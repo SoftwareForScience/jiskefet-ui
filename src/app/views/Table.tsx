@@ -32,7 +32,7 @@ export class Table implements m.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {RunModel.current.map((runs) => {
+                        {RunModel.list.map((runs) => {
                             return (
                                 <tr>
                                     <td>{runs.run_number}</td>

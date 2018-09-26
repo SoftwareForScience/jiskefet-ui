@@ -1,13 +1,13 @@
 import * as m from 'mithril'
 
 export interface IRun {
-    run_number: number;
-    time_o2_start: Date;
-    time_trg_start: Date;
-    time_trg_end: Date;
-    time_o2_end: Date;
-    run_type: [];
-    run_quality: [];
+    run_number?: number;
+    time_o2_start?: Date;
+    time_trg_start?: Date;
+    time_trg_end?: Date;
+    time_o2_end?: Date;
+    run_type: string[];
+    run_quality: string[];
     activity_id: string;
     n_detectors: number;
     n_flps: number;
@@ -19,40 +19,25 @@ export interface IRun {
 }
 
 const RunModel = {
-    current: [] as IRun[],
+    list: [] as IRun[],
+    current: {} as IRun,
     async fetch() {
         return m.request({
             method: "GET",
-            url: "http://localhost:3000/Runs/",
+            url: "http://localhost:3000/runs",
             withCredentials: false
         }).then((result: any)=> {
-            this.current = result
+            this.list = result
         });
     },
-
-    saved: {} as IRun,
-    save(poll) {
+    save() {
         return m.request<IRun>( {
             method: "POST",
-            url: "http://localhost:3000/Runs",
-            data: poll,
+            url: "http://localhost:3000/runs",
+            data: RunModel.current,
             withCredentials: false
-        }).then(result => {
-            RunModel.saved = result
-        });
+        })
     },
-
-    updated: {} as IRun,
-    patch(poll) {
-        return m.request<IRun>( {
-            method: "PATCH",
-            url: "http://localhost:3000/Runs",
-            data: poll,
-            withCredentials: false
-        }).then(result => {
-            RunModel.updated = result
-        });
-    }
 }
 
 type RunModel = typeof RunModel;
