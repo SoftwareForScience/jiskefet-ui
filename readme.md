@@ -1,3 +1,9 @@
+master
+[![Build Status](https://travis-ci.com/BastiaanReinalda/alice-bookkeeping-ui.svg?branch=master)](https://travis-ci.com/BastiaanReinalda/alice-bookkeeping-ui)
+
+develop
+[![Build Status](https://travis-ci.com/BastiaanReinalda/alice-bookkeeping-ui.svg?branch=develop)](https://travis-ci.com/BastiaanReinalda/alice-bookkeeping-ui)
+
 # [Mithril 1.1](https://mithril.js.org/) Simple App Tutorial
 
 Typescript version adapted from: https://mithril.js.org/simple-application.html
