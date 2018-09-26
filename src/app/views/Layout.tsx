@@ -1,5 +1,5 @@
 import * as m from 'mithril';
-import { Topbar } from './topbar';
+import { Topbar } from './Topbar';
 
 export class Layout implements m.Component {
     view(vnode) {

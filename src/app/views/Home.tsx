@@ -1,10 +1,11 @@
 import * as m from 'mithril';
+import { Table } from './Table';
 
-export class Create implements m.Component {
+export class Home implements m.Component {
     view() {
         return (
-            <div className="container-fluid">
-                
+            <div>
+                {/* <Table/> */}
             </div>
         )
     }
