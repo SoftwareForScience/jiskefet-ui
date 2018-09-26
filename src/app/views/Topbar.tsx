@@ -11,7 +11,7 @@ export class Topbar implements m.Component {
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a href="/" className="nav-link" oncreate={m.route.link}>Create new poll</a>
+                            <a href="/" className="nav-link" oncreate={m.route.link}>Run Information</a>
                         </li>
                     </ul>
                 </div>
