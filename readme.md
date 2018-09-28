@@ -1,8 +1,5 @@
 master
-[![Build Status](https://travis-ci.com/BastiaanReinalda/alice-bookkeeping-ui.svg?branch=master)](https://travis-ci.com/BastiaanReinalda/alice-bookkeeping-ui)
-
-develop
-[![Build Status](https://travis-ci.com/BastiaanReinalda/alice-bookkeeping-ui.svg?branch=develop)](https://travis-ci.com/BastiaanReinalda/alice-bookkeeping-ui)
+[![Build Status](https://travis-ci.com/BastiaanReinalda/jiskefet-ui.svg?branch=master)](https://travis-ci.com/BastiaanReinalda/jiskefet-ui)
 
 # [Mithril 1.1](https://mithril.js.org/) Simple App Tutorial
 
