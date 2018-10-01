@@ -97,11 +97,11 @@ export class Create implements m.Component {
                                         name="bytes_timeframe_builder" required oninput={this.addToRunCreate} />
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Sumbit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </div>
             </form>
-        )
+        );
     }
 }

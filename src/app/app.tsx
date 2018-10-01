@@ -1,23 +1,23 @@
 import * as m from 'mithril';
 import '../scss/main.scss';
 import 'bootstrap';
-import { Layout } from './views/Layout';
-import { Table } from './views/Table';
+import { Layout } from './Layout';
+import { Table } from './views/RunTable';
 import { Create } from './views/Create';
 
-m.route(document.body, "/", {
-	"/": {
+m.route(document.body, '/', {
+	'/': {
 		view: () => (
 			<Layout>
 				<Table />
 			</Layout>
-		)
+		),
 	},
-	"/create": {
+	'/create': {
 		view: () => (
 			<Layout>
 				<Create />
 			</Layout>
-		)
+		),
 	},
 });

@@ -10,25 +10,25 @@ export class Table implements m.Component {
 
     view() {
         return (
-            <div class='table-responsive'>
-                <table class='table table-sm table-hover table-striped'>
-                    <thead class='thead-dark'>
+            <div class="table-responsive">
+                <table class="table table-sm table-hover table-striped">
+                    <thead class="thead-dark">
                         <tr>
-                            <th scope='col'>Run id</th>
-                            <th scope='col'>Time 02 start</th>
-                            <th scope='col'>Time trg start</th>
-                            <th scope='col'>Time trg end</th>
-                            <th scope='col'>Time 02 end</th>
-                            <th scope='col'>Activity id</th>
-                            <th scope='col'>Run type</th>
-                            <th scope='col'>Run quality</th>
-                            <th scope='col'>N detectors</th>
-                            <th scope='col'>N flps</th>
-                            <th scope='col'>N epns</th>
-                            <th scope='col'>N timeframes</th>
-                            <th scope='col'>N subtimeframes</th>
-                            <th scope='col'>Bytes read out</th>
-                            <th scope='col'>bytes timeframe builder</th>
+                            <th scope="col">Run id</th>
+                            <th scope="col">Time 02 start</th>
+                            <th scope="col">Time trg start</th>
+                            <th scope="col">Time trg end</th>
+                            <th scope="col">Time 02 end</th>
+                            <th scope="col">Activity id</th>
+                            <th scope="col">Run type</th>
+                            <th scope="col">Run quality</th>
+                            <th scope="col">N detectors</th>
+                            <th scope="col">N flps</th>
+                            <th scope="col">N epns</th>
+                            <th scope="col">N timeframes</th>
+                            <th scope="col">N subtimeframes</th>
+                            <th scope="col">Bytes read out</th>
+                            <th scope="col">bytes timeframe builder</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,11 +51,11 @@ export class Table implements m.Component {
                                     <td>{runs.bytes_read_out}</td>
                                     <td>{runs.bytes_timeframe_builder}</td>
                                 </tr>
-                            )
+                            );
                         })}
                     </tbody>
                 </table>
             </div>
-        )
+        );
     }
 }
