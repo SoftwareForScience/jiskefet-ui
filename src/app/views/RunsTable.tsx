@@ -1,9 +1,7 @@
 import * as m from 'mithril';
 import RunModel from '../models/Run';
-import { IRun } from '../models/Run';
 
-export class Table implements m.Component {
-
+export class RunsTable implements m.Component {
     oninit() {
         RunModel.fetch();
     }

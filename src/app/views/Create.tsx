@@ -2,9 +2,6 @@ import * as m from 'mithril';
 import RunModel, { IRun } from '../models/Run';
 
 export class Create implements m.Component {
-    constructor() {
-    }
-
     addToRunCreate = (event) => {
         RunModel.current[event.target.id] = event.target.value;
     }

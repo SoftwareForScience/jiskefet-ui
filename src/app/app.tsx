@@ -2,22 +2,22 @@ import * as m from 'mithril';
 import '../scss/main.scss';
 import 'bootstrap';
 import { Layout } from './Layout';
-import { Table } from './views/RunTable';
+import { Runs } from './views/Runs';
 import { Create } from './views/Create';
 
 m.route(document.body, '/', {
-	'/': {
-		view: () => (
-			<Layout>
-				<Table />
-			</Layout>
-		),
-	},
-	'/create': {
-		view: () => (
-			<Layout>
-				<Create />
-			</Layout>
-		),
-	},
+'/': {
+    view: () => (
+        <Layout>
+            <Runs />
+        </Layout>
+    ),
+},
+'create': {
+    view: () => (
+        <Layout>
+            <Create />
+        </Layout>
+    ),
+},
 });
