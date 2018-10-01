@@ -2,9 +2,6 @@ import * as m from 'mithril';
 import RunModel, { IRun } from '../models/Run';
 
 export class Create implements m.Component {
-    constructor() {
-    }
-
     addToRunCreate = (event) => {
         RunModel.current[event.target.id] = event.target.value;
     }
@@ -97,11 +94,11 @@ export class Create implements m.Component {
                                         name="bytes_timeframe_builder" required oninput={this.addToRunCreate} />
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Sumbit</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </div>
             </form>
-        )
+        );
     }
 }

@@ -1,8 +1,8 @@
 import * as m from 'mithril';
-import { Topbar } from './Topbar';
+import { Topbar } from './components/Topbar';
 
 export class Layout implements m.Component {
-    view(vnode) {
+    view(vnode: any) {
         return (
             <div>
                 <Topbar/>
@@ -10,6 +10,6 @@ export class Layout implements m.Component {
                     {vnode.children}
                 </div>
             </div>
-        )
+        );
     }
 }
