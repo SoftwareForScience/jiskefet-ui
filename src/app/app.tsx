@@ -4,6 +4,7 @@ import 'bootstrap';
 import { Layout } from './Layout';
 import { Runs } from './views/Runs';
 import { Create } from './views/Create';
+import { RunDetails } from './views/RunDetails';
 
 m.route(document.body, '/', {
     '/': {
@@ -13,10 +14,10 @@ m.route(document.body, '/', {
             </Layout>
         ),
     },
-    'create': {
+    '/create': {
         view: () => (
             <Layout>
-                <Create />
+                <RunDetails />
             </Layout>
         ),
     },

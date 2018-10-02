@@ -38,6 +38,31 @@ const RunModel = {
             withCredentials: false
         });
     },
+    fetchById(id: number) {
+        // return m.request<Run>({
+        //     method: 'POST',
+        //     url: 'http://localhost:3000/runs/' + id,
+        //     data: RunModel.current,
+        //     withCredentials: false
+        // }).then((result: any) => {
+        //     this.current = result;
+        // });
+        RunModel.current.run_number = id;
+        RunModel.current.time_o2_start = new Date();
+        RunModel.current.time_trg_start = new Date();
+        RunModel.current.time_trg_end = new Date();
+        RunModel.current.time_o2_end = new Date();
+        RunModel.current.run_type = ['test'];
+        RunModel.current.run_quality = ['test'];
+        RunModel.current.activity_id = "A9j2nI92";
+        RunModel.current.n_detectors = 1;
+        RunModel.current.n_flps = 2;
+        RunModel.current.n_epns = 3;
+        RunModel.current.n_timeframes = 4;
+        RunModel.current.n_subtimeframes = 5;
+        RunModel.current.bytes_read_out = 6;
+        RunModel.current.bytes_timeframe_builder = 7;
+    },
 };
 
 type RunModel = typeof RunModel;
