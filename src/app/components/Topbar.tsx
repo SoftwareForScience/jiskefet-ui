@@ -19,6 +19,6 @@ export class Topbar implements m.Component {
                     </ul>
                 </div>
             </nav>
-        )
+        );
     }
 }
