@@ -1,5 +1,5 @@
 import * as m from 'mithril';
-import RunModel, { Run } from '../models/Run';
+import RunModel from '../models/Run';
 
 export class Create implements m.Component {
     addToRunCreate = (event) => {
