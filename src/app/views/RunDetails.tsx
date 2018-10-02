@@ -1,3 +1,11 @@
+/**
+ * TODO:
+ * - Fix timestamps from Run
+ * - Discuss visualisations
+ * - Use no mocup date 
+ * - Make components of bordered columns
+ */
+
 import * as m from 'mithril';
 import RunModel from '../models/Run';
 import Spinner from '../components/Spinner';
@@ -5,13 +13,14 @@ import Spinner from '../components/Spinner';
 export class RunDetails implements m.Component {
     private isLoading: boolean;
 
-    constructor() {
+    constructor(vnode) {
         this.isLoading = true;
     }
 
     oninit() {
-        //RunModel.fetch().then(() => this.isLoading = false);
+        //RunModel.fetchById(vnode.attrs.runId).then(() => this.isLoading = false);
         RunModel.fetchById(1);
+        console.log(RunModel.current)
         this.isLoading = false
     }
 
@@ -20,45 +29,44 @@ export class RunDetails implements m.Component {
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
                     {RunModel.current &&
-                        <div className="col-md-12">
+                        <div className="col-md-10 mx-auto">
                             <div className="row">
                                 <div className="col-md-4 border rounded border-dark">
                                     <h4>Run</h4>
-                                    <p>Run number: {RunModel.current.run_number}</p>
-                                    <p>timestamp</p>
-                                    <p>timestamp</p>
-                                    <p>timestamp</p>
-                                    <p>timestamp</p>
-                                    <p>Run quality: {RunModel.current.run_quality}</p>
-                                    <p>Run type: {RunModel.current.run_type}</p>
-                                    <p>Activity id: {RunModel.current.activity_id}</p>
-                                    <p>Number of detectors: {RunModel.current.n_detectors}</p>
-                                    <p>Number of EPNS: {RunModel.current.n_epns}</p>
-                                    <p>Number of FLPS: {RunModel.current.n_flps}</p>
-                                    <p>Number of timeframes: {RunModel.current.n_timeframes}</p>
-                                    <p>Number of subtimeframes: {RunModel.current.n_subtimeframes}</p>
+                                    {Object.keys(RunModel.current).map((key) =>
+                                        (<p key={RunModel.current[key]}>
+                                            {key}: {RunModel.current[key]}
+                                        </p>)
+                                    )}
                                 </div>
-                                <br/>
                                 <div className="col-md-7 offset-md-1">
                                     <div className="row">
-                                        <div className="col-md-6 border rounded border-dark">
+                                        <div className="col-md-5 border rounded border-dark">
                                             <h4>Detectors</h4>
-                                            
+                                            {
+                                                //Fetch detectors from runs
+                                            }
                                         </div>
-                                        <div className="col-md-6 border rounded border-dark">
+                                        <div className="col-md-5 offset-md-2 border rounded border-dark">
                                             <h4>EPN Role Sessions</h4>
-                                            
+                                            {
+                                                //Fetch epn role from runs
+                                            }
                                         </div>
                                     </div>
-                                    <br/>
+                                    <br />
                                     <div className="row">
-                                        <div className="col-md-6 border rounded border-dark">
+                                        <div className="col-md-5 border rounded border-dark">
                                             <h4>FLP Roles</h4>
-                                            
+                                            {
+                                                //Fetch flp roles from runs
+                                            }
                                         </div>
-                                        <div className="col-md-6 border rounded border-dark">
+                                        <div className="col-md-5 offset-md-2 border rounded border-dark">
                                             <h4>Run Quality history</h4>
-                                            
+                                            {
+                                                //Fetch run quality history from runs
+                                            }
                                         </div>
                                     </div>
                                 </div>

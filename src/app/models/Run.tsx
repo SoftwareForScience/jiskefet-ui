@@ -48,10 +48,6 @@ const RunModel = {
         //     this.current = result;
         // });
         RunModel.current.run_number = id;
-        RunModel.current.time_o2_start = new Date();
-        RunModel.current.time_trg_start = new Date();
-        RunModel.current.time_trg_end = new Date();
-        RunModel.current.time_o2_end = new Date();
         RunModel.current.run_type = ['test'];
         RunModel.current.run_quality = ['test'];
         RunModel.current.activity_id = "A9j2nI92";
