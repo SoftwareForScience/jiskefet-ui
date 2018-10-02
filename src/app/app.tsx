@@ -6,18 +6,18 @@ import { Runs } from './views/Runs';
 import { Create } from './views/Create';
 
 m.route(document.body, '/', {
-'/': {
-    view: () => (
-        <Layout>
-            <Runs />
-        </Layout>
-    ),
-},
-'create': {
-    view: () => (
-        <Layout>
-            <Create />
-        </Layout>
-    ),
-},
+    '/': {
+        view: () => (
+            <Layout>
+                <Runs />
+            </Layout>
+        ),
+    },
+    'create': {
+        view: () => (
+            <Layout>
+                <Create />
+            </Layout>
+        ),
+    },
 });

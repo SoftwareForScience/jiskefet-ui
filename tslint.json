@@ -1,7 +1,8 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint:recommended"
+        "tslint:recommended",
+        "tslint-react"
     ],
     "rules": {
         "arrow-parens": false,
@@ -14,33 +15,19 @@
         ],
         "member-access": false,
         "ban": false,
-        "brace-style": [
-            true,
-            "1tbs",
-            {
-                "allowSingleLine": true
-            }
-        ],
-        "block-spacing": [
-            true,
-            "always"
-        ],
         "class-name": true,
         "comment-format": [
             true,
             "check-space"
         ],
         "curly": true,
-        "eofline": false,
+        "eofline": true,
         "forin": true,
-        "handle-callback-err": [
-            true,
-            "^(err|error)$"
-        ],
         "import-spacing": true,
         "indent": [
             true,
-            "spaces"
+            "spaces",
+            4
         ],
         "interface-name": [
             true,
@@ -60,9 +47,19 @@
         ],
         "member-ordering": [
             true,
-            "public-before-private",
-            "static-before-instance",
-            "variables-before-functions"
+            {
+                "order": [
+                    "public-static-field",
+                    "public-instance-field",
+                    "private-static-field",
+                    "private-instance-field",
+                    "public-constructor",                    
+                    "private-constructor",
+                    "public-instance-method",
+                    "protected-instance-method",
+                    "private-instance-method"
+                ]
+            }
         ],
         "new-parens": true,
         "no-any": false,
@@ -81,29 +78,21 @@
         "no-consecutive-blank-lines": [
             true
         ],
-        "no-constant-condition": true,
         "no-construct": true,
         "no-debugger": true,
         "no-duplicate-variable": true,
         "no-empty": true,
         "no-eval": true,
-        "no-multi-spaces": [
-            true
-        ],
         "no-shadowed-variable": true,
         "no-string-literal": true,
         "no-string-throw": true,
         "no-switch-case-fall-through": true,
         "no-reference": true,
-        "no-trailing-whitespace": false,
+        "no-trailing-whitespace": true,
         "no-unused-expression": true,
         "no-var-keyword": true,
         "ordered-imports": false,
         "object-literal-sort-keys": false,
-        "object-curly-spacing": [
-            true,
-            "always"
-        ],
         "one-variable-per-declaration": [
             true,
             "ignore-for-loop"
@@ -130,19 +119,6 @@
             "always"
         ],
         "switch-default": true,
-        "ter-arrow-spacing": [
-            true
-        ],
-        "ter-func-call-spacing": [
-            true
-        ],
-        "ter-indent": [
-            true,
-            4,
-            {
-                "SwitchCase": 1
-            }
-        ],
         "trailing-comma": [
             true,
             {
@@ -167,10 +143,6 @@
                 "property-declaration": "nospace",
                 "variable-declaration": "nospace"
             }
-        ],
-        "space-in-parens": [
-            true,
-            "never"
         ],
         "variable-name": [
             true,

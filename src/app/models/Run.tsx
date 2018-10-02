@@ -1,6 +1,6 @@
-import * as m from 'mithril'
+import * as m from 'mithril';
 
-export interface IRun {
+export interface Run {
     run_number?: number;
     time_o2_start?: Date;
     time_trg_start?: Date;
@@ -19,26 +19,26 @@ export interface IRun {
 }
 
 const RunModel = {
-    list: [] as IRun[],
-    current: {} as IRun,
+    list: [] as Run[],
+    current: {} as Run,
     async fetch() {
         return m.request({
-            method: "GET",
-            url: "http://localhost:3000/runs",
+            method: 'GET',
+            url: 'http://localhost:3000/runs',
             withCredentials: false
-        }).then((result: any)=> {
-            this.list = result
+        }).then((result: any) => {
+            this.list = result;
         });
     },
     save() {
-        return m.request<IRun>( {
-            method: "POST",
-            url: "http://localhost:3000/runs",
+        return m.request<Run>({
+            method: 'POST',
+            url: 'http://localhost:3000/runs',
             data: RunModel.current,
             withCredentials: false
-        })
+        });
     },
-}
+};
 
 type RunModel = typeof RunModel;
 export default RunModel;
