@@ -38,7 +38,7 @@ export class Runs implements m.Component {
                 <Spinner isLoading={this.isLoading}>
                     <div className="row">
                         <div className="col-md-12">
-                            <Table data={RunModel.list} columns={columns}/>
+                            <Table data={RunModel.list} columns={columns} />
                         </div>
                     </div>
                 </Spinner>

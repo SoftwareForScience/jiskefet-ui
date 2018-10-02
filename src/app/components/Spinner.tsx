@@ -16,7 +16,8 @@ class Spinner implements m.Component {
                             <div className="loader text-center" />
                         </div>
                     </div>
-                    : vnode.children}
+                    : vnode.children
+                }
             </div>
         );
     }

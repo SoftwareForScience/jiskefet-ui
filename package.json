@@ -7,8 +7,8 @@
 		"dev": "webpack-dev-server -d --open --content-base src/",
 		"build": "webpack -p",
         "test": "./node_modules/tslint/bin/tslint -c ./.tslint.ts ./src/ts/*.ts ./src/ts/models/*.ts ./src/ts/views/*.ts",
-        "lint": "tslint 'src/**/*.{tsx}'"
-	},
+        "lint": "tslint -p tsconfig.json -c tslint.json"
+},
 	"keywords": [],
 	"author": "Bastiaan reinalda",
 	"license": "MIT",
