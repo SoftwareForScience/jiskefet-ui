@@ -31,7 +31,7 @@ export class Log implements m.Component {
                                         <div class="col-sm-12 mt-2"><p>{LogModel.current.text}</p></div>
 
                                         <dt class="col-sm-6">Log id</dt>
-                                        <dd class="col-sm-6">{LogModel.current.log_id}</dd>
+                                        <dd class="col-sm-6">{LogModel.current.logId}</dd>
 
                                         <dt class="col-sm-6">Subtype:</dt>
                                         <dd class="col-sm-6">
@@ -48,10 +48,10 @@ export class Log implements m.Component {
                                         </dd>
 
                                         <dt class="col-sm-6">Creation time:</dt>
-                                        <dd class="col-sm-6">{LogModel.current.creation_time}</dd>
+                                        <dd class="col-sm-6">{LogModel.current.creationTime}</dd>
 
                                         <dt class="col-sm-6">User id:</dt>
-                                        <dd class="col-sm-6">{LogModel.current.user_id}</dd>
+                                        <dd class="col-sm-6">{LogModel.current.userId}</dd>
                                     </dl>
                                 </div>
                             </div>

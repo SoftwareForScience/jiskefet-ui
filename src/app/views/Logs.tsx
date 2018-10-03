@@ -6,13 +6,13 @@ import Table from '../components/Table';
 const columns = [
     {
         header: 'Log id',
-        accessor: 'log_id'
+        accessor: 'logId'
     },
     {
         header: 'Title',
         accessor: 'title',
         cell: row => (
-            <a href={`/logs/${row.log_id}`} oncreate={m.route.link}>
+            <a href={`/logs/${row.logId}`} oncreate={m.route.link}>
                 {row.title}
             </a>
         )
@@ -44,7 +44,7 @@ const columns = [
         )
     }, {
         header: 'Creation time',
-        accessor: 'creation_time'
+        accessor: 'creationTime'
     },
     {
         header: 'Text',
