@@ -14,7 +14,7 @@ m.route(document.body, '/', {
             </Layout>
         ),
     },
-    'create': {
+    '/create': {
         view: () => (
             <Layout>
                 <Create />

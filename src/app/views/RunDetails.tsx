@@ -11,9 +11,7 @@ export class RunDetails implements m.Component {
     }
 
     oninit() {
-        //RunModel.fetchById(m.route.param("id")).then(() => this.isLoading = false);
-        RunModel.fetchById(Number(m.route.param("id")));
-        this.isLoading = false
+        RunModel.fetchById(Number(m.route.param("id"))).then(() => this.isLoading = false);
     }
 
     view() {
