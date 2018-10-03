@@ -1,8 +1,14 @@
 import * as m from 'mithril';
 
+interface Column {
+    header: string;
+    accessor: string;
+    cell?: (row: object) => object;
+}
+
 export default class Table implements m.Component {
     data: any[];
-    columns: any[];
+    columns: Column[];
 
     constructor(vnode: any) {
         this.data = vnode.attrs.data;
@@ -11,21 +17,25 @@ export default class Table implements m.Component {
 
     view() {
         return (
-            <div class="table-responsive">
-                <table class="table table-bordered">
+            <div class="table-responsive-md">
+                <table class="table table-sm table-bordered table-hover shadow-sm">
                     <thead>
                         <tr>
-                            {this.columns && this.columns.map(col => <th scope="col" key={col}>{col}</th>)}
+                            {this.columns && this.columns.map(column =>
+                                <th scope="col" key={column.accessor}>
+                                    {column.header}
+                                </th>
+                            )}
                         </tr>
                     </thead>
                     <tbody>
                         {this.data && this.data.map(row =>
                             <tr key={row}>
-                                {Object.keys(row).map((key) =>
-                                    (<td key={row[key]}>
-                                        {row[key]}
-                                    </td>)
-                                )}
+                                {this.columns.map((column: Column) => (
+                                    <td key={row[column.accessor]}>
+                                        {column.cell ? column.cell(row) : row[column.accessor]}
+                                    </td>
+                                ))}
                             </tr>
                         )}
                     </tbody>

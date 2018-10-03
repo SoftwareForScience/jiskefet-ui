@@ -34,12 +34,27 @@
             "never-prefix"
         ],
         "jsdoc-format": true,
+
+        "jsx-alignment": true,
         "jsx-boolean-value": [
             "never"
         ],
+        "jsx-curly-spacing": [
+            true,
+            "never"
+        ],
+        "jsx-equals-spacing": [
+            true,
+            "never"
+        ],
+        "jsx-no-bind": true,
         "jsx-no-lambda": false,
         "jsx-no-multiline-js": false,
-        "jsx-curly-spacing": false,
+        "jsx-no-string-ref": true,
+        "jsx-self-close": true,
+        "jsx-wrap-multiline": true,
+        "jsx-space-before-trailing-slash": true,
+        "jsx-key": true,
         "label-position": true,
         "max-line-length": [
             false,
