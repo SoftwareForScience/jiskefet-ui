@@ -2,6 +2,7 @@ import * as m from 'mithril';
 import LogModel from '../models/Log';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
+import Feedback from '../components/Feedback';
 
 const columns = [
     {
@@ -59,9 +60,18 @@ const columns = [
 
 export class Logs implements m.Component {
     private isLoading: boolean;
+    private hasFetched: boolean;
+    private hasFailed: boolean;
+    private failedMessage: any;
+    private succesMessage: any;
 
     constructor() {
         this.isLoading = true;
+        this.failedMessage = 'failed to get data!';
+        this.succesMessage = 'succes getting data!';
+        // for testing purposes
+        this.hasFetched = true;
+        this.hasFailed = false;
     }
 
     oninit() {
@@ -81,6 +91,7 @@ export class Logs implements m.Component {
                         </div>
                     </div>
                 </Spinner>
+                <Feedback hasFetched={this.hasFetched} hasFailed={this.hasFailed} succesMessage={this.succesMessage} failedMessage={this.failedMessage} />
             </div>
         );
     }
