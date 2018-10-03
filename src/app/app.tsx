@@ -17,7 +17,7 @@ m.route(document.body, '/', {
     'create': {
         view: () => (
             <Layout>
-                <RunDetails />
+                <Create />
             </Layout>
         ),
     },
