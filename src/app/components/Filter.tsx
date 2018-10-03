@@ -1,13 +1,14 @@
 import * as m from 'mithril';
 
 export default class Filter implements m.Component {
-    filters: any[];
+    filterParams: any[];
+    filters: any;
     private fetchEntity;
 
     constructor(vnode: any) {
-        this.filters = vnode.attrs.filters;
-        console.log(vnode.attrs.filters);
+        this.filterParams = vnode.attrs.filterParams;
         this.fetchEntity = vnode.attrs.fetchRuns;
+        this.filters = vnode.attrs.filters;
     }
 
     /**
@@ -37,7 +38,7 @@ export default class Filter implements m.Component {
     view() {
         return (
             <div class="filters-responsive">
-                {this.filters && this.filters.map(filter =>
+                {this.filterParams && this.filterParams.map(filter =>
                     (
                         <div class="form-group">
                             <label key={filter.name} for={filter}>Filter for {filter.name}</label>

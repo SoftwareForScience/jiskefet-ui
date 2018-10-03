@@ -22,34 +22,42 @@ const columns = [
     'B timeframe builder',
 ];
 
-const filters = [
+const filterParams = [
     {
-        name: 'Time 02 start',
+        name: 'TimeO2Start',
         type: 'datetime-local'
     },
     {
-        name: 'Time 02 end',
+        name: 'TimeO2End',
         type: 'datetime-local'
     },
     {
-        name: 'Time trg start',
+        name: 'TimeTrgStart',
         type: 'datetime-local'
     },
     {
-        name: 'Time trg end',
+        name: 'TimeTrgEnd',
         type: 'datetime-local'
     },
 ];
 
+interface Filters {
+    TimeO2Start?: Date;
+    TimeO2End?: Date;
+    TimeTrgStart?: Date;
+    TimeTrgEnd?: Date;
+}
+
 export class Runs implements m.Component {
     private isLoading: boolean;
+    private filters: Filters = {};
 
     constructor() {
         this.isLoading = true;
     }
 
     fetchRuns = (queryParam: string) => {
-        RunModel.fetchByParams(queryParam);
+        // RunModel.fetchByParams(queryParam);
     }
 
     oninit() {
@@ -62,7 +70,7 @@ export class Runs implements m.Component {
                 <Spinner isLoading={this.isLoading}>
                     <div className="row">
                         <div className="col-md-3">
-                            <Filter filters={filters} fetchEntity={this.fetchRuns}/>
+                            <Filter filterParams={filterParams} fetchEntity={this.fetchRuns} filters={this.filters}/>
                         </div>
                         <div className="col-md-9">
                             <Table data={RunModel.list} columns={columns} />
