@@ -17,8 +17,8 @@ export default class Table implements m.Component {
 
     view() {
         return (
-            <div class="table-responsive">
-                <table class="table table-bordered">
+            <div class="table-responsive-md">
+                <table class="table table-sm table-bordered table-hover shadow-sm">
                     <thead>
                         <tr>
                             {this.columns && this.columns.map(column =>

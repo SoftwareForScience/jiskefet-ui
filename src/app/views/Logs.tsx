@@ -12,25 +12,48 @@ const columns = [
         header: 'Title',
         accessor: 'title',
         cell: row => (
-            <a href={`/logs/${row.log_id}`} className="nav-link" oncreate={m.route.link}>
+            <a href={`/logs/${row.log_id}`} oncreate={m.route.link}>
                 {row.title}
             </a>
         )
     },
     {
         header: 'Subtype',
-        accessor: 'subtype'
+        accessor: 'subtype',
+        cell: row => (
+            row.subtype === 'run' ?
+                (
+                    <div class="text-center">
+                        <span class="badge badge-warning">{row.subtype}</span>
+                    </div>
+                )
+                : row.subtype
+        )
     },
     {
         header: 'Origin',
-        accessor: 'origin'
+        accessor: 'origin',
+        cell: row => (
+            row.origin === 'human' ?
+                (
+                    <div class="text-center">
+                        <span class="badge badge-success">{row.origin}</span>
+                    </div>
+                )
+                : row.origin
+        )
     }, {
         header: 'Creation time',
         accessor: 'creation_time'
     },
     {
         header: 'Text',
-        accessor: 'text'
+        accessor: 'text',
+        cell: row => (
+            <div class="d-block text-truncate" style="max-width: 200px;">
+                {row.text}
+            </div>
+        )
     },
 ];
 
