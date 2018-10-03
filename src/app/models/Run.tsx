@@ -1,21 +1,21 @@
 import * as m from 'mithril';
 
 export interface Run {
-    run_number?: number;
-    time_o2_start?: Date;
-    time_trg_start?: Date;
-    time_trg_end?: Date;
-    time_o2_end?: Date;
-    run_type: string[];
-    run_quality: string[];
-    activity_id: string;
-    n_detectors: number;
-    n_flps: number;
-    n_epns: number;
-    n_timeframes: number;
-    n_subtimeframes: number;
-    bytes_read_out: number;
-    bytes_timeframe_builder: number;
+    runNumber?: number;
+    timeO2Start?: Date;
+    timeTrgStart?: Date;
+    timeTrgEnd?: Date;
+    timeO2End?: Date;
+    runType: string[];
+    runQuality: string[];
+    activityId: string;
+    nDetectors: number;
+    nFlps: number;
+    nEpns: number;
+    nTimeframes: number;
+    nSubtimeframes: number;
+    bytesReadOut: number;
+    bytesTimeframeBuilder: number;
 }
 
 const RunModel = {
@@ -36,6 +36,15 @@ const RunModel = {
             url: 'http://localhost:3000/runs',
             data: RunModel.current,
             withCredentials: false
+        });
+    },
+    fetchById(id: number) {
+        return m.request<Run>({
+            method: 'GET',
+            url: 'http://localhost:3000/runs/' + id,
+            withCredentials: false
+        }).then((result: any) => {
+            this.current = result;
         });
     },
 };

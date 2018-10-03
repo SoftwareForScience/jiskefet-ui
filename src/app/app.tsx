@@ -6,6 +6,7 @@ import { Runs } from './views/Runs';
 import { Logs } from './views/Logs';
 import { Log } from './views/Log';
 import { Create } from './views/Create';
+import { RunDetails } from './views/RunDetails';
 
 m.route(document.body, '/logs', {
     '/logs': {
@@ -29,10 +30,17 @@ m.route(document.body, '/logs', {
             </Layout>
         ),
     },
-    'create': {
+    '/create': {
         view: () => (
             <Layout>
                 <Create />
+            </Layout>
+        ),
+    },
+    '/run/:id': {
+        view: () => (
+            <Layout>
+                <RunDetails />
             </Layout>
         ),
     },
