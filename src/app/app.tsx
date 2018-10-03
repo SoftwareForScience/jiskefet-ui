@@ -14,7 +14,14 @@ m.route(document.body, '/', {
             </Layout>
         ),
     },
-    '/create': {
+    'create': {
+        view: () => (
+            <Layout>
+                <RunDetails />
+            </Layout>
+        ),
+    },
+    '/run/:id': {
         view: () => (
             <Layout>
                 <RunDetails />

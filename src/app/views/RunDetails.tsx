@@ -8,19 +8,18 @@
 import * as m from 'mithril';
 import RunModel from '../models/Run';
 import Spinner from '../components/Spinner';
-import CardBody from '../components/CardBody';
+import Card from '../components/Card';
 
 export class RunDetails implements m.Component {
     private isLoading: boolean;
 
-    constructor(vnode) {
+    constructor() {
         this.isLoading = true;
     }
 
     oninit() {
-        //RunModel.fetchById(vnode.attrs.runId).then(() => this.isLoading = false);
-        RunModel.fetchById(1);
-        console.log(RunModel.current)
+        //RunModel.fetchById(m.route.param("id")).then(() => this.isLoading = false);
+        RunModel.fetchById(Number(m.route.param("id")));
         this.isLoading = false
     }
 
@@ -32,39 +31,24 @@ export class RunDetails implements m.Component {
                         <div className="col-md-10 mx-auto">
                             <div className="row">
                                 <div className="col-md-4">
-                                    <div className="card">
-                                        <h4 className="card-header">Run</h4>
-                                        <CardBody run={RunModel.current} />
-                                    </div>
+                                    <Card run={RunModel.current} title={"Run"} />
                                 </div>
-                                <div className="col-md-7 offset-md-1">
+                                <div className="col-md-8">
                                     <div className="row">
-                                        <div className="col-md-5">
-                                            <div className="card">
-                                                <h4 className="card-header">Detectors</h4>
-                                                <CardBody run={"test"} />
-                                            </div>
+                                        <div className="col-md-6">
+                                            <Card run={"test"} title={"Detectors"} />
                                         </div>
-                                        <div className="col-md-5 offset-md-2">
-                                            <div className="card">
-                                                <h4 className="card-header">EPN Role Sessions</h4>
-                                                <CardBody run={"test"} />
-                                            </div>
+                                        <div className="col-md-6">
+                                            <Card run={"test"} title={"EPN Role Sessions"} />
                                         </div>
                                     </div>
-                                    <br />
+                                    <br/>
                                     <div className="row">
-                                        <div className="col-md-5">
-                                            <div className="card">
-                                                <h4 className="card-header">EPN Role Sessions</h4>
-                                                <CardBody run={"test"} />
-                                            </div>
+                                        <div className="col-md-6">
+                                            <Card run={"test"} title={"EPN Role Sessions"} />
                                         </div>
-                                        <div className="col-md-5 offset-md-2">
-                                            <div className="card">
-                                                <h4 className="card-header">Run Quality history</h4>
-                                                <CardBody run={"test"} />
-                                            </div>
+                                        <div className="col-md-6">
+                                            <Card run={"test"} title={"Run Quality history"} />
                                         </div>
                                     </div>
                                 </div>
@@ -72,7 +56,7 @@ export class RunDetails implements m.Component {
                         </div>
                     }
                 </Spinner>
-            </div>
+            </div >
         );
     }
 }
