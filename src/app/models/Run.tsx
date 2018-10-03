@@ -40,9 +40,8 @@ const RunModel = {
     },
     fetchById(id: number) {
         // return m.request<Run>({
-        //     method: 'POST',
+        //     method: 'GET',
         //     url: 'http://localhost:3000/runs/' + id,
-        //     data: RunModel.current,
         //     withCredentials: false
         // }).then((result: any) => {
         //     this.current = result;

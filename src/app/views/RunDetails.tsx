@@ -1,10 +1,3 @@
-/**
- * TODO:
- * - Fix timestamps from Run
- * - Discuss visualisations
- * - Use no mocup date
- */
-
 import * as m from 'mithril';
 import RunModel from '../models/Run';
 import Spinner from '../components/Spinner';
@@ -45,7 +38,7 @@ export class RunDetails implements m.Component {
                                     <br/>
                                     <div className="row">
                                         <div className="col-md-6">
-                                            <Card run={"test"} title={"EPN Role Sessions"} />
+                                            <Card run={"test"} title={"FLP Role Sessions"} />
                                         </div>
                                         <div className="col-md-6">
                                             <Card run={"test"} title={"Run Quality history"} />
