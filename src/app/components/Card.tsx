@@ -2,11 +2,11 @@ import * as m from 'mithril';
 
 export default class Card implements m.Component {
     data: any[];
-    title: string
+    title: string;
 
     constructor(vnode: any) {
         this.data = vnode.attrs.run;
-        this.title = vnode.attrs.title
+        this.title = vnode.attrs.title;
     }
 
     view() {

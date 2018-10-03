@@ -11,7 +11,7 @@ export class RunDetails implements m.Component {
     }
 
     oninit() {
-        RunModel.fetchById(Number(m.route.param("id"))).then(() => this.isLoading = false);
+        RunModel.fetchById(Number(m.route.param('id'))).then(() => this.isLoading = false);
     }
 
     view() {
@@ -22,24 +22,24 @@ export class RunDetails implements m.Component {
                         <div className="col-md-10 mx-auto">
                             <div className="row">
                                 <div className="col-md-4">
-                                    <Card run={RunModel.current} title={"Run"} />
+                                    <Card run={RunModel.current} title={'Run'} />
                                 </div>
                                 <div className="col-md-8">
                                     <div className="row">
                                         <div className="col-md-6">
-                                            <Card run={"test"} title={"Detectors"} />
+                                            <Card run={'test'} title={'Detectors'} />
                                         </div>
                                         <div className="col-md-6">
-                                            <Card run={"test"} title={"EPN Role Sessions"} />
+                                            <Card run={'test'} title={'EPN Role Sessions'} />
                                         </div>
                                     </div>
-                                    <br/>
+                                    <br />
                                     <div className="row">
                                         <div className="col-md-6">
-                                            <Card run={"test"} title={"FLP Role Sessions"} />
+                                            <Card run={'test'} title={'FLP Role Sessions'} />
                                         </div>
                                         <div className="col-md-6">
-                                            <Card run={"test"} title={"Run Quality history"} />
+                                            <Card run={'test'} title={'Run Quality history'} />
                                         </div>
                                     </div>
                                 </div>
