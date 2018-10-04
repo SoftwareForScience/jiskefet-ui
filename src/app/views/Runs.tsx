@@ -6,7 +6,12 @@ import Table from '../components/Table';
 const columns = [
     {
         header: 'Run id',
-        accessor: 'runNumber'
+        accessor: 'runNumber',
+        cell: row => (
+            <a href={`/runs/${row.runNumber}`} oncreate={m.route.link}>
+                {row.runNumber}
+            </a>
+        )
     },
     {
         header: 'Time 02 start',

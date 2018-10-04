@@ -19,7 +19,7 @@ export default class Table implements m.Component {
 
     view() {
         return (
-            <div class="table-responsive-md">
+            <div class="table-responsive-xl">
                 <table class={`table table-sm table-bordered table-hover shadow-sm ${this.class}`}>
                     <thead>
                         <tr>

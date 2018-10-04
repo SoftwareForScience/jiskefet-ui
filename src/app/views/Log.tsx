@@ -21,7 +21,7 @@ export class Log implements m.Component {
                 <Spinner isLoading={this.isLoading}>
                     <div class="row">
                         <div class="col-md-6 mx-auto">
-                            <div class="card shadow bg-light">
+                            <div class="card shadow-sm bg-light">
                                 <div class="card-header">
                                     Log
                                 </div>

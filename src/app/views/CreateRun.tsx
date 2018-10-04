@@ -1,7 +1,7 @@
 import * as m from 'mithril';
 import RunModel from '../models/Run';
 
-export class Create implements m.Component {
+export class CreateRun implements m.Component {
 
     addToRunCreate = (event) => {
         RunModel.current[event.target.id] = event.target.value;
@@ -20,19 +20,19 @@ export class Create implements m.Component {
                     this.saveRun();
                 }}
             >
-                <div className="container-fluid">
+                <div class="container-fluid">
                     <div class="container">
-                        <div className="col-md-8 mx-auto">
+                        <div class="col-md-8 mx-auto bg-light rounded p-4">
                             <div><h3>Create a new Run</h3></div>
                             <div class="form-group">
                                 <label for="activity_id">Activity ID:</label>
                                 <div class="field">
                                     <input
-                                        id="activity_id"
+                                        id="activityId"
                                         type="text"
                                         class="form-control"
                                         placeholder="Activity ID"
-                                        name="activity_id"
+                                        name="activityId"
                                         maxlength="16"
                                         required
                                         oninput={this.addToRunCreate}
@@ -42,7 +42,7 @@ export class Create implements m.Component {
                             <div class="form-group">
                                 <label for="run_type">Select run type:</label>
                                 <div class="field">
-                                    <select id="run_type" class="form-control" name="run_type" required onclick={this.addToRunCreate}>
+                                    <select id="runType" class="form-control" name="runType" required onclick={this.addToRunCreate}>
                                         <option value="test">-Choose one-</option>
                                         <option value="test">test</option>
                                     </select>
@@ -51,77 +51,77 @@ export class Create implements m.Component {
                             <div class="form-group">
                                 <label for="run_quality">Select run quality:</label>
                                 <div class="field">
-                                    <select id="run_quality" class="form-control" name="run_quality" required onclick={this.addToRunCreate}>
+                                    <select id="runQuality" class="form-control" name="runQuality" required onclick={this.addToRunCreate}>
                                         <option value="test">-Choose one-</option>
                                         <option value="test">test</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="n_detectors">N detectors:</label>
+                                <label for="n_detectors">Number of detectors:</label>
                                 <div class="field">
                                     <input
-                                        id="n_detectors"
+                                        id="nDetectors"
                                         type="number"
                                         class="form-control"
-                                        placeholder="N detectors"
-                                        name="n_detectors"
+                                        placeholder="Number of detectors"
+                                        name="nDetectors"
                                         required
                                         oninput={this.addToRunCreate}
                                     />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="n_flps">N flps:</label>
+                                <label for="n_flps">Number of FLPs:</label>
                                 <div class="field">
                                     <input
-                                        id="n_flps"
+                                        id="nFlps"
                                         type="number"
                                         class="form-control"
-                                        placeholder="N flps"
-                                        name="n_fpls"
+                                        placeholder="Number of FLPs"
+                                        name="nFlps"
                                         required
                                         oninput={this.addToRunCreate}
                                     />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="n_epns">N epns:</label>
+                                <label for="n_epns">Number of EPNs:</label>
                                 <div class="field">
                                     <input
-                                        id="n_epns"
+                                        id="nEpns"
                                         type="number"
                                         class="form-control"
-                                        placeholder="N epns"
-                                        name="n_epns"
+                                        placeholder="Number of EPNs"
+                                        name="nEpns"
                                         required
                                         oninput={this.addToRunCreate}
                                     />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="n_timeframes">N timeframes:</label>
+                                <label for="n_timeframes">Number of timeframes:</label>
                                 <div class="field">
                                     <input
-                                        id="n_timeframes"
+                                        id="nTimeframes"
                                         type="number"
                                         class="form-control"
-                                        placeholder="N timeframes"
-                                        name="n_timeframes"
+                                        placeholder="Number of timeframes"
+                                        name="nTimeframes"
                                         required
                                         oninput={this.addToRunCreate}
                                     />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="n_subtimeframes">N subtimeframes:</label>
+                                <label for="n_subtimeframes">Number of subtimeframes:</label>
                                 <div class="field">
                                     <input
-                                        id="n_subtimeframes"
+                                        id="nSubtimeframes"
                                         type="number"
                                         class="form-control"
-                                        placeholder="N subtimeframes"
-                                        name="n_subtimeframes"
+                                        placeholder="Number of subtimeframes"
+                                        name="nSubtimeframes"
                                         required
                                         oninput={this.addToRunCreate}
                                     />
@@ -131,25 +131,25 @@ export class Create implements m.Component {
                                 <label for="bytes_read_out">Bytes read out:</label>
                                 <div class="field">
                                     <input
-                                        id="bytes_read_out"
+                                        id="bytesReadOut"
                                         type="number"
                                         class="form-control"
                                         placeholder="Bytes read out"
-                                        name="bytes_read_out"
+                                        name="bytesReadOut"
                                         required
                                         oninput={this.addToRunCreate}
                                     />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="bytes_timeframe_builder">Byte timeframe builder:</label>
+                                <label for="bytes_timeframe_builder">Bytes timeframe builder:</label>
                                 <div class="field">
                                     <input
-                                        id="bytes_timeframe_builder"
+                                        id="bytesTimeframeBuilder"
                                         type="number"
                                         class="form-control"
                                         placeholder="Bytes timeframe builder"
-                                        name="bytes_timeframe_builder"
+                                        name="bytesTimeframeBuilder"
                                         required
                                         oninput={this.addToRunCreate}
                                     />

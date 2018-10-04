@@ -3,7 +3,7 @@ import RunModel from '../models/Run';
 import Spinner from '../components/Spinner';
 import Card from '../components/Card';
 
-export class RunDetails implements m.Component {
+export class Run implements m.Component {
     private isLoading: boolean;
 
     constructor() {
@@ -19,7 +19,7 @@ export class RunDetails implements m.Component {
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
                     {RunModel.current &&
-                        <div className="col-md-10 mx-auto">
+                        <div className="col-md-12 mx-auto">
                             <div className="row">
                                 <div className="col-md-4">
                                     <Card run={RunModel.current} title={'Run'} />
@@ -27,19 +27,19 @@ export class RunDetails implements m.Component {
                                 <div className="col-md-8">
                                     <div className="row">
                                         <div className="col-md-6">
-                                            <Card run={'test'} title={'Detectors'} />
+                                        <Card run={{lorum: 'ipsum'}} title={'Detectors'} />
                                         </div>
                                         <div className="col-md-6">
-                                            <Card run={'test'} title={'EPN Role Sessions'} />
+                                        <Card run={{ lorum: 'ipsum' }} title={'EPN Role Sessions'} />
                                         </div>
                                     </div>
                                     <br />
                                     <div className="row">
                                         <div className="col-md-6">
-                                            <Card run={'test'} title={'FLP Role Sessions'} />
+                                        <Card run={{ lorum: 'ipsum' }} title={'FLP Role Sessions'} />
                                         </div>
                                         <div className="col-md-6">
-                                            <Card run={'test'} title={'Run Quality history'} />
+                                        <Card run={{ lorum: 'ipsum' }} title={'Run Quality history'} />
                                         </div>
                                     </div>
                                 </div>

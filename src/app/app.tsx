@@ -5,8 +5,8 @@ import { Layout } from './Layout';
 import { Runs } from './views/Runs';
 import { Logs } from './views/Logs';
 import { Log } from './views/Log';
-import { Create } from './views/Create';
-import { RunDetails } from './views/RunDetails';
+import { CreateRun } from './views/CreateRun';
+import { Run } from './views/Run';
 
 m.route(document.body, '/logs', {
     '/logs': {
@@ -33,14 +33,14 @@ m.route(document.body, '/logs', {
     '/create': {
         view: () => (
             <Layout>
-                <Create />
+                <CreateRun />
             </Layout>
         ),
     },
-    '/run/:id': {
+    '/runs/:id': {
         view: () => (
             <Layout>
-                <RunDetails />
+                <Run />
             </Layout>
         ),
     },

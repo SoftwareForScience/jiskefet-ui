@@ -11,14 +11,17 @@ export default class Card implements m.Component {
 
     view() {
         return (
-            <div className="card">
-                <h4 className="card-header">{this.title}</h4>
+            <div className="card shadow-sm">
+                <div class="card-header">
+                    {this.title}
+                </div>
                 <div className="card-body">
                     <p className="card-text">
                         {Object.keys(this.data).map((key) =>
-                            (<p key={this.data[key]}>
-                                {key}: {this.data[key]}
-                            </p>)
+                            (<dl class="row mb-1" key={this.data[key]}>
+                                <dt class="col-sm-6 text-muted">{key}:</dt>
+                                <dd class="col-sm-6">{this.data[key]}</dd>
+                            </dl>)
                         )}
                     </p>
                 </div>
