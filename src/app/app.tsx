@@ -20,8 +20,6 @@ m.route(document.body, '/logs', {
     '/logs/create': {
         view: () => (
             <Layout>
-                {console.log('logs/create')}
-
                 <CreateLog />
             </Layout>
         ),
@@ -29,7 +27,6 @@ m.route(document.body, '/logs', {
     '/logs/:id': {
         view: (vnode) => (
             <Layout>
-                {console.log('logs/id')}
                 <Log id={vnode.attrs.id} />
             </Layout>
         ),
@@ -44,7 +41,6 @@ m.route(document.body, '/logs', {
     '/runs/create': {
         view: () => (
             <Layout>
-                {console.log('runs/create')}
                 <CreateRun />
             </Layout>
         ),
@@ -52,7 +48,6 @@ m.route(document.body, '/logs', {
     '/runs/:id': {
         view: () => (
             <Layout>
-                {console.log('runs/id')}
                 <Run />
             </Layout>
         ),

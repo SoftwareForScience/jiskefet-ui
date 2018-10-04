@@ -43,8 +43,6 @@ const LogModel = {
     save() {
         LogModel.createLog.creationTime = new Date().toString();
         LogModel.createLog.origin = 'human';
-        console.log('To Post:');
-        console.log(this.createLog);
         return m.request<Log>({
             method: 'POST',
             url: 'http://localhost:3000/logs',
