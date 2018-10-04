@@ -9,16 +9,18 @@ interface Column {
 export default class Table implements m.Component {
     data: any[];
     columns: Column[];
+    class: string; // example: 'font-sm bg-dark'
 
     constructor(vnode: any) {
         this.data = vnode.attrs.data;
         this.columns = vnode.attrs.columns;
+        this.class = vnode.attrs.class;
     }
 
     view() {
         return (
             <div class="table-responsive-md">
-                <table class="table table-sm table-bordered table-hover shadow-sm">
+                <table class={`table table-sm table-bordered table-hover shadow-sm ${this.class}`}>
                     <thead>
                         <tr>
                             {this.columns && this.columns.map(column =>

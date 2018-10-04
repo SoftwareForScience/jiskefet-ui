@@ -6,63 +6,63 @@ import Table from '../components/Table';
 const columns = [
     {
         header: 'Run id',
-        accessor: 'run_number'
+        accessor: 'runNumber'
     },
     {
         header: 'Time 02 start',
-        accessor: 'time_o2_start'
+        accessor: 'timeO2Start'
     },
     {
         header: 'Time trg start',
-        accessor: 'time_trg_start'
+        accessor: 'timeTrgStart'
     },
     {
         header: 'Time trg end',
-        accessor: 'time_trg_end'
+        accessor: 'timeTrgEnd'
     },
     {
         header: 'Time 02 end',
-        accessor: 'time_o2_end'
+        accessor: 'timeO2End'
     },
     {
         header: 'Activity id',
-        accessor: 'activity_id'
+        accessor: 'activityId'
     },
     {
         header: 'Run type',
-        accessor: 'run_type'
+        accessor: 'runType'
     },
     {
         header: 'Run quality',
-        accessor: 'run_quality'
+        accessor: 'runQuality'
     },
     {
         header: 'N detectors',
-        accessor: 'n_detectors'
+        accessor: 'nDetectors'
     },
     {
         header: 'N flps',
-        accessor: 'n_flps'
+        accessor: 'nFlps'
     },
     {
         header: 'N epns',
-        accessor: 'n_epns'
+        accessor: 'nEpns'
     },
     {
         header: 'N timeframes',
-        accessor: 'n_timeframes'
+        accessor: 'nTimeframes'
     },
     {
         header: 'N subtimeframes',
-        accessor: 'n_subtimeframes'
+        accessor: 'nSubtimeframes'
     },
     {
         header: 'B read out',
-        accessor: 'b_read_out'
+        accessor: 'bytesReadOut'
     },
     {
         header: 'B timeframe builder',
-        accessor: 'b_timeframe_builder'
+        accessor: 'bytesTimeframeBuilder'
     },
 ];
 
@@ -83,7 +83,11 @@ export class Runs implements m.Component {
                 <Spinner isLoading={this.isLoading}>
                     <div className="row">
                         <div className="col-md-12">
-                            <Table data={RunModel.list} columns={columns} />
+                            <Table
+                                data={RunModel.list}
+                                columns={columns}
+                                class="font-sm"
+                            />
                         </div>
                     </div>
                 </Spinner>

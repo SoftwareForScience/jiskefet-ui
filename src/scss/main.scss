@@ -1,7 +1,9 @@
 // Include all of Bootstrap
 @import "node_modules/bootstrap/scss/bootstrap";
 
-// Body
+@import 'NavBar.scss';
+@import 'Spinner.scss';
+
 $body-bg-color: #ffffff;
 $body-text-color: #4d4d4d;
 
@@ -10,34 +12,6 @@ body {
     color: $body-text-color;
 }
 
-.main-content {
-    margin-top: 10px;
-}
-
-.top-margin {
-    margin-top: 10%;
-}
-
-.loader {
-    margin-left: 45%;
-    border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-.logo {
-    margin-right: 12px;
-}
-
-.jiskefet-navbar {
-    background-color: #1f201f;
-    box-shadow: 0px 1px 5px #0000006e;
+.font-sm {
+    font-size: 10px;
 }
