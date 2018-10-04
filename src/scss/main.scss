@@ -1,8 +1,10 @@
 // Include all of Bootstrap
 @import "node_modules/bootstrap/scss/bootstrap";
 
-// Body
-$body-bg-color: #dfdfdf;
+@import 'NavBar.scss';
+@import 'Spinner.scss';
+
+$body-bg-color: #ffffff;
 $body-text-color: #4d4d4d;
 
 body {
@@ -10,10 +12,6 @@ body {
     color: $body-text-color;
 }
 
-.main-content {
-    margin-top: 10px;
-}
-
-.top-margin {
-    margin-top: 10%;
+.font-sm {
+    font-size: 11px;
 }
