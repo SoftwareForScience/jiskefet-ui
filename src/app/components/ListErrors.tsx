@@ -13,10 +13,13 @@ class ListErrors implements m.Component {
                 <ul key={this.errors}>
                     {this.errors ?
                         (Object.keys(this.errors).map((errorKey) =>
-                            (<li key={this.errors[errorKey]}>
+                            <div key={this.errors[errorKey]} class="alert alert-warning" role="alert">
                                 {this.errors[errorKey]}
-                            </li>)))
-                        : null}
+                            </div>
+                        ))
+                        : <div class="alert alert-info" role="alert">
+                            Geen errors, goed gedaan pikkebaas!
+                        </div>}
                 </ul>
             </div>
         );

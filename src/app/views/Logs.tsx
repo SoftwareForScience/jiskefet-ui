@@ -3,6 +3,7 @@ import LogModel from '../models/Log';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
 import Feedback from '../components/Feedback';
+import ListErrors from '../components/ListErrors';
 
 const columns = [
     {
@@ -64,18 +65,22 @@ export class Logs implements m.Component {
     private hasFailed: boolean;
     private failedMessage: any;
     private succesMessage: any;
+    private errors: any;
 
     constructor() {
         this.isLoading = true;
         this.failedMessage = 'failed to get data!';
         this.succesMessage = 'succes getting data!';
-        // for testing purposes
+        this.errors = ''; // For testing purposes!
         this.hasFetched = true;
         this.hasFailed = false;
     }
 
     oninit() {
-        LogModel.fetch().then(() => this.isLoading = false);
+        LogModel.fetch().then(() => this.isLoading = false).catch((e) => this.errors += e);
+        if (this.errors) {
+            this.hasFailed = true;
+        }
     }
 
     view() {
@@ -92,6 +97,7 @@ export class Logs implements m.Component {
                     </div>
                 </Spinner>
                 <Feedback hasFetched={this.hasFetched} hasFailed={this.hasFailed} succesMessage={this.succesMessage} failedMessage={this.failedMessage} />
+                {/*<ListErrors errors={this.errors} />  For testing purposes! */}
             </div>
         );
     }

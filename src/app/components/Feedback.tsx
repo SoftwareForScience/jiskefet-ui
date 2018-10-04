@@ -15,11 +15,24 @@ class Feedback implements m.Component {
 
     view(vnode: any) {
         return (
-            <div className="fb-message">
-                {vnode.attrs.hasFetched ?
-                    <label class="fb-label">
-                        {this.hasFailed ? this.failedMessage : this.succesMessage}
-                    </label>
+            <div className="feedback-block">
+                {this.hasFetched ?
+                    <div class="feeback">
+                        {this.hasFailed ?
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{this.failedMessage}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            :
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>{this.succesMessage}</strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>}
+                    </div>
                     : 'uberhaupt niks gefetched'}
             </div>
         );
