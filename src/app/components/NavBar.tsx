@@ -16,7 +16,8 @@ export class NavBar implements m.Component {
                     <ul class="navbar-nav mr-auto">
                         <NavItem href="/logs" name="Logs" />
                         <NavItem href="/runs" name="Runs" />
-                        <NavItem href="/create" name="Create new run" />
+                        <NavItem href="/logs/create" name="Create new log" />
+                        <NavItem href="/runs/create" name="Create new run" />
                     </ul>
                 </div>
             </header>

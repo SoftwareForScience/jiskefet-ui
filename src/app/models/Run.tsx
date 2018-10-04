@@ -21,6 +21,7 @@ export interface Run {
 const RunModel = {
     list: [] as Run[],
     current: {} as Run,
+    createRun: {} as Run,
     async fetch() {
         return m.request({
             method: 'GET',
@@ -34,7 +35,7 @@ const RunModel = {
         return m.request<Run>({
             method: 'POST',
             url: 'http://localhost:3000/runs',
-            data: RunModel.current,
+            data: RunModel.createRun,
             withCredentials: false
         });
     },

@@ -1,7 +1,8 @@
 import * as m from 'mithril';
-import LogModel from '../models/Log';
+import LogModel, { Log } from '../models/Log';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
+import { format } from 'date-fns';
 
 const columns = [
     {
@@ -11,16 +12,16 @@ const columns = [
     {
         header: 'Title',
         accessor: 'title',
-        cell: row => (
+        cell: (row: Log) => (
             <a href={`/logs/${row.logId}`} oncreate={m.route.link}>
                 {row.title}
             </a>
         )
     },
     {
-        header: 'Subtype',
+        header: 'Sub-type',
         accessor: 'subtype',
-        cell: row => (
+        cell: (row: Log) => (
             row.subtype === 'run' ?
                 (
                     <div class="text-center">
@@ -33,7 +34,7 @@ const columns = [
     {
         header: 'Origin',
         accessor: 'origin',
-        cell: row => (
+        cell: (row: Log) => (
             row.origin === 'human' ?
                 (
                     <div class="text-center">
@@ -44,7 +45,8 @@ const columns = [
         )
     }, {
         header: 'Creation time',
-        accessor: 'creationTime'
+        accessor: 'creationTime',
+        cell: (row: Log) => (format(row.creationTime, 'HH:MM:SS DD/MM/YYYY'))
     },
     {
         header: 'Text',
