@@ -1,7 +1,7 @@
 import * as m from 'mithril';
 
 export interface Log {
-    logId: number;
+    logId?: number;
     subtype: string;
     userId?: number;
     origin: string;
@@ -14,7 +14,7 @@ export interface Log {
 const LogModel = {
     list: [] as any[],
     current: {} as Log,
-    currentIndex: null as number | null,
+    createLog: {} as Log, // log being created
     async fetch() {
         return m.request({
             method: 'GET',
@@ -41,10 +41,12 @@ const LogModel = {
         });
     },
     save() {
+        LogModel.createLog.creationTime = new Date().toString();
+        LogModel.createLog.origin = 'human';
         return m.request<Log>({
             method: 'POST',
-            url: 'http://localhost:3000/log',
-            data: LogModel.current,
+            url: 'http://localhost:3000/logs',
+            data: LogModel.createLog,
             withCredentials: false
         });
     }

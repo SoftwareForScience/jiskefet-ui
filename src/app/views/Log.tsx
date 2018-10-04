@@ -1,6 +1,7 @@
 import * as m from 'mithril';
 import LogModel from '../models/Log';
 import Spinner from '../components/Spinner';
+import { format } from 'date-fns';
 
 export class Log implements m.Component {
     private id: number;
@@ -48,10 +49,7 @@ export class Log implements m.Component {
                                         </dd>
 
                                         <dt class="col-sm-6">Creation time:</dt>
-                                        <dd class="col-sm-6">{LogModel.current.creationTime}</dd>
-
-                                        <dt class="col-sm-6">User id:</dt>
-                                        <dd class="col-sm-6">{LogModel.current.userId}</dd>
+                                        <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:MM:SS MM/DD/YYYY')}</dd>
                                     </dl>
                                 </div>
                             </div>

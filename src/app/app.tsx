@@ -7,6 +7,7 @@ import { Logs } from './views/Logs';
 import { Log } from './views/Log';
 import { CreateRun } from './views/CreateRun';
 import { Run } from './views/Run';
+import { CreateLog } from './views/CreateLog';
 
 m.route(document.body, '/logs', {
     '/logs': {
@@ -16,8 +17,15 @@ m.route(document.body, '/logs', {
             </Layout>
         ),
     },
+    '/logs/create': {
+        view: () => (
+            <Layout>
+                <CreateLog />
+            </Layout>
+        ),
+    },
     '/logs/:id': {
-        view: (vnode: any) => (
+        view: (vnode) => (
             <Layout>
                 <Log id={vnode.attrs.id} />
             </Layout>
@@ -30,7 +38,7 @@ m.route(document.body, '/logs', {
             </Layout>
         ),
     },
-    '/create': {
+    '/runs/create': {
         view: () => (
             <Layout>
                 <CreateRun />

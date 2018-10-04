@@ -4,8 +4,7 @@ import RunModel from '../models/Run';
 export class CreateRun implements m.Component {
 
     addToRunCreate = (event) => {
-        RunModel.current[event.target.id] = event.target.value;
-        console.log(RunModel.current);
+        RunModel.createRun[event.target.id] = event.target.value;
     }
 
     saveRun() {
@@ -21,9 +20,9 @@ export class CreateRun implements m.Component {
                 }}
             >
                 <div class="container-fluid">
-                    <div class="container">
-                        <div class="col-md-8 mx-auto bg-light rounded p-4">
-                            <div><h3>Create a new Run</h3></div>
+                    <div class="row">
+                        <div class="col-md-8 mx-auto bg-light rounded p-4 shadow-sm">
+                            <div><h3>Create a new run</h3></div>
                             <div class="form-group">
                                 <label for="activity_id">Activity ID:</label>
                                 <div class="field">

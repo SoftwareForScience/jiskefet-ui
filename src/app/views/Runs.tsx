@@ -1,7 +1,8 @@
 import * as m from 'mithril';
-import RunModel from '../models/Run';
+import RunModel, { Run } from '../models/Run';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
+import { format } from 'date-fns';
 
 const columns = [
     {
@@ -15,19 +16,23 @@ const columns = [
     },
     {
         header: 'Time 02 start',
-        accessor: 'timeO2Start'
-    },
-    {
-        header: 'Time trg start',
-        accessor: 'timeTrgStart'
-    },
-    {
-        header: 'Time trg end',
-        accessor: 'timeTrgEnd'
+        accessor: 'timeO2Start',
+        cell: (row: Run) => (row.timeO2Start ? format(row.timeO2Start, 'HH:MM:SS DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Time 02 end',
-        accessor: 'timeO2End'
+        accessor: 'timeO2End',
+        cell: (row: Run) => (row.timeO2End ? format(row.timeO2End, 'HH:MM:SS DD/MM/YYYY') : 'Unkown')
+    },
+    {
+        header: 'Time trg start',
+        accessor: 'timeTrgStart',
+        cell: (row: Run) => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:MM:SS DD/MM/YYYY') : 'Unkown')
+    },
+    {
+        header: 'Time trg end',
+        accessor: 'timeTrgEnd',
+        cell: (row: Run) => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:MM:SS DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Activity id',
@@ -42,23 +47,23 @@ const columns = [
         accessor: 'runQuality'
     },
     {
-        header: 'N detectors',
+        header: 'no. of detectors',
         accessor: 'nDetectors'
     },
     {
-        header: 'N flps',
+        header: 'no. of FLPs',
         accessor: 'nFlps'
     },
     {
-        header: 'N epns',
+        header: 'no. of EPNs',
         accessor: 'nEpns'
     },
     {
-        header: 'N timeframes',
+        header: 'no. of timeframes',
         accessor: 'nTimeframes'
     },
     {
-        header: 'N subtimeframes',
+        header: 'no. of sub-timeframes',
         accessor: 'nSubtimeframes'
     },
     {
