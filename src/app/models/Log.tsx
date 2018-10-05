@@ -1,4 +1,5 @@
 import * as m from 'mithril';
+import { API_URL } from '../constants';
 
 export interface Log {
     logId?: number;
@@ -16,9 +17,10 @@ const LogModel = {
     current: {} as Log,
     createLog: {} as Log, // log being created
     async fetch() {
+
         return m.request({
             method: 'GET',
-            url: 'http://localhost:3000/logs',
+            url: `${API_URL}logs`,
             withCredentials: false
         }).then((result: any) => {
             this.list = result;
@@ -31,7 +33,7 @@ const LogModel = {
     async fetchOne(id: number) {
         return m.request({
             method: 'GET',
-            url: 'http://localhost:3000/logs/' + id,
+            url: `${API_URL}logs/${id}`,
             withCredentials: false
         }).then((result: any) => {
             this.current = result;
@@ -45,7 +47,7 @@ const LogModel = {
         LogModel.createLog.origin = 'human';
         return m.request<Log>({
             method: 'POST',
-            url: 'http://localhost:3000/logs',
+            url: `${API_URL}logs`,
             data: LogModel.createLog,
             withCredentials: false
         });

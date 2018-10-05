@@ -1,4 +1,5 @@
 import * as m from 'mithril';
+import { API_URL } from '../constants';
 
 export interface Run {
     runNumber?: number;
@@ -25,7 +26,7 @@ const RunModel = {
     async fetch() {
         return m.request({
             method: 'GET',
-            url: 'http://localhost:3000/runs',
+            url: `${API_URL}runs`,
             withCredentials: false
         }).then((result: any) => {
             this.list = result;
@@ -34,7 +35,7 @@ const RunModel = {
     save() {
         return m.request<Run>({
             method: 'POST',
-            url: 'http://localhost:3000/runs',
+            url: `${API_URL}runs`,
             data: RunModel.createRun,
             withCredentials: false
         });
@@ -42,7 +43,7 @@ const RunModel = {
     fetchById(id: number) {
         return m.request<Run>({
             method: 'GET',
-            url: 'http://localhost:3000/runs/' + id,
+            url: `${API_URL}runs/${id}`,
             withCredentials: false
         }).then((result: any) => {
             this.current = result;
