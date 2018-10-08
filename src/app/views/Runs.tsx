@@ -103,6 +103,8 @@ interface Filters {
     timeTrgEnd?: Date;
 }
 
+const entity = 'runs';
+
 export class Runs implements m.Component {
     private isLoading: boolean;
     private filters: Filters = {};
@@ -117,7 +119,7 @@ export class Runs implements m.Component {
     }
 
     fetchRuns = (queryParam: string) => {
-        console.log('fetching runs with searchParams ' + queryParam);
+        console.log('Fetching runs with searchParams ' + queryParam);
         // RunModel.fetchByParams(queryParam);
     }
 
@@ -131,7 +133,7 @@ export class Runs implements m.Component {
                 <Spinner isLoading={this.isLoading}>
                     <div className="row">
                         <div className="col-md-3">
-                            <Filter filterParams={filterParams} fetchEntity={this.fetchRuns} updateFilters={this.updateFilters} />
+                            <Filter filterParams={filterParams} fetchEntity={this.fetchRuns} updateFilters={this.updateFilters} entity={entity} />
                         </div>
                         <div className="col-md-9">
                             <Table

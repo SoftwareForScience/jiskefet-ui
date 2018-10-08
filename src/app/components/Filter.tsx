@@ -5,11 +5,13 @@ export default class Filter implements m.Component {
     private fetchEntity;
     private updateFilters;
     private filters: any;
+    private entity: any;
 
     constructor(vnode: any) {
         this.filterParams = vnode.attrs.filterParams;
         this.fetchEntity = vnode.attrs.fetchEntity;
         this.updateFilters = vnode.attrs.updateFilters;
+        this.entity = vnode.attrs.entity;
     }
 
     /**
@@ -19,6 +21,7 @@ export default class Filter implements m.Component {
         const key = event.target.id;
         const value = event.target.value;
         this.filters = this.updateFilters(key, value);
+        console.log(this.filters);
         this.updateRoute();
         this.fetch();
     }
@@ -28,7 +31,8 @@ export default class Filter implements m.Component {
      */
     updateRoute() {
         const queryString = m.buildQueryString(this.filters);
-        m.route.set('/?' + queryString);
+        // tslint:disable-next-line:prefer-template
+        m.route.set('/' + this.entity + '/?' + queryString);
     }
 
     fetch() {
@@ -43,7 +47,7 @@ export default class Filter implements m.Component {
                     (
                         <div class="form-group">
                             <label key={filter.name} for={filter}>Filter for {filter.name}</label>
-                            <input type={filter.type} class="form-control" id={filter.name} onblur={this.addFilter} />
+                            <input type={filter.type} class="form-control" id={filter.name} onchange={this.addFilter} />
                         </div>
                     )
                 )}
