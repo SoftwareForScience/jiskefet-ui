@@ -4,14 +4,12 @@ export default class Filter implements m.Component {
     filterParams: any[];
     private fetchEntity;
     private updateFilters;
-    private getFilters;
     private filters: any;
 
     constructor(vnode: any) {
         this.filterParams = vnode.attrs.filterParams;
         this.fetchEntity = vnode.attrs.fetchEntity;
         this.updateFilters = vnode.attrs.updateFilters;
-        this.getFilters = vnode.attrs.getFilters;
     }
 
     /**
