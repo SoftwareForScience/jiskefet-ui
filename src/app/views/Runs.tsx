@@ -24,28 +24,28 @@ const columns = [
 
 const filterParams = [
     {
-        name: 'TimeO2Start',
+        name: 'timeO2Start',
         type: 'datetime-local'
     },
     {
-        name: 'TimeO2End',
+        name: 'timeO2End',
         type: 'datetime-local'
     },
     {
-        name: 'TimeTrgStart',
+        name: 'timeTrgStart',
         type: 'datetime-local'
     },
     {
-        name: 'TimeTrgEnd',
+        name: 'timeTrgEnd',
         type: 'datetime-local'
     },
 ];
 
 interface Filters {
-    TimeO2Start?: Date;
-    TimeO2End?: Date;
-    TimeTrgStart?: Date;
-    TimeTrgEnd?: Date;
+    timeO2Start?: Date;
+    timeO2End?: Date;
+    timeTrgStart?: Date;
+    timeTrgEnd?: Date;
 }
 
 export class Runs implements m.Component {
@@ -56,7 +56,13 @@ export class Runs implements m.Component {
         this.isLoading = true;
     }
 
+    updateFilters = (key, value) => {
+        value ? this.filters[key] = value : delete this.filters[key];
+        return this.filters;
+    }
+
     fetchRuns = (queryParam: string) => {
+        console.log('fetching runs with searchParams ' + queryParam);
         // RunModel.fetchByParams(queryParam);
     }
 
@@ -70,7 +76,7 @@ export class Runs implements m.Component {
                 <Spinner isLoading={this.isLoading}>
                     <div className="row">
                         <div className="col-md-3">
-                            <Filter filterParams={filterParams} fetchEntity={this.fetchRuns} filters={this.filters}/>
+                            <Filter filterParams={filterParams} fetchEntity={this.fetchRuns} updateFilters={this.updateFilters}/>
                         </div>
                         <div className="col-md-9">
                             <Table data={RunModel.list} columns={columns} />

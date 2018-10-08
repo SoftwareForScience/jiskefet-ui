@@ -2,13 +2,16 @@ import * as m from 'mithril';
 
 export default class Filter implements m.Component {
     filterParams: any[];
-    filters: any;
     private fetchEntity;
+    private updateFilters;
+    private getFilters;
+    private filters: any;
 
     constructor(vnode: any) {
         this.filterParams = vnode.attrs.filterParams;
-        this.fetchEntity = vnode.attrs.fetchRuns;
-        this.filters = vnode.attrs.filters;
+        this.fetchEntity = vnode.attrs.fetchEntity;
+        this.updateFilters = vnode.attrs.updateFilters;
+        this.getFilters = vnode.attrs.getFilters;
     }
 
     /**
@@ -17,7 +20,7 @@ export default class Filter implements m.Component {
     addFilter = (event) => {
         const key = event.target.id;
         const value = event.target.value;
-        value ? this.filters[key] = value : delete this.filters[key];
+        this.filters = this.updateFilters(key, value);
         this.updateRoute();
         this.fetch();
     }
@@ -42,7 +45,7 @@ export default class Filter implements m.Component {
                     (
                         <div class="form-group">
                             <label key={filter.name} for={filter}>Filter for {filter.name}</label>
-                            <input type={filter.type} class="form-control" id={filter.name} onchange={this.addFilter} />
+                            <input type={filter.type} class="form-control" id={filter.name} onblur={this.addFilter} />
                         </div>
                     )
                 )}
