@@ -24,6 +24,7 @@
 		"@types/jquery": "^3.3.6",
 		"@types/mithril": "^1.1.12",
 		"@types/node": "^10.9.4",
+		"@types/quill": "^2.0.0",
 		"css-loader": "^1.0.0",
 		"node-sass": "^4.9.3",
 		"sass-loader": "^7.1.0",

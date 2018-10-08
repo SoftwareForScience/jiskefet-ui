@@ -1,6 +1,10 @@
 // Include all of Bootstrap
 @import "node_modules/bootstrap/scss/bootstrap";
 
+// Include QuillEditor stylesheets
+@import url("https://cdn.quilljs.com/1.3.6/quill.snow.css");
+
+
 @import 'NavBar.scss';
 @import 'Spinner.scss';
 

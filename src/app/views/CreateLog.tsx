@@ -55,7 +55,10 @@ export default class CreateLog implements m.Component {
                                     rows="5"
                                 />
                             </div>
-                            <QuillEditor />
+                            <div class="form-group">
+                                <label for="editor">Quill editor:</label>
+                                <QuillEditor />
+                            </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
