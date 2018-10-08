@@ -4,6 +4,7 @@ import Spinner from '../components/Spinner';
 import Table from '../components/Table';
 import Filter from '../components/Filter';
 import { format } from 'date-fns';
+import Fetchable from '../interfaces/Fetchable';
 
 const columns = [
     {
@@ -77,7 +78,20 @@ const columns = [
     },
 ];
 
-const filterParams = [
+const inputFields = [
+    {
+        name: 'runNumber',
+        type: 'number',
+        placeholder: '1',
+        label: 'Specify Run number:',
+        cell: () => (
+            <div />
+        )
+    },
+    {
+        name: 'searchTerm',
+        type: 'text'
+    },
     {
         name: 'timeO2Start',
         type: 'datetime-local'
@@ -96,35 +110,19 @@ const filterParams = [
     },
 ];
 
-interface Filters {
-    timeO2Start?: Date;
-    timeO2End?: Date;
-    timeTrgStart?: Date;
-    timeTrgEnd?: Date;
-}
-
-const entity = 'runs';
-
-export class Runs implements m.Component {
+export class Runs implements m.Component, Fetchable<Run> {
     private isLoading: boolean;
-    private filters: Filters = {};
 
     constructor() {
         this.isLoading = true;
+        this.fetch();
     }
 
-    updateFilters = (key, value) => {
-        value ? this.filters[key] = value : delete this.filters[key];
-        return this.filters;
-    }
-
-    fetchRuns = (queryParam: string) => {
+    fetch = (queryParam?: string) => {
         console.log('Fetching runs with searchParams ' + queryParam);
-        // RunModel.fetchByParams(queryParam);
-    }
-
-    oninit() {
+        // RunModel.fetchByParams(queryParam).then(() => this.isLoading = false);
         RunModel.fetch().then(() => this.isLoading = false);
+        return [];
     }
 
     view() {
@@ -133,7 +131,11 @@ export class Runs implements m.Component {
                 <Spinner isLoading={this.isLoading}>
                     <div className="row">
                         <div className="col-md-3">
-                            <Filter filterParams={filterParams} fetchEntity={this.fetchRuns} updateFilters={this.updateFilters} entity={entity} />
+                            <Filter
+                                inputFields={inputFields}
+                                fetch={this.fetch}
+                                route="runs"
+                            />
                         </div>
                         <div className="col-md-9">
                             <Table

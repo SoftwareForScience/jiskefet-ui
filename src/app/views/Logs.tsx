@@ -3,6 +3,8 @@ import LogModel, { Log } from '../models/Log';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
 import { format } from 'date-fns';
+import Filter from '../components/Filter';
+import Fetchable from '../interfaces/Fetchable';
 
 const columns = [
     {
@@ -59,11 +61,24 @@ const columns = [
     },
 ];
 
-export class Logs implements m.Component {
+const inputFields = [
+    {
+        name: 'title',
+        type: 'text'
+    },
+];
+
+export class Logs implements m.Component, Fetchable<Log> {
     private isLoading: boolean;
 
     constructor() {
         this.isLoading = true;
+    }
+
+    fetch = (queryParam: string) => {
+        console.log('Fetching runs with searchParams ' + queryParam);
+        // RunModel.fetchByParams(queryParam);
+        return [];
     }
 
     oninit() {
@@ -75,7 +90,14 @@ export class Logs implements m.Component {
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-3">
+                            <Filter
+                                inputFields={inputFields}
+                                fetch={this.fetch}
+                                route="logs"
+                            />
+                        </div>
+                        <div className="col-md-9">
                             <Table
                                 data={LogModel.list}
                                 columns={columns}
