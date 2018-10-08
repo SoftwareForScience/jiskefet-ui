@@ -1,7 +1,8 @@
 import * as m from 'mithril';
 import LogModel from '../models/Log';
+import QuillEditor from '../components/QuillEditor';
 
-export class CreateLog implements m.Component {
+export default class CreateLog implements m.Component {
     addToCreateLog = (event) => {
         LogModel.createLog[event.target.id] = event.target.value;
     }
@@ -54,6 +55,7 @@ export class CreateLog implements m.Component {
                                     rows="5"
                                 />
                             </div>
+                            <QuillEditor />
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
                     </div>

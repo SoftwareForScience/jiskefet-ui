@@ -76,7 +76,7 @@ const columns = [
     },
 ];
 
-export class Runs implements m.Component {
+export default class Runs implements m.Component {
     private isLoading: boolean;
 
     constructor() {

@@ -59,7 +59,7 @@ const columns = [
     },
 ];
 
-export class Logs implements m.Component {
+export default class Logs implements m.Component {
     private isLoading: boolean;
 
     constructor() {

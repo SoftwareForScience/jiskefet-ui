@@ -1,7 +1,7 @@
 import * as m from 'mithril';
-import { NavBar } from './components/NavBar';
+import NavBar from './components/NavBar';
 
-export class Layout implements m.Component {
+export default class Layout implements m.Component {
     view(vnode: any) {
         return (
             <div>

@@ -1,7 +1,7 @@
 import * as m from 'mithril';
-import { NavItem } from './NavItem';
+import NavItem from './NavItem';
 
-export class NavBar implements m.Component {
+export default class NavBar implements m.Component {
     view() {
         return (
             <header class="navbar navbar-expand-sm navbar-dark jiskefet-navbar">

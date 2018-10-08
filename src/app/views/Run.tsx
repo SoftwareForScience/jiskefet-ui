@@ -3,7 +3,7 @@ import RunModel from '../models/Run';
 import Spinner from '../components/Spinner';
 import Card from '../components/Card';
 
-export class Run implements m.Component {
+export default class Run implements m.Component {
     private isLoading: boolean;
 
     constructor() {

@@ -1,6 +1,6 @@
 import * as m from 'mithril';
 
-class Spinner implements m.Component {
+export default class Spinner implements m.Component {
     isLoading: boolean;
 
     constructor(vnode: any) {
@@ -22,5 +22,3 @@ class Spinner implements m.Component {
         );
     }
 }
-
-export default Spinner;

@@ -3,7 +3,7 @@ import LogModel from '../models/Log';
 import Spinner from '../components/Spinner';
 import { format } from 'date-fns';
 
-export class Log implements m.Component {
+export default class Log implements m.Component {
     private id: number;
     private isLoading: boolean;
 
