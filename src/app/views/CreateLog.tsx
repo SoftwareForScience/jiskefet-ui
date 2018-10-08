@@ -44,7 +44,7 @@ export default class CreateLog implements m.Component {
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            {/* <div class="form-group">
                                 <label for="text">Description:</label>
                                 <textarea
                                     id="text"
@@ -54,9 +54,9 @@ export default class CreateLog implements m.Component {
                                     oninput={this.addToCreateLog}
                                     rows="5"
                                 />
-                            </div>
+                            </div> */}
                             <div class="form-group">
-                                <label for="editor">Quill editor:</label>
+                                <label for="editor">Description:</label>
                                 <QuillEditor />
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
