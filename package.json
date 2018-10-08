@@ -6,16 +6,15 @@
 	"scripts": {
 		"dev": "webpack-dev-server -d --open --content-base src/",
 		"build": "webpack -p",
-        "test": "./node_modules/tslint/bin/tslint -c ./.tslint.ts ./src/ts/*.ts ./src/ts/models/*.ts ./src/ts/views/*.ts",
-        "lint": "tslint 'src/**/*.{tsx}'"
+		"test": "./node_modules/tslint/bin/tslint -c ./.tslint.ts ./src/ts/*.ts ./src/ts/models/*.ts ./src/ts/views/*.ts",
+		"lint": "tslint -p tsconfig.json -c tslint.json"
 	},
 	"keywords": [],
 	"author": "Bastiaan reinalda",
 	"license": "MIT",
 	"dependencies": {
-		"@types/dotenv": "^4.0.3",
 		"bootstrap": "^4.1.3",
-		"dotenv": "^6.0.0",
+		"date-fns": "^1.29.0",
 		"jquery": "^3.3.1",
 		"mithril": "^1.1.6",
 		"popper.js": "^1.14.4"
