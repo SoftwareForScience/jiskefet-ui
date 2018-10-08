@@ -10,13 +10,11 @@ export class Log implements m.Component {
     constructor(vnode: any) {
         this.id = vnode.attrs.id;
         this.isLoading = true;
-    }
-
-    oninit() {
         LogModel.fetchOne(this.id).then(() => this.isLoading = false);
+
     }
 
-    view() {
+    view() {        
         return (
             <div className="container">
                 <Spinner isLoading={this.isLoading}>
