@@ -49,7 +49,7 @@ export class Log implements m.Component {
                                         </dd>
 
                                         <dt class="col-sm-6">Creation time:</dt>
-                                        <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:MM:SS MM/DD/YYYY')}</dd>
+                                        <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:mm:ss DD/MM/YYYY')}</dd>
                                     </dl>
                                 </div>
                             </div>

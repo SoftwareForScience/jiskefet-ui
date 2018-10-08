@@ -17,22 +17,22 @@ const columns = [
     {
         header: 'Time 02 start',
         accessor: 'timeO2Start',
-        cell: (row: Run) => (row.timeO2Start ? format(row.timeO2Start, 'HH:MM:SS DD/MM/YYYY') : 'Unkown')
+        cell: (row: Run) => (row.timeO2Start ? format(row.timeO2Start, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Time 02 end',
         accessor: 'timeO2End',
-        cell: (row: Run) => (row.timeO2End ? format(row.timeO2End, 'HH:MM:SS DD/MM/YYYY') : 'Unkown')
+        cell: (row: Run) => (row.timeO2End ? format(row.timeO2End, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Time trg start',
         accessor: 'timeTrgStart',
-        cell: (row: Run) => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:MM:SS DD/MM/YYYY') : 'Unkown')
+        cell: (row: Run) => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Time trg end',
         accessor: 'timeTrgEnd',
-        cell: (row: Run) => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:MM:SS DD/MM/YYYY') : 'Unkown')
+        cell: (row: Run) => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Activity id',
