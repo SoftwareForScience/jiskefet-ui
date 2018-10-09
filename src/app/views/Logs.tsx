@@ -3,6 +3,7 @@ import LogModel, { Log } from '../models/Log';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
 import { format } from 'date-fns';
+import QuillViewer from '../components/QuillViewer';
 
 const columns = [
     {
@@ -53,7 +54,8 @@ const columns = [
         accessor: 'text',
         cell: row => (
             <div class="d-block text-truncate" style="max-width: 200px;">
-                {row.text}
+                <QuillViewer id={row.logId} content={row.text} />
+                {console.log(row.text)}
             </div>
         )
     },

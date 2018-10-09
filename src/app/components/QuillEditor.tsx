@@ -1,55 +1,50 @@
 import * as m from 'mithril';
+import * as hljs from 'highlightjs';
 import * as QuillNamespace from 'quill';
-import * as Stream from 'mithril/stream';
 
 export default class QuillEditor implements m.Component {
+    private postContent: (content: string) => void;
+
     constructor(vnode: any) {
-        console.log('hi');
+        this.postContent = vnode.attrs.postContent;
     }
 
     oncreate(vnode: any) {
-        // const content = Stream(null);
         const toolbarOptions = [
             [{ header: [1, 2, 3, 4, 5, 6, false] }],
-            ['bold', 'italic', 'underline'],        // toggled buttons
+            ['bold', 'italic', 'underline'],
             [{ list: 'ordered' }, { list: 'bullet' }],
             [{ align: [] }],
-            // [{ script: 'sub' }, { script: 'super' }],      // superscript/subscript
-            // [{ indent: '-1' }, { indent: '+1' }],          // outdent/indent
-            // [{ direction: 'rtl' }],                         // text direction
             ['link', 'blockquote', 'code-block', 'formula', 'image'],
-            [{ color: [] }, { background: [] }],          // dropdown with defaults from theme
-            // [{ font: [] }],
-
-            ['clean']                                         // remove formatting button
+            [{ color: [] }, { background: [] }],
+            ['clean']
         ];
+
         const options = {
             modules: {
-                syntax: true,              // Include syntax module
-                toolbar: toolbarOptions,  // Include button in toolbar
-                scrollingContainer: '#scrolling-container',
+                syntax: {
+                    highlight: text => hljs.highlightAuto(text).value
+                },
+                formula: true,
+                toolbar: toolbarOptions
             },
-            placeholder: 'Compose an epic...',
+            placeholder: 'Type the body of the log...',
             theme: 'snow'
         };
+
         const Quill: any = QuillNamespace;
+
         const quillEditor = new Quill('#quill-container', options);
 
-        // if (content()) {
-        //     quillEditor.setContents(content);
-        // }
-
-        // quillEditor.on('text-change', (delta, oldDelta, source) => {
-        //     // content(quillEditor.getContents().ops);
-        //     m.redraw();
-        // });
+        quillEditor.on('text-change', (delta, oldDelta, source) => {
+            const contents = JSON.stringify(quillEditor.getContents().ops);
+            this.postContent(contents);
+        });
     }
 
     view() {
         return (
-            <div id="scrolling-container">
-                <div id="quill-container" />
-            </div>
+            <div id="quill-container" />
         );
     }
 }

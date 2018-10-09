@@ -16,10 +16,16 @@ module.exports = {
             {
                 test: /\.(s*)css$/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
-            }
+            },
+            { test: /\.(png|woff|woff2|eot|ttf|svg)$/, use: ['url-loader?limit=100000'] }
         ],
     },
     node: {
         fs: 'empty'
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            "window.katex": "katex" // formulas/latex plugin for Quill wysiwyg
+        })
+    ]
 }

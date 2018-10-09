@@ -7,8 +7,16 @@ export default class CreateLog implements m.Component {
         LogModel.createLog[event.target.id] = event.target.value;
     }
 
+    addDescription = (content: string) => {
+        LogModel.createLog.text = content;
+    }
+
     saveLog() {
         LogModel.save();
+    }
+
+    onupdate() {
+        console.log(LogModel.createLog);
     }
 
     view() {
@@ -56,8 +64,9 @@ export default class CreateLog implements m.Component {
                                 />
                             </div> */}
                             <div class="form-group">
-                                <label for="editor">Description:</label>
-                                <QuillEditor />
+                                <label for="description">Description:</label>
+                                <input name="description" type="hidden" />
+                                <QuillEditor postContent={this.addDescription} />
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

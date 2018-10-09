@@ -1,6 +1,7 @@
 import * as m from 'mithril';
 import LogModel from '../models/Log';
 import Spinner from '../components/Spinner';
+import QuillViewer from '../components/QuillViewer';
 import { format } from 'date-fns';
 
 export default class Log implements m.Component {
@@ -29,8 +30,6 @@ export default class Log implements m.Component {
                                 <div class="card-body">
                                     <h5 class="card-title">{LogModel.current.title}</h5>
                                     <dl class="row">
-                                        <div class="col-sm-12 mt-2"><p>{LogModel.current.text}</p></div>
-
                                         <dt class="col-sm-6">Log id</dt>
                                         <dd class="col-sm-6">{LogModel.current.logId}</dd>
 
@@ -50,6 +49,11 @@ export default class Log implements m.Component {
 
                                         <dt class="col-sm-6">Creation time:</dt>
                                         <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:MM:SS MM/DD/YYYY')}</dd>
+
+                                        <dt class="col-sm-6">Text:</dt>
+                                        <div class="col-sm-12 mt-2 rounded bg-white">
+                                            <QuillViewer id={LogModel.current.logId} content={LogModel.current.text} />
+                                        </div>
                                     </dl>
                                 </div>
                             </div>

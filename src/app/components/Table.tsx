@@ -1,4 +1,5 @@
 import * as m from 'mithril';
+import QuillViewer from '../components/QuillViewer';
 
 interface Column {
     header: string;
