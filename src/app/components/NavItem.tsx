@@ -13,15 +13,13 @@ export class NavItem implements m.Component {
 
     view() {
         let text;
-        if (this.icon === undefined) {
-            text = <a href={this.href} className="nav-link" oncreate={m.route.link}>{this.title}</a>;
-        } else {
-            text = [(
+        text = !this.icon ?
+            <a href={this.href} className="nav-link" oncreate={m.route.link}>{this.title}</a> :
+            [(
                 <a href={this.href} className="nav-link" oncreate={m.route.link}>
                     <span class={`fas ${this.icon}`} />
                     &nbsp;{this.title}</a>
             )];
-        }
 
         return (
             <li class={`nav-item ${this.href === m.route.get() && 'active'}`}>
