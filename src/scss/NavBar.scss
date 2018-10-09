@@ -16,13 +16,15 @@
 }
 
 .unstyled-button {
-    padding: 0.25rem 0.75rem;
+    padding: 0.5rem 0.75rem;
     font-size: 1.25rem;
     line-height: 1;
     color: rgba(255, 255, 255, 0.5);
     background-color: transparent;
     border: 1px solid transparent;
     border-radius: 0.25rem;
+    float: right;
+    padding-left: 3rem;
 }
 
 /* Toggle Styles */
@@ -127,9 +129,8 @@
     }
 }
 
-/* Navbar */
-
 @media (max-width: 768px) {
+    /* Navbar right*/
     .navbar-collapse {
         position: absolute;
         top: 54px;
@@ -153,5 +154,15 @@
         -o-transition: right 0.3s ease-in;
         -moz-transition: right 0.3s ease-in;
         transition: right 0.3s ease-in;
+    }
+    .unstyled-button {
+        padding: 0.5rem 0.75rem;
+        font-size: 1.25rem;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.5);
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        float: right;
     }
 }
