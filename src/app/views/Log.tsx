@@ -10,13 +10,11 @@ export class Log implements m.Component {
     constructor(vnode: any) {
         this.id = vnode.attrs.id;
         this.isLoading = true;
-    }
-
-    oninit() {
         LogModel.fetchOne(this.id).then(() => this.isLoading = false);
+
     }
 
-    view() {
+    view() {        
         return (
             <div className="container">
                 <Spinner isLoading={this.isLoading}>
@@ -49,7 +47,7 @@ export class Log implements m.Component {
                                         </dd>
 
                                         <dt class="col-sm-6">Creation time:</dt>
-                                        <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:MM:SS MM/DD/YYYY')}</dd>
+                                        <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:mm:ss DD/MM/YYYY')}</dd>
                                     </dl>
                                 </div>
                             </div>

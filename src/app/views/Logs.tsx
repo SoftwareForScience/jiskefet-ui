@@ -46,7 +46,7 @@ const columns = [
     }, {
         header: 'Creation time',
         accessor: 'creationTime',
-        cell: (row: Log) => (format(row.creationTime, 'HH:MM:SS DD/MM/YYYY'))
+        cell: (row: Log) => (row.creationTime ? format(row.creationTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Text',
