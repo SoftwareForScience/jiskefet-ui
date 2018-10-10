@@ -2,14 +2,18 @@ import * as m from 'mithril';
 import * as hljs from 'highlightjs';
 import * as QuillNamespace from 'quill';
 
-export default class QuillEditor implements m.Component {
+interface Attrs {
+    postContent: (content: string) => void;
+}
+
+export default class QuillEditor implements m.ClassComponent<Attrs> {
     private postContent: (content: string) => void;
 
-    constructor(vnode: any) {
+    constructor(vnode: m.Vnode<Attrs>) {
         this.postContent = vnode.attrs.postContent;
     }
 
-    oncreate(vnode: any) {
+    oncreate() {
         const toolbarOptions = [
             [{ header: [1, 2, 3, 4, 5, 6, false] }],
             ['bold', 'italic', 'underline'],
@@ -33,10 +37,9 @@ export default class QuillEditor implements m.Component {
         };
 
         const Quill: any = QuillNamespace;
-
         const quillEditor = new Quill('#quill-container', options);
 
-        quillEditor.on('text-change', (delta, oldDelta, source) => {
+        quillEditor.on('text-change', () => {
             const contents = JSON.stringify(quillEditor.getContents().ops);
             this.postContent(contents);
         });

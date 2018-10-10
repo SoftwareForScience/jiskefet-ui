@@ -22,39 +22,43 @@ export default class Log implements m.Component {
             <div className="container">
                 <Spinner isLoading={this.isLoading}>
                     <div class="row">
-                        <div class="col-md-6 mx-auto">
+                        <div class="col-md-12 mx-auto">
                             <div class="card shadow-sm bg-light">
                                 <div class="card-header">
                                     Log
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">{LogModel.current.title}</h5>
-                                    <dl class="row">
-                                        <dt class="col-sm-6">Log id</dt>
-                                        <dd class="col-sm-6">{LogModel.current.logId}</dd>
-
-                                        <dt class="col-sm-6">Subtype:</dt>
-                                        <dd class="col-sm-6">
-                                            { LogModel.current.subtype === 'run' ?
-                                            <span class="badge badge-warning">{LogModel.current.subtype}</span>
-                                            : LogModel.current.subtype}
-                                        </dd>
-
-                                        <dt class="col-sm-6">Origin:</dt>
-                                        <dd class="col-sm-6">
-                                            {LogModel.current.origin === 'human' ?
-                                                <span class="badge badge-success">{LogModel.current.origin}</span>
-                                                : LogModel.current.origin}
-                                        </dd>
-
-                                        <dt class="col-sm-6">Creation time:</dt>
-                                        <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:MM:SS MM/DD/YYYY')}</dd>
-
-                                        <dt class="col-sm-6">Text:</dt>
-                                        <div class="col-sm-12 mt-2 rounded bg-white">
-                                            <QuillViewer id={LogModel.current.logId} content={LogModel.current.text} />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5 class="card-title">{LogModel.current.title}</h5>
                                         </div>
-                                    </dl>
+                                        <div class="col-md-6">
+                                            <dl class="row">
+                                                <dt class="col-sm-6">Log id</dt>
+                                                <dd class="col-sm-6">{LogModel.current.logId}</dd>
+
+                                                <dt class="col-sm-6">Subtype:</dt>
+                                                <dd class="col-sm-6">
+                                                    {LogModel.current.subtype === 'run' ?
+                                                        <span class="badge badge-warning">{LogModel.current.subtype}</span>
+                                                        : LogModel.current.subtype}
+                                                </dd>
+
+                                                <dt class="col-sm-6">Origin:</dt>
+                                                <dd class="col-sm-6">
+                                                    {LogModel.current.origin === 'human' ?
+                                                        <span class="badge badge-success">{LogModel.current.origin}</span>
+                                                        : LogModel.current.origin}
+                                                </dd>
+
+                                                <dt class="col-sm-6">Creation time:</dt>
+                                                <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:MM:SS MM/DD/YYYY')}</dd>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer log-footer">
+                                    <QuillViewer id={LogModel.current.logId} content={LogModel.current.text} />
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,4 @@
 import * as m from 'mithril';
-import QuillViewer from '../components/QuillViewer';
 
 interface Column {
     header: string;
@@ -16,6 +15,13 @@ export default class Table implements m.Component {
         this.data = vnode.attrs.data;
         this.columns = vnode.attrs.columns;
         this.class = vnode.attrs.class;
+    }
+
+    onupdate(vnode: any) {
+        if (this.columns !== vnode.attrs.columns) {
+            this.columns = vnode.attrs.columns;
+            m.redraw();
+        }
     }
 
     view() {

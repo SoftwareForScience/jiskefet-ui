@@ -15,10 +15,6 @@ export default class CreateLog implements m.Component {
         LogModel.save();
     }
 
-    onupdate() {
-        console.log(LogModel.createLog);
-    }
-
     view() {
         return (
             <form
