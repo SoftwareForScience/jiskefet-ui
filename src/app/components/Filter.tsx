@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+
 import * as m from 'mithril';
 
 interface FilterParam {
@@ -12,7 +20,7 @@ export default class Filter implements m.Component {
     // Attrs
     private inputFields: FilterParam[];
     private fetch;
-    private route: string; // e.g. 'runs', as in site.com/runs
+    private route: string;
 
     // Class props
     private routeFilters: object; // Filters that are in the route's query.
@@ -52,6 +60,8 @@ export default class Filter implements m.Component {
 
     /**
      * Update the route with query params in filters
+     * @param filters The filters.
+     * @param route e.g. 'runs', as in site.com/runs
      */
     updateRoute(filters: object, route: string) {
         const queryString = m.buildQueryString(filters);
@@ -75,7 +85,9 @@ export default class Filter implements m.Component {
                     {this.mergedFilters && this.mergedFilters.map(filter =>
                         (
                             <div class="form-group">
-                                <label key={filter.name} for={filter}>{filter.label || `Filter for ${filter.name}`}</label>
+                                <label key={filter.name} for={filter.name}>
+                                    {filter.label || `Filter for ${filter.name}`}
+                                </label>
                                 <input
                                     type={filter.type}
                                     class="form-control"
