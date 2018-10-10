@@ -119,7 +119,7 @@ export class Runs implements m.Component, Fetchable<Run> {
 
     fetch = (queryParam?: string) => {
         console.log('Fetching runs with searchParams ' + queryParam);
-        // RunModel.fetchByParams(queryParam).then(() => this.isLoading = false);
+        // RunModel.fetchByQuery(queryParam).then(() => this.isLoading = false);
         RunModel.fetch().then(() => this.isLoading = false);
         return [];
     }

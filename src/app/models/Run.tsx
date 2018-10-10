@@ -32,6 +32,15 @@ const RunModel = {
             this.list = result;
         });
     },
+    async fetchByQuery(query?: string) {
+        return m.request({
+            method: 'GET',
+            url: `${API_URL}runs${query}`,
+            withCredentials: false
+        }).then((result: any) => {
+            this.list = result;
+        });
+    },
     save() {
         return m.request<Run>({
             method: 'POST',
