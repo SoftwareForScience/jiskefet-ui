@@ -14,7 +14,7 @@ export class Log implements m.Component {
 
     }
 
-    view() {        
+    view() {
         return (
             <div className="container">
                 <Spinner isLoading={this.isLoading}>

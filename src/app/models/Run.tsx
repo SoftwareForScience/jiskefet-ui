@@ -45,7 +45,7 @@ const RunModel = {
             method: 'GET',
             url: `${API_URL}runs/${id}`,
             withCredentials: false
-        }).then((result: any) => {            
+        }).then((result: any) => {
             this.current = result;
         });
     },
