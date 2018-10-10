@@ -76,8 +76,8 @@ export class Logs implements m.Component, Fetchable<Log> {
     }
 
     fetch = (queryParam: string) => {
-        console.log('Fetching runs with searchParams ' + queryParam);
-        // RunModel.fetchByParams(queryParam);
+        console.log('Fetching logs with searchParams ' + queryParam);
+        // LogModel.fetchByQuery(queryParam);
         return [];
     }
 

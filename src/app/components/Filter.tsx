@@ -92,7 +92,7 @@ export default class Filter implements m.Component {
                                     type={filter.type}
                                     class="form-control"
                                     id={filter.name}
-                                    onchange={this.addFilter}
+                                    onblur={this.addFilter}
                                     value={filter.value}
                                     placeholder={filter.placeholder}
                                 />

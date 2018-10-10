@@ -16,11 +16,10 @@ const LogModel = {
     list: [] as any[],
     current: {} as Log,
     createLog: {} as Log, // log being created
-    async fetch() {
-
+    async fetch(query?: string) {
         return m.request({
             method: 'GET',
-            url: `${API_URL}logs`,
+            url: `${API_URL}logs${'?' + query || ''}`,
             withCredentials: false
         }).then((result: any) => {
             this.list = result;
@@ -28,7 +27,6 @@ const LogModel = {
             const result = dummyLogList;
             this.list = result;
         });
-
     },
     async fetchOne(id: number) {
         return m.request({
