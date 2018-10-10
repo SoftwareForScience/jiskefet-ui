@@ -2,11 +2,11 @@ import * as m from 'mithril';
 import { API_URL } from '../constants';
 
 export interface Run {
-    runNumber?: number;
-    timeO2Start?: Date;
-    timeTrgStart?: Date;
-    timeTrgEnd?: Date;
-    timeO2End?: Date;
+    runNumber: number;
+    timeO2Start: Date | string;
+    timeTrgStart: Date | string;
+    timeTrgEnd: Date | string;
+    timeO2End: Date | string;
     runType: string[];
     runQuality: string[];
     activityId: string;
@@ -45,7 +45,7 @@ const RunModel = {
             method: 'GET',
             url: `${API_URL}runs/${id}`,
             withCredentials: false
-        }).then((result: any) => {
+        }).then((result: any) => {            
             this.current = result;
         });
     },

@@ -5,7 +5,7 @@ export default class Card implements m.Component {
     title: string;
 
     constructor(vnode: any) {
-        this.data = vnode.attrs.run;
+        this.data = vnode.attrs.data;
         this.title = vnode.attrs.title;
     }
 

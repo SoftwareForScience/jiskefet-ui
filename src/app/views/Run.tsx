@@ -1,11 +1,13 @@
 import * as m from 'mithril';
-import RunModel from '../models/Run';
+import RunModel, { Run as IRun } from '../models/Run';
 import Spinner from '../components/Spinner';
 import Card from '../components/Card';
+import { format } from 'date-fns';
 
 export class Run implements m.Component {
     private isLoading: boolean;
     private id: number;
+    private run: IRun;
 
     constructor(vnode: any) {
         this.isLoading = true;
@@ -13,35 +15,46 @@ export class Run implements m.Component {
     }
 
     oninit() {
-        RunModel.fetchById(this.id).then(() => this.isLoading = false);
+        RunModel.fetchById(this.id).then(() => {
+            this.isLoading = false;
+            this.run = RunModel.current;
+            this.formatDateFields();
+        });
+    }
+
+    formatDateFields = () => {
+        this.run.timeO2Start = format(this.run.timeO2Start, 'HH:mm:ss DD/MM/YYYY');
+        this.run.timeO2End = format(this.run.timeO2End, 'HH:mm:ss DD/MM/YYYY');
+        this.run.timeTrgStart = format(this.run.timeTrgStart, 'HH:mm:ss DD/MM/YYYY');
+        this.run.timeTrgEnd = format(this.run.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY');
     }
 
     view() {
         return (
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
-                    {RunModel.current &&
+                    {this.run &&
                         <div className="col-md-12 mx-auto">
                             <div className="row">
                                 <div className="col-md-4">
-                                    <Card run={RunModel.current} title={'Run'} />
+                                    <Card data={this.run} title={'Run'} />
                                 </div>
                                 <div className="col-md-8">
                                     <div className="row">
                                         <div className="col-md-6">
-                                        <Card run={{lorum: 'ipsum'}} title={'Detectors'} />
+                                        <Card data={{ lorum: 'ipsum' }} title={'Detectors'} />
                                         </div>
                                         <div className="col-md-6">
-                                        <Card run={{ lorum: 'ipsum' }} title={'EPN Role Sessions'} />
+                                        <Card data={{ lorum: 'ipsum' }} title={'EPN Role Sessions'} />
                                         </div>
                                     </div>
                                     <br />
                                     <div className="row">
                                         <div className="col-md-6">
-                                        <Card run={{ lorum: 'ipsum' }} title={'FLP Role Sessions'} />
+                                        <Card data={{ lorum: 'ipsum' }} title={'FLP Role Sessions'} />
                                         </div>
                                         <div className="col-md-6">
-                                        <Card run={{ lorum: 'ipsum' }} title={'Run Quality history'} />
+                                        <Card data={{ lorum: 'ipsum' }} title={'Run Quality history'} />
                                         </div>
                                     </div>
                                 </div>
