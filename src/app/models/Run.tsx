@@ -34,7 +34,7 @@ const RunModel = {
     async fetch(query?: string) {
         return m.request({
             method: 'GET',
-            url: `${API_URL}runs${query ? '?' + query : ''}`,
+            url: `${API_URL}runs${query ? `?${query}` : ''}`,
             withCredentials: false
         }).then((result: any) => {
             console.log('fetching in run');

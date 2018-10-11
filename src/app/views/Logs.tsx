@@ -63,9 +63,15 @@ const columns = [
 
 const inputFields = [
     {
-        name: 'title',
-        type: 'text'
+        name: 'logId',
+        type: 'number',
+        label: 'Log id'
     },
+    {
+        name: 'searchterm',
+        type: 'text',
+        label: 'Title'
+    }
 ];
 
 export default class Logs implements m.Component, Fetchable<Log> {
@@ -80,9 +86,9 @@ export default class Logs implements m.Component, Fetchable<Log> {
     }
 
     fetch = (queryParam: string) => {
-        console.log('Fetching logs with searchParams ' + queryParam);
-        // LogModel.fetchByQuery(queryParam);
-        return [];
+        LogModel.fetch(queryParam).then(() => {
+            this.isLoading = false;
+        });
     }
 
     oninit() {

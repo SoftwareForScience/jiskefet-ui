@@ -27,7 +27,7 @@ const LogModel = {
     async fetch(query?: string) {
         return m.request({
             method: 'GET',
-            url: `${API_URL}logs${'?' + query || ''}`,
+            url: `${API_URL}logs${query ? `?${query}` : ''}`,
             withCredentials: false
         }).then((result: any) => {
             this.list = result;
