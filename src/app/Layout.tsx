@@ -7,10 +7,10 @@
  */
 
 import * as m from 'mithril';
-import { NavBar } from './components/NavBar';
-import { SideBar } from './components/SideBar';
+import NavBar from './components/NavBar';
+import SideBar from './components/SideBar';
 
-export class Layout implements m.Component {
+export default class Layout implements m.Component {
     view(vnode: any) {
         return (
             <div>

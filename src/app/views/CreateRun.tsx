@@ -9,7 +9,7 @@
 import * as m from 'mithril';
 import RunModel from '../models/Run';
 
-export class CreateRun implements m.Component {
+export default class CreateRun implements m.Component {
 
     addToRunCreate = (event) => {
         RunModel.createRun[event.target.id] = event.target.value;

@@ -9,8 +9,17 @@
 // Include all of Bootstrap
 @import "node_modules/bootstrap/scss/bootstrap";
 
+// Include QuillEditor stylesheets
+@import url("https://cdn.quilljs.com/1.3.6/quill.snow.css");
+@import "../../node_modules/highlightjs/styles/monokai-sublime.css";
+@import "../../node_modules/katex/dist/katex.min.css";
+// @import '../../node_modules/katex/dist/katex.css';
+
+
+@import 'Log.scss';
 @import 'NavBar.scss';
 @import 'Spinner.scss';
+@import 'QuillEditor.scss';
 
 $body-bg-color: #ffffff;
 $body-text-color: #4d4d4d;

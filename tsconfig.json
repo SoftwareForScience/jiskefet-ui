@@ -18,6 +18,8 @@
 		"noImplicitThis": true,
         "experimentalDecorators": true,
         "jsx": "react",
-        "jsxFactory": "m"
+        "jsxFactory": "m",
+        "noUnusedLocals": true,
+        "forceConsistentCasingInFileNames": true
 	}
 }	
