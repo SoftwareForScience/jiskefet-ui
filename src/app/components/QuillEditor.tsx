@@ -2,14 +2,23 @@ import * as m from 'mithril';
 import * as hljs from 'highlightjs';
 import * as QuillNamespace from 'quill';
 
-interface Attrs {
-    postContent: (content: string) => void;
-}
-
-export default class QuillEditor implements m.ClassComponent<Attrs> {
+/**
+ * This component executes the function postContent on text change.
+ *
+ * It will save a string with the following format:
+ * {
+ *   ops: [
+ *     { insert: 'Gandalf', attributes: { bold: true } },
+ *     { insert: ' the ' },
+ *     { insert: 'Grey', attributes: { color: '#cccccc' } }
+ *   ]
+ * }
+ * For more information on the format above, see: https://quilljs.com/docs/delta/.
+ */
+export default class QuillEditor implements m.Component {
     private postContent: (content: string) => void;
 
-    constructor(vnode: m.Vnode<Attrs>) {
+    constructor(vnode: any) {
         this.postContent = vnode.attrs.postContent;
     }
 
@@ -40,8 +49,8 @@ export default class QuillEditor implements m.ClassComponent<Attrs> {
         const quillEditor = new Quill('#quill-container', options);
 
         quillEditor.on('text-change', () => {
-            const contents = JSON.stringify(quillEditor.getContents().ops);
-            this.postContent(contents);
+            const content = JSON.stringify(quillEditor.getContents());
+            this.postContent(content);
         });
     }
 

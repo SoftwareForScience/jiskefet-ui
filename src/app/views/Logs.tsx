@@ -76,7 +76,7 @@ export default class Logs implements m.Component {
                     accessor: 'text',
                     cell: row => (
                         <div class="d-block" style="max-width: 200px;">
-                            <QuillViewer id={row.logId} content={row.text} plaintext={true} />
+                            <QuillViewer id={row.logId} content={row.text} plaintext={true} plaintextLimit={100} />
                         </div>
                     )
                 }
