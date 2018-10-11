@@ -7,9 +7,9 @@
  */
 
 import * as m from 'mithril';
-import { NavItem } from './NavItem';
+import NavItem from './NavItem';
 
-export class SideBar implements m.Component {
+export default class SideBar implements m.Component {
     view() {
         return (
             <div class="container-fluid">

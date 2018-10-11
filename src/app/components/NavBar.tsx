@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import * as $ from 'jquery';
-import { NavItem } from './NavItem';
+import NavItem from './NavItem';
 
 function toggle() {
     $('#menu-toggle').click((e) => {
@@ -17,8 +17,7 @@ function toggle() {
     });
 }
 
-export class NavBar implements m.Component {
-
+export default class NavBar implements m.Component {
     view() {
         return (
             <nav class="navbar navbar-expand-sm navbar-dark jiskefet-navbar" >

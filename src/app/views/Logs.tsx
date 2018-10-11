@@ -11,6 +11,7 @@ import LogModel, { Log } from '../models/Log';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
 import { format } from 'date-fns';
+import QuillViewer from '../components/QuillViewer';
 import Filter from '../components/Filter';
 import Fetchable from '../interfaces/Fetchable';
 
@@ -57,16 +58,7 @@ const columns = [
         header: 'Creation time',
         accessor: 'creationTime',
         cell: (row: Log) => (row.creationTime ? format(row.creationTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    },
-    {
-        header: 'Text',
-        accessor: 'text',
-        cell: row => (
-            <div class="d-block text-truncate" style="max-width: 200px;">
-                {row.text}
-            </div>
-        )
-    },
+    }
 ];
 
 const inputFields = [
@@ -76,11 +68,15 @@ const inputFields = [
     },
 ];
 
-export class Logs implements m.Component, Fetchable<Log> {
+export default class Logs implements m.Component, Fetchable<Log> {
     private isLoading: boolean;
+    private previewContent: boolean;
+    private columns: any[];
 
     constructor() {
         this.isLoading = true;
+        this.previewContent = false;
+        this.columns = columns;
     }
 
     fetch = (queryParam: string) => {
@@ -93,10 +89,38 @@ export class Logs implements m.Component, Fetchable<Log> {
         LogModel.fetch().then(() => this.isLoading = false);
     }
 
-    view() {
+    togglePreview = () => {
+        this.previewContent = !this.previewContent;
+        if (this.previewContent) {
+            this.columns = [
+                ...columns,
+                {
+                    header: 'Preview of text',
+                    accessor: 'text',
+                    cell: row => (
+                        <div class="d-block" style="max-width: 200px;">
+                            <QuillViewer id={row.logId} content={row.text} plaintext={true} plaintextLimit={100} />
+                        </div>
+                    )
+                }
+            ];
+        } else {
+            this.columns = columns;
+        }
+        m.redraw();
+    }
+
+    view(vnode: any) {
         return (
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
+                                {this.previewContent ? 'Hide content' : 'Preview content'}
+                            </button>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-md-3">
                             <Filter
@@ -108,7 +132,7 @@ export class Logs implements m.Component, Fetchable<Log> {
                         <div className="col-md-9">
                             <Table
                                 data={LogModel.list}
-                                columns={columns}
+                                columns={this.columns}
                             />
                         </div>
                     </div>

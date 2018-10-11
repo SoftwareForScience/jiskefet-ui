@@ -12,7 +12,7 @@ import Spinner from '../components/Spinner';
 import Card from '../components/Card';
 import { format } from 'date-fns';
 
-export class Run implements m.Component {
+export default class Run implements m.Component {
     private isLoading: boolean;
     private id: number;
     private run: IRun;

@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 
-export class NavItem implements m.Component {
+export default class NavItem implements m.Component {
     private href: string;
     private title: string;
     private icon: string;

@@ -109,7 +109,7 @@ const inputFields = [
     },
 ];
 
-export class Runs implements m.Component, Fetchable<Run> {
+export default class Runs implements m.Component, Fetchable<Run> {
     private isLoading: boolean;
 
     constructor() {
