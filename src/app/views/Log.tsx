@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+
 import * as m from 'mithril';
 import LogModel from '../models/Log';
 import Spinner from '../components/Spinner';
@@ -11,10 +19,8 @@ export default class Log implements m.Component {
     constructor(vnode: any) {
         this.id = vnode.attrs.id;
         this.isLoading = true;
-    }
-
-    oninit() {
         LogModel.fetchOne(this.id).then(() => this.isLoading = false);
+
     }
 
     view() {
@@ -52,7 +58,7 @@ export default class Log implements m.Component {
                                                 </dd>
 
                                                 <dt class="col-sm-6">Creation time:</dt>
-                                                <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:MM:SS MM/DD/YYYY')}</dd>
+                                                <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:mm:ss DD/MM/YYYY')}</dd>
                                             </dl>
                                         </div>
                                     </div>

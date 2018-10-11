@@ -1,3 +1,11 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+
 import * as m from 'mithril';
 import { API_URL } from '../constants';
 
@@ -16,11 +24,10 @@ const LogModel = {
     list: [] as any[],
     current: {} as Log,
     createLog: {} as Log, // log being created
-    async fetch() {
-
+    async fetch(query?: string) {
         return m.request({
             method: 'GET',
-            url: `${API_URL}logs`,
+            url: `${API_URL}logs${'?' + query || ''}`,
             withCredentials: false
         }).then((result: any) => {
             this.list = result;
@@ -28,7 +35,6 @@ const LogModel = {
             const result = dummyLogList;
             this.list = result;
         });
-
     },
     async fetchOne(id: number) {
         return m.request({
@@ -63,7 +69,7 @@ const dummyLogList = [
         subtype: 'run',
         userId: 10,
         origin: 'human',
-        creationTime: '2018-10-10 14:33',
+        creationTime: '2018-10-10 14:33:23',
         title: 'Magic happened',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         runs: [
@@ -80,7 +86,7 @@ const dummyLogList = [
         subtype: 'run',
         userId: 10,
         origin: 'human',
-        creationTime: '2018-10-10 14:33',
+        creationTime: '2018-10-10 14:33:10',
         title: 'Magic happened',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         runs: [
@@ -97,7 +103,7 @@ const dummyLogList = [
         subtype: 'run',
         userId: 10,
         origin: 'human',
-        creationTime: '2018-10-10 14:33',
+        creationTime: '2018-10-10 14:33:21',
         title: 'Magic happened',
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         runs: [

@@ -1,12 +1,20 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+
 import * as m from 'mithril';
 import { API_URL } from '../constants';
 
 export interface Run {
-    runNumber?: number;
-    timeO2Start?: Date;
-    timeTrgStart?: Date;
-    timeTrgEnd?: Date;
-    timeO2End?: Date;
+    runNumber: number;
+    timeO2Start: Date | string;
+    timeTrgStart: Date | string;
+    timeTrgEnd: Date | string;
+    timeO2End: Date | string;
     runType: string[];
     runQuality: string[];
     activityId: string;
@@ -23,12 +31,13 @@ const RunModel = {
     list: [] as Run[],
     current: {} as Run,
     createRun: {} as Run,
-    async fetch() {
+    async fetch(query?: string) {
         return m.request({
             method: 'GET',
-            url: `${API_URL}runs`,
+            url: `${API_URL}runs${query ? '?' + query : ''}`,
             withCredentials: false
         }).then((result: any) => {
+            console.log('fetching in run');
             this.list = result;
         });
     },
