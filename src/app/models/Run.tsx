@@ -31,12 +31,13 @@ const RunModel = {
     list: [] as Run[],
     current: {} as Run,
     createRun: {} as Run,
-    async fetch() {
+    async fetch(query?: string) {
         return m.request({
             method: 'GET',
-            url: `${API_URL}runs`,
+            url: `${API_URL}runs${query ? '?' + query : ''}`,
             withCredentials: false
         }).then((result: any) => {
+            console.log('fetching in run');
             this.list = result;
         });
     },
@@ -53,7 +54,7 @@ const RunModel = {
             method: 'GET',
             url: `${API_URL}runs/${id}`,
             withCredentials: false
-        }).then((result: any) => {            
+        }).then((result: any) => {
             this.current = result;
         });
     },

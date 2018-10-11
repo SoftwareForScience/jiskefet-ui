@@ -14,18 +14,23 @@ import { format } from 'date-fns';
 
 export class Run implements m.Component {
     private isLoading: boolean;
+    private id: number;
     private run: IRun;
 
-    constructor() {
+    constructor(vnode: any) {
         this.isLoading = true;
-        RunModel.fetchById(Number(m.route.param('id'))).then(() => {
+        this.id = vnode.attrs.id;
+    }
+
+    oninit() {
+        RunModel.fetchById(this.id).then(() => {
             this.isLoading = false;
             this.run = RunModel.current;
             this.formatDateFields();
-        });  
+        });
     }
 
-    formatDateFields = () => {        
+    formatDateFields = () => {
         this.run.timeO2Start = format(this.run.timeO2Start, 'HH:mm:ss DD/MM/YYYY');
         this.run.timeO2End = format(this.run.timeO2End, 'HH:mm:ss DD/MM/YYYY');
         this.run.timeTrgStart = format(this.run.timeTrgStart, 'HH:mm:ss DD/MM/YYYY');

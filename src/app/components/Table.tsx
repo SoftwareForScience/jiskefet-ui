@@ -25,6 +25,17 @@ export default class Table implements m.Component {
         this.class = vnode.attrs.class;
     }
 
+    onupdate(vnode: any) {
+        if (this.columns !== vnode.attrs.columns) {
+            this.columns = vnode.attrs.columns;
+            // m.redraw();
+        }
+        if (this.data !== vnode.attrs.data) {
+            this.data = vnode.attrs.data;
+            m.redraw();
+        }
+    }
+
     view() {
         return (
             <div class="table-responsive-xl">
@@ -40,9 +51,10 @@ export default class Table implements m.Component {
                     </thead>
                     <tbody>
                         {this.data && this.data.map(row =>
-                            <tr key={row}>
+                            // tslint:disable-next-line:jsx-key
+                            <tr>
                                 {this.columns.map((column: Column) => (
-                                    <td key={row[column.accessor]}>
+                                    <td>
                                         {column.cell ? column.cell(row) : row[column.accessor]}
                                     </td>
                                 ))}

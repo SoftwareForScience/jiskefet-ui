@@ -54,9 +54,9 @@ m.route(document.body, '/logs', {
         ),
     },
     '/runs/:id': {
-        view: () => (
+        view: (vnode) => (
             <Layout>
-                <Run />
+                <Run id={vnode.attrs.id} />
             </Layout>
         ),
     },

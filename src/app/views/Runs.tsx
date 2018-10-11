@@ -10,7 +10,9 @@ import * as m from 'mithril';
 import RunModel, { Run } from '../models/Run';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
+import Filter from '../components/Filter';
 import { format } from 'date-fns';
+import Fetchable from '../interfaces/Fetchable';
 
 const columns = [
     {
@@ -84,15 +86,46 @@ const columns = [
     },
 ];
 
-export class Runs implements m.Component {
+const inputFields = [
+    {
+        name: 'runNumber',
+        type: 'number'
+    },
+    {
+        name: 'timeO2Start',
+        type: 'datetime-local'
+    },
+    {
+        name: 'timeO2End',
+        type: 'datetime-local'
+    },
+    {
+        name: 'timeTrgStart',
+        type: 'datetime-local'
+    },
+    {
+        name: 'timeTrgEnd',
+        type: 'datetime-local'
+    },
+];
+
+export class Runs implements m.Component, Fetchable<Run> {
     private isLoading: boolean;
 
     constructor() {
         this.isLoading = true;
     }
 
+    fetch = (queryParam?: string) => {
+        RunModel.fetch(queryParam).then(() => {
+            this.isLoading = false;
+        });
+    }
+
     oninit() {
-        RunModel.fetch().then(() => this.isLoading = false);
+        RunModel.fetch().then(() => {
+            this.isLoading = false;
+        });
     }
 
     view() {
@@ -100,7 +133,14 @@ export class Runs implements m.Component {
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-3">
+                            <Filter
+                                inputFields={inputFields}
+                                fetch={this.fetch}
+                                route="runs"
+                            />
+                        </div>
+                        <div className="col-md-9">
                             <Table
                                 data={RunModel.list}
                                 columns={columns}
