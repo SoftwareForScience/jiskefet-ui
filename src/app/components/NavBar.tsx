@@ -11,10 +11,7 @@ import * as $ from 'jquery';
 import NavItem from './NavItem';
 
 function toggle() {
-    $('#menu-toggle').click((e) => {
-        e.preventDefault();
-        $('#wrapper').toggleClass('toggled');
-    });
+    $('#wrapper').toggleClass('toggled');
 }
 
 export default class NavBar implements m.Component {
@@ -27,7 +24,7 @@ export default class NavBar implements m.Component {
                             <img src="../../assets/cern_logo.png" width="30" height="30" class="d-inline-block align-top logo" alt="" />
                             Jiskefet
                         </a>
-                        <button type="button" class="unstyled-button" id="menu-toggle" onclick={toggle}><span class="fas fa-bars" /></button>
+                        <button type="button" class="unstyled-button" onclick={toggle}><span class="fas fa-bars" /></button>
                         <button class="navbar-toggler navbar-nav ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="fas fa-user-cog" />
                         </button>
