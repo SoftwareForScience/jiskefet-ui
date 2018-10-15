@@ -1,7 +1,18 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+
 import * as m from 'mithril';
-import RunModel from '../models/Run';
+import RunModel, { Run } from '../models/Run';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
+import Filter from '../components/Filter';
+import { format } from 'date-fns';
+import Fetchable from '../interfaces/Fetchable';
 
 const columns = [
     {
@@ -15,19 +26,23 @@ const columns = [
     },
     {
         header: 'Time 02 start',
-        accessor: 'timeO2Start'
-    },
-    {
-        header: 'Time trg start',
-        accessor: 'timeTrgStart'
-    },
-    {
-        header: 'Time trg end',
-        accessor: 'timeTrgEnd'
+        accessor: 'timeO2Start',
+        cell: (row: Run) => (row.timeO2Start ? format(row.timeO2Start, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Time 02 end',
-        accessor: 'timeO2End'
+        accessor: 'timeO2End',
+        cell: (row: Run) => (row.timeO2End ? format(row.timeO2End, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+    },
+    {
+        header: 'Time trg start',
+        accessor: 'timeTrgStart',
+        cell: (row: Run) => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+    },
+    {
+        header: 'Time trg end',
+        accessor: 'timeTrgEnd',
+        cell: (row: Run) => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Activity id',
@@ -42,23 +57,23 @@ const columns = [
         accessor: 'runQuality'
     },
     {
-        header: 'N detectors',
+        header: 'no. of detectors',
         accessor: 'nDetectors'
     },
     {
-        header: 'N flps',
+        header: 'no. of FLPs',
         accessor: 'nFlps'
     },
     {
-        header: 'N epns',
+        header: 'no. of EPNs',
         accessor: 'nEpns'
     },
     {
-        header: 'N timeframes',
+        header: 'no. of timeframes',
         accessor: 'nTimeframes'
     },
     {
-        header: 'N subtimeframes',
+        header: 'no. of sub-timeframes',
         accessor: 'nSubtimeframes'
     },
     {
@@ -71,15 +86,46 @@ const columns = [
     },
 ];
 
-export class Runs implements m.Component {
+const inputFields = [
+    {
+        name: 'runNumber',
+        type: 'number'
+    },
+    {
+        name: 'timeO2Start',
+        type: 'datetime-local'
+    },
+    {
+        name: 'timeO2End',
+        type: 'datetime-local'
+    },
+    {
+        name: 'timeTrgStart',
+        type: 'datetime-local'
+    },
+    {
+        name: 'timeTrgEnd',
+        type: 'datetime-local'
+    },
+];
+
+export default class Runs implements m.Component, Fetchable<Run> {
     private isLoading: boolean;
 
     constructor() {
         this.isLoading = true;
     }
 
+    fetch = (queryParam?: string) => {
+        RunModel.fetch(queryParam).then(() => {
+            this.isLoading = false;
+        });
+    }
+
     oninit() {
-        RunModel.fetch().then(() => this.isLoading = false);
+        RunModel.fetch().then(() => {
+            this.isLoading = false;
+        });
     }
 
     view() {
@@ -87,7 +133,14 @@ export class Runs implements m.Component {
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-3">
+                            <Filter
+                                inputFields={inputFields}
+                                fetch={this.fetch}
+                                route="runs"
+                            />
+                        </div>
+                        <div className="col-md-9">
                             <Table
                                 data={RunModel.list}
                                 columns={columns}
