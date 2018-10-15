@@ -30,7 +30,6 @@ export interface Run {
 const RunModel = {
     list: [] as Run[],
     current: {} as Run,
-    createRun: {} as Run,
     async fetch(query?: string) {
         return m.request({
             method: 'GET',
@@ -38,14 +37,6 @@ const RunModel = {
             withCredentials: false
         }).then((result: any) => {
             this.list = result;
-        });
-    },
-    save() {
-        return m.request<Run>({
-            method: 'POST',
-            url: `${API_URL}runs`,
-            data: RunModel.createRun,
-            withCredentials: false
         });
     },
     fetchById(id: number) {

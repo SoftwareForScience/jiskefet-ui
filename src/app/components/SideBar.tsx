@@ -20,7 +20,6 @@ export default class SideBar implements m.Component {
                                 <NavItem href="/logs" name="Logs" />
                                 <NavItem href="/runs" name="Runs" />
                                 <NavItem href="/logs/create" name="Create new log" />
-                                <NavItem href="/runs/create" name="Create new run" />
                             </ul>
                         </li>
                     </ul>

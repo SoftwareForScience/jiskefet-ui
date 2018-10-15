@@ -13,7 +13,6 @@ import Layout from './Layout';
 import Runs from './views/Runs';
 import Logs from './views/Logs';
 import Log from './views/Log';
-import CreateRun from './views/CreateRun';
 import Run from './views/Run';
 import CreateLog from './views/CreateLog';
 
@@ -43,13 +42,6 @@ m.route(document.body, '/logs', {
         view: () => (
             <Layout>
                 <Runs />
-            </Layout>
-        ),
-    },
-    '/runs/create': {
-        view: () => (
-            <Layout>
-                <CreateRun />
             </Layout>
         ),
     },
