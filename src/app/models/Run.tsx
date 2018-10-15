@@ -37,7 +37,6 @@ const RunModel = {
             url: `${API_URL}runs${query ? `?${query}` : ''}`,
             withCredentials: false
         }).then((result: any) => {
-            console.log('fetching in run');
             this.list = result;
         });
     },
