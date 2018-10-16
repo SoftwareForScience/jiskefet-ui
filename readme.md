@@ -25,3 +25,7 @@ $ npm run dev
 ```
 
 Then go to http://localhost:8080/ in your browser.
+
+### Build minified:
+
+	npm run build
