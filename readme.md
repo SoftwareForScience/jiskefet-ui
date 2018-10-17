@@ -22,10 +22,26 @@ $ npm install
 ```bash
 # watch mode
 $ npm run dev
+
+# build minified
+$ npm run build
 ```
 
 Then go to http://localhost:8080/ in your browser.
 
-### Build minified:
+## Dependencies
 
-	npm run build
+The project depends on the following packages in order to run properly.
+
+```JSON
+{
+		"bootstrap": "^4.1.3",
+		"date-fns": "^1.29.0",
+		"highlightjs": "^9.10.0",
+		"jquery": "^3.3.1",
+		"katex": "^0.10.0-rc.1",
+		"mithril": "^1.1.6",
+		"popper.js": "^1.14.4",
+		"quill": "^1.3.6"
+	}
+```
