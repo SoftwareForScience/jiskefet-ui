@@ -21,7 +21,7 @@ export default class NavBar implements m.Component {
                 <div class="container-fluid">
                     <div class="navbar-header w-100 d-flex">
                         <a href="/" class="navbar-brand jiskefet-navbar-text" oncreate={m.route.link}>
-                            <img src="../../assets/cern_logo.png" width="30" height="30" class="d-inline-block align-top logo" alt="" />
+                            <img src="../../assets/alice_logo_text_white.png" width="30" height="30" class="d-inline-block align-top logo" alt="" />
                             Jiskefet
                         </a>
                         <button type="button" class="unstyled-button" onclick={toggle}><span class="fas fa-bars" /></button>
