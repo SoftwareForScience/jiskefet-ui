@@ -128,14 +128,14 @@ export default class Logs implements m.Component, Fetchable<Log> {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-md-3 mt-2">
                             <Filter
                                 inputFields={inputFields}
                                 fetch={this.fetch}
                                 route="logs"
                             />
                         </div>
-                        <div className="col-md-9">
+                        <div className="col-md-9 mt-2">
                             <Table
                                 data={LogModel.list}
                                 columns={this.columns}

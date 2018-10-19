@@ -133,14 +133,14 @@ export default class Runs implements m.Component, Fetchable<Run> {
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
                     <div className="row">
-                        <div className="col-md-3">
+                        <div className="col-md-3 mt-2">
                             <Filter
                                 inputFields={inputFields}
                                 fetch={this.fetch}
                                 route="runs"
                             />
                         </div>
-                        <div className="col-md-9">
+                        <div className="col-md-9 mt-2">
                             <Table
                                 data={RunModel.list}
                                 columns={columns}

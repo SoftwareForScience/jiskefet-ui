@@ -19,6 +19,15 @@ export default class NavItem implements m.Component {
         this.icon = vnode.attrs.icon;
     }
 
+    /**
+     * Returns true if this NavItem's href corresponds to the current page/route (ignores query params in route).
+     * Example true if: href = '/logs', current page/route = 'site.com/logs?id=1'
+     */
+    isCurrentPage = (): boolean => {
+        const route = m.route.get().split('?')[0];
+        return route === this.href;
+    }
+
     view() {
         let text;
         text = !this.icon ?
@@ -30,7 +39,7 @@ export default class NavItem implements m.Component {
             )];
 
         return (
-            <li class={`nav-item ${this.href === m.route.get() && 'active'}`}>
+            <li class={`nav-item ${this.isCurrentPage() && 'active'}`}>
                 {text}
             </li >
         );

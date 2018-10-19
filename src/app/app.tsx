@@ -9,7 +9,7 @@
 import * as m from 'mithril';
 import '../scss/main.scss';
 import 'bootstrap';
-import Layout from './Layout';
+import Layout from './components/Layout';
 import Runs from './views/Runs';
 import Logs from './views/Logs';
 import Log from './views/Log';
