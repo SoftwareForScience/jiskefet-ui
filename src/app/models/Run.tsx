@@ -28,35 +28,49 @@ export interface Run {
 }
 
 const RunModel = {
-    list: [] as Run[],
-    current: {} as Run,
-    createRun: {} as Run,
-    async fetch(query?: string) {
-        return m.request({
-            method: 'GET',
-            url: `${API_URL}runs${query ? `?${query}` : ''}`,
-            withCredentials: false
-        }).then((result: any) => {
-            console.log('fetching in run');
-            this.list = result;
-        });
+    list: {
+        error: '',
+        runs: [] as Run[],
+        async fetch(query?: string) {
+            return m.request({
+                method: 'GET',
+                url: `${API_URL}runs${query ? `?${query}` : ''}`,
+                withCredentials: false
+            }).then((result: any) => {
+                RunModel.list.runs = result;
+            }).catch((e: any) => {
+                RunModel.list.error = e.message;
+            });
+        }
     },
-    save() {
-        return m.request<Run>({
-            method: 'POST',
-            url: `${API_URL}runs`,
-            data: RunModel.createRun,
-            withCredentials: false
-        });
+    createRun: {
+        error: '',
+        run: {} as Run,
+        async save() {
+            return m.request<Run>({
+                method: 'POST',
+                url: `${API_URL}runs`,
+                data: RunModel.createRun,
+                withCredentials: false
+            }).catch((e: any) => {
+                RunModel.createRun.error = e.message;
+            });
+        }
     },
-    fetchById(id: number) {
-        return m.request<Run>({
-            method: 'GET',
-            url: `${API_URL}runs/${id}`,
-            withCredentials: false
-        }).then((result: any) => {
-            this.current = result;
-        });
+    current: {
+        error: '',
+        run: {} as Run,
+        async fetchById(id: number) {
+            return m.request<Run>({
+                method: 'GET',
+                url: `${API_URL}runs/${id}`,
+                withCredentials: false
+            }).then((result: any) => {
+                RunModel.current.run = result;
+            }).catch((e: any) => {
+                RunModel.current.error = e.message;
+            });
+        }
     },
 };
 

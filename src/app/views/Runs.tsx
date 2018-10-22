@@ -9,6 +9,7 @@
 import * as m from 'mithril';
 import RunModel, { Run } from '../models/Run';
 import Spinner from '../components/Spinner';
+import HtmlError from '../components/HtmlError';
 import Table from '../components/Table';
 import Filter from '../components/Filter';
 import { format } from 'date-fns';
@@ -117,13 +118,13 @@ export default class Runs implements m.Component, Fetchable<Run> {
     }
 
     fetch = (queryParam?: string) => {
-        RunModel.fetch(queryParam).then(() => {
+        RunModel.list.fetch(queryParam).then(() => {
             this.isLoading = false;
         });
     }
 
     oninit() {
-        RunModel.fetch().then(() => {
+        RunModel.list.fetch().then(() => {
             this.isLoading = false;
         });
     }
@@ -132,22 +133,24 @@ export default class Runs implements m.Component, Fetchable<Run> {
         return (
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
-                    <div className="row">
-                        <div className="col-md-3">
-                            <Filter
-                                inputFields={inputFields}
-                                fetch={this.fetch}
-                                route="runs"
-                            />
+                    <HtmlError errorMessage={RunModel.list.error}>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <Filter
+                                    inputFields={inputFields}
+                                    fetch={this.fetch}
+                                    route="runs"
+                                />
+                            </div>
+                            <div className="col-md-9">
+                                <Table
+                                    data={RunModel.list.runs}
+                                    columns={columns}
+                                    class="font-sm"
+                                />
+                            </div>
                         </div>
-                        <div className="col-md-9">
-                            <Table
-                                data={RunModel.list}
-                                columns={columns}
-                                class="font-sm"
-                            />
-                        </div>
-                    </div>
+                    </HtmlError>
                 </Spinner>
             </div>
         );

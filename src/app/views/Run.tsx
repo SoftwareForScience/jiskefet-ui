@@ -11,6 +11,7 @@ import RunModel, { Run as IRun } from '../models/Run';
 import Spinner from '../components/Spinner';
 import Card from '../components/Card';
 import { format } from 'date-fns';
+import HtmlError from '../components/HtmlError';
 
 export default class Run implements m.Component {
     private isLoading: boolean;
@@ -23,9 +24,9 @@ export default class Run implements m.Component {
     }
 
     oninit() {
-        RunModel.fetchById(this.id).then(() => {
+        RunModel.current.fetchById(this.id).then(() => {
             this.isLoading = false;
-            this.run = RunModel.current;
+            this.run = RunModel.current.run;
             this.formatDateFields();
         });
     }
@@ -41,34 +42,36 @@ export default class Run implements m.Component {
         return (
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
-                    {this.run &&
-                        <div className="col-md-12 mx-auto">
-                            <div className="row">
-                                <div className="col-md-4">
-                                    <Card data={this.run} title={'Run'} />
-                                </div>
-                                <div className="col-md-8">
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                        <Card data={{ lorum: 'ipsum' }} title={'Detectors'} />
-                                        </div>
-                                        <div className="col-md-6">
-                                        <Card data={{ lorum: 'ipsum' }} title={'EPN Role Sessions'} />
-                                        </div>
+                    <HtmlError errorMessage={RunModel.list.error}>
+                        {this.run &&
+                            <div className="col-md-12 mx-auto">
+                                <div className="row">
+                                    <div className="col-md-4">
+                                        <Card data={this.run} title={'Run'} />
                                     </div>
-                                    <br />
-                                    <div className="row">
-                                        <div className="col-md-6">
-                                        <Card data={{ lorum: 'ipsum' }} title={'FLP Role Sessions'} />
+                                    <div className="col-md-8">
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <Card data={{ lorum: 'ipsum' }} title={'Detectors'} />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Card data={{ lorum: 'ipsum' }} title={'EPN Role Sessions'} />
+                                            </div>
                                         </div>
-                                        <div className="col-md-6">
-                                        <Card data={{ lorum: 'ipsum' }} title={'Run Quality history'} />
+                                        <br />
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <Card data={{ lorum: 'ipsum' }} title={'FLP Role Sessions'} />
+                                            </div>
+                                            <div className="col-md-6">
+                                                <Card data={{ lorum: 'ipsum' }} title={'Run Quality history'} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </HtmlError>
                 </Spinner>
             </div >
         );
