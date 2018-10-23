@@ -8,6 +8,7 @@
 
 import * as m from 'mithril';
 import { API_URL } from '../constants';
+import HttpErrorModel from './HttpError';
 
 export interface Run {
     runNumber: number;
@@ -28,49 +29,40 @@ export interface Run {
 }
 
 const RunModel = {
-    list: {
-        error: '',
-        runs: [] as Run[],
-        async fetch(query?: string) {
-            return m.request({
-                method: 'GET',
-                url: `${API_URL}runs${query ? `?${query}` : ''}`,
-                withCredentials: false
-            }).then((result: any) => {
-                RunModel.list.runs = result;
-            }).catch((e: any) => {
-                RunModel.list.error = e.message;
-            });
-        }
+    list: [] as Run[],
+    async fetch(query?: string) {
+        return m.request({
+            method: 'GET',
+            url: `${API_URL}runs${query ? `?${query}` : ''}`,
+            withCredentials: false
+        }).then((result: any) => {
+            RunModel.list = result;
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
+        });
     },
-    createRun: {
-        error: '',
-        run: {} as Run,
-        async save() {
-            return m.request<Run>({
-                method: 'POST',
-                url: `${API_URL}runs`,
-                data: RunModel.createRun,
-                withCredentials: false
-            }).catch((e: any) => {
-                RunModel.createRun.error = e.message;
-            });
-        }
+    createRun: {} as Run,
+    async save() {
+        return m.request<Run>({
+            method: 'POST',
+            url: `${API_URL}runs`,
+            data: RunModel.createRun,
+            withCredentials: false
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
+        });
     },
-    current: {
-        error: '',
-        run: {} as Run,
-        async fetchById(id: number) {
-            return m.request<Run>({
-                method: 'GET',
-                url: `${API_URL}runs/${id}`,
-                withCredentials: false
-            }).then((result: any) => {
-                RunModel.current.run = result;
-            }).catch((e: any) => {
-                RunModel.current.error = e.message;
-            });
-        }
+    current: {} as Run,
+    async fetchById(id: number) {
+        return m.request<Run>({
+            method: 'GET',
+            url: `${API_URL}runs/${id}`,
+            withCredentials: false
+        }).then((result: any) => {
+            RunModel.current = result;
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
+        });
     },
 };
 

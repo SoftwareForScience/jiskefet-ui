@@ -8,6 +8,7 @@
 
 import * as m from 'mithril';
 import { API_URL } from '../constants';
+import HttpErrorModel from './HttpError';
 
 export interface Log {
     logId?: number;
@@ -21,51 +22,42 @@ export interface Log {
 }
 
 const LogModel = {
-    list: {
-        error: '',
-        logs: [] as any[],
-        async fetch(query?: string) {
-            return m.request({
-                method: 'GET',
-                url: `${API_URL}logs${query ? `?${query}` : ''}`,
-                withCredentials: false
-            }).then((result: any) => {
-                LogModel.list.logs = result;
-            }).catch((e: any) => {
-                LogModel.list.error = e.message;
-            });
-        }
+    list: [] as any[],
+    async fetch(query?: string) {
+        return m.request({
+            method: 'GET',
+            url: `${API_URL}logs${query ? `?${query}` : ''}`,
+            withCredentials: false
+        }).then((result: any) => {
+            LogModel.list = result;
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
+        });
     },
-    current: {
-        error: '',
-        log: {} as Log,
-        async fetchOne(id: number) {
-            return m.request({
-                method: 'GET',
-                url: `${API_URL}logs/${id}`,
-                withCredentials: false
-            }).then((result: any) => {
-                LogModel.current.log = result;
-            }).catch((e: any) => {
-                LogModel.current.error = e.message;
-            });
-        }
+    current: {} as Log,
+    async fetchOne(id: number) {
+        return m.request({
+            method: 'GET',
+            url: `${API_URL}logs/${id}`,
+            withCredentials: false
+        }).then((result: any) => {
+            LogModel.current = result;
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
+        });
     },
-    createLog: {
-        error: '',
-        log: {} as Log,
-        async save() {
-            LogModel.createLog.log.creationTime = new Date().toString();
-            LogModel.createLog.log.origin = 'human';
-            return m.request<Log>({
-                method: 'POST',
-                url: `${API_URL}logs`,
-                data: LogModel.createLog.log,
-                withCredentials: false
-            }).catch((e: any) => {
-                LogModel.createLog.error = e.message;
-            });
-        }
+    createLog: {} as Log,
+    async save() {
+        LogModel.createLog.creationTime = new Date().toString();
+        LogModel.createLog.origin = 'human';
+        return m.request<Log>({
+            method: 'POST',
+            url: `${API_URL}logs`,
+            data: LogModel.createLog,
+            withCredentials: false
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
+        });
     }
 };
 

@@ -9,7 +9,7 @@
 import * as m from 'mithril';
 import RunModel, { Run } from '../models/Run';
 import Spinner from '../components/Spinner';
-import HtmlError from '../components/HtmlError';
+import HttpError from '../components/HttpError';
 import Table from '../components/Table';
 import Filter from '../components/Filter';
 import { format } from 'date-fns';
@@ -118,13 +118,13 @@ export default class Runs implements m.Component, Fetchable<Run> {
     }
 
     fetch = (queryParam?: string) => {
-        RunModel.list.fetch(queryParam).then(() => {
+        RunModel.fetch(queryParam).then(() => {
             this.isLoading = false;
         });
     }
 
     oninit() {
-        RunModel.list.fetch().then(() => {
+        RunModel.fetch().then(() => {
             this.isLoading = false;
         });
     }
@@ -133,7 +133,7 @@ export default class Runs implements m.Component, Fetchable<Run> {
         return (
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
-                    <HtmlError errorMessage={RunModel.list.error}>
+                    <HttpError>
                         <div className="row">
                             <div className="col-md-3">
                                 <Filter
@@ -144,13 +144,13 @@ export default class Runs implements m.Component, Fetchable<Run> {
                             </div>
                             <div className="col-md-9">
                                 <Table
-                                    data={RunModel.list.runs}
+                                    data={RunModel.list}
                                     columns={columns}
                                     class="font-sm"
                                 />
                             </div>
                         </div>
-                    </HtmlError>
+                    </HttpError>
                 </Spinner>
             </div>
         );

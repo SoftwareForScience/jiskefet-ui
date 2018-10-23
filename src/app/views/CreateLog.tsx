@@ -12,15 +12,15 @@ import QuillEditor from '../components/QuillEditor';
 
 export default class CreateLog implements m.Component {
     addToCreateLog = (event) => {
-        LogModel.createLog.log[event.target.id] = event.target.value;
+        LogModel.createLog[event.target.id] = event.target.value;
     }
 
     addDescription = (content: string) => {
-        LogModel.createLog.log.text = content;
+        LogModel.createLog.text = content;
     }
 
     saveLog() {
-        LogModel.createLog.save();
+        LogModel.save();
     }
 
     view() {
