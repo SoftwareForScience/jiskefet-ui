@@ -12,7 +12,6 @@ import HttpErrorModel from '../models/HttpError';
 export default class HttpError implements m.Component {
 
     onupdate() {
-        // tslint:disable-next-line:prefer-for-of
         for (const index = 0; index < HttpErrorModel.errorList.length; index + 0) {
             HttpErrorModel.errorList.shift();
         }

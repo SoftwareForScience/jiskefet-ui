@@ -123,29 +123,30 @@ export default class Logs implements m.Component, Fetchable<Log> {
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
                     <HttpError>
-                        <SuccessMessage />
-                        <div className="row">
-                            <div className="col-md-12">
-                                <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
-                                    {this.previewContent ? 'Hide content' : 'Preview content'}
-                                </button>
+                        <SuccessMessage>
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
+                                        {this.previewContent ? 'Hide content' : 'Preview content'}
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-md-3">
-                                <Filter
-                                    inputFields={inputFields}
-                                    fetch={this.fetch}
-                                    route="logs"
-                                />
+                            <div className="row">
+                                <div className="col-md-3">
+                                    <Filter
+                                        inputFields={inputFields}
+                                        fetch={this.fetch}
+                                        route="logs"
+                                    />
+                                </div>
+                                <div className="col-md-9">
+                                    <Table
+                                        data={LogModel.list}
+                                        columns={this.columns}
+                                    />
+                                </div>
                             </div>
-                            <div className="col-md-9">
-                                <Table
-                                    data={LogModel.list}
-                                    columns={this.columns}
-                                />
-                            </div>
-                        </div>
+                        </SuccessMessage>
                     </HttpError>
                 </Spinner>
             </div>
