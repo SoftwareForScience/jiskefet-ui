@@ -7,7 +7,6 @@
  */
 
 import * as m from 'mithril';
-import { API_URL } from '../constants';
 
 /**
  * Interface with the fields for fetching one or more Log entries.
@@ -43,7 +42,7 @@ const LogModel = {
     async fetch(query?: string) {
         return m.request({
             method: 'GET',
-            url: `${API_URL}logs${query ? `?${query}` : ''}`,
+            url: `${process.env.API_URL}logs${query ? `?${query}` : ''}`,
             withCredentials: false
         }).then((result: any) => {
             this.list = result;
@@ -52,7 +51,7 @@ const LogModel = {
     async fetchOne(id: number) {
         return m.request({
             method: 'GET',
-            url: `${API_URL}logs/${id}`,
+            url: `${process.env.API_URL}logs/${id}`,
             withCredentials: false
         }).then((result: any) => {
             this.current = result;
@@ -62,7 +61,7 @@ const LogModel = {
         LogModel.createLog.origin = 'human';
         return m.request<Log>({
             method: 'POST',
-            url: `${API_URL}logs`,
+            url: `${process.env.API_URL}logs`,
             data: LogModel.createLog,
             withCredentials: false
         });

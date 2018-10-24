@@ -7,7 +7,6 @@
  */
 
 import * as m from 'mithril';
-import { API_URL } from '../constants';
 
 export interface Run {
     runNumber: number;
@@ -33,7 +32,7 @@ const RunModel = {
     async fetch(query?: string) {
         return m.request({
             method: 'GET',
-            url: `${API_URL}runs${query ? `?${query}` : ''}`,
+            url: `${process.env.API_URL}runs${query ? `?${query}` : ''}`,
             withCredentials: false
         }).then((result: any) => {
             this.list = result;
@@ -42,7 +41,7 @@ const RunModel = {
     fetchById(id: number) {
         return m.request<Run>({
             method: 'GET',
-            url: `${API_URL}runs/${id}`,
+            url: `${process.env.API_URL}runs/${id}`,
             withCredentials: false
         }).then((result: any) => {
             this.current = result;
