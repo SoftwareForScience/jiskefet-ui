@@ -1,0 +1,188 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+ 
+.logo {
+    margin-right: 12px;
+    width: 23px;
+}
+
+.jiskefet-navbar {
+    background-color: #1f201f;
+    box-shadow: 0px 1px 5px #0000006e;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+}
+
+.jiskefet-navbar-text {
+    font-size: 0;
+}
+
+.unstyled-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    float: right;
+    padding-left: 3rem;
+}
+
+/* Toggle Styles */
+
+#wrapper {
+    padding-left: 0;
+    margin-top: 3.5em;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    position: fixed;
+    left: 250px;
+    z-index: 1;
+    overflow-y: auto;
+    margin-left: -250px;
+    width: 0;
+    height: 100%;
+    background: #1f201f;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    padding: 15px;
+    width: 100%;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    width: 250px;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav>.sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav>.sidebar-brand a {
+    color: gray;
+}
+
+.sidebar-nav>.sidebar-brand a:hover {
+    background: none;
+    color: #fff;
+}
+
+/* Media queries */
+
+@media (min-width: 768px) {
+
+    .jiskefet-navbar-text {
+        font-size: 1.25rem;
+    }
+
+    #wrapper {
+        padding-left: 250px;
+    }
+    
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Navbar right*/
+
+    .navbar-collapse {
+        position: absolute;
+        top: 54px;
+        right: 0;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-bottom: 15px;
+        width: 100%;
+    }
+
+    .navbar-collapse.collapsing {
+        height: auto;
+        -webkit-transition: right 0.3s ease;
+        -o-transition: right 0.3s ease;
+        -moz-transition: right 0.3s ease;
+        transition: right 0.3s ease;
+        right: -100%;
+    }
+
+    .navbar-collapse.show {
+        right: 0;
+        -webkit-transition: right 0.3s ease-in;
+        -o-transition: right 0.3s ease-in;
+        -moz-transition: right 0.3s ease-in;
+        transition: right 0.3s ease-in;
+    }
+
+    .unstyled-button {
+        padding: 0.5rem 0.75rem;
+        font-size: 1.25rem;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.5);
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        float: right;
+    }
+}
