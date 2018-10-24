@@ -9,12 +9,13 @@
 import * as m from 'mithril';
 import LogModel, { Log } from '../models/Log';
 import Spinner from '../components/Spinner';
-import SuccessMessage from '../components/SuccessMessage';
 import Table from '../components/Table';
 import Fetchable from '../interfaces/Fetchable';
 import QuillViewer from '../components/QuillViewer';
 import Filter from '../components/Filter';
 import { format } from 'date-fns';
+import HttpError from '../components/HttpError';
+import SuccessMessage from '../components/SuccessMessage';
 
 const columns = [
     {
@@ -121,29 +122,31 @@ export default class Logs implements m.Component, Fetchable<Log> {
         return (
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
-                <SuccessMessage />
-                    <div className="row">
-                        <div className="col-md-12">
-                            <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
-                                {this.previewContent ? 'Hide content' : 'Preview content'}
-                            </button>
+                    <HttpError>
+                        <SuccessMessage />
+                        <div className="row">
+                            <div className="col-md-12">
+                                <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
+                                    {this.previewContent ? 'Hide content' : 'Preview content'}
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-3">
-                            <Filter
-                                inputFields={inputFields}
-                                fetch={this.fetch}
-                                route="logs"
-                            />
+                        <div className="row">
+                            <div className="col-md-3">
+                                <Filter
+                                    inputFields={inputFields}
+                                    fetch={this.fetch}
+                                    route="logs"
+                                />
+                            </div>
+                            <div className="col-md-9">
+                                <Table
+                                    data={LogModel.list}
+                                    columns={this.columns}
+                                />
+                            </div>
                         </div>
-                        <div className="col-md-9">
-                            <Table
-                                data={LogModel.list}
-                                columns={this.columns}
-                            />
-                        </div>
-                    </div>
+                    </HttpError>
                 </Spinner>
             </div>
         );

@@ -20,7 +20,7 @@ export default class CreateLog implements m.Component {
     }
 
     saveLog() {
-        LogModel.save();
+        LogModel.save().then(() => m.route.set('/Logs'));
     }
 
     view() {

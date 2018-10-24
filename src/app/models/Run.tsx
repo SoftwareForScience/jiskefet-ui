@@ -9,6 +9,7 @@
 import * as m from 'mithril';
 import { API_URL } from '../constants';
 import SuccesModel from './Succes';
+import HttpErrorModel from './HttpError';
 
 export interface Run {
     runNumber: number;
@@ -30,19 +31,19 @@ export interface Run {
 
 const RunModel = {
     list: [] as Run[],
-    current: {} as Run,
-    createRun: {} as Run,
     async fetch(query?: string) {
         return m.request({
             method: 'GET',
             url: `${API_URL}runs${query ? `?${query}` : ''}`,
             withCredentials: false
         }).then((result: any) => {
-            this.list = result;
-            SuccesModel.list.push('Succesfully fetched runs');
+            RunModel.list = result;
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
         });
     },
-    save() {
+    createRun: {} as Run,
+    async save() {
         return m.request<Run>({
             method: 'POST',
             url: `${API_URL}runs`,
@@ -50,16 +51,20 @@ const RunModel = {
             withCredentials: false
         }).then(() => {
             SuccesModel.list.push('Succesfully saved run');
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
         });
     },
-    fetchById(id: number) {
+    current: {} as Run,
+    async fetchById(id: number) {
         return m.request<Run>({
             method: 'GET',
             url: `${API_URL}runs/${id}`,
             withCredentials: false
         }).then((result: any) => {
-            this.current = result;
-            SuccesModel.list.push('Succesfully fetched run');
+            RunModel.current = result;
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
         });
     },
 };
