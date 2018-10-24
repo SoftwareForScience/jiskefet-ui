@@ -9,8 +9,8 @@
 import * as m from 'mithril';
 import LogModel, { Log } from '../models/Log';
 import Spinner from '../components/Spinner';
+import SuccessMessage from '../components/SuccessMessage';
 import Table from '../components/Table';
-import Feedback from '../components/Feedback';
 import Fetchable from '../interfaces/Fetchable';
 import QuillViewer from '../components/QuillViewer';
 import Filter from '../components/Filter';
@@ -77,21 +77,10 @@ const inputFields = [
 
 export default class Logs implements m.Component, Fetchable<Log> {
     private isLoading: boolean;
-    private hasFetched: boolean;
-    private hasFailed: boolean;
-    private failedMessage: any;
-    private succesMessage: any;
-    private errors: any;
     private previewContent: boolean;
     private columns: any[];
 
     constructor() {
-        this.isLoading = true;
-        this.failedMessage = 'failed to get data!';
-        this.succesMessage = 'succes getting data!';
-        this.errors = ''; // For testing purposes!
-        this.hasFetched = true;
-        this.hasFailed = false;
         this.isLoading = true;
         this.previewContent = false;
         this.columns = columns;
@@ -104,10 +93,7 @@ export default class Logs implements m.Component, Fetchable<Log> {
     }
 
     oninit() {
-        LogModel.fetch().then(() => this.isLoading = false).catch((e) => this.errors += e);
-        if (this.errors) {
-            this.hasFailed = true;
-        }
+        LogModel.fetch().then(() => this.isLoading = false);
     }
 
     togglePreview = () => {
@@ -135,6 +121,7 @@ export default class Logs implements m.Component, Fetchable<Log> {
         return (
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
+                <SuccessMessage />
                     <div className="row">
                         <div className="col-md-12">
                             <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
@@ -158,8 +145,6 @@ export default class Logs implements m.Component, Fetchable<Log> {
                         </div>
                     </div>
                 </Spinner>
-                <Feedback hasFetched={this.hasFetched} hasFailed={this.hasFailed} succesMessage={this.succesMessage} failedMessage={this.failedMessage} />
-                {/*<ListErrors errors={this.errors} />  For testing purposes! */}
             </div>
         );
     }

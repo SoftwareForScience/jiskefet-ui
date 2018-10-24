@@ -8,6 +8,7 @@
 
 import * as m from 'mithril';
 import { API_URL } from '../constants';
+import SuccesModel from './Succes';
 
 export interface Run {
     runNumber: number;
@@ -37,8 +38,8 @@ const RunModel = {
             url: `${API_URL}runs${query ? `?${query}` : ''}`,
             withCredentials: false
         }).then((result: any) => {
-            console.log('fetching in run');
             this.list = result;
+            SuccesModel.list.push('Succesfully fetched runs');
         });
     },
     save() {
@@ -47,6 +48,8 @@ const RunModel = {
             url: `${API_URL}runs`,
             data: RunModel.createRun,
             withCredentials: false
+        }).then(() => {
+            SuccesModel.list.push('Succesfully saved run');
         });
     },
     fetchById(id: number) {
@@ -56,6 +59,7 @@ const RunModel = {
             withCredentials: false
         }).then((result: any) => {
             this.current = result;
+            SuccesModel.list.push('Succesfully fetched run');
         });
     },
 };

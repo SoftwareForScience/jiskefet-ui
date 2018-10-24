@@ -8,6 +8,7 @@
 
 import * as m from 'mithril';
 import { API_URL } from '../constants';
+import SuccesModel from './Succes';
 
 export interface Log {
     logId?: number;
@@ -31,6 +32,7 @@ const LogModel = {
             withCredentials: false
         }).then((result: any) => {
             this.list = result;
+            SuccesModel.list.push('Succesfully fetched logs');
         }).catch(() => {
             const result = dummyLogList;
             this.list = result;
@@ -43,6 +45,7 @@ const LogModel = {
             withCredentials: false
         }).then((result: any) => {
             this.current = result;
+            SuccesModel.list.push('Succesfully fetched log');
         }).catch(() => {
             const result = dummyLogList[0];
             this.current = result;
@@ -56,6 +59,8 @@ const LogModel = {
             url: `${API_URL}logs`,
             data: LogModel.createLog,
             withCredentials: false
+        }).then(() => {
+            SuccesModel.list.push('Succesfully saved log');
         });
     }
 };
