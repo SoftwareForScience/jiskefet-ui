@@ -7,6 +7,7 @@
  */
 
 import * as m from 'mithril';
+import HttpErrorModel from './HttpError';
 
 export interface Run {
     runNumber: number;
@@ -36,15 +37,19 @@ const RunModel = {
             withCredentials: false
         }).then((result: any) => {
             this.list = result;
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
         });
     },
-    fetchById(id: number) {
+    async fetchById(id: number) {
         return m.request<Run>({
             method: 'GET',
             url: `${process.env.API_URL}runs/${id}`,
             withCredentials: false
         }).then((result: any) => {
-            this.current = result;
+            RunModel.current = result;
+        }).catch((e: any) => {
+            HttpErrorModel.errorList.push(e);
         });
     },
 };
