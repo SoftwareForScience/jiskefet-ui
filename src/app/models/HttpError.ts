@@ -6,8 +6,33 @@
  * copied verbatim in the file "LICENSE"
  */
 
+import { HttpError } from '../interfaces/HttpError';
+
+/**
+ * This module stores http errors from failed api calls.
+ */
+
+/**
+ * Contains a list of http errors from failed api calls.
+ * Should not be modified directly, instead use the 'add' function inside HttpErrorModel.
+ */
+let errorList: HttpError[] = [];
+
 const HttpErrorModel = {
-    errorList: [] as string[],
+    /**
+     * Add an error to the list
+     */
+    add: (a: HttpError): void => {
+        errorList.push(a);
+    },
+    /**
+     * Returns the list of errors and empties it.
+     */
+    getErrors: (): HttpError[] => {
+        const tempErrorList: HttpError[] = errorList;
+        errorList = [];
+        return tempErrorList;
+    }
 };
 
 type HttpErrorModel = typeof HttpErrorModel;

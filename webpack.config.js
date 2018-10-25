@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require('path');
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
     entry: ['./src/app/app.tsx'],
@@ -26,6 +27,7 @@ module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
             "window.katex": "katex" // formulas/latex plugin for Quill wysiwyg
-        })
+        }),
+        new Dotenv()
     ]
 }

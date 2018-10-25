@@ -7,20 +7,20 @@
  */
 
 import * as m from 'mithril';
-import LogModel from '../models/Log';
 import QuillEditor from '../components/QuillEditor';
+import State from '../models/State';
 
 export default class CreateLog implements m.Component {
     addToCreateLog = (event) => {
-        LogModel.createLog[event.target.id] = event.target.value;
+        State.LogModel.createLog[event.target.id] = event.target.value;
     }
 
     addDescription = (content: string) => {
-        LogModel.createLog.text = content;
+        State.LogModel.createLog.text = content;
     }
 
     saveLog() {
-        LogModel.save();
+        State.LogModel.save();
     }
 
     view() {
@@ -56,17 +56,6 @@ export default class CreateLog implements m.Component {
                                     </select>
                                 </div>
                             </div>
-                            {/* <div class="form-group">
-                                <label for="text">Description:</label>
-                                <textarea
-                                    id="text"
-                                    class="form-control"
-                                    placeholder="Description"
-                                    required
-                                    oninput={this.addToCreateLog}
-                                    rows="5"
-                                />
-                            </div> */}
                             <div class="form-group">
                                 <label for="description">Description:</label>
                                 <input name="description" type="hidden" />

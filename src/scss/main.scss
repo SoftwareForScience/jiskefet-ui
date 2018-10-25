@@ -6,29 +6,19 @@
  * copied verbatim in the file "LICENSE"
  */
 
-// Include all of Bootstrap
-@import "node_modules/bootstrap/scss/bootstrap";
+@charset 'utf-8';
 
-// Include QuillEditor stylesheets
-@import url("https://cdn.quilljs.com/1.3.6/quill.snow.css");
-@import "../../node_modules/highlightjs/styles/monokai-sublime.css";
-@import "../../node_modules/katex/dist/katex.min.css";
-// @import '../../node_modules/katex/dist/katex.css';
+/* Vendor Dependencies */
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import url('https://cdn.quilljs.com/1.3.6/quill.snow.css');
+@import '../../node_modules/highlightjs/styles/monokai-sublime.css';
+@import '../../node_modules/katex/dist/katex.min.css';
 
-
-@import 'Log.scss';
-@import 'NavBar.scss';
-@import 'Spinner.scss';
-@import 'QuillEditor.scss';
-
-$body-bg-color: #ffffff;
-$body-text-color: #4d4d4d;
-
-body {
-    background-color: $body-bg-color;
-    color: $body-text-color;
-}
-
-.font-sm {
-    font-size: 11px;
-}
+/* Authored Dependencies */
+@import './abstracts/variables';
+@import './layout/NavBar';
+@import './layout/Sidebar';
+@import './layout/Layout';
+@import './components/Spinner';
+@import './components/QuillEditor';
+@import './pages/Log';

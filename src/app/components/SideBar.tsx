@@ -8,23 +8,27 @@
 
 import * as m from 'mithril';
 import NavItem from './NavItem';
+import State from '../models/State';
 
 export default class SideBar implements m.Component {
+    class: string;
+    showSidebar: boolean;
+
+    constructor(vnode: any) {
+        this.class = vnode.attrs.class || '';
+        this.showSidebar = State.AppState.showSidebar;
+    }
+
     view() {
         return (
-            <div class="container-fluid">
-                <div id="sidebar-wrapper">
-                    <ul class="sidebar-nav">
-                        <li class="sidebar-brand">
-                            <ul class="mr-auto list-unstyled components">
-                                <NavItem href="/logs" name="Logs" />
-                                <NavItem href="/runs" name="Runs" />
-                                <NavItem href="/logs/create" name="Create new log" />
-                                <NavItem href="/runs/create" name="Create new run" />
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>);
+            // Sidebar
+            <nav class={`jf-sidebar ${this.class} ${State.AppState.showSidebar ? '' : 'jf-sidebar-active'}`}>
+                <ul class="list-unstyled components">
+                    <NavItem href="/logs" name="Logs" />
+                    <NavItem href="/runs" name="Runs" />
+                    <NavItem href="/logs/create" name="Create new log" />
+                </ul>
+            </nav>
+        );
     }
 }
