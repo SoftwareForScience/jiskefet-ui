@@ -7,12 +7,12 @@
  */
 
 import * as m from 'mithril';
-import AppState from '../models/AppState';
+import State from '../models/State';
 
 export default class NavBar implements m.Component {
 
     toggleSidebar = () => {
-        AppState.showSidebar = !AppState.showSidebar;
+        State.AppState.showSidebar = !State.AppState.showSidebar;
     }
 
     view() {

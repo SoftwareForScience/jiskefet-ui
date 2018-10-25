@@ -7,49 +7,44 @@
  */
 
 import * as m from 'mithril';
-import HttpErrorModel from './HttpError';
+import { HttpError } from '../interfaces/HttpError';
+import { Run } from '../interfaces/Run';
+import State from './State';
 
-export interface Run {
-    runNumber: number;
-    timeO2Start: Date | string;
-    timeTrgStart: Date | string;
-    timeTrgEnd: Date | string;
-    timeO2End: Date | string;
-    runType: string[];
-    runQuality: string[];
-    activityId: string;
-    nDetectors: number;
-    nFlps: number;
-    nEpns: number;
-    nTimeframes: number;
-    nSubtimeframes: number;
-    bytesReadOut: number;
-    bytesTimeframeBuilder: number;
-}
-
+/**
+ * Stores the state around Run entities.
+ */
 const RunModel = {
+    isFetchingRuns: false as boolean,
+    isFetchingRun: false as boolean,
     list: [] as Run[],
     current: {} as Run,
     async fetch(query?: string) {
+        RunModel.isFetchingRuns = true;
         return m.request({
             method: 'GET',
             url: `${process.env.API_URL}runs${query ? `?${query}` : ''}`,
             withCredentials: false
         }).then((result: any) => {
+            RunModel.isFetchingRuns = false;
             this.list = result;
-        }).catch((e: any) => {
-            HttpErrorModel.errorList.push(e);
+        }).catch((e: HttpError) => {
+            RunModel.isFetchingRuns = false;
+            State.HttpErrorModel.add(e);
         });
     },
     async fetchById(id: number) {
+        RunModel.isFetchingRun = true;
         return m.request<Run>({
             method: 'GET',
             url: `${process.env.API_URL}runs/${id}`,
             withCredentials: false
         }).then((result: any) => {
+            RunModel.isFetchingRun = false;
             RunModel.current = result;
-        }).catch((e: any) => {
-            HttpErrorModel.errorList.push(e);
+            }).catch((e: HttpError) => {
+            RunModel.isFetchingRun = false;
+            State.HttpErrorModel.add(e);
         });
     },
 };

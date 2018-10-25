@@ -7,8 +7,8 @@
  */
 
 import * as m from 'mithril';
-import AppState from '../models/AppState';
 import NavItem from './NavItem';
+import State from '../models/State';
 
 export default class SideBar implements m.Component {
     class: string;
@@ -16,13 +16,13 @@ export default class SideBar implements m.Component {
 
     constructor(vnode: any) {
         this.class = vnode.attrs.class || '';
-        this.showSidebar = AppState.showSidebar;
+        this.showSidebar = State.AppState.showSidebar;
     }
 
     view() {
         return (
             // Sidebar
-            <nav class={`jf-sidebar ${this.class} ${AppState.showSidebar ? '' : 'jf-sidebar-active'}`}>
+            <nav class={`jf-sidebar ${this.class} ${State.AppState.showSidebar ? '' : 'jf-sidebar-active'}`}>
                 <ul class="list-unstyled components">
                     <NavItem href="/logs" name="Logs" />
                     <NavItem href="/runs" name="Runs" />

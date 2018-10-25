@@ -7,11 +7,12 @@
  */
 
 /**
- * Contains the general state of the app, e.g. UI state.
+ * An error received from, for example, a failed API call.
+ * Returned in the catch portion of the Promise m.request().
  */
-const AppState = {
-    showSidebar: true as boolean,
-};
-
-type AppState = typeof AppState;
-export default AppState;
+export interface HttpError {
+    error: string;
+    statuscode: number;
+    message: string;
+    stack: string;
+}
