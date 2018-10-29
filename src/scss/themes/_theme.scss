@@ -6,9 +6,13 @@
  * copied verbatim in the file "LICENSE"
  */
 
-const SuccesModel = {
-    list: [] as string[]
-};
+@import '../abstracts/variables';
 
-type SuccesModel = typeof SuccesModel;
-export default SuccesModel;
+body {
+    background-color: $body-bg-color;
+    color: $body-text-color;
+}
+
+.font-sm {
+    font-size: $font-sm;
+}

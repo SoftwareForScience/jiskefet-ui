@@ -7,15 +7,16 @@
  */
 
 import * as m from 'mithril';
-import LogModel, { Log } from '../models/Log';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
 import Fetchable from '../interfaces/Fetchable';
 import QuillViewer from '../components/QuillViewer';
 import Filter from '../components/Filter';
 import { format } from 'date-fns';
-import HttpError from '../components/HttpError';
 import SuccessMessage from '../components/SuccessMessage';
+import HttpErrorAlert from '../components/HttpErrorAlert';
+import { Log } from '../interfaces/Log';
+import State from '../models/State';
 
 const columns = [
     {
@@ -77,27 +78,30 @@ const inputFields = [
 ];
 
 export default class Logs implements m.Component, Fetchable<Log> {
-    private isLoading: boolean;
     private previewContent: boolean;
     private columns: any[];
 
     constructor() {
-        this.isLoading = true;
         this.previewContent = false;
         this.columns = columns;
     }
 
-    fetch = (queryParam: string) => {
-        LogModel.fetch(queryParam).then(() => {
-            this.isLoading = false;
-        });
+    /**
+     * Fetch logs with the query param given.
+     */
+    fetch = (queryParam: string = ''): void => {
+        State.LogModel.fetch(queryParam);
     }
 
     oninit() {
-        LogModel.fetch().then(() => this.isLoading = false);
+        this.fetch();
     }
 
-    togglePreview = () => {
+    /**
+     * When previewContent is true, adds a column to this.columns
+     * that shows a preview of the contents of a Log.
+     */
+    togglePreview = (): void => {
         this.previewContent = !this.previewContent;
         if (this.previewContent) {
             this.columns = [
@@ -118,36 +122,35 @@ export default class Logs implements m.Component, Fetchable<Log> {
         m.redraw();
     }
 
-    view(vnode: any) {
+    view() {
         return (
             <div className="container-fluid">
-                <Spinner isLoading={this.isLoading}>
-                    <HttpError>
-                        <SuccessMessage>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
-                                        {this.previewContent ? 'Hide content' : 'Preview content'}
-                                    </button>
-                                </div>
+                <Spinner isLoading={State.LogModel.isFetchingLogs}>
+                    <HttpErrorAlert>
+                        <SuccessMessage />
+                        <div className="row">
+                            <div className="col-md-12">
+                                <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
+                                    {this.previewContent ? 'Hide content' : 'Preview content'}
+                                </button>
                             </div>
-                            <div className="row">
-                                <div className="col-md-3">
-                                    <Filter
-                                        inputFields={inputFields}
-                                        fetch={this.fetch}
-                                        route="logs"
-                                    />
-                                </div>
-                                <div className="col-md-9">
-                                    <Table
-                                        data={LogModel.list}
-                                        columns={this.columns}
-                                    />
-                                </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3 mt-2">
+                                <Filter
+                                    inputFields={inputFields}
+                                    fetch={this.fetch}
+                                    route="logs"
+                                />
                             </div>
-                        </SuccessMessage>
-                    </HttpError>
+                            <div className="col-md-9 mt-2">
+                                <Table
+                                    data={State.LogModel.list}
+                                    columns={this.columns}
+                                />
+                            </div>
+                        </div>
+                    </HttpErrorAlert>
                 </Spinner>
             </div>
         );

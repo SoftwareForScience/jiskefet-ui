@@ -7,27 +7,22 @@
  */
 
 import * as m from 'mithril';
-import SuccesModel from '../models/Succes';
+import State from '../models/State';
 
 export default class SuccessMessage implements m.Component {
 
-    onremove() {
-        for (const index = 0; index < SuccesModel.list.length; index + 0) {
-            SuccesModel.list.shift();
-        }
-    }
-
     view(vnode: any) {
+        const successMessages: string[] = State.SuccessModel.getSuccessMessages();
         return (
             <div>
-                {SuccesModel.list &&
+                {successMessages &&
                     <div className="row">
                         <div className="col-md-12">
                             <div className="text-center">
-                                {SuccesModel.list.map(e =>
+                                {successMessages.map(e =>
                                     // tslint:disable-next-line:jsx-key
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <strong>{e.toString()}</strong>
+                                        <strong>{e}</strong>
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -37,7 +32,6 @@ export default class SuccessMessage implements m.Component {
                         </div>
                     </div>
                 }
-                {vnode.children}
             </div>
         );
     }

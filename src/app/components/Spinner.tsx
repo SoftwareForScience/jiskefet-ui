@@ -21,7 +21,7 @@ export default class Spinner implements m.Component {
                 {vnode.attrs.isLoading ?
                     <div className="row">
                         <div className="col-md-12">
-                            <div className="loader text-center" />
+                            <div className="jf-loader text-center" />
                         </div>
                     </div>
                     : vnode.children

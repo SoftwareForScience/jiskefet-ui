@@ -17,6 +17,8 @@ And the **Ansible playbook** to deploy the application can be found here: https:
 $ npm install
 ```
 
+Copy .env.dist as .env and set your own values.
+
 ## Running the app
 
 ```bash

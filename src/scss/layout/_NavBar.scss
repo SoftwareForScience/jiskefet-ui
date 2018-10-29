@@ -1,0 +1,46 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+ 
+ @import '../abstracts/variables';
+
+.jf-navbar {
+    background-color: $main-theme-color;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    width: 100%;
+    
+    .jf-hamburger-button {
+        font-size: 1.25rem;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.5);
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        float: right;
+        margin: 0 16px 0 0;
+        outline: none;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:hover path {
+            fill: $body-bg-color;
+            transition: all $default-transition-time;
+        }
+
+        &:active path {
+            fill: $main-theme-color;
+            transition: all $default-transition-time;
+            outline: none;
+        }
+    }
+}
+
+

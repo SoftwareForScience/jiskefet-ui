@@ -1,0 +1,74 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+
+ @import '../abstracts/variables';
+
+.jf-sidebar {
+    width: $sidebar-width;
+    position: fixed;
+    top: $topbar-offset;
+    left: 0;
+    height: 100vh;
+    z-index: 999;
+    transition: all $default-transition-time;
+    background-color: $main-theme-color;
+    color: $body-text-color;
+
+    &.jf-sidebar-active {
+        margin-left: (-$sidebar-width);
+    }
+
+    a, a:hover, a:focus {
+        color: inherit;
+        text-decoration: none;
+        transition: all $default-transition-time;
+    }
+
+    .components {
+        padding: 20px 0;
+    }
+
+    ul {
+        p {
+            color: $main-theme-secondary-color;
+            padding: 10px;
+        }
+        
+        li a {
+            padding: 10px;
+            font-size: 1.1em;
+            display: block;
+        }
+
+        li a:hover {
+            color: $main-theme-color;
+            background: $main-theme-secondary-color;
+        }
+
+        li.active > a, a[aria-expanded="true"] {
+            color: $main-theme-secondary-color;
+            background-color: $body-text-color;
+        }
+    }
+
+    &li {
+        text-indent: 20px;
+        line-height: 40px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .jf-sidebar {
+        margin-left: (-$sidebar-width);
+        
+        &.jf-sidebar-active {
+            margin-left: 0;
+        }
+    }
+}

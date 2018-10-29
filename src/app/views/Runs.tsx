@@ -7,13 +7,14 @@
  */
 
 import * as m from 'mithril';
-import RunModel, { Run } from '../models/Run';
 import Spinner from '../components/Spinner';
-import HttpError from '../components/HttpError';
+import HttpErrorAlert from '../components/HttpErrorAlert';
 import Table from '../components/Table';
 import Filter from '../components/Filter';
 import { format } from 'date-fns';
 import Fetchable from '../interfaces/Fetchable';
+import { Run } from '../interfaces/Run';
+import State from '../models/State';
 
 const columns = [
     {
@@ -111,46 +112,36 @@ const inputFields = [
 ];
 
 export default class Runs implements m.Component, Fetchable<Run> {
-    private isLoading: boolean;
-
-    constructor() {
-        this.isLoading = true;
-    }
-
     fetch = (queryParam?: string) => {
-        RunModel.fetch(queryParam).then(() => {
-            this.isLoading = false;
-        });
+        State.RunModel.fetch(queryParam);
     }
 
     oninit() {
-        RunModel.fetch().then(() => {
-            this.isLoading = false;
-        });
+        this.fetch();
     }
 
     view() {
         return (
             <div className="container-fluid">
-                <Spinner isLoading={this.isLoading}>
-                    <HttpError>
+                <Spinner isLoading={State.RunModel.isFetchingRuns}>
+                    <HttpErrorAlert>
                         <div className="row">
-                            <div className="col-md-3">
+                            <div className="col-md-3 mt-2">
                                 <Filter
                                     inputFields={inputFields}
                                     fetch={this.fetch}
                                     route="runs"
                                 />
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-9 mt-2">
                                 <Table
-                                    data={RunModel.list}
+                                    data={State.RunModel.list}
                                     columns={columns}
                                     class="font-sm"
                                 />
                             </div>
                         </div>
-                    </HttpError>
+                    </HttpErrorAlert>
                 </Spinner>
             </div>
         );

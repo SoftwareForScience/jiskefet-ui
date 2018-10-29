@@ -65,7 +65,7 @@ export default class Filter implements m.Component {
      */
     updateRoute(filters: object, route: string) {
         const queryString = m.buildQueryString(filters);
-        m.route.set(`/${route}/?${queryString}`);
+        m.route.set(`/${route}?${queryString}`);
     }
 
     /**
