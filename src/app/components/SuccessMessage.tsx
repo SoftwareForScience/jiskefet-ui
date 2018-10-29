@@ -10,9 +10,14 @@ import * as m from 'mithril';
 import State from '../models/State';
 
 export default class SuccessMessage implements m.Component {
+    successMessages: string[];
 
-    view(vnode: any) {
-        const successMessages: string[] = State.SuccessModel.getSuccessMessages();
+    constructor() {
+        this.successMessages = State.SuccessModel.getSuccessMessages();
+    }
+
+    view() {
+        const successMessages: string[] = this.successMessages;
         return (
             <div>
                 {successMessages &&
