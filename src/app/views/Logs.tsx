@@ -9,10 +9,11 @@
 import * as m from 'mithril';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
-import { format } from 'date-fns';
+import Fetchable from '../interfaces/Fetchable';
 import QuillViewer from '../components/QuillViewer';
 import Filter from '../components/Filter';
-import Fetchable from '../interfaces/Fetchable';
+import { format } from 'date-fns';
+import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import { Log } from '../interfaces/Log';
 import State from '../models/State';
@@ -126,6 +127,7 @@ export default class Logs implements m.Component, Fetchable<Log> {
             <div className="container-fluid">
                 <Spinner isLoading={State.LogModel.isFetchingLogs}>
                     <HttpErrorAlert>
+                        <SuccessMessage />
                         <div className="row">
                             <div className="col-md-12">
                                 <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>

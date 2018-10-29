@@ -9,6 +9,7 @@
 import * as m from 'mithril';
 import { Log, LogCreate } from '../interfaces/Log';
 import State from './State';
+import SuccesModel from './Success';
 
 /**
  * Stores the state around Log entities.
@@ -54,6 +55,8 @@ const LogModel = {
             url: `${process.env.API_URL}logs`,
             data: LogModel.createLog,
             withCredentials: false
+        }).then(() => {
+            SuccesModel.add('Successfully saved log.');
         }).catch((e: any) => {
             State.HttpErrorModel.add(e);
         });

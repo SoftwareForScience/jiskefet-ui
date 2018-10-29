@@ -10,6 +10,7 @@ import LogModel from './Log';
 import RunModel from './Run';
 import AppState from './AppState';
 import HttpErrorModel from './HttpError';
+import SuccessModel from './Success';
 
 /**
  * The single state container for the application.
@@ -18,6 +19,7 @@ import HttpErrorModel from './HttpError';
 export default {
     AppState,
     HttpErrorModel,
+    SuccessModel,
     LogModel,
     RunModel
 };

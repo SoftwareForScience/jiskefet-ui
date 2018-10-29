@@ -29,6 +29,7 @@ export default class CreateLog implements m.Component {
                 onsubmit={e => {
                     e.preventDefault();
                     this.saveLog();
+                    m.route.set('/Logs');
                 }}
             >
                 <div class="container-fluid">
