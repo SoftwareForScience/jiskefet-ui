@@ -12,6 +12,80 @@ import QuillViewer from '../components/QuillViewer';
 import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
+import Table from '../components/Table';
+import { Run } from '../interfaces/Run';
+
+const runColumns = [
+    {
+        header: 'Run id',
+        accessor: 'runNumber',
+        cell: row => (
+            <a href={`/runs/${row.runNumber}`} oncreate={m.route.link}>
+                {row.runNumber}
+            </a>
+        )
+    },
+    {
+        header: 'Time 02 start',
+        accessor: 'timeO2Start',
+        cell: (row: Run) => (row.timeO2Start ? format(row.timeO2Start, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+    },
+    {
+        header: 'Time 02 end',
+        accessor: 'timeO2End',
+        cell: (row: Run) => (row.timeO2End ? format(row.timeO2End, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+    },
+    {
+        header: 'Time trg start',
+        accessor: 'timeTrgStart',
+        cell: (row: Run) => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+    },
+    {
+        header: 'Time trg end',
+        accessor: 'timeTrgEnd',
+        cell: (row: Run) => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+    },
+    {
+        header: 'Activity id',
+        accessor: 'activityId'
+    },
+    {
+        header: 'Run type',
+        accessor: 'runType'
+    },
+    {
+        header: 'Run quality',
+        accessor: 'runQuality'
+    },
+    {
+        header: 'no. of detectors',
+        accessor: 'nDetectors'
+    },
+    {
+        header: 'no. of FLPs',
+        accessor: 'nFlps'
+    },
+    {
+        header: 'no. of EPNs',
+        accessor: 'nEpns'
+    },
+    {
+        header: 'no. of timeframes',
+        accessor: 'nTimeframes'
+    },
+    {
+        header: 'no. of sub-timeframes',
+        accessor: 'nSubtimeframes'
+    },
+    {
+        header: 'B read out',
+        accessor: 'bytesReadOut'
+    },
+    {
+        header: 'B timeframe builder',
+        accessor: 'bytesTimeframeBuilder'
+    },
+];
 
 export default class Log implements m.Component {
     private id: number;
@@ -64,8 +138,42 @@ export default class Log implements m.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer log-footer">
-                                        <QuillViewer id={State.LogModel.current.logId} content={State.LogModel.current.text} />
+                                    <a class="btn btn-link" data-toggle="collapse" href="#collapseFooter" role="button" aria-expanded="false" aria-controls="collapseFooter">&darr;</a>
+                                    <div class="collapse" id="collapseFooter">
+                                        <div class="card-footer log-footer">
+                                            <QuillViewer id={State.LogModel.current.logId} content={State.LogModel.current.text} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                <ul class="nav nav-pills flex-column flex-sm-row" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#runs" role="tab" data-toggle="tab">Runs</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#subsystems" role="tab" data-toggle="tab">Subsystems</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#users" role="tab" data-toggle="tab">Users</a>
+                                    </li>
+                                </ul>
+                                <br />
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane active" id="runs" aria-labelledby="runs-tab">
+                                        <Table
+                                            data={State.LogModel.current.runs}
+                                            columns={runColumns}
+                                        />
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
+                                        Not yet implemented
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="users" aria-labelledby="users-tab">
+                                        Not yet implemented
                                     </div>
                                 </div>
                             </div>
