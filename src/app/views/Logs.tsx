@@ -12,57 +12,11 @@ import Table from '../components/Table';
 import Fetchable from '../interfaces/Fetchable';
 import QuillViewer from '../components/QuillViewer';
 import Filter from '../components/Filter';
-import { format } from 'date-fns';
 import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import { Log } from '../interfaces/Log';
 import State from '../models/State';
-
-const columns = [
-    {
-        header: 'Log id',
-        accessor: 'logId'
-    },
-    {
-        header: 'Title',
-        accessor: 'title',
-        cell: (row: Log) => (
-            <a href={`/logs/${row.logId}`} oncreate={m.route.link}>
-                {row.title}
-            </a>
-        )
-    },
-    {
-        header: 'Sub-type',
-        accessor: 'subtype',
-        cell: (row: Log) => (
-            row.subtype === 'run' ?
-                (
-                    <div class="text-center">
-                        <span class="badge badge-warning">{row.subtype}</span>
-                    </div>
-                )
-                : row.subtype
-        )
-    },
-    {
-        header: 'Origin',
-        accessor: 'origin',
-        cell: (row: Log) => (
-            row.origin === 'human' ?
-                (
-                    <div class="text-center">
-                        <span class="badge badge-success">{row.origin}</span>
-                    </div>
-                )
-                : row.origin
-        )
-    }, {
-        header: 'Creation time',
-        accessor: 'creationTime',
-        cell: (row: Log) => (row.creationTime ? format(row.creationTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    }
-];
+import LogColumns from '../util/LogUtil';
 
 const inputFields = [
     {
@@ -83,7 +37,7 @@ export default class Logs implements m.Component, Fetchable<Log> {
 
     constructor() {
         this.previewContent = false;
-        this.columns = columns;
+        this.columns = LogColumns;
     }
 
     /**
@@ -105,7 +59,7 @@ export default class Logs implements m.Component, Fetchable<Log> {
         this.previewContent = !this.previewContent;
         if (this.previewContent) {
             this.columns = [
-                ...columns,
+                ...LogColumns,
                 {
                     header: 'Preview of text',
                     accessor: 'text',
@@ -117,7 +71,7 @@ export default class Logs implements m.Component, Fetchable<Log> {
                 }
             ];
         } else {
-            this.columns = columns;
+            this.columns = LogColumns;
         }
         m.redraw();
     }

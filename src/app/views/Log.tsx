@@ -17,18 +17,16 @@ import RunColumns from '../util/RunUtil';
 
 export default class Log implements m.Component {
     private id: number;
-    private isLoading: boolean;
 
     constructor(vnode: any) {
         this.id = vnode.attrs.id;
-        this.isLoading = true;
-        State.LogModel.fetchOne(this.id).then(() => this.isLoading = false);
+        State.LogModel.fetchOne(this.id);
     }
 
     view() {
         return (
-            <div className="container">
-                <Spinner isLoading={this.isLoading}>
+            <div class="container">
+                <Spinner isLoading={State.LogModel.isFetchingLog}>
                     <HttpErrorAlert>
                         <div class="row">
                             <div class="col-md-12 mx-auto">
@@ -88,19 +86,28 @@ export default class Log implements m.Component {
                                     <li class="nav-item">
                                         <a class="nav-link" href="#users" role="tab" data-toggle="tab">Users</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#files" role="tab" data-toggle="tab">Files</a>
+                                    </li>
                                 </ul>
                                 <br />
                                 <div class="tab-content">
                                     <div role="tabpanel" class="tab-pane active" id="runs" aria-labelledby="runs-tab">
-                                        <Table
-                                            data={State.LogModel.current.runs}
-                                            columns={RunColumns}
-                                        />
+                                        {State.LogModel.current.runs && State.LogModel.current.runs.length > 0 ?
+                                            <Table
+                                                data={State.LogModel.current.runs}
+                                                columns={RunColumns}
+                                            />
+                                            : 'This log has no runs'
+                                        }
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
                                         Not yet implemented
                                     </div>
                                     <div role="tabpanel" class="tab-pane" id="users" aria-labelledby="users-tab">
+                                        Not yet implemented
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="files" aria-labelledby="files-tab">
                                         Not yet implemented
                                     </div>
                                 </div>
