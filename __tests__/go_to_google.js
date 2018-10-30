@@ -1,19 +1,20 @@
-const timeout = global.TIMEOUT;
+const timeout = global.TIME_OUT;
+const url = 'https://google.com';
 
 describe(
   '/ (Home Page)',
   () => {
     let page;
     beforeAll(async () => {
-      page = await global.BROWSER_INSTANCE.newPage();
-      await page.goto('https://google.com');
+      page = await global.BROWSER.newPage();
+      await page.goto(url);
     }, timeout);
 
     afterAll(async () => {
       await page.close();
     });
 
-    it('should load without error', async () => {
+    test(`If ${url} is reachable`, async () => {
       const text = await page.evaluate(() => document.body.textContent);
       expect(text).toContain('google');
     });

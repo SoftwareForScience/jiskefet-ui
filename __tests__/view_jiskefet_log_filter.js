@@ -1,13 +1,14 @@
-const timeout = global.TIMEOUT;
+const timeout = global.TIME_OUT;
+const url = 'http://145.92.8.34/';
 
 describe(
-  '/ (Home Page Logs Filter)',
+  'Home Page Logs Filter',
   () => {
     let page;
     beforeAll(async () => {
-      page = await global.BROWSER_INSTANCE.newPage();
+      page = await global.BROWSER.newPage();
       // replace url with .env url
-      await page.goto('http://192.168.253.157/#!/logs');
+      await page.goto(`${url}#!/logs`);
       await page.screenshot({ path: '__tests__/screenshots/jiskefet_home_page_logs_filter.png' });
     }, timeout);
 
@@ -15,18 +16,22 @@ describe(
       await page.close();
     });
 
-    it('should show the filter', async () => {
-      const expectedFiltersArray = ['logId', 'searchterm'];
-      const foundElementsArray = [];
+    test('should show the filter', async () => {
+      const expectedElementsArray = ['#logId', '#searchterm'];
+      let foundElementsCounter = 0;
 
-      await page.evaluate(() => {
-        foundElementsArray.push(document.getElementById('logId'));
-        foundElementsArray.push(document.getElementById('searchterm'));
-      });
+      console.log(`time out is ${timeout}`);
+      await Promise.all(expectedElementsArray.map(async (element) => {
+        console.log(`checking ${element}`);
+        if (await page.$(element) !== null) {
+          foundElementsCounter += 1;
+          console.log(`found ${element}`);
+        } else {
+          console.log(`unable to find ${element}`);
+        }
+      }));
 
-      await foundElementsArray.forEach((text) => {
-        expect(text).toContain(expectedFiltersArray);
-      });
+      await expect(foundElementsCounter).toBe(expectedElementsArray.length);
     });
   },
   timeout,

@@ -21,9 +21,10 @@ class PuppeteerEnvironment extends NodeEnvironment {
     if (!wsEndpoint) {
       throw new Error('wsEndpoint not found');
     }
-    this.global.BROWSER_INSTANCE = await puppeteer.connect({
+    this.global.BROWSER = await puppeteer.connect({
       browserWSEndpoint: wsEndpoint,
     });
+    this.global.TIME_OUT = 5000;
   }
 
   async teardown() {

@@ -1,13 +1,14 @@
-const timeout = global.TIMEOUT;
+const timeout = global.TIME_OUT;
+const url = 'http://145.92.8.34/';
 
 describe(
   '/ (Home Page)',
   () => {
     let page;
     beforeAll(async () => {
-      page = await global.BROWSER_INSTANCE.newPage();
+      page = await global.BROWSER.newPage();
       // replace url with .env url
-      await page.goto('http://192.168.253.157/');
+      await page.goto(url);
       await page.screenshot({ path: '__tests__/screenshots/jiskefet_home_page.png' });
     }, timeout);
 
@@ -15,7 +16,7 @@ describe(
       await page.close();
     });
 
-    it('should load without error', async () => {
+    test(`Check if ${url} is reachable`, async () => {
       const text = await page.evaluate(() => document.body.textContent);
       expect(text).toContain('Jiskefet');
     });
