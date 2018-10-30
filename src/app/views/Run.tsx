@@ -13,20 +13,19 @@ import Card from '../components/Card';
 import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
+import Table from '../components/Table';
+import LogColumns from '../util/LogUtil';
 
 export default class Run implements m.Component {
-    private isLoading: boolean;
     private id: number;
     private run: IRun;
 
     constructor(vnode: any) {
-        this.isLoading = true;
         this.id = vnode.attrs.id;
     }
 
     oninit() {
         State.RunModel.fetchById(this.id).then(() => {
-            this.isLoading = false;
             this.run = State.RunModel.current;
             this.formatDateFields();
         });
@@ -42,36 +41,48 @@ export default class Run implements m.Component {
     view() {
         return (
             <div className="container-fluid">
-                <Spinner isLoading={this.isLoading}>
+                <Spinner isLoading={State.LogModel.isFetchingLogs}>
                     <HttpErrorAlert>
-                        {this.run &&
-                            <div className="col-md-12 mx-auto">
+                        <div className="col-md-12 mx-auto">
+                            {this.run &&
                                 <div className="row">
-                                    <div className="col-md-4">
+                                    <div className="col-md-12">
                                         <Card data={this.run} title={'Run'} />
                                     </div>
-                                    <div className="col-md-8">
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <Card data={{ lorum: 'ipsum' }} title={'Detectors'} />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <Card data={{ lorum: 'ipsum' }} title={'EPN Role Sessions'} />
-                                            </div>
+                                </div>
+                            }
+                            <br />
+                            <div class="row">
+                                <div class="col-md-12 mx-auto">
+                                    <ul class="nav nav-pills flex-column flex-sm-row" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#runs" role="tab" data-toggle="tab">Logs</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#subsystems" role="tab" data-toggle="tab">Detectors</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#users" role="tab" data-toggle="tab">Sessions</a>
+                                        </li>
+                                    </ul>
+                                    <br />
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane active" id="logs" aria-labelledby="logs-tab">
+                                            <Table
+                                                data={State.RunModel.current.logs}
+                                                columns={LogColumns}
+                                            />
                                         </div>
-                                        <br />
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <Card data={{ lorum: 'ipsum' }} title={'FLP Role Sessions'} />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <Card data={{ lorum: 'ipsum' }} title={'Run Quality history'} />
-                                            </div>
+                                        <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
+                                            Not yet implemented
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane" id="users" aria-labelledby="users-tab">
+                                            Not yet implemented
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        }
+                        </div>
                     </HttpErrorAlert>
                 </Spinner>
             </div >

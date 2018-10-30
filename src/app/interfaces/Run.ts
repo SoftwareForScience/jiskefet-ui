@@ -22,4 +22,5 @@ export interface Run {
     nSubtimeframes: number;
     bytesReadOut: number;
     bytesTimeframeBuilder: number;
+    logs: any[];
 }
