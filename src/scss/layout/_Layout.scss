@@ -1,0 +1,39 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+
+@import '../abstracts/variables';
+
+.jf-wrapper {
+    display: flex;
+    width: 100%;
+    margin-top: $topbar-offset;
+}
+
+.jf-content {
+    width: calc(100% - #{$sidebar-width});
+    min-height: 100vh;
+    transition: all 0.3s;
+    position: absolute;
+    top: $topbar-offset;
+    right: 0;
+    padding-top: 1rem;
+
+    &.jf-content-active {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .jf-content {
+        width: 100%;
+
+        &.jf-content-active {
+            width: calc(100% - #{$sidebar-width});
+        }
+    }
+}

@@ -7,11 +7,12 @@
  */
 
 import * as m from 'mithril';
-import RunModel, { Run as IRun } from '../models/Run';
+import { Run as IRun } from '../interfaces/Run';
 import Spinner from '../components/Spinner';
 import Card from '../components/Card';
 import { format } from 'date-fns';
-import HttpError from '../components/HttpError';
+import HttpErrorAlert from '../components/HttpErrorAlert';
+import State from '../models/State';
 
 export default class Run implements m.Component {
     private isLoading: boolean;
@@ -24,9 +25,9 @@ export default class Run implements m.Component {
     }
 
     oninit() {
-        RunModel.fetchById(this.id).then(() => {
+        State.RunModel.fetchById(this.id).then(() => {
             this.isLoading = false;
-            this.run = RunModel.current;
+            this.run = State.RunModel.current;
             this.formatDateFields();
         });
     }
@@ -42,7 +43,7 @@ export default class Run implements m.Component {
         return (
             <div className="container-fluid">
                 <Spinner isLoading={this.isLoading}>
-                    <HttpError>
+                    <HttpErrorAlert>
                         {this.run &&
                             <div className="col-md-12 mx-auto">
                                 <div className="row">
@@ -71,7 +72,7 @@ export default class Run implements m.Component {
                                 </div>
                             </div>
                         }
-                    </HttpError>
+                    </HttpErrorAlert>
                 </Spinner>
             </div >
         );
