@@ -1,3 +1,5 @@
+// setup from https://jestjs.io/docs/en/puppeteer
+
 const chalk = require('chalk');
 const rimraf = require('rimraf');
 const os = require('os');

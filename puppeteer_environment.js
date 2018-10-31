@@ -1,3 +1,4 @@
+// setup from https://jestjs.io/docs/en/puppeteer
 /* eslint no-useless-constructor: "off" */
 
 const chalk = require('chalk');

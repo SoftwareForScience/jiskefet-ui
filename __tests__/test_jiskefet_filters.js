@@ -1,5 +1,5 @@
 const timeout = global.TIME_OUT;
-const url = 'http://145.92.8.34/';
+const url = `${process.env.TEST_URL}`;
 const currentDateTime = new Date().toLocaleString();
 const logTestTitle = `puppeteer test title ${currentDateTime}`;
 
@@ -9,7 +9,6 @@ describe(
     let page;
     beforeAll(async () => {
       page = await global.BROWSER.newPage();
-      // replace url with .env url
       await page.goto(`${url}#!/logs`);
       await page.screenshot({ path: '__tests__/screenshots/jiskefet_home_page_logs_filter.png' });
     }, timeout);
