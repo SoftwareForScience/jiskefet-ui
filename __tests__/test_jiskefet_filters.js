@@ -4,7 +4,7 @@ const currentDateTime = new Date().toLocaleString();
 const logTestTitle = `puppeteer test title ${currentDateTime}`;
 
 describe(
-  'Home Page Logs Filter',
+  'Jiskefet Filters',
   () => {
     let page;
     beforeAll(async () => {

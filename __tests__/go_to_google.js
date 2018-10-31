@@ -2,7 +2,7 @@ const timeout = global.TIME_OUT;
 const url = 'https://google.com';
 
 describe(
-  '/ (Home Page)',
+  'Google Home Page',
   () => {
     let page;
     beforeAll(async () => {

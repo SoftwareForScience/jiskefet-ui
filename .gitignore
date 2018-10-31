@@ -83,3 +83,4 @@ node_modules
 .vscode
 __tests__/screenshots/*
 .env
+__tests__/__snapshots__/*

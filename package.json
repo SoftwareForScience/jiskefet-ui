@@ -7,8 +7,12 @@
 		"dev": "webpack-dev-server -d --open --content-base src/",
 		"build": "webpack -p",
 		"test": "./node_modules/tslint/bin/tslint -c ./.tslint.ts ./src/ts/*.ts ./src/ts/models/*.ts ./src/ts/views/*.ts",
-		"test:jest": "jest",
+		"test:jest": "jest && codecov",
 		"lint": "tslint -p tsconfig.json -c tslint.json"
+	},
+	"jest": {
+		"coverageDirectory": "./coverage/",
+		"collectCoverage": true
 	},
 	"keywords": [],
 	"author": "Jiskefet Dev Team",

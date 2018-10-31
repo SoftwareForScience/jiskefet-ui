@@ -2,7 +2,7 @@ const timeout = global.TIME_OUT;
 const url = `${process.env.TEST_URL}`;
 
 describe(
-  '/ (Home Page)',
+  'Jiskefet Home Page',
   () => {
     let page;
     beforeAll(async () => {
