@@ -13,11 +13,13 @@ module.exports = async function globalSetup() {
   const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
   // This global is not available inside tests but only in global teardown
   global.BROWSER_GLOBAL = browser;
-  // Instead, we expose the connection details via file system to be used in tests
-  console.log(`directory is ${DIR}`);
+
+  // make directory for setup variables of jest and puppeteer
   mkdirp.sync(DIR);
+
+  // make screenshot directory for puppeteer
   mkdirp.sync(screenshotDir);
+
+  // Instead, we expose the connection details via file system to be used in tests
   fs.writeFileSync(path.join(DIR, 'wsEndpoint'), browser.wsEndpoint());
-  console.log(`workspace endpoint is ${browser.wsEndpoint()}`);
-  console.log(`working directory path is ${path.join(DIR, 'wsEndpoint')}`);
 };
