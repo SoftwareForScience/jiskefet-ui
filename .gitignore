@@ -84,3 +84,4 @@ node_modules
 __tests__/screenshots/*
 .env
 __tests__/__snapshots__/*
+coverage/*

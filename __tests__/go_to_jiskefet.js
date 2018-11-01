@@ -8,7 +8,7 @@ describe(
     beforeAll(async () => {
       page = await global.BROWSER.newPage();
       await page.goto(url);
-      await page.screenshot({ path: '__tests__/screenshots/jiskefet_home_page.png' });
+      // await page.screenshot({ path: '__tests__/screenshots/jiskefet_home_page.png' });
     }, timeout);
 
     afterAll(async () => {

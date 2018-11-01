@@ -1,5 +1,6 @@
 const timeout = global.TIME_OUT;
 const url = `${process.env.TEST_URL}`;
+
 describe(
   'Jiskefet Filters',
   () => {

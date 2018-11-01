@@ -7,12 +7,16 @@
 		"dev": "webpack-dev-server -d --open --content-base src/",
 		"build": "webpack -p",
 		"test": "./node_modules/tslint/bin/tslint -c ./.tslint.ts ./src/ts/*.ts ./src/ts/models/*.ts ./src/ts/views/*.ts",
-		"test:jest": "jest && codecov",
+		"jest": "jest",
+		"jest:cov": "jest --coverage",
 		"lint": "tslint -p tsconfig.json -c tslint.json"
 	},
 	"jest": {
 		"coverageDirectory": "./coverage/",
-		"collectCoverage": true
+		"collectCoverage": true,
+		"collectCoverageFrom": [
+			"src/app/**/*.{ts,tsx}"
+		]
 	},
 	"keywords": [],
 	"author": "Jiskefet Dev Team",
@@ -29,6 +33,7 @@
 		"quill": "^1.3.6"
 	},
 	"devDependencies": {
+		"@types/jest": "^23.3.9",
 		"@types/jquery": "^3.3.6",
 		"@types/mithril": "^1.1.12",
 		"@types/node": "^10.9.4",
@@ -51,6 +56,7 @@
 		"rimraf": "^2.6.2",
 		"sass-loader": "^7.1.0",
 		"style-loader": "^0.23.0",
+		"ts-jest": "^23.10.4",
 		"ts-loader": "^5.1.0",
 		"tslint": "^5.11.0",
 		"tslint-react": "^3.6.0",
