@@ -8,4 +8,6 @@ cache:
  - node_modules
 script: 
  - tslint -c tslint.json 'src/**/*.ts'
+ - npm run jest:cov
+after_success:
  - codecov -f coverage/*.json
