@@ -5,4 +5,4 @@ install:
  - npm install
 script: 
  - tslint -c tslint.json 'src/**/*.ts'
- - jest && codecov
+ - codecov
