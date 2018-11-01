@@ -31,16 +31,29 @@ export default class Run implements m.Component {
         State.RunModel.current.timeTrgEnd = format(State.RunModel.current.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY');
     }
 
+    routeToCreateLog = () => {
+        m.route.set(`/logs/create/runs/${this.id}`);
+    }
+
     view() {
         return (
-            <div class="container">
+            <div class="container-fluid">
                 <Spinner isLoading={State.RunModel.isFetchingRun}>
                     <HttpErrorAlert>
                         <div class="row">
                             <div class="col-md-12 mx-auto">
                                 <div class="card shadow-sm bg-light">
                                     <div class="card-header">
-                                        Run
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h3>Run</h3>
+                                            </div>
+                                            <div class="col-md-6 float-right">
+                                                <button class="btn btn-light border mb-2 float-right" onclick={this.routeToCreateLog}>
+                                                    Create log
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -86,45 +99,45 @@ export default class Run implements m.Component {
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="card-header">
+                                        <div class="col-md-12 mx-auto">
+                                            <ul class="nav nav-tabs card-header-tabs pull-xs-left flex-column flex-sm-row" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" href="#runs" role="tab" data-toggle="tab">Logs</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#subsystems" role="tab" data-toggle="tab">Detectors</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#users" role="tab" data-toggle="tab">Others...</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active" id="runs" aria-labelledby="runs-tab">
+                                                {State.RunModel.current.logs && State.RunModel.current.logs.length > 0 ?
+                                                    <Table
+                                                        data={State.RunModel.current.logs}
+                                                        columns={LogColumns}
+                                                    />
+                                                    : 'This run has nu logs'
+                                                }
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
+                                                Not yet implemented
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="users" aria-labelledby="users-tab">
+                                                Not yet implemented
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-12 mx-auto">
-                                <ul class="nav nav-pills flex-column flex-sm-row" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#runs" role="tab" data-toggle="tab">Logs</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#subsystems" role="tab" data-toggle="tab">Detectors</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#users" role="tab" data-toggle="tab">Others...</a>
-                                    </li>
-                                </ul>
-                                <br />
-                                <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="runs" aria-labelledby="runs-tab">
-                                        {State.RunModel.current.logs && State.RunModel.current.logs.length > 0 ?
-                                            <Table
-                                                data={State.RunModel.current.logs}
-                                                columns={LogColumns}
-                                            />
-                                            : 'This run has nu logs'
-                                        }
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
-                                        Not yet implemented
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="users" aria-labelledby="users-tab">
-                                        Not yet implemented
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </HttpErrorAlert>
-                </Spinner>
+                    </HttpErrorAlert >
+                </Spinner >
             </div >
         );
     }

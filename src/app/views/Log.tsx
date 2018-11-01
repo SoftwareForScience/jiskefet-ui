@@ -25,14 +25,14 @@ export default class Log implements m.Component {
 
     view() {
         return (
-            <div class="container">
+            <div class="container-fluid">
                 <Spinner isLoading={State.LogModel.isFetchingLog}>
                     <HttpErrorAlert>
                         <div class="row">
                             <div class="col-md-12 mx-auto">
                                 <div class="card shadow-sm bg-light">
                                     <div class="card-header">
-                                        Log
+                                    <h3>Log</h3>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -64,58 +64,58 @@ export default class Log implements m.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <a class="btn btn-link" data-toggle="collapse" href="#collapseFooter" role="button" aria-expanded="false" aria-controls="collapseFooter">&darr;</a>
+                                    <a class="btn btn-link" data-toggle="collapse" href="#collapseFooter" role="button" aria-expanded="false" aria-controls="collapseFooter">&darr; Open text</a>
                                     <div class="collapse" id="collapseFooter">
                                         <div class="card-footer log-footer">
                                             <QuillViewer id={State.LogModel.current.logId} content={State.LogModel.current.text} />
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-md-12 mx-auto">
-                                <ul class="nav nav-pills flex-column flex-sm-row" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#runs" role="tab" data-toggle="tab">Runs</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#subsystems" role="tab" data-toggle="tab">Subsystems</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#users" role="tab" data-toggle="tab">Users</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#files" role="tab" data-toggle="tab">Files</a>
-                                    </li>
-                                </ul>
-                                <br />
-                                <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="runs" aria-labelledby="runs-tab">
-                                        {State.LogModel.current.runs && State.LogModel.current.runs.length > 0 ?
-                                            <Table
-                                                data={State.LogModel.current.runs}
-                                                columns={RunColumns}
-                                            />
-                                            : 'This log has no runs'
-                                        }
+                                    <div class="card-header">
+                                        <div class="col-md-12 mx-auto">
+                                            <ul class="nav nav-tabs card-header-tabs pull-xs-left flex-column flex-sm-row" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" href="#runs" role="tab" data-toggle="tab">Runs</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#subsystems" role="tab" data-toggle="tab">Subsystems</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#users" role="tab" data-toggle="tab">Users</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#files" role="tab" data-toggle="tab">Files</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
-                                        Not yet implemented
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="users" aria-labelledby="users-tab">
-                                        Not yet implemented
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane" id="files" aria-labelledby="files-tab">
-                                        Not yet implemented
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active" id="runs" aria-labelledby="runs-tab">
+                                                {State.LogModel.current.runs && State.LogModel.current.runs.length > 0 ?
+                                                    <Table
+                                                        data={State.LogModel.current.runs}
+                                                        columns={RunColumns}
+                                                    />
+                                                    : 'This log has no runs'
+                                                }
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
+                                                Not yet implemented
+                                                </div>
+                                            <div role="tabpanel" class="tab-pane" id="users" aria-labelledby="users-tab">
+                                                Not yet implemented
+                                                </div>
+                                            <div role="tabpanel" class="tab-pane" id="files" aria-labelledby="files-tab">
+                                                Not yet implemented
+                                                </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </HttpErrorAlert>
                 </Spinner>
-            </div>
+            </div >
         );
     }
 }

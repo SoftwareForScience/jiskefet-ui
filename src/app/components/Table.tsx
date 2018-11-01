@@ -38,9 +38,9 @@ export default class Table implements m.Component {
 
     view() {
         return (
-            <div class="table-responsive-xl">
+            <div class="table-responsive-md">
                 <table class={`table table-sm table-bordered table-hover shadow-sm ${this.class}`}>
-                    <thead>
+                    <thead class="thead-light">
                         <tr>
                             {this.columns && this.columns.map(column =>
                                 <th scope="col" key={column.accessor}>

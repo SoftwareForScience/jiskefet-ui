@@ -53,23 +53,23 @@ const RunColumns = [
         accessor: 'runQuality'
     },
     {
-        header: 'no. of detectors',
+        header: 'Detectors',
         accessor: 'nDetectors'
     },
     {
-        header: 'no. of FLPs',
+        header: 'FLPs',
         accessor: 'nFlps'
     },
     {
-        header: 'no. of EPNs',
+        header: 'EPNs',
         accessor: 'nEpns'
     },
     {
-        header: 'no. of timeframes',
+        header: 'Timeframes',
         accessor: 'nTimeframes'
     },
     {
-        header: 'no. of sub-timeframes',
+        header: 'Sub-timeframes',
         accessor: 'nSubtimeframes'
     },
     {
