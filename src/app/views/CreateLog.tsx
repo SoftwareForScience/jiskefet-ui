@@ -7,7 +7,7 @@
  */
 
 import * as m from 'mithril';
-import QuillEditor from '../components/QuillEditor';
+import MarkdownEditor from '../components/MarkdownEditor';
 import State from '../models/State';
 
 export default class CreateLog implements m.Component {
@@ -52,7 +52,7 @@ export default class CreateLog implements m.Component {
             >
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-8 mx-auto bg-light rounded p-4 shadow-sm">
+                        <div class="col-md-12 mx-auto bg-light rounded p-4 shadow-sm">
                             <div><h3>{`Create a new log ${this.runNumber ? `for run number ${this.runNumber}` : ''}`}</h3></div>
                             <div class="form-group">
                                 <label for="title">Title:</label>
@@ -92,7 +92,7 @@ export default class CreateLog implements m.Component {
                             <div class="form-group">
                                 <label for="description">Description:</label>
                                 <input name="description" type="hidden" />
-                                <QuillEditor postContent={this.addDescription} />
+                                <MarkdownEditor postContent={this.addDescription} />
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

@@ -8,12 +8,12 @@
 
 import * as m from 'mithril';
 import Spinner from '../components/Spinner';
-import QuillViewer from '../components/QuillViewer';
 import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
 import Table from '../components/Table';
 import RunColumns from '../util/RunUtil';
+import MarkdownViewer from '../components/MarkdownViewer';
 
 export default class Log implements m.Component {
     private id: number;
@@ -67,7 +67,7 @@ export default class Log implements m.Component {
                                     <a class="btn btn-link" data-toggle="collapse" href="#collapseFooter" role="button" aria-expanded="false" aria-controls="collapseFooter">&darr; Open text</a>
                                     <div class="collapse" id="collapseFooter">
                                         <div class="card-footer log-footer">
-                                            <QuillViewer id={State.LogModel.current.logId} content={State.LogModel.current.text} />
+                                            <MarkdownViewer id={State.LogModel.current.logId} content={State.LogModel.current.text} />
                                         </div>
                                     </div>
                                     <div class="card-header">
