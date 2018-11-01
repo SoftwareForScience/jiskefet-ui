@@ -31,6 +31,13 @@ m.route(document.body, '/logs', {
             </Layout>
         ),
     },
+    '/logs/create/runs/:id': {
+        view: (vnode) => (
+            <Layout>
+                <CreateLog runNumber={vnode.attrs.id} />
+            </Layout>
+        ),
+    },
     '/logs/:id': {
         view: (vnode) => (
             <Layout>
