@@ -21,6 +21,7 @@ export default class Log implements m.Component {
         this.id = vnode.attrs.id;
         this.isLoading = true;
         State.LogModel.fetchOne(this.id).then(() => this.isLoading = false);
+        State.AttachmentModel.fetchForLog(this.id).then(() => this.isLoading = false);
     }
 
     view() {
@@ -38,6 +39,11 @@ export default class Log implements m.Component {
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <h5 class="card-title">{State.LogModel.current.title}</h5>
+                                                {State.AttachmentModel.list.map(attachment =>
+                                                    <div key={attachment.id}>
+                                                        <a href={State.AttachmentModel.downloadFile} download>{attachment.title}</a>
+                                                    </div>
+                                                )}
                                             </div>
                                             <div class="col-md-6">
                                                 <dl class="row">
