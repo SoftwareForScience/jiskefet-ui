@@ -6,4 +6,8 @@
  * copied verbatim in the file "LICENSE"
  */
 
-export const API_URL = 'http://localhost:3000/';
+@import '../abstracts/variables';
+
+.log-footer {
+    background-color: $main-theme-secondary-color;
+}

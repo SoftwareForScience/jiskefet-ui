@@ -7,70 +7,115 @@
  */
 
 import * as m from 'mithril';
-import LogModel from '../models/Log';
 import Spinner from '../components/Spinner';
-import QuillViewer from '../components/QuillViewer';
 import { format } from 'date-fns';
+import HttpErrorAlert from '../components/HttpErrorAlert';
+import State from '../models/State';
+import Table from '../components/Table';
+import RunColumns from '../util/RunUtil';
+import MarkdownViewer from '../components/MarkdownViewer';
 
 export default class Log implements m.Component {
     private id: number;
-    private isLoading: boolean;
 
     constructor(vnode: any) {
         this.id = vnode.attrs.id;
-        this.isLoading = true;
-        LogModel.fetchOne(this.id).then(() => this.isLoading = false);
-
+        State.LogModel.fetchOne(this.id);
     }
 
     view() {
         return (
-            <div className="container">
-                <Spinner isLoading={this.isLoading}>
-                    <div class="row">
-                        <div class="col-md-12 mx-auto">
-                            <div class="card shadow-sm bg-light">
-                                <div class="card-header">
-                                    Log
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h5 class="card-title">{LogModel.current.title}</h5>
+            <div class="container-fluid">
+                <Spinner isLoading={State.LogModel.isFetchingLog}>
+                    <HttpErrorAlert>
+                        <div class="row">
+                            <div class="col-md-12 mx-auto">
+                                <div class="card shadow-sm bg-light">
+                                    <div class="card-header">
+                                    <h3>Log</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h5 class="card-title">{State.LogModel.current.title}</h5>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <dl class="row">
+                                                    <dt class="col-sm-6">Log id</dt>
+                                                    <dd class="col-sm-6">{State.LogModel.current.logId}</dd>
+
+                                                    <dt class="col-sm-6">Subtype:</dt>
+                                                    <dd class="col-sm-6">
+                                                        {State.LogModel.current.subtype === 'run' ?
+                                                            <span class="badge badge-warning">{State.LogModel.current.subtype}</span>
+                                                            : State.LogModel.current.subtype}
+                                                    </dd>
+
+                                                    <dt class="col-sm-6">Origin:</dt>
+                                                    <dd class="col-sm-6">
+                                                        {State.LogModel.current.origin === 'human' ?
+                                                            <span class="badge badge-success">{State.LogModel.current.origin}</span>
+                                                            : State.LogModel.current.origin}
+                                                    </dd>
+
+                                                    <dt class="col-sm-6">Creation time:</dt>
+                                                    <dd class="col-sm-6">{format(State.LogModel.current.creationTime, 'HH:mm:ss DD/MM/YYYY')}</dd>
+                                                </dl>
+                                            </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <dl class="row">
-                                                <dt class="col-sm-6">Log id</dt>
-                                                <dd class="col-sm-6">{LogModel.current.logId}</dd>
-
-                                                <dt class="col-sm-6">Subtype:</dt>
-                                                <dd class="col-sm-6">
-                                                    {LogModel.current.subtype === 'run' ?
-                                                        <span class="badge badge-warning">{LogModel.current.subtype}</span>
-                                                        : LogModel.current.subtype}
-                                                </dd>
-
-                                                <dt class="col-sm-6">Origin:</dt>
-                                                <dd class="col-sm-6">
-                                                    {LogModel.current.origin === 'human' ?
-                                                        <span class="badge badge-success">{LogModel.current.origin}</span>
-                                                        : LogModel.current.origin}
-                                                </dd>
-
-                                                <dt class="col-sm-6">Creation time:</dt>
-                                                <dd class="col-sm-6">{format(LogModel.current.creationTime, 'HH:mm:ss DD/MM/YYYY')}</dd>
-                                            </dl>
+                                    </div>
+                                    <a class="btn btn-link" data-toggle="collapse" href="#collapseFooter" role="button" aria-expanded="false" aria-controls="collapseFooter">&darr; Open text</a>
+                                    <div class="collapse" id="collapseFooter">
+                                        <div class="card-footer log-footer">
+                                            <MarkdownViewer id={State.LogModel.current.logId} content={State.LogModel.current.text} />
+                                        </div>
+                                    </div>
+                                    <div class="card-header">
+                                        <div class="col-md-12 mx-auto">
+                                            <ul class="nav nav-tabs card-header-tabs pull-xs-left flex-column flex-sm-row" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" href="#runs" role="tab" data-toggle="tab">Runs</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#subsystems" role="tab" data-toggle="tab">Subsystems</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#users" role="tab" data-toggle="tab">Users</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#files" role="tab" data-toggle="tab">Files</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active" id="runs" aria-labelledby="runs-tab">
+                                                {State.LogModel.current.runs && State.LogModel.current.runs.length > 0 ?
+                                                    <Table
+                                                        data={State.LogModel.current.runs}
+                                                        columns={RunColumns}
+                                                    />
+                                                    : 'This log has no runs'
+                                                }
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
+                                                Not yet implemented
+                                                </div>
+                                            <div role="tabpanel" class="tab-pane" id="users" aria-labelledby="users-tab">
+                                                Not yet implemented
+                                                </div>
+                                            <div role="tabpanel" class="tab-pane" id="files" aria-labelledby="files-tab">
+                                                Not yet implemented
+                                                </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-footer log-footer">
-                                    <QuillViewer id={LogModel.current.logId} content={LogModel.current.text} />
-                                </div>
                             </div>
                         </div>
-                    </div>
+                    </HttpErrorAlert>
                 </Spinner>
-            </div>
+            </div >
         );
     }
 }

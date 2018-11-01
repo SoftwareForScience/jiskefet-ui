@@ -7,20 +7,39 @@
  */
 
 import * as m from 'mithril';
-import LogModel from '../models/Log';
-import QuillEditor from '../components/QuillEditor';
+import MarkdownEditor from '../components/MarkdownEditor';
+import State from '../models/State';
 
 export default class CreateLog implements m.Component {
+    private runNumber: number;
+
+    constructor(vnode: any) {
+        this.runNumber = vnode.attrs.runNumber;
+    }
+
     addToCreateLog = (event) => {
-        LogModel.createLog[event.target.id] = event.target.value;
+        State.LogModel.createLog[event.target.id] = event.target.value;
+    }
+
+    addRunsToCreateLog = (event) => {
+        State.RunModel.fetchById(event.target.value).then(() => {
+            State.LogModel.createLog.runs = new Array();
+            State.LogModel.createLog.runs.push(State.RunModel.current);
+        });
     }
 
     addDescription = (content: string) => {
-        LogModel.createLog.text = content;
+        State.LogModel.createLog.text = content;
     }
 
     saveLog() {
-        LogModel.save();
+        if (this.runNumber) {
+            State.LogModel.createLog.runs = new Array();
+            State.LogModel.createLog.runs.push(State.RunModel.current);
+        }
+        State.LogModel.save().then(() => {
+            m.route.set('/Logs');
+        });
     }
 
     view() {
@@ -33,8 +52,8 @@ export default class CreateLog implements m.Component {
             >
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-8 mx-auto bg-light rounded p-4 shadow-sm">
-                            <div><h3>Create a new log</h3></div>
+                        <div class="col-md-12 mx-auto bg-light rounded p-4 shadow-sm">
+                            <div><h3>{`Create a new log ${this.runNumber ? `for run number ${this.runNumber}` : ''}`}</h3></div>
                             <div class="form-group">
                                 <label for="title">Title:</label>
                                 <div class="field">
@@ -56,21 +75,24 @@ export default class CreateLog implements m.Component {
                                     </select>
                                 </div>
                             </div>
-                            {/* <div class="form-group">
-                                <label for="text">Description:</label>
-                                <textarea
-                                    id="text"
-                                    class="form-control"
-                                    placeholder="Description"
-                                    required
-                                    oninput={this.addToCreateLog}
-                                    rows="5"
+                            <div class="form-group">
+                                <label for="subtype">Run number:</label>
+                                <div class="field">
+                                <input
+                                        id="runs"
+                                        type="number"
+                                        class="form-control"
+                                        placeholder="Run number"
+                                        value={this.runNumber && this.runNumber}
+                                        required
+                                        oninput={this.addRunsToCreateLog}
                                 />
-                            </div> */}
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="description">Description:</label>
                                 <input name="description" type="hidden" />
-                                <QuillEditor postContent={this.addDescription} />
+                                <MarkdownEditor postContent={this.addDescription} />
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
