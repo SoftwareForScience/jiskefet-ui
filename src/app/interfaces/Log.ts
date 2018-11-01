@@ -30,5 +30,5 @@ export interface LogCreate {
     origin: string;
     title: string;
     text: string;
-    runs?: any[];
+    runs: any[];
 }
