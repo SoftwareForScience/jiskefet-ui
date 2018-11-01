@@ -122,7 +122,7 @@ export default class Run implements m.Component {
                                                         data={State.RunModel.current.logs}
                                                         columns={LogColumns}
                                                     />
-                                                    : 'This run has nu logs'
+                                                    : 'This run has no logs'
                                                 }
                                             </div>
                                             <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
