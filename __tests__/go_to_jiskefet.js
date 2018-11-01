@@ -16,6 +16,7 @@ describe(
     });
 
     test(`Check if ${url} is reachable`, async () => {
+      await page.waitFor('.navbar-brand');
       const text = await page.evaluate(() => document.body.textContent);
       expect(text).toContain('Jiskefet');
     });
