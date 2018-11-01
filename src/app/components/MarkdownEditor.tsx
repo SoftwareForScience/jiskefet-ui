@@ -9,26 +9,35 @@
 import * as m from 'mithril';
 import MarkdownViewer from './MarkdownViewer';
 
+/**
+ * Markdown editor with preview.
+ */
 export default class MarkdownEditor implements m.Component {
-    private postContent: (content: string) => void;
+    private callback: (content: string) => void;
     private content: string;
 
     constructor(vnode: any) {
-        this.postContent = vnode.attrs.postContent;
+        this.callback = vnode.attrs.postContent;
     }
 
-    onTextChange = (e: any): void => {
-        console.log('text change');
-        this.content = e.target.value;
-        this.postContent(this.content);
+    /**
+     * Bind value to content and executes the callback.
+     */
+    onTextChange = (event: any): void => {
+        this.content = event.target.value;
+        this.callback(this.content);
     }
 
     view() {
         return (
             <div class="row">
-                <textarea id="markdown" class="col-md-6" oninput={this.onTextChange} />
-                <div class="col-md-6">
-                    <MarkdownViewer content={this.content} />
+                <div class="col-md-6 jf-markdown-wrapper">
+                    <textarea id="markdown" placeholder="Type your description here" oninput={this.onTextChange} />
+                </div>
+                <div class="col-md-6 jf-markdown-wrapper">
+                    <div class="jf-markdown-preview">
+                        <MarkdownViewer content={this.content} />
+                    </div>
                 </div>
             </div>
         );

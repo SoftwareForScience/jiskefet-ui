@@ -9,39 +9,42 @@
 import * as m from 'mithril';
 import * as marked from 'marked';
 
+/**
+ * Displays markdown as html.
+ */
 export default class MarkdownViewer implements m.Component {
     content: string;
-
-/**
- * background-color: white;
- * border-radius: 3px;
- * border: solid 1px #E0E0E0;
- * word-break: break-word;
- */
 
     constructor(vnode: any) {
         this.content = vnode.attrs.content;
     }
 
     oncreate() {
-        this.parse();
-    }
-
-    parse() {
-        const markdownViewer = document.getElementById('markdown-viewer');
-        if (markdownViewer && this.content) {
-            markdownViewer.innerHTML = marked(this.content);
-        }
+        this.parse(this.content);
     }
 
     onupdate(vnode: any) {
         this.content = vnode.attrs.content;
-        this.parse();
+        this.parse(this.content);
+    }
+
+    /**
+     * Inserts raw markdown content into viewer as HMTL.
+     */
+    parse(content: string) {
+        const markdownViewer = document.getElementById('jf-markdown-viewer');
+        if (markdownViewer) {
+            if (content) {
+                markdownViewer.innerHTML = marked(content);
+            } else {
+                markdownViewer.innerHTML = "";
+            }
+        }
     }
 
     view() {
         return (
-            <div id="markdown-viewer" />
+            <div id="jf-markdown-viewer" />
         );
     }
 }

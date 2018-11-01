@@ -34,7 +34,7 @@ export default class CreateLog implements m.Component {
             >
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-8 mx-auto bg-light rounded p-4 shadow-sm">
+                        <div class="col-md-12 mx-auto bg-light rounded p-4 shadow-sm">
                             <div><h3>Create a new log</h3></div>
                             <div class="form-group">
                                 <label for="title">Title:</label>
@@ -59,7 +59,7 @@ export default class CreateLog implements m.Component {
                             </div>
                             <div class="form-group">
                                 <label for="description">Description:</label>
-                                <MarkdownEditor postContent={this.addDescription} />
+                                <MarkdownEditor callback={this.addDescription} />
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

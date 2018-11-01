@@ -1,0 +1,20 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+ 
+#jf-markdown-viewer {
+    & pre {
+        overflow: auto;
+        font-size: 85%;
+        line-height: 1.45;
+        background-color: #f6f8fa;
+        border-radius: 3px;
+        padding: 10px 20px;
+        margin-top: 0;
+        margin-bottom: 1pc;
+    }
+}
