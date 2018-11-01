@@ -17,6 +17,8 @@ And the **Ansible playbook** to deploy the application can be found here: https:
 $ npm install
 ```
 
+Copy .env.dist as .env and set your own values.
+
 ## Running the app
 
 ```bash
@@ -72,8 +74,8 @@ Common examples of poppers are tooltips, popovers and drop-downs.
 "popper.js": "^1.14.4"
 ```
 
-QuillJS is a modern rich text editor built for compatibility and extensibility.
-It was created by Jason Chen and Byron Milligan and open sourced by Salesforce.
+MarkedJs is a low-level markdown compiler for parsing markdown without caching or blocking
+for long periods of time.
 ```
-"quill": "^1.3.6"
+"marked": "^0.5.1"
 ```
