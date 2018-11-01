@@ -26,7 +26,7 @@ class PuppeteerEnvironment extends NodeEnvironment {
       browserWSEndpoint: wsEndpoint,
     });
     this.global.TIME_OUT = 5000;
-    if (process.env.TEST_URL !== undefined) {
+    if (process.env.TEST_URL) {
       this.global.TEST_URL = process.env.TEST_URL;
     } else {
       this.global.TEST_URL = 'http://jiskefet.heikovdheyden.nl/';

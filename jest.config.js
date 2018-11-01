@@ -8,4 +8,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/app/**/*.{ts,tsx}',
   ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '__tests__/snapshot__tests/'],
 };

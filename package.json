@@ -11,13 +11,6 @@
 		"jest:cov": "jest --coverage",
 		"lint": "tslint -p tsconfig.json -c tslint.json"
 	},
-	"jest": {
-		"coverageDirectory": "./coverage/",
-		"collectCoverage": true,
-		"collectCoverageFrom": [
-			"src/app/**/*.{ts,tsx}"
-		]
-	},
 	"keywords": [],
 	"author": "Jiskefet Dev Team",
 	"license": "MIT",
