@@ -25,9 +25,6 @@ module.exports = {
         fs: 'empty'
     },
     plugins: [
-        new webpack.ProvidePlugin({
-            "window.katex": "katex" // formulas/latex plugin for Quill wysiwyg
-        }),
         new Dotenv()
     ]
 }

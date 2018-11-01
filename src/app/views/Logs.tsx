@@ -10,7 +10,6 @@ import * as m from 'mithril';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
 import Fetchable from '../interfaces/Fetchable';
-import QuillViewer from '../components/QuillViewer';
 import Filter from '../components/Filter';
 import { format } from 'date-fns';
 import SuccessMessage from '../components/SuccessMessage';
@@ -111,7 +110,7 @@ export default class Logs implements m.Component, Fetchable<Log> {
                     accessor: 'text',
                     cell: row => (
                         <div class="d-block" style="max-width: 200px;">
-                            <QuillViewer id={row.logId} content={row.text} plaintext={true} plaintextLimit={100} />
+                            {/* <QuillViewer id={row.logId} content={row.text} plaintext={true} plaintextLimit={100} /> */}
                         </div>
                     )
                 }

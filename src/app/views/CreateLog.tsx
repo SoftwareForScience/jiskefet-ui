@@ -59,8 +59,7 @@ export default class CreateLog implements m.Component {
                             </div>
                             <div class="form-group">
                                 <label for="description">Description:</label>
-                                <textarea name="description" />
-                                <MarkdownEditor />
+                                <MarkdownEditor postContent={this.addDescription} />
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

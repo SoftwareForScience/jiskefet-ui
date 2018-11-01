@@ -7,51 +7,30 @@
  */
 
 import * as m from 'mithril';
-import * as SimpleMDE from 'simplemde';
-// import * as hljs from 'highlightjs';
+import MarkdownViewer from './MarkdownViewer';
 
 export default class MarkdownEditor implements m.Component {
     private postContent: (content: string) => void;
+    private content: string;
 
     constructor(vnode: any) {
         this.postContent = vnode.attrs.postContent;
     }
 
-    oncreate() {
-        // const toolbarOptions = [{
-        //     name: 'bold',
-        //     action: SimpleMDE.toggleBold,
-        //     className: 'fa fa-bold',
-        //     title: 'Bold',
-        // },
-        // {
-        //     name: 'italic',
-        //     action: SimpleMDE.toggleItalic,
-        //     className: 'fa fa-italic',
-        //     title: 'italic',
-        // }
-        // ];
-        // element: document.getElementById('simplemde-container'),
-
-        // const options = {
-        //     renderingConfig: {
-        //         highlight: text => hljs.highlightAuto(text).value
-        //     },
-        //     toolbar: toolbarOptions,
-        //     placeholder: 'Type the body of the log...',
-        // };
-
-        const simpleMDE: SimpleMDE = new SimpleMDE();
-
-        simpleMDE.codemirror.on('change', () => {
-            const content = JSON.stringify(simpleMDE);
-            this.postContent(content);
-        });
+    onTextChange = (e: any): void => {
+        console.log('text change');
+        this.content = e.target.value;
+        this.postContent(this.content);
     }
 
     view() {
         return (
-            <div id="simplemde-container" />
+            <div class="row">
+                <textarea id="markdown" class="col-md-6" oninput={this.onTextChange} />
+                <div class="col-md-6">
+                    <MarkdownViewer content={this.content} />
+                </div>
+            </div>
         );
     }
 }

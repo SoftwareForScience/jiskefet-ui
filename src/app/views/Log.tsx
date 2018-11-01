@@ -8,10 +8,10 @@
 
 import * as m from 'mithril';
 import Spinner from '../components/Spinner';
-import QuillViewer from '../components/QuillViewer';
 import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
+import MarkdownViewer from '../components/MarkdownViewer';
 
 export default class Log implements m.Component {
     private id: number;
@@ -65,7 +65,7 @@ export default class Log implements m.Component {
                                         </div>
                                     </div>
                                     <div class="card-footer log-footer">
-                                        <QuillViewer id={State.LogModel.current.logId} content={State.LogModel.current.text} />
+                                        <MarkdownViewer content={State.LogModel.current.text} />
                                     </div>
                                 </div>
                             </div>
