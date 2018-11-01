@@ -37,8 +37,9 @@ export default class CreateLog implements m.Component {
             State.LogModel.createLog.runs = new Array();
             State.LogModel.createLog.runs.push(State.RunModel.current);
         }
-        console.log(State.LogModel.createLog.runs);
-        State.LogModel.save().then();
+        State.LogModel.save().then(() => {
+            m.route.set('/Logs');
+        });
     }
 
     view() {
@@ -47,7 +48,6 @@ export default class CreateLog implements m.Component {
                 onsubmit={e => {
                     e.preventDefault();
                     this.saveLog();
-                    m.route.set('/Logs');
                 }}
             >
                 <div class="container-fluid">
