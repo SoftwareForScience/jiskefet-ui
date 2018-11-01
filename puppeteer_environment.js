@@ -29,7 +29,7 @@ class PuppeteerEnvironment extends NodeEnvironment {
     if (process.env.TEST_URL) {
       this.global.TEST_URL = process.env.TEST_URL;
     } else {
-      this.global.TEST_URL = 'http://localhost:8080/';
+      this.global.TEST_URL = 'http://jiskefet.heikovdheyden.nl/';
     }
   }
 
