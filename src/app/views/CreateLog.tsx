@@ -7,8 +7,8 @@
  */
 
 import * as m from 'mithril';
-import QuillEditor from '../components/QuillEditor';
 import State from '../models/State';
+import MarkdownEditor from '../components/MarkdownEditor';
 
 export default class CreateLog implements m.Component {
     addToCreateLog = (event) => {
@@ -59,8 +59,8 @@ export default class CreateLog implements m.Component {
                             </div>
                             <div class="form-group">
                                 <label for="description">Description:</label>
-                                <input name="description" type="hidden" />
-                                <QuillEditor postContent={this.addDescription} />
+                                <textarea name="description" />
+                                <MarkdownEditor />
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
