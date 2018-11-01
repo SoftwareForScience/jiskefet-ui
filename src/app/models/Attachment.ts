@@ -19,7 +19,7 @@ const AttachmentModel = {
     isFetchingAttachment: false as boolean,
     list: [] as any[],
     current: {} as Attachment,
-    attachmentBlob: {} as Blob,
+    file: {} as File,
     createAttachment: {} as AttachmentCreate, // attachment being created
     async fetchForLog(id: number) {
         AttachmentModel.isFetchingAttachment = true;
@@ -66,13 +66,21 @@ const AttachmentModel = {
 
         }
     },
-    downloadFile() {
+    async downloadFile(attachment: any) {
+        const arrayBufferView = new Uint8Array(attachment.fileData);
+        const attachmentBlob = new Blob([arrayBufferView], { type: attachment.fileMime });
 
-        const f = new File([blob], "File name");
-        // const arrayBufferView = new Uint8Array(fileData as ArrayBuffer);
-        // const attachmentBlob = new Blob([arrayBufferView], { type: fileMime });
-        // const url = window.URL.createObjectURL(attachmentBlob);
-        // window.location.assign(url);
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(attachmentBlob);
+
+        link.setAttribute('visibility', 'hidden');
+        link.download = attachment.title;
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        console.log(attachment.fileData);
     }
 };
 
