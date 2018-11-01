@@ -6,9 +6,7 @@
 	"scripts": {
 		"dev": "webpack-dev-server -d --open --content-base src/",
 		"build": "webpack -p",
-		"test": "./node_modules/tslint/bin/tslint -c ./.tslint.ts ./src/ts/*.ts ./src/ts/models/*.ts ./src/ts/views/*.ts",
-		"jest": "jest",
-		"jest:cov": "jest --coverage",
+		"test": "jest",
 		"lint": "tslint -p tsconfig.json -c tslint.json"
 	},
 	"keywords": [],
