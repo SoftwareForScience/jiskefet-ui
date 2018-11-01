@@ -37,7 +37,7 @@ export default class MarkdownViewer implements m.Component {
             if (content) {
                 markdownViewer.innerHTML = marked(content);
             } else {
-                markdownViewer.innerHTML = "";
+                markdownViewer.innerHTML = '';
             }
         }
     }
