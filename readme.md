@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/BastiaanReinalda/jiskefet-ui.svg?branch=master)](https://travis-ci.com/BastiaanReinalda/jiskefet-ui)
+[![Build Status](https://travis-ci.com/SoftwareForScience/jiskefet-ui.svg?branch=develop)](https://travis-ci.com/SoftwareForScience/jiskefet-ui)
 
 ## Description
 This bookkeeping system is a system for A Large Ion Collider Experiment
