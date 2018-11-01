@@ -1,5 +1,5 @@
 const timeout = global.TIME_OUT;
-const url = `${process.env.TEST_URL}`;
+const url = global.TEST_URL;
 
 describe(
   'Jiskefet Home Page',
