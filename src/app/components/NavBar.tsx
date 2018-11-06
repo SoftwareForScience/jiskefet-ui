@@ -23,7 +23,7 @@ export default class NavBar implements m.Component {
                         <span class="fas fa-bars" />
                     </button>
                     <a href="/" class="navbar-brand" oncreate={m.route.link}>
-                        <img src="../../assets/alice_logo_text_white.png" width="30" height="30" class="d-inline-block align-top logo" alt="" />
+                        <img src="../../assets/alice_logo_text_white.png" width="30" height="30" class="d-inline-block align-top jf-logo" alt="" />
                         Jiskefet
                     </a>
                 </div>
