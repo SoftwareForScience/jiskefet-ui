@@ -1,7 +1,9 @@
 const timeout = global.TIME_OUT;
+const maxWaitTime = 2000;
 const url = global.TEST_URL;
 const currentDateTime = new Date().toLocaleString();
 const logTestTitle = `puppeteer test title ${currentDateTime}`;
+const faker = require('faker');
 
 describe(
   'Jiskefet Filters',
@@ -22,9 +24,16 @@ describe(
       await page.waitFor('#title');
       await page.click('input[id=title]');
       await page.type('input[id=title]', `${logTestTitle}`);
+      await page.click('input[id=runs]');
+      await page.type('input[id=runs]', '1');
+      await page.click('textarea[id=markdown]');
+      await page.type('textarea[id=markdown]', faker.lorem.text());
+      await page.screenshot({ path: '__tests__/screenshots/jiskefet_log_filled_in.png' });
       await page.select('select[id=subtype]', 'run');
       await page.click('button[type=submit]');
-      await page.screenshot({ path: '__tests__/screenshots/jiskefet_log_filled_in.png' });
+      await page.waitFor(maxWaitTime); // wait for page to load
+      await page.waitFor('.alert-success');
+      await page.screenshot({ path: '__tests__/screenshots/jiskefet_log_success_message.png' });
     }, timeout);
 
     test('home page should show the filter', async () => {
@@ -48,10 +57,10 @@ describe(
       await page.click('input[id=searchterm]');
       await page.type('input[id=searchterm]', `${logTestTitle}`);
       await page.click('div[class=container-fluid]');
-      await page.waitFor(1000);
+      await page.waitFor(maxWaitTime);
       await page.screenshot({ path: '__tests__/screenshots/jiskefet_log_table_result.png' });
 
-      const selector = '.table-responsive-xl > .table > tbody > tr';
+      const selector = '.table-responsive-md > .table > tbody > tr';
 
       // creates a 2D array of the table row content
       const row = await page.$$eval(selector, trs => trs.map((tr) => {
@@ -59,7 +68,6 @@ describe(
         return tds.map(td => td.textContent);
       }));
 
-      // console.log(row[0][1]);
       await expect(row[0][1]).toContain(logTestTitle);
     });
 
