@@ -38,8 +38,8 @@ export default class Table implements m.Component {
 
     view() {
         return (
-            <div class="table-responsive-md">
-                <table class={`table table-sm table-bordered table-hover shadow-sm ${this.class}`}>
+            <div class="table-responsive">
+                <table class={`table table-sm table-bordered table-hover shadow-sm ${this.class || ''}`}>
                     <thead class="thead-light">
                         <tr>
                             {this.columns && this.columns.map(column =>

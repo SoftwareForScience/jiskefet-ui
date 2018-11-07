@@ -66,7 +66,7 @@ export default class Log implements m.Component {
                                     </div>
                                     <a class="btn btn-link" data-toggle="collapse" href="#collapseFooter" role="button" aria-expanded="false" aria-controls="collapseFooter">&darr; Open text</a>
                                     <div class="collapse" id="collapseFooter">
-                                        <div class="card-footer log-footer">
+                                        <div class="card-footer jf-log-footer">
                                             <MarkdownViewer id={State.LogModel.current.logId} content={State.LogModel.current.text} />
                                         </div>
                                     </div>
