@@ -10,9 +10,6 @@
 
 /* Vendor Dependencies */
 @import 'node_modules/bootstrap/scss/bootstrap';
-@import url('https://cdn.quilljs.com/1.3.6/quill.snow.css');
-@import '../../node_modules/highlightjs/styles/monokai-sublime.css';
-@import '../../node_modules/katex/dist/katex.min.css';
 
 /* Authored Dependencies */
 @import './abstracts/variables';
@@ -20,5 +17,6 @@
 @import './layout/Sidebar';
 @import './layout/Layout';
 @import './components/Spinner';
-@import './components/QuillEditor';
 @import './pages/Log';
+@import './components/MarkdownEditor';
+@import './components/MarkdownViewer';

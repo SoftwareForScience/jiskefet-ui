@@ -10,59 +10,12 @@ import * as m from 'mithril';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
 import Fetchable from '../interfaces/Fetchable';
-import QuillViewer from '../components/QuillViewer';
 import Filter from '../components/Filter';
-import { format } from 'date-fns';
 import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import { Log } from '../interfaces/Log';
 import State from '../models/State';
-
-const columns = [
-    {
-        header: 'Log id',
-        accessor: 'logId'
-    },
-    {
-        header: 'Title',
-        accessor: 'title',
-        cell: (row: Log) => (
-            <a href={`/logs/${row.logId}`} oncreate={m.route.link}>
-                {row.title}
-            </a>
-        )
-    },
-    {
-        header: 'Sub-type',
-        accessor: 'subtype',
-        cell: (row: Log) => (
-            row.subtype === 'run' ?
-                (
-                    <div class="text-center">
-                        <span class="badge badge-warning">{row.subtype}</span>
-                    </div>
-                )
-                : row.subtype
-        )
-    },
-    {
-        header: 'Origin',
-        accessor: 'origin',
-        cell: (row: Log) => (
-            row.origin === 'human' ?
-                (
-                    <div class="text-center">
-                        <span class="badge badge-success">{row.origin}</span>
-                    </div>
-                )
-                : row.origin
-        )
-    }, {
-        header: 'Creation time',
-        accessor: 'creationTime',
-        cell: (row: Log) => (row.creationTime ? format(row.creationTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    }
-];
+import LogColumns from '../util/LogUtil';
 
 const inputFields = [
     {
@@ -78,12 +31,12 @@ const inputFields = [
 ];
 
 export default class Logs implements m.Component, Fetchable<Log> {
-    private previewContent: boolean;
+    // private previewContent: boolean;
     private columns: any[];
 
     constructor() {
-        this.previewContent = false;
-        this.columns = columns;
+        // this.previewContent = false;
+        this.columns = LogColumns;
     }
 
     /**
@@ -101,26 +54,26 @@ export default class Logs implements m.Component, Fetchable<Log> {
      * When previewContent is true, adds a column to this.columns
      * that shows a preview of the contents of a Log.
      */
-    togglePreview = (): void => {
-        this.previewContent = !this.previewContent;
-        if (this.previewContent) {
-            this.columns = [
-                ...columns,
-                {
-                    header: 'Preview of text',
-                    accessor: 'text',
-                    cell: row => (
-                        <div class="d-block" style="max-width: 200px;">
-                            <QuillViewer id={row.logId} content={row.text} plaintext={true} plaintextLimit={100} />
-                        </div>
-                    )
-                }
-            ];
-        } else {
-            this.columns = columns;
-        }
-        m.redraw();
-    }
+    // togglePreview = (): void => {
+    //     this.previewContent = !this.previewContent;
+    //     if (this.previewContent) {
+    //         this.columns = [
+    //             ...LogColumns,
+    //             {
+    //                 header: 'Preview of text',
+    //                 accessor: 'text',
+    //                 cell: row => (
+    //                     <div class="d-block" style="max-width: 200px;">
+    //                         {/* <MarkdownViewer id={row.logId} content={row.text} plaintext={true} plaintextLimit={100} /> */}
+    //                     </div>
+    //                 )
+    //             }
+    //         ];
+    //     } else {
+    //         this.columns = LogColumns;
+    //     }
+    //     m.redraw();
+    // }
 
     view() {
         return (
@@ -128,13 +81,13 @@ export default class Logs implements m.Component, Fetchable<Log> {
                 <Spinner isLoading={State.LogModel.isFetchingLogs}>
                     <HttpErrorAlert>
                         <SuccessMessage />
-                        <div className="row">
+                        {/* <div className="row">
                             <div className="col-md-12">
                                 <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
                                     {this.previewContent ? 'Hide content' : 'Preview content'}
                                 </button>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="row">
                             <div className="col-md-3 mt-2">
                                 <Filter

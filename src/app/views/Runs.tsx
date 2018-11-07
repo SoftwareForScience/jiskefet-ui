@@ -11,82 +11,10 @@ import Spinner from '../components/Spinner';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import Table from '../components/Table';
 import Filter from '../components/Filter';
-import { format } from 'date-fns';
 import Fetchable from '../interfaces/Fetchable';
 import { Run } from '../interfaces/Run';
 import State from '../models/State';
-
-const columns = [
-    {
-        header: 'Run id',
-        accessor: 'runNumber',
-        cell: row => (
-            <a href={`/runs/${row.runNumber}`} oncreate={m.route.link}>
-                {row.runNumber}
-            </a>
-        )
-    },
-    {
-        header: 'Time 02 start',
-        accessor: 'timeO2Start',
-        cell: (row: Run) => (row.timeO2Start ? format(row.timeO2Start, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    },
-    {
-        header: 'Time 02 end',
-        accessor: 'timeO2End',
-        cell: (row: Run) => (row.timeO2End ? format(row.timeO2End, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    },
-    {
-        header: 'Time trg start',
-        accessor: 'timeTrgStart',
-        cell: (row: Run) => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    },
-    {
-        header: 'Time trg end',
-        accessor: 'timeTrgEnd',
-        cell: (row: Run) => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    },
-    {
-        header: 'Activity id',
-        accessor: 'activityId'
-    },
-    {
-        header: 'Run type',
-        accessor: 'runType'
-    },
-    {
-        header: 'Run quality',
-        accessor: 'runQuality'
-    },
-    {
-        header: 'no. of detectors',
-        accessor: 'nDetectors'
-    },
-    {
-        header: 'no. of FLPs',
-        accessor: 'nFlps'
-    },
-    {
-        header: 'no. of EPNs',
-        accessor: 'nEpns'
-    },
-    {
-        header: 'no. of timeframes',
-        accessor: 'nTimeframes'
-    },
-    {
-        header: 'no. of sub-timeframes',
-        accessor: 'nSubtimeframes'
-    },
-    {
-        header: 'B read out',
-        accessor: 'bytesReadOut'
-    },
-    {
-        header: 'B timeframe builder',
-        accessor: 'bytesTimeframeBuilder'
-    },
-];
+import RunColumns from '../util/RunUtil';
 
 const inputFields = [
     {
@@ -136,7 +64,7 @@ export default class Runs implements m.Component, Fetchable<Run> {
                             <div className="col-md-9 mt-2">
                                 <Table
                                     data={State.RunModel.list}
-                                    columns={columns}
+                                    columns={RunColumns}
                                     class="font-sm"
                                 />
                             </div>
