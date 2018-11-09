@@ -7,18 +7,20 @@
  */
 
 import * as m from 'mithril';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 
-export default class Spinner implements m.Component {
+interface Attrs {
     isLoading: boolean;
+}
 
-    constructor(vnode: any) {
-        this.isLoading = vnode.attrs.isLoading;
-    }
+type Vnode = m.Vnode<Attrs, Spinner>;
 
-    view(vnode: any) {
+export default class Spinner extends MithrilTsxComponent<Attrs> {
+    view(vnode: Vnode) {
+        const { isLoading } = vnode.attrs;
         return (
             <div>
-                {vnode.attrs.isLoading ?
+                {isLoading ?
                     <div className="row">
                         <div className="col-md-12">
                             <div className="jf-loader text-center" />

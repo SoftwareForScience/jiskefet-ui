@@ -8,17 +8,14 @@
 
 import * as m from 'mithril';
 import AppState from '../models/AppState';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 
-export default class Content implements m.Component {
-    class: string;
+type Vnode = m.Vnode<{}, Content>;
 
-    constructor(vnode: any) {
-        this.class = vnode.attrs.class || '';
-    }
-
-    view(vnode: any) {
+export default class Content extends MithrilTsxComponent<{}> {
+    view(vnode: Vnode) {
         return (
-            <div class={`jf-content ${this.class} ${AppState.showSidebar ? '' : 'jf-content-active'}`}>
+            <div class={`jf-content ${AppState.showSidebar ? '' : 'jf-content-active'}`}>
                 <div class="container-fluid">
                     {vnode.children}
                 </div>

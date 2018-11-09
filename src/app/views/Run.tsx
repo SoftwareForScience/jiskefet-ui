@@ -12,14 +12,19 @@ import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
 import Table from '../components/Table';
-import LogColumns from '../util/LogUtil';
+import LogColumns from '../constants/LogColumns';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 
-export default class Run implements m.Component {
-    private id: number;
+interface Attrs {
+    id: number;
+}
 
-    constructor(vnode: any) {
-        this.id = vnode.attrs.id;
-        State.RunModel.fetchById(this.id).then(() => {
+type Vnode = m.Vnode<Attrs, Run>;
+
+export default class Run extends MithrilTsxComponent<Attrs> {
+    constructor(vnode: Vnode) {
+        super();
+        State.RunModel.fetchById(vnode.attrs.id).then(() => {
             this.formatDateFields();
         });
     }
@@ -31,11 +36,7 @@ export default class Run implements m.Component {
         State.RunModel.current.timeTrgEnd = format(State.RunModel.current.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY');
     }
 
-    routeToCreateLog = () => {
-        m.route.set(`/logs/create/runs/${this.id}`);
-    }
-
-    view() {
+    view(vnode: Vnode) {
         return (
             <div class="container-fluid">
                 <Spinner isLoading={State.RunModel.isFetchingRun}>
@@ -49,7 +50,7 @@ export default class Run implements m.Component {
                                                 <h3>Run</h3>
                                             </div>
                                             <div class="col-md-6 float-right">
-                                                <button class="btn btn-light border mb-2 float-right" onclick={this.routeToCreateLog}>
+                                                <button class="btn btn-light border mb-2 float-right" onclick={() => m.route.set(`/logs/create/runs/${vnode.attrs.id}`)}>
                                                     Create log
                                                 </button>
                                             </div>

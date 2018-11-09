@@ -12,15 +12,21 @@ import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
 import Table from '../components/Table';
-import RunColumns from '../util/RunUtil';
+import RunColumns from '../constants/RunColumns';
 import MarkdownViewer from '../components/MarkdownViewer';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 
-export default class Log implements m.Component {
-    private id: number;
+interface Attrs {
+    id: number;
+}
 
-    constructor(vnode: any) {
-        this.id = vnode.attrs.id;
-        State.LogModel.fetchOne(this.id);
+type Vnode = m.Vnode<Attrs, Log>;
+
+export default class Log extends MithrilTsxComponent<Attrs> {
+
+    constructor(vnode: Vnode) {
+        super();
+        State.LogModel.fetchOne(vnode.attrs.id);
     }
 
     view() {
@@ -67,7 +73,7 @@ export default class Log implements m.Component {
                                     <a class="btn btn-link" data-toggle="collapse" href="#collapseFooter" role="button" aria-expanded="false" aria-controls="collapseFooter">&darr; Open text</a>
                                     <div class="collapse" id="collapseFooter">
                                         <div class="card-footer jf-log-footer">
-                                            <MarkdownViewer id={State.LogModel.current.logId} content={State.LogModel.current.text} />
+                                            <MarkdownViewer content={State.LogModel.current.text} />
                                         </div>
                                     </div>
                                     <div class="card-header">

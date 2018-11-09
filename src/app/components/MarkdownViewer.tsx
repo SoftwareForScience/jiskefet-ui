@@ -8,31 +8,32 @@
 
 import * as m from 'mithril';
 import * as marked from 'marked';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+
+interface Attrs {
+    content: string;
+}
+
+type VnodeDOM = m.VnodeDOM<Attrs, MarkdownViewer>;
 
 /**
  * Displays markdown as html.
  */
-export default class MarkdownViewer implements m.Component {
-    content: string;
+export default class MarkdownViewer extends MithrilTsxComponent<Attrs> {
 
-    constructor(vnode: any) {
-        this.content = vnode.attrs.content;
+    oncreate(vnode: VnodeDOM) {
+        this.parse(vnode.attrs.content);
     }
 
-    oncreate() {
-        this.parse(this.content);
-    }
-
-    onupdate(vnode: any) {
-        this.content = vnode.attrs.content;
-        this.parse(this.content);
+    onupdate(vnode: VnodeDOM) {
+        this.parse(vnode.attrs.content);
     }
 
     /**
      * Inserts raw markdown content into viewer as HMTL.
      */
-    parse(content: string) {
-        const markdownViewer = document.getElementById('jf-markdown-viewer');
+    parse(content: string): void {
+        const markdownViewer: HTMLElement | null = document.getElementById('jf-markdown-viewer');
         if (markdownViewer) {
             if (content) {
                 markdownViewer.innerHTML = marked(content);

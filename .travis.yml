@@ -3,4 +3,4 @@ node_js:
  - 'stable'
 install:
  - npm install
-script: tslint -c tslint.json 'src/**/*.ts'
+script: tslint -p tsconfig.json -c tslint.json
