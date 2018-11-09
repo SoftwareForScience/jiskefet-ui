@@ -7,6 +7,7 @@
 		"dev": "webpack-dev-server -d --open --content-base src/",
 		"build": "webpack -p",
 		"test": "jest",
+		"test:Watch": "jest --watch",
 		"lint": "tslint -p tsconfig.json -c tslint.json"
 	},
 	"keywords": [],
