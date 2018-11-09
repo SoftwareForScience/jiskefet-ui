@@ -13,9 +13,10 @@ import { Event } from '../interfaces/Event';
 interface FilterParam {
     name: string;
     type: string;
-    value?: any;
+    value?: string | null;
     placeholder?: string;
     label?: string;
+    event: string;
 }
 
 interface Attrs {
@@ -37,7 +38,7 @@ export default class Filter extends MithrilTsxComponent<Attrs> {
 
     constructor(vnode: Vnode) {
         super();
-        this.routeFilters = m.route.param();
+        this.routeFilters = m.route.param() as RouteFilters;
         this.mergedFilters = this.mergeFilters(vnode.attrs.inputFields, this.routeFilters);
     }
 
@@ -98,11 +99,15 @@ export default class Filter extends MithrilTsxComponent<Attrs> {
                                     type={filter.type}
                                     class="form-control"
                                     id={filter.name}
-                                    onblur={(event: Event) => {
-                                        this.routeFilters = this.updateFilter(event.target.id, event.target.value, this.routeFilters);
-                                        this.updateRoute(this.routeFilters, vnode.attrs.route);
-                                        this.mergedFilters = this.mergeFilters(vnode.attrs.inputFields, this.routeFilters);
-                                        this.fetchWithFilters(this.routeFilters, vnode.attrs.fetch);
+                                    {...{
+                                        [filter.event]: (event: Event) => {
+                                            this.routeFilters = this.updateFilter(event.target.id, event.target.value, this.routeFilters);
+                                            this.updateRoute(this.routeFilters, vnode.attrs.route);
+                                            this.mergedFilters = this.mergeFilters(vnode.attrs.inputFields, this.routeFilters);
+                                            this.fetchWithFilters(this.routeFilters, vnode.attrs.fetch);
+                                            console.log(this.mergedFilters);
+
+                                        }
                                     }}
                                     value={filter.value}
                                     placeholder={filter.placeholder}

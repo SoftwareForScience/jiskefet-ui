@@ -21,6 +21,8 @@ type Vnode = m.Vnode<Attrs, Table>;
 export default class Table extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
         const { columns, className, data } = vnode.attrs;
+        console.log(data);
+
         return (
             <div class="table-responsive">
                 <table class={`table table-sm table-bordered table-hover shadow-sm ${className || ''}`}>
@@ -39,7 +41,9 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                             <tr>
                                 {columns.map((column: Column) => (
                                     <td>
-                                        {(column.cell ? column.cell(row) : row[column.accessor])}
+                                        {(column.cell ?
+                                            column.cell(row)
+                                            : row[column.accessor] as string | number | boolean)}
                                     </td>
                                 ))}
                             </tr>

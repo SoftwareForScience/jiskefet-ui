@@ -22,12 +22,14 @@ const inputFields = [
     {
         name: 'logId',
         type: 'number',
-        label: 'Log id'
+        label: 'Log id',
+        event: 'onchange'
     },
     {
         name: 'searchterm',
         type: 'text',
-        label: 'Title'
+        label: 'Title',
+        event: 'onchange'
     }
 ];
 

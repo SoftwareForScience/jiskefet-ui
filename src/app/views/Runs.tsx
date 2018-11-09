@@ -20,23 +20,28 @@ import { Run } from '../interfaces/Run';
 const inputFields = [
     {
         name: 'runNumber',
-        type: 'number'
+        type: 'number',
+        event: 'onchange'
     },
     {
         name: 'timeO2Start',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
     {
         name: 'timeO2End',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
     {
         name: 'timeTrgStart',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
     {
         name: 'timeTrgEnd',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
 ];
 
