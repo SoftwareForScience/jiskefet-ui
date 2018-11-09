@@ -54,6 +54,10 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
         this.fetch();
     }
 
+    handleHeaderClick = () => {
+        console.log('hi');
+    }
+
     view() {
         return (
             <div className="container-fluid">
@@ -71,7 +75,7 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                                 <Table
                                     data={State.RunModel.list}
                                     columns={RunColumns}
-                                    className="font-sm"
+                                    className="jf-font-sm"
                                 />
                             </div>
                         </div>

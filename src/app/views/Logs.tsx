@@ -52,6 +52,10 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
         this.fetch();
     }
 
+    handleHeaderClick = () => {
+        console.log('hi');
+    }
+
     view() {
         return (
             <div className="container-fluid">
@@ -77,6 +81,7 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                 <Table
                                     data={State.LogModel.list}
                                     columns={this.columns}
+                                    filterKey={'log'}
                                 />
                             </div>
                         </div>
