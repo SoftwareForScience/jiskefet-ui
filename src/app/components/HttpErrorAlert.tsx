@@ -9,9 +9,12 @@
 import * as m from 'mithril';
 import State from '../models/State';
 import { HttpError } from '../interfaces/HttpError';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 
-export default class HttpErrorAlert implements m.Component {
-    view(vnode: any) {
+type Vnode = m.Vnode<{}, HttpErrorAlert>;
+
+export default class HttpErrorAlert extends MithrilTsxComponent<{}> {
+    view(vnode: Vnode) {
         const errors: HttpError[] = State.HttpErrorModel.getErrors();
         return (
             <div>

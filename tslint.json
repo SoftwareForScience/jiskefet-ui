@@ -34,7 +34,6 @@
             "never-prefix"
         ],
         "jsdoc-format": true,
-
         "jsx-alignment": true,
         "jsx-boolean-value": [
             "never"
@@ -68,7 +67,7 @@
                     "public-instance-field",
                     "private-static-field",
                     "private-instance-field",
-                    "public-constructor",                    
+                    "public-constructor",
                     "private-constructor",
                     "public-instance-method",
                     "protected-instance-method",
@@ -105,6 +104,7 @@
         "no-reference": true,
         "no-trailing-whitespace": true,
         "no-unused-expression": true,
+        "no-unsafe-any": true,
         "no-var-keyword": true,
         "ordered-imports": false,
         "object-literal-sort-keys": false,
@@ -147,7 +147,9 @@
         "typedef": [
             true,
             "parameter",
-            "property-declaration"
+            "arrow-parameter",
+            "property-declaration",
+            "member-variable-declaration"
         ],
         "typedef-whitespace": [
             true,

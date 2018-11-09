@@ -8,31 +8,44 @@
 
 import * as m from 'mithril';
 import MarkdownViewer from './MarkdownViewer';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { Event } from '../interfaces/Event';
+
+interface Attrs {
+    postContent: (content: string) => void;
+}
+
+type Vnode = m.Vnode<Attrs, MarkdownEditor>;
 
 /**
  * Markdown editor with preview.
  */
-export default class MarkdownEditor implements m.Component {
-    private callback: (content: string) => void;
-    private content: string;
+export default class MarkdownEditor extends MithrilTsxComponent<Attrs> {
+    content: string;
 
-    constructor(vnode: any) {
-        this.callback = vnode.attrs.postContent;
+    constructor(vnode: Vnode) {
+        super();
     }
 
     /**
-     * Bind value to content and executes the callback.
+     * Bind event.target.value to this.content;
      */
-    onTextChange = (event: any): void => {
+    handleInput = (event: Event): void => {
         this.content = event.target.value;
-        this.callback(this.content);
     }
 
-    view() {
+    view(vnode: Vnode) {
         return (
             <div class="row">
                 <div class="col-md-6 jf-markdown-wrapper">
-                    <textarea id="markdown" placeholder="Type your description here" oninput={this.onTextChange} />
+                    <textarea
+                        id="markdown"
+                        placeholder="Type your description here"
+                        oninput={(event: Event) => {
+                            this.handleInput(event);
+                            vnode.attrs.postContent(this.content);
+                        }}
+                    />
                 </div>
                 <div class="col-md-6 jf-markdown-wrapper">
                     <div class="jf-markdown-preview">

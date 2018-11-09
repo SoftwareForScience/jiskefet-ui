@@ -7,39 +7,39 @@
  */
 
 import * as m from 'mithril';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 
-export default class NavItem implements m.Component {
-    private href: string;
-    private title: string;
-    private icon: string;
+interface Attrs {
+    href: string;
+    name: string;
+    icon?: string;
+}
 
-    constructor(vnode: any) {
-        this.href = vnode.attrs.href;
-        this.title = vnode.attrs.name;
-        this.icon = vnode.attrs.icon;
-    }
+type Vnode = m.Vnode<Attrs, NavItem>;
 
+export default class NavItem extends MithrilTsxComponent<Attrs> {
     /**
      * Returns true if this NavItem's href corresponds to the current page/route (ignores query params in route).
      * Example true if: href = '/logs', current page/route = 'site.com/logs?id=1'
      */
-    isCurrentPage = (): boolean => {
-        const route = m.route.get().split('?')[0];
-        return route === this.href;
+    isCurrentPage = (hrefString: string): boolean => {
+        const route: string = m.route.get().split('?')[0];
+        return route === hrefString;
     }
 
-    view() {
-        let text;
-        text = !this.icon ?
-            <a href={this.href} className="nav-link" oncreate={m.route.link}>{this.title}</a> :
-            [(
-                <a href={this.href} className="nav-link" oncreate={m.route.link}>
-                    <span class={`fas ${this.icon}`} />
-                    &nbsp;{this.title}</a>
+    view(vnode: Vnode) {
+        const { href, name, icon } = vnode.attrs;
+        let text: JSX.Element | JSX.Element[];
+        text = !icon ?
+            <a href={href} className="nav-link" oncreate={m.route.link}>{name}</a>
+            : [(
+                <a href={href} className="nav-link" oncreate={m.route.link}>
+                    <span class={`fas ${icon}`} />
+                    &nbsp;{name}</a>
             )];
 
         return (
-            <li class={`nav-item ${this.isCurrentPage() && 'active'}`}>
+            <li class={`nav-item ${this.isCurrentPage(href) && 'active'}`}>
                 {text}
             </li >
         );

@@ -8,8 +8,9 @@
 
 import * as m from 'mithril';
 import State from '../models/State';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 
-export default class NavBar implements m.Component {
+export default class NavBar extends MithrilTsxComponent<{}> {
 
     toggleSidebar = () => {
         State.AppState.showSidebar = !State.AppState.showSidebar;
