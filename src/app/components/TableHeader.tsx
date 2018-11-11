@@ -21,14 +21,17 @@ interface Attrs {
 type Vnode = m.Vnode<Attrs, TableHeader>;
 
 /**
- * TableHeader component (<th></th>), with order by state.
+ * TableHeader component (<th></th>).
  */
 export default class TableHeader extends MithrilTsxComponent<Attrs> {
     // The css classes for order directions.
     private readonly orderByDescClass: string = 'jf-sort-desc';
     private readonly orderByAscClass: string = 'jf-sort-asc';
 
-    getOrderByClass = (orderDirection: string | null) => {
+    /**
+     * Returns the css class that belongs to the order direction given.
+     */
+    getOrderByClass = (orderDirection: OrderDirection | null): string | null => {
         switch (orderDirection) {
             case OrderDirection.Ascending:
                 return this.orderByAscClass;

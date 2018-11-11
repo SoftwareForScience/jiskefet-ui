@@ -23,6 +23,8 @@ const LogModel = {
     createLog: {} as LogCreate, // log being created
     async fetch(query?: string) {
         LogModel.isFetchingLogs = true;
+        console.log('fetching...');
+        console.log(`${ process.env.API_URL }logs${ query? `?${query}` : ''}`);
         return m.request({
             method: 'GET',
             url: `${process.env.API_URL}logs${query ? `?${query}` : ''}`,

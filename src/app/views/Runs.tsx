@@ -76,6 +76,7 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                                     data={State.RunModel.list}
                                     columns={RunColumns}
                                     className="jf-font-sm"
+                                    onHeaderClick={this.handleHeaderClick}
                                 />
                             </div>
                         </div>

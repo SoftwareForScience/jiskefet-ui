@@ -14,10 +14,27 @@ import { OrderDirection } from '../enums/OrderDirection';
 import State from '../models/State';
 
 interface Attrs {
-    data: object[];
+    /**
+     * The data that the table displays. Each object in the array represents
+     * a row where each field represents the column and its value.
+     */
+    data: Array<{ [column: string]: any}>; // Todo: better typedef needed
+    /**
+     * The columns (table headers) for the table.
+     */
     columns: Column[];
-    className?: string; // example: 'font-sm bg-dark'
+    /**
+     * The optional css class for the table.
+     */
+    className?: string;
+    /**
+     * ...
+     */
     filterKey?: string; // key for filters, e.g. 'log' or 'run'
+    /**
+     * Function being called when a table header is clicked.
+     */
+    onHeaderClick: () => void;
 }
 
 type Vnode = m.Vnode<Attrs, Table>;
@@ -36,7 +53,7 @@ export default class Table extends MithrilTsxComponent<Attrs> {
     }
 
     view(vnode: Vnode) {
-        const { columns, className, data, filterKey } = vnode.attrs;
+        const { columns, className, data, filterKey, onHeaderClick } = vnode.attrs;
         return (
             <div class="table-responsive">
                 <table class={`table table-sm table-bordered table-hover shadow-sm jf-table ${className || ''}`}>
@@ -46,12 +63,12 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                                 // tslint:disable-next-line:jsx-key
                                 <TableHeader
                                     column={column}
-                                    orderDirection={filterKey && State.FilterModel.get(filterKey)
-                                        ? this.getOrder(column, State.FilterModel.get(filterKey))
+                                    orderDirection={filterKey && State.FilterModel.getFilters(filterKey)
+                                        ? this.getOrder(column, State.FilterModel.getFilters(filterKey))
                                         : null}
                                     onClick={filterKey ? () => {
-                                        State.FilterModel.changeOrderBy(filterKey, column.accessor);
-                                        console.log(State.FilterModel.getAll());
+                                        State.FilterModel.switchOrderBy(filterKey, column.accessor);
+                                        onHeaderClick();
                                     } : undefined}
                                 />
                             )}

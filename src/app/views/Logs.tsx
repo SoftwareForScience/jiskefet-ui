@@ -9,7 +9,6 @@
 import * as m from 'mithril';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
-import Filter from '../components/Filter';
 import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
@@ -17,6 +16,7 @@ import LogColumns from '../constants/LogColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import Fetchable from '../interfaces/Fetchable';
 import { Log } from '../interfaces/Log';
+import NewFilter from '../components/NewFilter';
 
 const inputFields = [
     {
@@ -52,8 +52,8 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
         this.fetch();
     }
 
-    handleHeaderClick = () => {
-        console.log('hi');
+    handleQuery = () => {
+        this.fetch(State.FilterModel.getQueryString('log'));
     }
 
     view() {
@@ -62,19 +62,12 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                 <Spinner isLoading={State.LogModel.isFetchingLogs}>
                     <HttpErrorAlert>
                         <SuccessMessage />
-                        {/* <div className="row">
-                            <div className="col-md-12">
-                                <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
-                                    {this.previewContent ? 'Hide content' : 'Preview content'}
-                                </button>
-                            </div>
-                        </div> */}
                         <div className="row">
                             <div className="col-md-3 mt-2">
-                                <Filter
+                                <NewFilter
                                     inputFields={inputFields}
-                                    fetch={this.fetch}
-                                    route="logs"
+                                    filterKey={'log'}
+                                    onEvent={this.handleQuery}
                                 />
                             </div>
                             <div className="col-md-9 mt-2">
@@ -82,6 +75,7 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                     data={State.LogModel.list}
                                     columns={this.columns}
                                     filterKey={'log'}
+                                    onHeaderClick={this.handleQuery}
                                 />
                             </div>
                         </div>

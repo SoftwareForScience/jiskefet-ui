@@ -122,6 +122,7 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                     <Table
                                                         data={State.RunModel.current.logs}
                                                         columns={LogColumns}
+                                                        onHeaderClick={() => ('remove this')}
                                                     />
                                                     : 'This run has no logs'
                                                 }
