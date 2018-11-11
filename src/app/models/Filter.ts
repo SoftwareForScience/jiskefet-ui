@@ -11,6 +11,20 @@ import * as _ from 'lodash';
  */
 
  // Todo: think about moving this object, so that this class can accept a generic object
+const DefaultFilters = {
+    log: {
+        logId: null as string | null,
+        searchterm: null as string | null,
+        creationTime: null as string | null,
+        origin: null as string | null,
+        subType: null as string | null,
+        orderBy: null as string | null,
+        orderDirection: null as OrderDirection | null,
+        pageSize: 8 as number,
+        pageNumber: 1 as number | null
+    }
+};
+
 const Filters = {
     log: {
         logId: null as string | null,
@@ -20,28 +34,29 @@ const Filters = {
         subType: null as string | null,
         orderBy: null as string | null,
         orderDirection: null as OrderDirection | null,
-        pageSize: null as string | null,
-        pageNumber: null as string | null
+        pageSize: null as number | null,
+        pageNumber: null as number | null
     },
 };
 
 // Todo: Move this to util class
 /**
- * Update the route with query params in filters.
- * @param filters The filters object to be inserted into the route as query params.
+ * Update the url with query params in filters.
+ * @param filters The filters object to be inserted into the url as query params.
  */
-const updateRoute = (filters: any): void => {
-    const queryString: string = m.buildQueryString(filters);
-    console.log(filters);
-    m.route.set(`${getPathFromUrl(m.route.get())}?${queryString}`);
+const updateUrlFromFilters = (filterKey: string): void => {
+    const cleanFilters = getCleanFilters(filterKey);
+    if (cleanFilters) {
+        const queryString: string = m.buildQueryString(cleanFilters);
+        m.route.set(`${m.route.get().split(/[?#]/)[0]}?${queryString}`);
+    }
 };
 
-// Todo: Move this to util class
-const getPathFromUrl = (url: string): string => {
-    return url.split(/[?#]/)[0];
-};
-
-const getCleanFilters = (filterKey: string) => {
+/**
+ * Returns the filters that are not null.
+ * @param filterKey e.g. 'log' or 'run'
+ */
+const getCleanFilters = (filterKey: string): {[key: string]: string} => {
     return _.pickBy(Filters[filterKey], _.identity);
 };
 
@@ -53,15 +68,28 @@ const FilterModel = {
     /**
      * Set a filter, i.e. filterKey.key = value.
      */
-    setFilter: (filterKey: string, key: string, value: string | null): void => {
+    setFilter: (filterKey: string, key: string, value: string | number | null): void => {
         Filters[filterKey][key] = value || null;
-        updateRoute(getCleanFilters(filterKey));
+        updateUrlFromFilters(filterKey);
+    },
+    /**
+     * Sets the query params from the url into the filters.
+     */
+    setFiltersFromUrl: (filterKey: string) => {
+        const filtersFromUrl = m.route.param();
+        _.merge(Filters[filterKey], filtersFromUrl);
     },
     /**
      * Returns the filter object on key filterKey
      */
     getFilters: (filterKey: string) => {
         return Filters[filterKey];
+    },
+    /**
+     * Sets all the values for the object at filterKey to null;
+     */
+    setFiltersToDefaults: (filterKey: string) => {
+        Filters[filterKey] = DefaultFilters[filterKey];
     },
     /**
      * Switches the orderDirection for the columnName given.
@@ -84,11 +112,7 @@ const FilterModel = {
                 break;
             default:
         }
-        updateRoute(getCleanFilters(filterKey));
-    },
-    // delete this, just for testing purposes
-    getAll: () => {
-        return Filters;
+        updateUrlFromFilters(filterKey);
     },
     /**
      * Returns the filters as a query string.

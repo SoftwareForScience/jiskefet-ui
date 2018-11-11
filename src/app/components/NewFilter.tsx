@@ -9,12 +9,10 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
-import State from '../models/State';
 
 interface InputField {
-    name: string;
+    name: string; // name should exist as a key in the filters attribute.
     type: string;
-    value?: string | null;
     placeholder?: string;
     label?: string;
     event: string;
@@ -26,21 +24,20 @@ interface Attrs {
      */
     inputFields: InputField[];
     /**
-     * The key used in FilterModel's Filters object to save the filters in.
-     */
-    filterKey: string;
-    /**
      * Function being called when the event happens on an input field.
      */
-    onEvent: () => void;
+    onEvent: (key: string, value: string | number) => void;
+    /**
+     * The values of the filters.
+     */
+    filters: { [key: string]: string | number | null };
 }
 
 type Vnode = m.Vnode<Attrs, NewFilter>;
-// type VnodeDOM = m.VnodeDOM<Attrs, NewFilter>;
 
 export default class NewFilter extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { inputFields, filterKey, onEvent } = vnode.attrs;
+        const { inputFields, onEvent, filters } = vnode.attrs;
         return (
             <div class="filters-responsive">
                 <div class="bg-light rounded p-4 shadow-sm border">
@@ -56,12 +53,10 @@ export default class NewFilter extends MithrilTsxComponent<Attrs> {
                                     id={inputField.name}
                                     {...{
                                         [inputField.event]: (event: Event) => {
-                                            // Todo: maybe too tightly coupled
-                                            State.FilterModel.setFilter(filterKey, inputField.name, event.target.value);
-                                            onEvent();
+                                            onEvent(inputField.name, event.target.value);
                                         }
                                     }}
-                                    value={inputField.value}
+                                    value={filters[inputField.name]}
                                     placeholder={inputField.placeholder}
                                 />
                             </div>

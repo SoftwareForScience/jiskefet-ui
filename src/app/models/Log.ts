@@ -18,20 +18,22 @@ import { HttpError } from '../interfaces/HttpError';
 const LogModel = {
     isFetchingLogs: false as boolean,
     isFetchingLog: false as boolean,
+    count: 0 as number, // number of total rows available.
     list: [] as Log[],
     current: {} as Log,
     createLog: {} as LogCreate, // log being created
     async fetch(query?: string) {
         LogModel.isFetchingLogs = true;
         console.log('fetching...');
-        console.log(`${ process.env.API_URL }logs${ query? `?${query}` : ''}`);
+        console.log(`${ process.env.API_URL }logs${ query ? `?${query}` : ''}`);
         return m.request({
             method: 'GET',
             url: `${process.env.API_URL}logs${query ? `?${query}` : ''}`,
             withCredentials: false
-        }).then((result: Log[]) => {
+        }).then((result: { logs: Log[], count: number }) => {
             LogModel.isFetchingLogs = false;
-            LogModel.list = result;
+            LogModel.list = result.logs;
+            LogModel.count = result.count;
         }).catch((error: HttpError) => {
             LogModel.isFetchingLogs = false;
             State.HttpErrorModel.add(error);

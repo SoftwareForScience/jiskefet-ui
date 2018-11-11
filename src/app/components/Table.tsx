@@ -11,7 +11,6 @@ import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Column } from '../interfaces/Column';
 import TableHeader from './TableHeader';
 import { OrderDirection } from '../enums/OrderDirection';
-import State from '../models/State';
 
 interface Attrs {
     /**
@@ -28,32 +27,29 @@ interface Attrs {
      */
     className?: string;
     /**
-     * ...
-     */
-    filterKey?: string; // key for filters, e.g. 'log' or 'run'
-    /**
      * Function being called when a table header is clicked.
      */
-    onHeaderClick: () => void;
+    onHeaderClick?: (accessor: string) => void;
+    orderBy?: string;
+    orderDirection?: OrderDirection;
 }
 
 type Vnode = m.Vnode<Attrs, Table>;
 
 export default class Table extends MithrilTsxComponent<Attrs> {
-
     /**
-     * Returns the order direction of a column, based on the values of the filters.
+     * Returns the order direction for a column, based on orderBy and orderDirection.
      */
-    getOrder = (column: Column, filters: any): OrderDirection | null => {
-        if (filters.orderBy === column.accessor) {
-            return filters.orderDirection;
+    getOrder = (column: Column, orderBy: string, orderDirection: OrderDirection): OrderDirection | null => {
+        if (orderBy === column.accessor) {
+            return orderDirection;
         } else {
             return null;
         }
     }
 
     view(vnode: Vnode) {
-        const { columns, className, data, filterKey, onHeaderClick } = vnode.attrs;
+        const { columns, className, data, onHeaderClick, orderBy, orderDirection} = vnode.attrs;
         return (
             <div class="table-responsive">
                 <table class={`table table-sm table-bordered table-hover shadow-sm jf-table ${className || ''}`}>
@@ -63,13 +59,9 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                                 // tslint:disable-next-line:jsx-key
                                 <TableHeader
                                     column={column}
-                                    orderDirection={filterKey && State.FilterModel.getFilters(filterKey)
-                                        ? this.getOrder(column, State.FilterModel.getFilters(filterKey))
-                                        : null}
-                                    onClick={filterKey ? () => {
-                                        State.FilterModel.switchOrderBy(filterKey, column.accessor);
-                                        onHeaderClick();
-                                    } : undefined}
+                                    // fix ternary
+                                    orderDirection={(orderBy && orderDirection) ? this.getOrder(column, orderBy, orderDirection) : null}
+                                    onClick={() => (onHeaderClick ? onHeaderClick(column.accessor) : null)}
                                 />
                             )}
                         </tr>

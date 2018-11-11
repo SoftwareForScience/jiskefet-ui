@@ -10,6 +10,6 @@
  * The order directions for orderBy query params.
  */
 export enum OrderDirection {
-    Ascending = 'asc',
-    Descending = 'desc'
+    Ascending = 'ASC',
+    Descending = 'DESC'
 }
