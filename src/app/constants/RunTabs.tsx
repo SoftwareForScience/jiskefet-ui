@@ -36,13 +36,6 @@ const RunTabs: Tab[] = [
         )
     },
     {
-        name: 'Users',
-        id: 'users',
-        content: (): string => (
-            'Not yet implemented'
-        )
-    },
-    {
         name: 'Others...',
         id: 'others',
         content: (): string => (
