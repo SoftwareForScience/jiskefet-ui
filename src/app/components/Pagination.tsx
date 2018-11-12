@@ -48,9 +48,9 @@ export default class Pagination extends MithrilTsxComponent<Attrs> {
                 {!this.editable &&
                     <div
                         id="page-selector-label"
-                        class="page-link"
+                        class="page-link page-selector-label"
                         data-toggle="tooltip"
-                        data-placement="top"
+                        data-placement="bottom"
                         title="Click to manually select a page"
                         onclick={() => {
                             this.editable = true;
@@ -65,8 +65,8 @@ export default class Pagination extends MithrilTsxComponent<Attrs> {
     }
 
     pageNonLink = (item: string) => (
-        <li class={`page-item disabled`}>
-            <a class="page-link">
+        <li class={`page-item disabled `}>
+            <a class="page-link jf-page-non-link">
                 {item}
             </a>
         </li >

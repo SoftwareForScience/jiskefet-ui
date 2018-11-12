@@ -20,7 +20,7 @@ const DefaultFilters = {
         subType: null as string | null,
         orderBy: null as string | null,
         orderDirection: null as OrderDirection | null,
-        pageSize: 8 as number,
+        pageSize: 16 as number,
         pageNumber: 1 as number | null
     }
 };
@@ -89,7 +89,7 @@ const FilterModel = {
      * Sets all the values for the object at filterKey to null;
      */
     setFiltersToDefaults: (filterKey: string) => {
-        Filters[filterKey] = DefaultFilters[filterKey];
+        Object.assign(Filters[filterKey], DefaultFilters[filterKey]);
     },
     /**
      * Switches the orderDirection for the columnName given.

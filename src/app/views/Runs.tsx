@@ -60,7 +60,7 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
 
     view() {
         return (
-            <div className="container-fluid">
+            <div>
                 <Spinner isLoading={State.RunModel.isFetchingRuns}>
                     <HttpErrorAlert>
                         <div className="row">

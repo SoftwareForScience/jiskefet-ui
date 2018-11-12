@@ -21,6 +21,7 @@ import Pagination from '../components/Pagination';
 import { Event } from '../interfaces/Event';
 import _ = require('lodash');
 import { Column } from '../interfaces/Column';
+import PageCounter from '../components/PageCounter';
 
 const inputFields = [
     {
@@ -35,7 +36,7 @@ const inputFields = [
         type: 'text',
         label: 'Title',
         event: 'onchange',
-        placeholder: 'e.g. batch run 32.14_e21'
+        placeholder: 'e.g. EOR report'
     }
 ];
 
@@ -67,6 +68,9 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
         this.fetch(State.FilterModel.getQueryString('log'));
     }
 
+    /**
+     * Creates a dummy table, to be used when fetching happens.
+     */
     createDummyTable = (size: number, columns: Column[]): JSX.Element => {
         const dummyData = [] as Array<{ [column: string]: any }>;
         _.times(size, () => dummyData.push({ key: 'value' }));
@@ -81,9 +85,52 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
     view() {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         return (
-            <div className="container-fluid">
+            <div>
                 <HttpErrorAlert>
                     <SuccessMessage />
+                    <div class="row bg-light rounded mx-2 shadow-sm border">
+                        <div class="col-md-12 py-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="text-muted">
+                                        <PageCounter
+                                            currentPage={State.FilterModel.getFilters('log').pageNumber}
+                                            rowsInTable={State.FilterModel.getFilters('log').pageSize}
+                                            totalCount={State.LogModel.count}
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <select
+                                        id="pageSize"
+                                        class="form-control form-control-sm"
+                                        name="pageSize"
+                                        onchange={(event: Event) => {
+                                            State.FilterModel.setFilter('log', 'pageSize', event.target.value);
+                                            State.FilterModel.setFilter('log', 'pageNumber', 1);
+                                            this.fetchWithFilters();
+                                        }}
+                                        value={State.FilterModel.getFilters('log').pageSize}
+                                    >
+                                        {pageSizes.map((pageSize: number) =>
+                                            // tslint:disable-next-line:jsx-key
+                                            <option value={pageSize}>{pageSize}</option>
+                                        )}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 py-2">
+                            <Pagination
+                                currentPage={State.FilterModel.getFilters('log').pageNumber}
+                                numberOfPages={Math.ceil(State.LogModel.count / State.FilterModel.getFilters('log').pageSize)}
+                                onChange={(newPage: number) => {
+                                    State.FilterModel.setFilter('log', 'pageNumber', newPage);
+                                    this.fetchWithFilters();
+                                }}
+                            />
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-md-3 mt-2">
                             <NewFilter
@@ -99,9 +146,7 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                         <div className="col-md-9 mt-2">
                             <Spinner
                                 isLoading={State.LogModel.isFetchingLogs}
-                                component={
-                                    this.createDummyTable(State.FilterModel.getFilters('log').pageSize, LogColumns)
-                                }
+                                component={this.createDummyTable(State.FilterModel.getFilters('log').pageSize, LogColumns)}
                             >
                                 <Table
                                     data={State.LogModel.list}
@@ -114,36 +159,6 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                     }}
                                 />
                             </Spinner>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-2 offset-3 form-group">
-                            <select
-                                id="pageSize"
-                                class="form-control form-control-sm"
-                                name="pageSize"
-                                onchange={(event: Event) => {
-                                    State.FilterModel.setFilter('log', 'pageSize', event.target.value);
-                                    State.FilterModel.setFilter('log', 'pageNumber', 1);
-                                    this.fetchWithFilters();
-                                }}
-                                value={State.FilterModel.getFilters('log').pageSize}
-                            >
-                                {pageSizes.map((pageSize: number) =>
-                                    // tslint:disable-next-line:jsx-key
-                                    <option value={pageSize}>{pageSize}</option>
-                                )}
-                            </select>
-                        </div>
-                        <div className="col-md-7 form-group">
-                            <Pagination
-                                currentPage={State.FilterModel.getFilters('log').pageNumber}
-                                numberOfPages={Math.ceil(State.LogModel.count / State.FilterModel.getFilters('log').pageSize)}
-                                onChange={(newPage: number) => {
-                                    State.FilterModel.setFilter('log', 'pageNumber', newPage);
-                                    this.fetchWithFilters();
-                                }}
-                            />
                         </div>
                     </div>
                 </HttpErrorAlert>
