@@ -11,9 +11,10 @@ import Spinner from '../components/Spinner';
 import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
-import Table from '../components/Table';
-import LogColumns from '../constants/LogColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
+import TabContent from '../components/TabContent';
+import TabHeader from '../components/TabHeader';
+import RunTabs from '../constants/RunTabs';
 
 interface Attrs {
     id: number;
@@ -101,38 +102,17 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                         </div>
                                     </div>
                                     <div class="card-header">
-                                        <div class="col-md-12 mx-auto">
-                                            <ul class="nav nav-tabs card-header-tabs pull-xs-left flex-column flex-sm-row" role="tablist">
-                                                <li class="nav-item">
-                                                    <a class="nav-link active" href="#runs" role="tab" data-toggle="tab">Logs</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#subsystems" role="tab" data-toggle="tab">Detectors</a>
-                                                </li>
-                                                <li class="nav-item">
-                                                    <a class="nav-link" href="#users" role="tab" data-toggle="tab">Others...</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <TabHeader
+                                            tabs={RunTabs}
+                                        />
                                     </div>
                                     <div class="card-body">
-                                        <div class="tab-content">
-                                            <div role="tabpanel" class="tab-pane active" id="runs" aria-labelledby="runs-tab">
-                                                {State.RunModel.current.logs && State.RunModel.current.logs.length > 0 ?
-                                                    <Table
-                                                        data={State.RunModel.current.logs}
-                                                        columns={LogColumns}
-                                                    />
-                                                    : 'This run has no logs'
-                                                }
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
-                                                Not yet implemented
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane" id="users" aria-labelledby="users-tab">
-                                                Not yet implemented
-                                            </div>
-                                        </div>
+                                        <Spinner isLoading={State.RunModel.isFetchingRun}>
+                                            <TabContent
+                                                tabs={RunTabs}
+                                                entity={State.RunModel.current}
+                                            />
+                                        </Spinner>
                                     </div>
                                 </div>
                             </div>
