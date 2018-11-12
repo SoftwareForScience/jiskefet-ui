@@ -81,6 +81,13 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                         )}
                     </tbody>
                 </table>
+                {data.length === 0 && <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-light text-center" role="alert">
+                            No results found
+                        </div>
+                    </div>
+                </div>}
             </div>
         );
     }

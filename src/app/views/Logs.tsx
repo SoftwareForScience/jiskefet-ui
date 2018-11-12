@@ -117,10 +117,10 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-2  offset-3">
+                        <div className="col-md-2 offset-3 form-group">
                             <select
                                 id="pageSize"
-                                class="form-control"
+                                class="form-control form-control-sm"
                                 name="pageSize"
                                 onchange={(event: Event) => {
                                     State.FilterModel.setFilter('log', 'pageSize', event.target.value);
@@ -135,7 +135,7 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                 )}
                             </select>
                         </div>
-                        <div className="col-md-7">
+                        <div className="col-md-7 form-group">
                             <Pagination
                                 currentPage={State.FilterModel.getFilters('log').pageNumber}
                                 numberOfPages={Math.ceil(State.LogModel.count / State.FilterModel.getFilters('log').pageSize)}
