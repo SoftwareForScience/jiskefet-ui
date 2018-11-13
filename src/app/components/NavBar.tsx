@@ -20,11 +20,21 @@ export default class NavBar extends MithrilTsxComponent<{}> {
         return (
             <nav class="navbar navbar-expand-sm navbar-dark jf-navbar" >
                 <div class="navbar-header w-100 d-flex">
-                    <button type="button" class="btn jf-hamburger-button" onclick={this.toggleSidebar}>
+                    <button
+                        type="button"
+                        class="btn jf-hamburger-button"
+                        onclick={this.toggleSidebar}
+                    >
                         <span class="fas fa-bars" />
                     </button>
                     <a href="/" class="navbar-brand" oncreate={m.route.link}>
-                        <img src="../../assets/alice_logo_text_white.png" width="30" height="30" class="d-inline-block align-top jf-logo" alt="" />
+                        <img
+                            src="../../assets/alice_logo_text_white.png"
+                            width="30"
+                            height="30"
+                            class="d-inline-block align-top jf-logo"
+                            alt=""
+                        />
                         Jiskefet
                     </a>
                 </div>

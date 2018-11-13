@@ -52,19 +52,25 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                     <dt class="col-sm-6">Subtype:</dt>
                                                     <dd class="col-sm-6">
                                                         {State.LogModel.current.subtype === 'run' ?
-                                                            <span class="badge badge-warning">{State.LogModel.current.subtype}</span>
+                                                            <span class="badge badge-warning">
+                                                            {State.LogModel.current.subtype}
+                                                            </span>
                                                             : State.LogModel.current.subtype}
                                                     </dd>
 
                                                     <dt class="col-sm-6">Origin:</dt>
                                                     <dd class="col-sm-6">
                                                         {State.LogModel.current.origin === 'human' ?
-                                                            <span class="badge badge-success">{State.LogModel.current.origin}</span>
+                                                            <span class="badge badge-success">
+                                                            {State.LogModel.current.origin}
+                                                            </span>
                                                             : State.LogModel.current.origin}
                                                     </dd>
 
                                                     <dt class="col-sm-6">Creation time:</dt>
-                                                    <dd class="col-sm-6">{format(State.LogModel.current.creationTime, 'HH:mm:ss DD/MM/YYYY')}</dd>
+                                                    <dd class="col-sm-6">
+                                                    {format(State.LogModel.current.creationTime, 'HH:mm:ss DD/MM/YYYY')}
+                                                    </dd>
                                                 </dl>
                                             </div>
                                         </div>

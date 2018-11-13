@@ -56,7 +56,13 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12 mx-auto bg-light rounded p-4 shadow-sm">
-                            <div><h3>{`Create a new log ${vnode.attrs.runNumber ? `for run number ${vnode.attrs.runNumber}` : ''}`}</h3></div>
+                            <div>
+                                <h3>
+                                    {`Create a new log ${vnode.attrs.runNumber
+                                        ? `for run number ${vnode.attrs.runNumber}`
+                                        : ''}`}
+                                </h3>
+                            </div>
                             <div class="form-group">
                                 <label for="title">Title:</label>
                                 <div class="field">
@@ -73,7 +79,13 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                             <div class="form-group">
                                 <label for="subtype">Select subtype:</label>
                                 <div class="field">
-                                    <select id="subtype" class="form-control" name="subtype" required onclick={this.addToCreateLog}>
+                                    <select
+                                        id="subtype"
+                                        class="form-control"
+                                        name="subtype"
+                                        required
+                                        onclick={this.addToCreateLog}
+                                    >
                                         <option value="run">run</option>
                                     </select>
                                 </div>
@@ -81,7 +93,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                             <div class="form-group">
                                 <label for="subtype">Run number:</label>
                                 <div class="field">
-                                <input
+                                    <input
                                         id="runs"
                                         type="number"
                                         class="form-control"
@@ -89,7 +101,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                         value={vnode.attrs.runNumber && vnode.attrs.runNumber}
                                         required
                                         oninput={this.addRunsToCreateLog}
-                                />
+                                    />
                                 </div>
                             </div>
                             <div class="form-group">
