@@ -14,15 +14,30 @@ import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
 
 export default class Log implements m.Component {
-    private id: number;
+    private logId: number;
     private isLoading: boolean;
 
     constructor(vnode: any) {
-        this.id = vnode.attrs.id;
+        this.logId = vnode.attrs.id;
         this.isLoading = true;
-        State.LogModel.fetchOne(this.id).then(() => this.isLoading = false);
-        State.AttachmentModel.fetchAttachmentsForLog(this.id).then(() => this.isLoading = false);
+        State.LogModel.fetchOne(this.logId).then(() => this.isLoading = false);
+        State.AttachmentModel.fetch(this.logId).then(() => this.isLoading = false);
         // hier moet attachments worden opgehaald
+    }
+
+    async saveAttachmentModels(event: any) {
+        const files = event.target.files;
+        for (const file of files) {
+            await State.AttachmentModel.read(file, true);
+        }
+    }
+
+    postAttachments() {
+        for (const attachment of State.AttachmentModel.attachmentsToAdd) {
+            State.AttachmentModel.current = attachment;
+            State.AttachmentModel.save();
+        }
+        State.AttachmentModel.attachmentsToAdd = [];
     }
 
     view() {
@@ -40,10 +55,34 @@ export default class Log implements m.Component {
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <h5 class="card-title">{State.LogModel.current.title}</h5>
-                                                <h6 class="card-title">Attachments</h6>
-                                                {State.AttachmentModel.list.map(attachment =>
-                                                    <a id={attachment.id} download={attachment.title} key={attachment.id} href={State.AttachmentModel.downloadAttachmentAsFile(attachment)} >{attachment.title}</a>
-                                                )}
+                                                <h6 class="card-title">Attachments:</h6>
+                                                <ul>
+                                                    {State.AttachmentModel.list.map(attachment =>
+                                                        <li key={attachment.id}>
+                                                            <a
+                                                                id={attachment.id}
+                                                                download={attachment.title}
+                                                                href={State.AttachmentModel.download(attachment)}
+                                                            >
+                                                                {attachment.title}
+                                                            </a>
+                                                        </li>
+                                                    )}
+                                                </ul>
+                                                <br />
+                                                <br />
+                                                <label for="fileUpload">Attach new file(s) to Log:</label>
+                                                <input
+                                                    type="file"
+                                                    class="form-control-file"
+                                                    id="fileUpload"
+                                                    name="fileUpload"
+                                                    multiple
+                                                    data-show-caption="true"
+                                                    onchange={this.saveAttachmentModels}
+                                                />
+                                                <br />
+                                                <button class="btn btn-primary" onclick={this.postAttachments}>Save Attachment(s)</button>
                                             </div>
                                             <div class="col-md-6">
                                                 <dl class="row">

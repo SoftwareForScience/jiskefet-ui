@@ -1,3 +1,5 @@
+import { Log } from './Log';
+
 /*
  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
  *
@@ -11,7 +13,7 @@
  */
 export interface Attachment {
     fileId?: number;
-    logId?: number;
+    log?: Log;
     creationTime?: string;
     title: string;
     fileMime: string;
@@ -24,7 +26,7 @@ export interface Attachment {
  */
 export interface AttachmentCreate {
     fileId?: number;
-    logId?: number;
+    log?: Log;
     creationTime?: string;
     title: string;
     fileMime: string;

@@ -23,9 +23,11 @@ export default class CreateLog implements m.Component {
         State.LogModel.save();
     }
 
-    convertFileToAttachmentModel(event: any) {
+    async saveAttachmentModels(event: any) {
         const files = event.target.files;
-        State.AttachmentModel.saveAttachmentModel(files);
+        for (const file of files) {
+            await State.AttachmentModel.read(file, false);
+        }
     }
 
     view() {
@@ -76,7 +78,7 @@ export default class CreateLog implements m.Component {
                                     name="fileUpload"
                                     multiple
                                     data-show-caption="true"
-                                    onchange={this.convertFileToAttachmentModel}
+                                    onchange={this.saveAttachmentModels}
                                 />
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>

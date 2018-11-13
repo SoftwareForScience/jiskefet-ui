@@ -9,6 +9,7 @@
 import * as m from 'mithril';
 import { Attachment, AttachmentCreate } from '../interfaces/Attachment';
 import State from './State';
+import SuccesModel from './Success';
 
 /**
  * Stores the state around Attachment entities.
@@ -21,7 +22,8 @@ const AttachmentModel = {
     file: {} as File,
     createAttachment: {} as AttachmentCreate, // attachment being created
     downloadUrl: '' as string,
-    async fetchAttachmentsForLog(id: number) {
+    attachmentsToAdd: [] as any[],
+    async fetch(id: number) {
         AttachmentModel.isFetchingAttachment = true;
         return m.request({
             method: 'GET',
@@ -35,42 +37,49 @@ const AttachmentModel = {
             State.HttpErrorModel.add(e);
         });
     },
-    downloadAttachmentAsFile(attachment: any): string {
-
+    download(attachment: any): string {
         if (attachment.fileData.indexOf('base64;') >= 0) {
             attachment.fileData = attachment.fileData.split('base64;')[1];
         }
-
-        if (attachment.fileMime.indexOf('image') >= 0) {
-            console.log('Attachment is a image');
-            return `data:${attachment.fileMime};base64,${attachment.fileData}`; // data:image/png;base64," + baseString
-        } else {
-            return URL.createObjectURL(new Blob([atob(attachment.fileData)], { type: attachment.fileMime }));
-        }
+        return `data:${attachment.fileMime};base64,${attachment.fileData}`; // data:image/png;base64," + baseString
     },
-    async saveAttachmentModel(files: any) {
+    async save() {
+        return m.request<Attachment>({
+            method: 'POST',
+            url: `${process.env.API_URL}attachments`,
+            data: AttachmentModel.createAttachment,
+            withCredentials: false
+        }).then(() => {
+            SuccesModel.add('Successfully saved attachment.');
+        }).catch((e: any) => {
+            State.HttpErrorModel.add(e);
+        });
+    },
+    async read(file: any, isExistingLog: boolean) {
         const reader = new FileReader();
-        const attachmentsToAdd = [] as any[];
-        // Does not work for multiple files upload yet
-        for (const file of files) {
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-                const base64String = reader.result as string;
-                const fileMime = base64String.substring('data:'.length, base64String.indexOf(';base64,')) as string;
-                const fileData = base64String.substring(base64String.indexOf(';base64,')).substring(';base64,'.length) as string;
-                State.AttachmentModel.createAttachment.title = file.name;
-                State.AttachmentModel.createAttachment.fileMime = fileMime;
-                State.AttachmentModel.createAttachment.fileData = fileData;
-                attachmentsToAdd.push(State.AttachmentModel.createAttachment);
-            };
-
-            reader.onerror = (error) => {
-                console.log('Error: ', error);
-            };
-
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            console.log(file.name);
+            const base64String = reader.result as string;
+            const fileMime = base64String.substring('data:'.length, base64String.indexOf(';base64,')) as string;
+            const fileData = base64String.substring(base64String.indexOf(';base64,')).substring(';base64,'.length) as string;
+            State.AttachmentModel.createAttachment.title = file.name;
+            State.AttachmentModel.createAttachment.fileMime = fileMime;
+            State.AttachmentModel.createAttachment.fileData = fileData;
+            if (isExistingLog) {
+                State.AttachmentModel.createAttachment.log = State.LogModel.current;
+            }
+            this.attachmentsToAdd.push(State.AttachmentModel.createAttachment);
+        };
+        reader.onerror = (error) => {
+            console.log('Error: ', error);
+        };
+        if (!isExistingLog) {
+            // save the attachment(s) to createLog
+            State.LogModel.createLog.attachments = this.attachmentsToAdd;
+            console.log(State.LogModel.createLog.attachments);
+            this.attachmentsToAdd = [];
         }
-        // save the attachment to createLog model
-        State.LogModel.createLog.attachments = attachmentsToAdd;
     }
 };
 
