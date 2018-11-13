@@ -18,10 +18,17 @@ const DefaultFilters = {
         creationTime: null as string | null,
         origin: null as string | null,
         subType: null as string | null,
+        orderBy: 'creationTime' as string | null,
+        orderDirection: 'DESC' as OrderDirection | null,
+        pageSize: 16 as number,
+        pageNumber: 1 as number | null
+    },
+    run: {
+        runId: null as string | null,
         orderBy: null as string | null,
         orderDirection: null as OrderDirection | null,
         pageSize: 16 as number,
-        pageNumber: 1 as number | null
+        pageNumber: null as number | null
     }
 };
 
@@ -37,6 +44,13 @@ const Filters = {
         pageSize: null as number | null,
         pageNumber: null as number | null
     },
+    run: {
+        runId: null as string | null,
+        orderBy: null as string | null,
+        orderDirection: null as OrderDirection | null,
+        pageSize: null as number | null,
+        pageNumber: null as number | null
+    }
 };
 
 // Todo: Move this to util class

@@ -56,7 +56,7 @@
         "jsx-key": true,
         "label-position": true,
         "max-line-length": [
-            false,
+            true,
             120
         ],
         "member-ordering": [

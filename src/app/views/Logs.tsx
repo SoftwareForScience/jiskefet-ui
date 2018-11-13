@@ -19,9 +19,8 @@ import { Log } from '../interfaces/Log';
 import NewFilter from '../components/NewFilter';
 import Pagination from '../components/Pagination';
 import { Event } from '../interfaces/Event';
-import _ = require('lodash');
-import { Column } from '../interfaces/Column';
 import PageCounter from '../components/PageCounter';
+import { createDummyTable } from '../utility/DummyService';
 
 const inputFields = [
     {
@@ -68,20 +67,6 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
         this.fetch(State.FilterModel.getQueryString('log'));
     }
 
-    /**
-     * Creates a dummy table, to be used when fetching happens.
-     */
-    createDummyTable = (size: number, columns: Column[]): JSX.Element => {
-        const dummyData = [] as Array<{ [column: string]: any }>;
-        _.times(size, () => dummyData.push({ key: 'value' }));
-        return (
-            <Table
-                data={dummyData}
-                columns={columns}
-            />
-        );
-    }
-
     view() {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         return (
@@ -123,7 +108,8 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                         <div class="col-md-12 py-2">
                             <Pagination
                                 currentPage={State.FilterModel.getFilters('log').pageNumber}
-                                numberOfPages={Math.ceil(State.LogModel.count / State.FilterModel.getFilters('log').pageSize)}
+                                numberOfPages={Math.ceil(State.LogModel.count
+                                    / State.FilterModel.getFilters('log').pageSize)}
                                 onChange={(newPage: number) => {
                                     State.FilterModel.setFilter('log', 'pageNumber', newPage);
                                     this.fetchWithFilters();
@@ -146,7 +132,7 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                         <div className="col-md-9 mt-2">
                             <Spinner
                                 isLoading={State.LogModel.isFetchingLogs}
-                                component={this.createDummyTable(State.FilterModel.getFilters('log').pageSize, LogColumns)}
+                                component={createDummyTable(State.FilterModel.getFilters('log').pageSize, LogColumns)}
                             >
                                 <Table
                                     data={State.LogModel.list}

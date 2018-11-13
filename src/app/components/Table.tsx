@@ -60,7 +60,8 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                                 <TableHeader
                                     column={column}
                                     // fix ternary
-                                    orderDirection={(orderBy && orderDirection) ? this.getOrder(column, orderBy, orderDirection) : null}
+                                    orderDirection={(orderBy && orderDirection) ?
+                                        this.getOrder(column, orderBy, orderDirection) : null}
                                     onClick={() => (onHeaderClick ? onHeaderClick(column.accessor) : null)}
                                 />
                             )}

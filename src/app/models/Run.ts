@@ -17,7 +17,7 @@ import State from './State';
 const RunModel = {
     isFetchingRuns: false as boolean,
     isFetchingRun: false as boolean,
-    count: null as number | null,
+    count: 0 as number, // number of total rows available.
     list: [] as Run[],
     current: {} as Run,
     async fetch(query?: string) {
