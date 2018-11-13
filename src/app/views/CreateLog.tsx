@@ -28,17 +28,12 @@ export default class CreateLog implements m.Component {
         State.AttachmentModel.saveAttachmentModel(files);
     }
 
-    saveAttachment() {
-        State.AttachmentModel.save();
-    }
-
     view() {
         return (
             <form
                 onsubmit={e => {
                     e.preventDefault();
                     this.saveLog();
-                    this.saveAttachment();
                     m.route.set('/Logs');
                 }}
             >

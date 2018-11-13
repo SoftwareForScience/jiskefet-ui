@@ -9,7 +9,6 @@
 import * as m from 'mithril';
 import { Attachment, AttachmentCreate } from '../interfaces/Attachment';
 import State from './State';
-import SuccesModel from './Success';
 
 /**
  * Stores the state around Attachment entities.
@@ -49,20 +48,9 @@ const AttachmentModel = {
             return URL.createObjectURL(new Blob([atob(attachment.fileData)], { type: attachment.fileMime }));
         }
     },
-    async save() {
-        return m.request<Attachment>({
-            method: 'POST',
-            url: `${process.env.API_URL}attachments`,
-            data: AttachmentModel.createAttachment,
-            withCredentials: false
-        }).then(() => {
-            SuccesModel.add('Successfully saved attachment.');
-        }).catch((e: any) => {
-            State.HttpErrorModel.add(e);
-        });
-    },
     async saveAttachmentModel(files: any) {
         const reader = new FileReader();
+        const attachmentsToAdd = [] as any[];
         // Does not work for multiple files upload yet
         for (const file of files) {
             reader.readAsDataURL(file);
@@ -73,6 +61,7 @@ const AttachmentModel = {
                 State.AttachmentModel.createAttachment.title = file.name;
                 State.AttachmentModel.createAttachment.fileMime = fileMime;
                 State.AttachmentModel.createAttachment.fileData = fileData;
+                attachmentsToAdd.push(State.AttachmentModel.createAttachment);
             };
 
             reader.onerror = (error) => {
@@ -80,6 +69,8 @@ const AttachmentModel = {
             };
 
         }
+        // save the attachment to createLog model
+        State.LogModel.createLog.attachments = attachmentsToAdd;
     }
 };
 
