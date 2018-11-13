@@ -36,24 +36,15 @@ const AttachmentModel = {
             State.HttpErrorModel.add(e);
         });
     },
-    downloadAttachmentAsFile(attachment: any, element: any): string {
-        const div = document.getElementById(element.id);
+    downloadAttachmentAsFile(attachment: any): string {
 
         if (attachment.fileData.indexOf('base64;') >= 0) {
             attachment.fileData = attachment.fileData.split('base64;')[1];
         }
-        console.log(attachment.fileData);
-        console.log(new Blob([atob(attachment.fileData)], { type: attachment.fileMime }));
 
-        if (attachment.fileMime.indexOf('image') >= 0 && div) {
+        if (attachment.fileMime.indexOf('image') >= 0) {
             console.log('Attachment is a image');
-            const img = new Image();
-            img.onload = () => {
-                div.appendChild(img);
-            };
-            div.hidden = true;
-            img.src = `data:${attachment.fileMime};base64,${attachment.fileData}`; // data:image/png;base64," + baseString
-            return '';
+            return `data:${attachment.fileMime};base64,${attachment.fileData}`; // data:image/png;base64," + baseString
         } else {
             return URL.createObjectURL(new Blob([atob(attachment.fileData)], { type: attachment.fileMime }));
         }

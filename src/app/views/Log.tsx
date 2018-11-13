@@ -42,7 +42,7 @@ export default class Log implements m.Component {
                                                 <h5 class="card-title">{State.LogModel.current.title}</h5>
                                                 <h6 class="card-title">Attachments</h6>
                                                 {State.AttachmentModel.list.map(attachment =>
-                                                    <a id={attachment.id} download={attachment.title} key={attachment.id} href={State.AttachmentModel.downloadAttachmentAsFile(attachment, this)} >{attachment.title}</a>
+                                                    <a id={attachment.id} download={attachment.title} key={attachment.id} href={State.AttachmentModel.downloadAttachmentAsFile(attachment)} >{attachment.title}</a>
                                                 )}
                                             </div>
                                             <div class="col-md-6">
