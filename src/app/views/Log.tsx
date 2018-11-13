@@ -13,8 +13,7 @@ import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import LogTabs from '../constants/LogTabs';
-import TabHeader from '../components/TabHeader';
-import TabContent from '../components/TabContent';
+import Tabs from '../components/Tab';
 
 interface Attrs {
     id: number;
@@ -70,19 +69,10 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-header">
-                                        <TabHeader
-                                            tabs={LogTabs}
-                                        />
-                                    </div>
-                                    <div class="card-body">
-                                        <Spinner isLoading={State.LogModel.isFetchingLog}>
-                                            <TabContent
-                                                tabs={LogTabs}
-                                                entity={State.LogModel.current}
-                                            />
-                                        </Spinner>
-                                    </div>
+                                    <Tabs
+                                        tabs={LogTabs}
+                                        entity={State.LogModel.current}
+                                    />
                                 </div>
                             </div>
                         </div>

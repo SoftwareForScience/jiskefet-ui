@@ -12,9 +12,8 @@ import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import TabContent from '../components/TabContent';
-import TabHeader from '../components/TabHeader';
 import RunTabs from '../constants/RunTabs';
+import Tabs from '../components/Tab';
 
 interface Attrs {
     id: number;
@@ -101,19 +100,10 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-header">
-                                        <TabHeader
-                                            tabs={RunTabs}
-                                        />
-                                    </div>
-                                    <div class="card-body">
-                                        <Spinner isLoading={State.RunModel.isFetchingRun}>
-                                            <TabContent
-                                                tabs={RunTabs}
-                                                entity={State.RunModel.current}
-                                            />
-                                        </Spinner>
-                                    </div>
+                                    <Tabs
+                                        tabs={RunTabs}
+                                        entity={State.RunModel.current}
+                                    />
                                 </div>
                             </div>
                         </div>

@@ -6,9 +6,27 @@
  * copied verbatim in the file "LICENSE"
  */
 
+ /**
+  * Interface for the creation of different tabs.
+  */
 export interface Tab {
+    /**
+     * The name of the tab
+     */
     name: string;
+
+    /**
+     * the id of the tab
+     */
     id: string;
+
+    /**
+     * Indicator that sets it the class to active if true
+     */
     active?: boolean;
+
+    /**
+     * Function to create the content of the tab body.
+     */
     content: (entity?: object) => JSX.Element | string;
 }
