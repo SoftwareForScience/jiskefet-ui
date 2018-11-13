@@ -53,7 +53,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                     <dd class="col-sm-6">
                                                         {State.LogModel.current.subtype === 'run' ?
                                                             <span class="badge badge-warning">
-                                                            {State.LogModel.current.subtype}
+                                                                {State.LogModel.current.subtype}
                                                             </span>
                                                             : State.LogModel.current.subtype}
                                                     </dd>
@@ -62,14 +62,17 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                     <dd class="col-sm-6">
                                                         {State.LogModel.current.origin === 'human' ?
                                                             <span class="badge badge-success">
-                                                            {State.LogModel.current.origin}
+                                                                {State.LogModel.current.origin}
                                                             </span>
                                                             : State.LogModel.current.origin}
                                                     </dd>
 
                                                     <dt class="col-sm-6">Creation time:</dt>
                                                     <dd class="col-sm-6">
-                                                    {format(State.LogModel.current.creationTime, 'HH:mm:ss DD/MM/YYYY')}
+                                                        {format(
+                                                            State.LogModel.current.creationTime,
+                                                            'HH:mm:ss DD/MM/YYYY'
+                                                        )}
                                                     </dd>
                                                 </dl>
                                             </div>

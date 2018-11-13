@@ -58,9 +58,9 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                         <div class="col-md-12 mx-auto bg-light rounded p-4 shadow-sm">
                             <div>
                                 <h3>
-                                    {`Create a new log ${vnode.attrs.runNumber
-                                        ? `for run number ${vnode.attrs.runNumber}`
-                                        : ''}`}
+                                    {`Create a new log ${vnode.attrs.runNumber ?
+                                        `for run number ${vnode.attrs.runNumber}` :
+                                        ''}`}
                                 </h3>
                             </div>
                             <div class="form-group">

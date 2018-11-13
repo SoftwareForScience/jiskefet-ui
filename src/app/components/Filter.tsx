@@ -104,16 +104,16 @@ export default class Filter extends MithrilTsxComponent<Attrs> {
                                             this.routeFilters = this.updateFilter(
                                                 event.target.id,
                                                 event.target.value,
-                                                this.routeFilters
-                                            );
-                                            this.updateRoute(this.routeFilters, vnode.attrs.route);
+                                                this.routeFilters);
+                                            this.updateRoute(
+                                                this.routeFilters,
+                                                vnode.attrs.route);
                                             this.mergedFilters = this.mergeFilters(
                                                 vnode.attrs.inputFields,
-                                                this.routeFilters
-                                            );
-                                            this.fetchWithFilters(this.routeFilters, vnode.attrs.fetch);
-                                            console.log(this.mergedFilters);
-
+                                                this.routeFilters);
+                                            this.fetchWithFilters(
+                                                this.routeFilters,
+                                                vnode.attrs.fetch);
                                         }
                                     }}
                                     value={filter.value}
