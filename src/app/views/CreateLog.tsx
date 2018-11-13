@@ -23,9 +23,9 @@ export default class CreateLog implements m.Component {
         State.LogModel.save();
     }
 
-    convertFileToAttachmentModel(e) {
-        var files = e.target.files;
-        State.AttachmentModel.createAttachmentModel(files);
+    convertFileToAttachmentModel(event: any) {
+        const files = event.target.files;
+        State.AttachmentModel.saveAttachmentModel(files);
     }
 
     saveAttachment() {
@@ -74,8 +74,15 @@ export default class CreateLog implements m.Component {
                             </div>
                             <div class="form-group">
                                 <label for="fileUpload">Attach file(s) to Log:</label>
-                                <input type="file" class="form-control-file" id="fileUpload" name="fileUpload" multiple
-                                    data-show-caption="true" onchange={this.convertFileToAttachmentModel} />
+                                <input
+                                    type="file"
+                                    class="form-control-file"
+                                    id="fileUpload"
+                                    name="fileUpload"
+                                    multiple
+                                    data-show-caption="true"
+                                    onchange={this.convertFileToAttachmentModel}
+                                />
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

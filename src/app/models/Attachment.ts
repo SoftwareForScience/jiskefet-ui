@@ -21,7 +21,8 @@ const AttachmentModel = {
     current: {} as Attachment,
     file: {} as File,
     createAttachment: {} as AttachmentCreate, // attachment being created
-    async fetchForLog(id: number) {
+    downloadUrl: '' as string,
+    async fetchAttachmentsForLog(id: number) {
         AttachmentModel.isFetchingAttachment = true;
         return m.request({
             method: 'GET',
@@ -35,6 +36,28 @@ const AttachmentModel = {
             State.HttpErrorModel.add(e);
         });
     },
+    downloadAttachmentAsFile(attachment: any, element: any): string {
+        const div = document.getElementById(element.id);
+
+        if (attachment.fileData.indexOf('base64;') >= 0) {
+            attachment.fileData = attachment.fileData.split('base64;')[1];
+        }
+        console.log(attachment.fileData);
+        console.log(new Blob([atob(attachment.fileData)], { type: attachment.fileMime }));
+
+        if (attachment.fileMime.indexOf('image') >= 0 && div) {
+            console.log('Attachment is a image');
+            const img = new Image();
+            img.onload = () => {
+                div.appendChild(img);
+            };
+            div.hidden = true;
+            img.src = `data:${attachment.fileMime};base64,${attachment.fileData}`; // data:image/png;base64," + baseString
+            return '';
+        } else {
+            return URL.createObjectURL(new Blob([atob(attachment.fileData)], { type: attachment.fileMime }));
+        }
+    },
     async save() {
         return m.request<Attachment>({
             method: 'POST',
@@ -47,7 +70,7 @@ const AttachmentModel = {
             State.HttpErrorModel.add(e);
         });
     },
-    async createAttachmentModel(files: any) {
+    async saveAttachmentModel(files: any) {
         const reader = new FileReader();
         // Does not work for multiple files upload yet
         for (const file of files) {
@@ -55,9 +78,10 @@ const AttachmentModel = {
             reader.onload = () => {
                 const base64String = reader.result as string;
                 const fileMime = base64String.substring('data:'.length, base64String.indexOf(';base64,')) as string;
+                const fileData = base64String.substring(base64String.indexOf(';base64,')).substring(';base64,'.length) as string;
                 State.AttachmentModel.createAttachment.title = file.name;
                 State.AttachmentModel.createAttachment.fileMime = fileMime;
-                State.AttachmentModel.createAttachment.fileData = base64String;
+                State.AttachmentModel.createAttachment.fileData = fileData;
             };
 
             reader.onerror = (error) => {
@@ -65,22 +89,6 @@ const AttachmentModel = {
             };
 
         }
-    },
-    async downloadFile(attachment: any) {
-        const arrayBufferView = new Uint8Array(attachment.fileData);
-        const attachmentBlob = new Blob([arrayBufferView], { type: attachment.fileMime });
-
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(attachmentBlob);
-
-        link.setAttribute('visibility', 'hidden');
-        link.download = attachment.title;
-
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        console.log(attachment.fileData);
     }
 };
 
