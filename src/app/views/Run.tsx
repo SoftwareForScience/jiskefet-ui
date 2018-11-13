@@ -50,7 +50,10 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                 <h3>Run</h3>
                                             </div>
                                             <div class="col-md-6 float-right">
-                                                <button class="btn btn-light border mb-2 float-right" onclick={() => m.route.set(`/logs/create/runs/${vnode.attrs.id}`)}>
+                                                <button
+                                                    class="btn btn-light border mb-2 float-right"
+                                                    onclick={() => m.route.set(`/logs/create/runs/${vnode.attrs.id}`)}
+                                                >
                                                     Create log
                                                 </button>
                                             </div>
@@ -76,7 +79,9 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                     </dd>
                                                     <dt class="col-sm-6">Run quality</dt>
                                                     <dd class="col-sm-6">
-                                                        <span class="badge badge-warning">{State.RunModel.current.runQuality}</span>
+                                                        <span class="badge badge-warning">
+                                                            {State.RunModel.current.runQuality}
+                                                        </span>
                                                     </dd>
                                                 </dl>
                                             </div>
@@ -95,29 +100,64 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                     <dt class="col-sm-6">Bytes read out</dt>
                                                     <dd class="col-sm-6">{State.RunModel.current.bytesReadOut}</dd>
                                                     <dt class="col-sm-6">Bytes timeframe builder</dt>
-                                                    <dd class="col-sm-6">{State.RunModel.current.bytesTimeframeBuilder}</dd>
+                                                    <dd class="col-sm-6">
+                                                        {State.RunModel.current.bytesTimeframeBuilder}
+                                                    </dd>
                                                 </dl>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-header">
                                         <div class="col-md-12 mx-auto">
-                                            <ul class="nav nav-tabs card-header-tabs pull-xs-left flex-column flex-sm-row" role="tablist">
+                                            <ul
+                                                class="nav
+                                                nav-tabs
+                                                card-header-tabs
+                                                pull-xs-left
+                                                flex-column
+                                                flex-sm-row"
+                                                role="tablist"
+                                            >
                                                 <li class="nav-item">
-                                                    <a class="nav-link active" href="#runs" role="tab" data-toggle="tab">Logs</a>
+                                                    <a
+                                                        class="nav-link active"
+                                                        href="#runs"
+                                                        role="tab"
+                                                        data-toggle="tab"
+                                                    >
+                                                        Logs
+                                                    </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" href="#subsystems" role="tab" data-toggle="tab">Detectors</a>
+                                                    <a
+                                                        class="nav-link"
+                                                        href="#subsystems"
+                                                        role="tab"
+                                                        data-toggle="tab"
+                                                    >
+                                                        Detectors
+                                                    </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a class="nav-link" href="#users" role="tab" data-toggle="tab">Others...</a>
+                                                    <a
+                                                        class="nav-link"
+                                                        href="#users"
+                                                        role="tab"
+                                                        data-toggle="tab"
+                                                    >Others...
+                                                    </a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="tab-content">
-                                            <div role="tabpanel" class="tab-pane active" id="runs" aria-labelledby="runs-tab">
+                                            <div
+                                                role="tabpanel"
+                                                class="tab-pane active"
+                                                id="runs"
+                                                aria-labelledby="runs-tab"
+                                            >
                                                 {State.RunModel.current.logs && State.RunModel.current.logs.length > 0 ?
                                                     <Table
                                                         data={State.RunModel.current.logs}
@@ -126,10 +166,20 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                     : 'This run has no logs'
                                                 }
                                             </div>
-                                            <div role="tabpanel" class="tab-pane" id="subsystems" aria-labelledby="subsystems-tab">
+                                            <div
+                                                role="tabpanel"
+                                                class="tab-pane"
+                                                id="subsystems"
+                                                aria-labelledby="subsystems-tab"
+                                            >
                                                 Not yet implemented
                                             </div>
-                                            <div role="tabpanel" class="tab-pane" id="users" aria-labelledby="users-tab">
+                                            <div
+                                                role="tabpanel"
+                                                class="tab-pane"
+                                                id="users"
+                                                aria-labelledby="users-tab"
+                                            >
                                                 Not yet implemented
                                             </div>
                                         </div>
