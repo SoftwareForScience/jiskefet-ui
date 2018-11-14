@@ -7,9 +7,17 @@
  */
 
 /**
- * Interface with the fields for fetching one or more Log entries.
+ * Interface with the fields for the modal component.
  */
 export interface ModalBody {
+    /**
+     * Optional variable that holds values for the body
+     */
     text?: string;
-    content: (text: string) => void;
+
+    /**
+     * This function should return the JSX.Element that is
+     * given to the modal body.
+     */
+    content: (text?: string) => void;
 }
