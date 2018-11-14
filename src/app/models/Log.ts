@@ -10,6 +10,7 @@ import * as m from 'mithril';
 import { Log, LogCreate } from '../interfaces/Log';
 import State from './State';
 import SuccesModel from './Success';
+import { HttpError } from '../interfaces/HttpError';
 
 /**
  * Stores the state around Log entities.
@@ -17,7 +18,7 @@ import SuccesModel from './Success';
 const LogModel = {
     isFetchingLogs: false as boolean,
     isFetchingLog: false as boolean,
-    list: [] as any[],
+    list: [] as Log[],
     current: {} as Log,
     createLog: {} as LogCreate, // log being created
     async fetch(query?: string) {
@@ -26,12 +27,12 @@ const LogModel = {
             method: 'GET',
             url: `${process.env.API_URL}logs${query ? `?${query}` : ''}`,
             withCredentials: false
-        }).then((result: any) => {
+        }).then((result: Log[]) => {
             LogModel.isFetchingLogs = false;
-            this.list = result;
-        }).catch((e: any) => {
+            LogModel.list = result;
+        }).catch((error: HttpError) => {
             LogModel.isFetchingLogs = false;
-            State.HttpErrorModel.add(e);
+            State.HttpErrorModel.add(error);
         });
     },
     async fetchOne(id: number) {
@@ -40,12 +41,12 @@ const LogModel = {
             method: 'GET',
             url: `${process.env.API_URL}logs/${id}`,
             withCredentials: false
-        }).then((result: any) => {
+        }).then((result: Log) => {
             LogModel.isFetchingLog = false;
-            this.current = result;
-        }).catch((e: any) => {
+            LogModel.current = result;
+        }).catch((error: HttpError) => {
             LogModel.isFetchingLog = false;
-            State.HttpErrorModel.add(e);
+            State.HttpErrorModel.add(error);
         });
     },
     async save() {
@@ -57,8 +58,8 @@ const LogModel = {
             withCredentials: false
         }).then(() => {
             SuccesModel.add('Successfully saved log.');
-        }).catch((e: any) => {
-            State.HttpErrorModel.add(e);
+        }).catch((error: HttpError) => {
+            State.HttpErrorModel.add(error);
         });
     }
 };

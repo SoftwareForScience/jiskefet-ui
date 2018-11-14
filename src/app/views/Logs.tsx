@@ -9,33 +9,35 @@
 import * as m from 'mithril';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
-import Fetchable from '../interfaces/Fetchable';
 import Filter from '../components/Filter';
 import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
-import { Log } from '../interfaces/Log';
 import State from '../models/State';
-import LogColumns from '../util/LogUtil';
+import LogColumns from '../constants/LogColumns';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+import Fetchable from '../interfaces/Fetchable';
+import { Log } from '../interfaces/Log';
 
 const inputFields = [
     {
         name: 'logId',
         type: 'number',
-        label: 'Log id'
+        label: 'Log id',
+        event: 'onchange'
     },
     {
         name: 'searchterm',
         type: 'text',
-        label: 'Title'
+        label: 'Title',
+        event: 'onchange'
     }
 ];
 
-export default class Logs implements m.Component, Fetchable<Log> {
-    // private previewContent: boolean;
+export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<Log> {
     private columns: any[];
 
     constructor() {
-        // this.previewContent = false;
+        super();
         this.columns = LogColumns;
     }
 
@@ -49,31 +51,6 @@ export default class Logs implements m.Component, Fetchable<Log> {
     oninit() {
         this.fetch();
     }
-
-    /**
-     * When previewContent is true, adds a column to this.columns
-     * that shows a preview of the contents of a Log.
-     */
-    // togglePreview = (): void => {
-    //     this.previewContent = !this.previewContent;
-    //     if (this.previewContent) {
-    //         this.columns = [
-    //             ...LogColumns,
-    //             {
-    //                 header: 'Preview of text',
-    //                 accessor: 'text',
-    //                 cell: row => (
-    //                     <div class="d-block" style="max-width: 200px;">
-    //                         {/* <MarkdownViewer id={row.logId} content={row.text} plaintext={true} plaintextLimit={100} /> */}
-    //                     </div>
-    //                 )
-    //             }
-    //         ];
-    //     } else {
-    //         this.columns = LogColumns;
-    //     }
-    //     m.redraw();
-    // }
 
     view() {
         return (

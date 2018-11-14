@@ -9,19 +9,22 @@
 import * as m from 'mithril';
 import MarkdownEditor from '../components/MarkdownEditor';
 import State from '../models/State';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { Event } from '../interfaces/Event';
 
-export default class CreateLog implements m.Component {
-    private runNumber: number;
+interface Attrs {
+    runNumber?: number;
+}
 
-    constructor(vnode: any) {
-        this.runNumber = vnode.attrs.runNumber;
-    }
+type Vnode = m.Vnode<Attrs, CreateLog>;
 
-    addToCreateLog = (event) => {
+export default class CreateLog extends MithrilTsxComponent<Attrs> {
+
+    addToCreateLog = (event: Event) => {
         State.LogModel.createLog[event.target.id] = event.target.value;
     }
 
-    addRunsToCreateLog = (event) => {
+    addRunsToCreateLog = (event: Event) => {
         State.RunModel.fetchById(event.target.value).then(() => {
             State.LogModel.createLog.runs = new Array();
             State.LogModel.createLog.runs.push(State.RunModel.current);
@@ -32,8 +35,8 @@ export default class CreateLog implements m.Component {
         State.LogModel.createLog.text = content;
     }
 
-    saveLog() {
-        if (this.runNumber) {
+    saveLog(runNumber: number | undefined) {
+        if (runNumber) {
             State.LogModel.createLog.runs = new Array();
             State.LogModel.createLog.runs.push(State.RunModel.current);
         }
@@ -42,18 +45,24 @@ export default class CreateLog implements m.Component {
         });
     }
 
-    view() {
+    view(vnode: Vnode) {
         return (
             <form
-                onsubmit={e => {
-                    e.preventDefault();
-                    this.saveLog();
+                onsubmit={(event: Event) => {
+                    event.preventDefault();
+                    this.saveLog(vnode.attrs.runNumber);
                 }}
             >
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12 mx-auto bg-light rounded p-4 shadow-sm">
-                            <div><h3>{`Create a new log ${this.runNumber ? `for run number ${this.runNumber}` : ''}`}</h3></div>
+                            <div>
+                                <h3>
+                                    {`Create a new log ${vnode.attrs.runNumber ?
+                                        `for run number ${vnode.attrs.runNumber}` :
+                                        ''}`}
+                                </h3>
+                            </div>
                             <div class="form-group">
                                 <label for="title">Title:</label>
                                 <div class="field">
@@ -70,7 +79,13 @@ export default class CreateLog implements m.Component {
                             <div class="form-group">
                                 <label for="subtype">Select subtype:</label>
                                 <div class="field">
-                                    <select id="subtype" class="form-control" name="subtype" required onclick={this.addToCreateLog}>
+                                    <select
+                                        id="subtype"
+                                        class="form-control"
+                                        name="subtype"
+                                        required
+                                        onclick={this.addToCreateLog}
+                                    >
                                         <option value="run">run</option>
                                     </select>
                                 </div>
@@ -78,15 +93,15 @@ export default class CreateLog implements m.Component {
                             <div class="form-group">
                                 <label for="subtype">Run number:</label>
                                 <div class="field">
-                                <input
+                                    <input
                                         id="runs"
                                         type="number"
                                         class="form-control"
                                         placeholder="Run number"
-                                        value={this.runNumber && this.runNumber}
+                                        value={vnode.attrs.runNumber && vnode.attrs.runNumber}
                                         required
                                         oninput={this.addRunsToCreateLog}
-                                />
+                                    />
                                 </div>
                             </div>
                             <div class="form-group">

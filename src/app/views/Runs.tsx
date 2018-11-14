@@ -11,35 +11,41 @@ import Spinner from '../components/Spinner';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import Table from '../components/Table';
 import Filter from '../components/Filter';
+import State from '../models/State';
+import RunColumns from '../constants/RunColumns';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 import Fetchable from '../interfaces/Fetchable';
 import { Run } from '../interfaces/Run';
-import State from '../models/State';
-import RunColumns from '../util/RunUtil';
 
 const inputFields = [
     {
         name: 'runNumber',
-        type: 'number'
+        type: 'number',
+        event: 'onchange'
     },
     {
         name: 'timeO2Start',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
     {
         name: 'timeO2End',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
     {
         name: 'timeTrgStart',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
     {
         name: 'timeTrgEnd',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
 ];
 
-export default class Runs implements m.Component, Fetchable<Run> {
+export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<Run> {
     fetch = (queryParam?: string) => {
         State.RunModel.fetch(queryParam);
     }
@@ -65,7 +71,7 @@ export default class Runs implements m.Component, Fetchable<Run> {
                                 <Table
                                     data={State.RunModel.list}
                                     columns={RunColumns}
-                                    class="font-sm"
+                                    className="font-sm"
                                 />
                             </div>
                         </div>

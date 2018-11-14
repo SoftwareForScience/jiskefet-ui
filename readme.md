@@ -53,19 +53,9 @@ Date-fns is a zero-dependency module that is able to manipulate JavaScript dates
 "date-fns": "^1.29.0"
 ```
 
-Syntax highlighting for the Web.
-```
-"highlightjs": "^9.10.0"
-```
-
 JavaScript library for DOM operations.
 ```
 "jquery": "^3.3.1"
-```
-
-KaTeX is a fast, easy-to-use JavaScript library for TeX math rendering on the web.
-```
-"katex": "^0.10.0-rc.1"
 ```
 
 A popper is an element on the screen which "pops out" from the natural flow of your application.

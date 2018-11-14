@@ -7,39 +7,46 @@
  */
 
 import * as m from 'mithril';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { Event } from '../interfaces/Event';
 
 interface FilterParam {
     name: string;
     type: string;
-    value: any | null;
+    value?: string | null;
     placeholder?: string;
     label?: string;
+    event: string;
 }
 
-export default class Filter implements m.Component {
-    // Attrs
-    private inputFields: FilterParam[];
-    private fetch;
-    private route: string;
+interface Attrs {
+    inputFields: FilterParam[];
+    fetch: (queryString: string) => void;
+    route: string;
+}
 
-    // Class props
-    private routeFilters: object; // Filters that are in the route's query.
+interface RouteFilters {
+    [name: string]: string;
+}
+
+type Vnode = m.Vnode<Attrs, Filter>;
+type VnodeDOM = m.VnodeDOM<Attrs, Filter>;
+
+export default class Filter extends MithrilTsxComponent<Attrs> {
+    private routeFilters: RouteFilters; // The route's query parameters.
     private mergedFilters: FilterParam[]; // The data from inputFields and the values from routeFilters combined.
 
-    constructor(vnode: any) {
-        this.routeFilters = m.route.param();
-        this.inputFields = vnode.attrs.inputFields;
-        this.fetch = vnode.attrs.fetch;
-        this.route = vnode.attrs.route;
-        this.mergedFilters = this.mergeFilters(this.inputFields, this.routeFilters);
-        this.fetchWithFilters(this.routeFilters);
+    constructor(vnode: Vnode) {
+        super();
+        this.routeFilters = m.route.param() as RouteFilters;
+        this.mergedFilters = this.mergeFilters(vnode.attrs.inputFields, this.routeFilters);
     }
 
     /**
      * Merges the filterParams with the filters in the route.
      */
-    mergeFilters = (inputParams: FilterParam[], routeFilters: object) => {
-        const merged = inputParams.map((filter: FilterParam) => ({
+    mergeFilters = (inputParams: FilterParam[], routeFilters: RouteFilters): FilterParam[] => {
+        const merged: FilterParam[] = inputParams.map((filter: FilterParam) => ({
             ...filter,
             value: routeFilters[filter.name] || null
         }));
@@ -47,25 +54,21 @@ export default class Filter implements m.Component {
     }
 
     /**
-     * Add a filter from an input element to the filters class property.
+     * Update the route with query params in routeFilters.
+     * @param routeFilters The filters object to be inserted into the route as query params.
+     * @param route e.g. 'runs', as in site.com/runs
      */
-    addFilter = (event) => {
-        const key = event.target.id;
-        const value = event.target.value;
-        value ? this.routeFilters[key] = value : delete this.routeFilters[key];
-        this.updateRoute(this.routeFilters, this.route);
-        this.mergedFilters = this.mergeFilters(this.inputFields, this.routeFilters);
-        this.fetchWithFilters(this.routeFilters);
+    updateRoute(routeFilters: RouteFilters, route: string): void {
+        const queryString: string = m.buildQueryString(routeFilters);
+        m.route.set(`/${route}?${queryString}`);
     }
 
     /**
-     * Update the route with query params in filters
-     * @param filters The filters.
-     * @param route e.g. 'runs', as in site.com/runs
+     * Update the filters. If value is null, remove the key from route filters.
      */
-    updateRoute(filters: object, route: string) {
-        const queryString = m.buildQueryString(filters);
-        m.route.set(`/${route}?${queryString}`);
+    updateFilter = (key: string, value: string | null, filters: RouteFilters): RouteFilters => {
+        value ? filters[key] = value : delete filters[key];
+        return filters;
     }
 
     /**
@@ -73,16 +76,20 @@ export default class Filter implements m.Component {
      * Example: {key: 'value'} will fetch with a query param of '?key=value'.
      * @param filters The filters.
      */
-    fetchWithFilters(filters: object) {
-        const queryString = m.buildQueryString(filters);
-        this.fetch(queryString);
+    fetchWithFilters = (filters: object, fetch: (queryString: string) => void) => {
+        const queryString: string = m.buildQueryString(filters);
+        fetch(queryString);
     }
 
-    view() {
+    oninit(vnode: VnodeDOM) {
+        this.fetchWithFilters(this.routeFilters, vnode.attrs.fetch);
+    }
+
+    view(vnode: Vnode) {
         return (
             <div class="filters-responsive">
                 <div class="bg-light rounded p-4 shadow-sm border">
-                    {this.mergedFilters && this.mergedFilters.map(filter =>
+                    {this.mergedFilters && this.mergedFilters.map((filter: FilterParam) =>
                         (
                             <div class="form-group">
                                 <label key={filter.name} for={filter.name}>
@@ -92,7 +99,23 @@ export default class Filter implements m.Component {
                                     type={filter.type}
                                     class="form-control"
                                     id={filter.name}
-                                    onblur={this.addFilter}
+                                    {...{
+                                        [filter.event]: (event: Event) => {
+                                            this.routeFilters = this.updateFilter(
+                                                event.target.id,
+                                                event.target.value,
+                                                this.routeFilters);
+                                            this.updateRoute(
+                                                this.routeFilters,
+                                                vnode.attrs.route);
+                                            this.mergedFilters = this.mergeFilters(
+                                                vnode.attrs.inputFields,
+                                                this.routeFilters);
+                                            this.fetchWithFilters(
+                                                this.routeFilters,
+                                                vnode.attrs.fetch);
+                                        }
+                                    }}
                                     value={filter.value}
                                     placeholder={filter.placeholder}
                                 />

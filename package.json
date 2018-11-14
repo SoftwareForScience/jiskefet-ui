@@ -28,6 +28,7 @@
     "@types/mithril": "^1.1.12",
     "@types/node": "^10.9.4",
     "css-loader": "^1.0.0",
+    "mithril-tsx-component": "^3.0.0",
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
