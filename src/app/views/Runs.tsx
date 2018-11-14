@@ -11,107 +11,41 @@ import Spinner from '../components/Spinner';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import Table from '../components/Table';
 import Filter from '../components/Filter';
-import { format } from 'date-fns';
+import State from '../models/State';
+import RunColumns from '../constants/RunColumns';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 import Fetchable from '../interfaces/Fetchable';
 import { Run } from '../interfaces/Run';
-import State from '../models/State';
-
-const columns = [
-    {
-        header: 'Run id',
-        accessor: 'runNumber',
-        cell: row => (
-            <a href={`/runs/${row.runNumber}`} oncreate={m.route.link}>
-                {row.runNumber}
-            </a>
-        )
-    },
-    {
-        header: 'Time 02 start',
-        accessor: 'timeO2Start',
-        cell: (row: Run) => (row.timeO2Start ? format(row.timeO2Start, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    },
-    {
-        header: 'Time 02 end',
-        accessor: 'timeO2End',
-        cell: (row: Run) => (row.timeO2End ? format(row.timeO2End, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    },
-    {
-        header: 'Time trg start',
-        accessor: 'timeTrgStart',
-        cell: (row: Run) => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    },
-    {
-        header: 'Time trg end',
-        accessor: 'timeTrgEnd',
-        cell: (row: Run) => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
-    },
-    {
-        header: 'Activity id',
-        accessor: 'activityId'
-    },
-    {
-        header: 'Run type',
-        accessor: 'runType'
-    },
-    {
-        header: 'Run quality',
-        accessor: 'runQuality'
-    },
-    {
-        header: 'no. of detectors',
-        accessor: 'nDetectors'
-    },
-    {
-        header: 'no. of FLPs',
-        accessor: 'nFlps'
-    },
-    {
-        header: 'no. of EPNs',
-        accessor: 'nEpns'
-    },
-    {
-        header: 'no. of timeframes',
-        accessor: 'nTimeframes'
-    },
-    {
-        header: 'no. of sub-timeframes',
-        accessor: 'nSubtimeframes'
-    },
-    {
-        header: 'B read out',
-        accessor: 'bytesReadOut'
-    },
-    {
-        header: 'B timeframe builder',
-        accessor: 'bytesTimeframeBuilder'
-    },
-];
 
 const inputFields = [
     {
         name: 'runNumber',
-        type: 'number'
+        type: 'number',
+        event: 'onchange'
     },
     {
         name: 'timeO2Start',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
     {
         name: 'timeO2End',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
     {
         name: 'timeTrgStart',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
     {
         name: 'timeTrgEnd',
-        type: 'datetime-local'
+        type: 'datetime-local',
+        event: 'onblur'
     },
 ];
 
-export default class Runs implements m.Component, Fetchable<Run> {
+export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<Run> {
     fetch = (queryParam?: string) => {
         State.RunModel.fetch(queryParam);
     }
@@ -136,8 +70,8 @@ export default class Runs implements m.Component, Fetchable<Run> {
                             <div className="col-md-9 mt-2">
                                 <Table
                                     data={State.RunModel.list}
-                                    columns={columns}
-                                    class="font-sm"
+                                    columns={RunColumns}
+                                    className="font-sm"
                                 />
                             </div>
                         </div>

@@ -7,42 +7,26 @@
  */
 
 import * as m from 'mithril';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { Column } from '../interfaces/Column';
 
-interface Column {
-    header: string;
-    accessor: string;
-    cell?: (row: object) => object;
+interface Attrs {
+    data: object[];
+    columns: Column[];
+    className?: string; // example: 'font-sm bg-dark'
 }
 
-export default class Table implements m.Component {
-    data: any[];
-    columns: Column[];
-    class: string; // example: 'font-sm bg-dark'
+type Vnode = m.Vnode<Attrs, Table>;
 
-    constructor(vnode: any) {
-        this.data = vnode.attrs.data;
-        this.columns = vnode.attrs.columns;
-        this.class = vnode.attrs.class;
-    }
-
-    onupdate(vnode: any) {
-        if (this.columns !== vnode.attrs.columns) {
-            this.columns = vnode.attrs.columns;
-            // m.redraw();
-        }
-        if (this.data !== vnode.attrs.data) {
-            this.data = vnode.attrs.data;
-            m.redraw();
-        }
-    }
-
-    view() {
+export default class Table extends MithrilTsxComponent<Attrs> {
+    view(vnode: Vnode) {
+        const { columns, className, data } = vnode.attrs;
         return (
-            <div class="table-responsive-xl">
-                <table class={`table table-sm table-bordered table-hover shadow-sm ${this.class}`}>
-                    <thead>
+            <div class="table-responsive">
+                <table class={`table table-sm table-bordered table-hover shadow-sm ${className || ''}`}>
+                    <thead class="thead-light">
                         <tr>
-                            {this.columns && this.columns.map(column =>
+                            {columns && columns.map((column: Column) =>
                                 <th scope="col" key={column.accessor}>
                                     {column.header}
                                 </th>
@@ -50,12 +34,14 @@ export default class Table implements m.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.data && this.data.map(row =>
+                        {data && data.map((row: object) =>
                             // tslint:disable-next-line:jsx-key
                             <tr>
-                                {this.columns.map((column: Column) => (
+                                {columns.map((column: Column) => (
                                     <td>
-                                        {column.cell ? column.cell(row) : row[column.accessor]}
+                                        {(column.cell ?
+                                            column.cell(row)
+                                            : row[column.accessor] as string | number | boolean)}
                                     </td>
                                 ))}
                             </tr>

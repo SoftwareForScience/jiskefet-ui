@@ -7,42 +7,67 @@
  */
 
 import * as m from 'mithril';
-import QuillEditor from '../components/QuillEditor';
+import MarkdownEditor from '../components/MarkdownEditor';
 import State from '../models/State';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { Event } from '../interfaces/Event';
 
-export default class CreateLog implements m.Component {
-    addToCreateLog = (event) => {
+interface Attrs {
+    runNumber?: number;
+}
+
+type Vnode = m.Vnode<Attrs, CreateLog>;
+
+export default class CreateLog extends MithrilTsxComponent<Attrs> {
+
+    addToCreateLog = (event: Event) => {
         State.LogModel.createLog[event.target.id] = event.target.value;
+    }
+
+    addRunsToCreateLog = (event: Event) => {
+        State.RunModel.fetchById(event.target.value).then(() => {
+            State.LogModel.createLog.runs = new Array();
+            State.LogModel.createLog.runs.push(State.RunModel.current);
+        });
     }
 
     addDescription = (content: string) => {
         State.LogModel.createLog.text = content;
     }
 
-    saveLog() {
-        State.LogModel.save();
+    saveLog(runNumber: number | undefined) {
+        if (runNumber) {
+            State.LogModel.createLog.runs = new Array();
+            State.LogModel.createLog.runs.push(State.RunModel.current);
+        }
+        State.LogModel.save().then(() => {
+            m.route.set('/Logs');
+        });
     }
 
     async saveAttachmentModels(event: any) {
         const files = event.target.files;
-        for (const file of files) {
-            await State.AttachmentModel.read(file, false);
-        }
+        await State.AttachmentModel.read(files[0], false);
     }
 
-    view() {
+    view(vnode: Vnode) {
         return (
             <form
-                onsubmit={e => {
-                    e.preventDefault();
-                    this.saveLog();
-                    m.route.set('/Logs');
+                onsubmit={(event: Event) => {
+                    event.preventDefault();
+                    this.saveLog(vnode.attrs.runNumber);
                 }}
             >
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-8 mx-auto bg-light rounded p-4 shadow-sm">
-                            <div><h3>Create a new Log</h3></div>
+                        <div class="col-md-12 mx-auto bg-light rounded p-4 shadow-sm">
+                            <div>
+                                <h3>
+                                    {`Create a new log ${vnode.attrs.runNumber ?
+                                        `for run number ${vnode.attrs.runNumber}` :
+                                        ''}`}
+                                </h3>
+                            </div>
                             <div class="form-group">
                                 <label for="title">Add a Title:</label>
                                 <div class="field">
@@ -59,24 +84,43 @@ export default class CreateLog implements m.Component {
                             <div class="form-group">
                                 <label for="subtype">Select Subtype:</label>
                                 <div class="field">
-                                    <select id="subtype" class="form-control" name="subtype" required onclick={this.addToCreateLog}>
+                                    <select
+                                        id="subtype"
+                                        class="form-control"
+                                        name="subtype"
+                                        required
+                                        onclick={this.addToCreateLog}
+                                    >
                                         <option value="run">run</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="description">Add a Description:</label>
-                                <input name="description" type="hidden" />
-                                <QuillEditor postContent={this.addDescription} />
+                                <label for="subtype">Run number:</label>
+                                <div class="field">
+                                    <input
+                                        id="runs"
+                                        type="number"
+                                        class="form-control"
+                                        placeholder="Run number"
+                                        value={vnode.attrs.runNumber && vnode.attrs.runNumber}
+                                        required
+                                        oninput={this.addRunsToCreateLog}
+                                    />
+                                </div>
                             </div>
                             <div class="form-group">
-                                <label for="fileUpload">Attach file(s) to Log:</label>
+                                <label for="description">Description:</label>
+                                <input name="description" type="hidden" />
+                                <MarkdownEditor postContent={this.addDescription} />
+                            </div>
+                            <div class="form-group">
+                                <label for="fileUpload">Attach file to Log:</label>
                                 <input
                                     type="file"
                                     class="form-control-file"
                                     id="fileUpload"
                                     name="fileUpload"
-                                    multiple
                                     data-show-caption="true"
                                     onchange={this.saveAttachmentModels}
                                 />

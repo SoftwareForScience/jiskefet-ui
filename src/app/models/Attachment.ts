@@ -15,13 +15,11 @@ import SuccesModel from './Success';
  * Stores the state around Attachment entities.
  */
 const AttachmentModel = {
-    isFetchingAttachments: false as boolean,
     isFetchingAttachment: false as boolean,
-    list: [] as any[],
+    hasChosenAttachment: false as boolean,
+    list: [] as Attachment[],
     current: {} as Attachment,
-    file: {} as File,
     createAttachment: {} as AttachmentCreate, // attachment being created
-    downloadUrl: '' as string,
     attachmentsToAdd: [] as any[],
     async fetch(id: number) {
         AttachmentModel.isFetchingAttachment = true;
@@ -31,7 +29,7 @@ const AttachmentModel = {
             withCredentials: false
         }).then((result: any) => {
             AttachmentModel.isFetchingAttachment = false;
-            this.list = result;
+            AttachmentModel.list = result;
         }).catch((e: any) => {
             AttachmentModel.isFetchingAttachment = false;
             State.HttpErrorModel.add(e);
@@ -56,30 +54,34 @@ const AttachmentModel = {
         });
     },
     async read(file: any, isExistingLog: boolean) {
+        AttachmentModel.hasChosenAttachment = true;
+        // Read the file data
         const reader = new FileReader();
-        reader.readAsDataURL(file);
         reader.onload = () => {
-            console.log(file.name);
+            // Store the base64 encoded file as a string
             const base64String = reader.result as string;
             const fileMime = base64String.substring('data:'.length, base64String.indexOf(';base64,')) as string;
-            const fileData = base64String.substring(base64String.indexOf(';base64,')).substring(';base64,'.length) as string;
-            State.AttachmentModel.createAttachment.title = file.name;
-            State.AttachmentModel.createAttachment.fileMime = fileMime;
-            State.AttachmentModel.createAttachment.fileData = fileData;
+            const fileData = base64String
+                .substring(base64String.indexOf(';base64,'))
+                .substring(';base64,'.length) as string;
+            // Save the file data in the state
+            AttachmentModel.createAttachment.title = file.name;
+            AttachmentModel.createAttachment.fileMime = fileMime;
+            AttachmentModel.createAttachment.fileData = fileData;
+            // If the log already exists add the current Log to the Attachment
             if (isExistingLog) {
-                State.AttachmentModel.createAttachment.log = State.LogModel.current;
+                AttachmentModel.createAttachment.log = State.LogModel.current;
             }
-            this.attachmentsToAdd.push(State.AttachmentModel.createAttachment);
         };
-        reader.onerror = (error) => {
-            console.log('Error: ', error);
-        };
+        // Save the Attachment to the Log that is going to be created
         if (!isExistingLog) {
-            // save the attachment(s) to createLog
-            State.LogModel.createLog.attachments = this.attachmentsToAdd;
-            console.log(State.LogModel.createLog.attachments);
-            this.attachmentsToAdd = [];
+            // Check if attachments have already been added
+            if (State.LogModel.createLog.attachments === undefined || State.LogModel.createLog.attachments.length > 0) {
+                State.LogModel.createLog.attachments = new Array();
+            }
+            State.LogModel.createLog.attachments.push(AttachmentModel.createAttachment);
         }
+        reader.readAsDataURL(file);
     }
 };
 

@@ -8,81 +8,77 @@
 
 import * as m from 'mithril';
 import Spinner from '../components/Spinner';
-import QuillViewer from '../components/QuillViewer';
 import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+import LogTabs from '../constants/LogTabs';
+import Tabs from '../components/Tab';
 
-export default class Log implements m.Component {
-    private logId: number;
-    private isLoading: boolean;
+interface Attrs {
+    id: number;
+}
 
-    constructor(vnode: any) {
-        this.logId = vnode.attrs.id;
-        this.isLoading = true;
-        State.LogModel.fetchOne(this.logId).then(() => this.isLoading = false);
-        State.AttachmentModel.fetch(this.logId).then(() => this.isLoading = false);
-        // hier moet attachments worden opgehaald
+type Vnode = m.Vnode<Attrs, Log>;
+
+export default class Log extends MithrilTsxComponent<Attrs> {
+
+    constructor(vnode: Vnode) {
+        super();
+        State.LogModel.fetchOne(vnode.attrs.id);
+        State.AttachmentModel.fetch(vnode.attrs.id);
     }
 
-    async saveAttachmentModels(event: any) {
+    saveAttachmentModels(event: any) {
         const files = event.target.files;
-        for (const file of files) {
-            await State.AttachmentModel.read(file, true);
-        }
+        State.AttachmentModel.read(files[0], true);
     }
 
-    postAttachments() {
-        for (const attachment of State.AttachmentModel.attachmentsToAdd) {
-            State.AttachmentModel.current = attachment;
-            State.AttachmentModel.save();
+    async postAttachments() {
+        if (State.AttachmentModel.createAttachment && State.AttachmentModel.hasChosenAttachment) {
+            await State.AttachmentModel.save();
+        } else {
+            State.AttachmentModel.hasChosenAttachment = false;
         }
-        State.AttachmentModel.attachmentsToAdd = [];
     }
 
     view() {
         return (
-            <div className="container">
-                <Spinner isLoading={this.isLoading}>
+            <div class="container-fluid">
+                <Spinner isLoading={State.LogModel.isFetchingLog}>
                     <HttpErrorAlert>
                         <div class="row">
                             <div class="col-md-12 mx-auto">
                                 <div class="card shadow-sm bg-light">
                                     <div class="card-header">
-                                        Log
+                                        <h3>Log</h3>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <h5 class="card-title">{State.LogModel.current.title}</h5>
-                                                <h6 class="card-title">Attachments:</h6>
-                                                <ul>
-                                                    {State.AttachmentModel.list.map(attachment =>
-                                                        <li key={attachment.id}>
-                                                            <a
-                                                                id={attachment.id}
-                                                                download={attachment.title}
-                                                                href={State.AttachmentModel.download(attachment)}
-                                                            >
-                                                                {attachment.title}
-                                                            </a>
-                                                        </li>
-                                                    )}
-                                                </ul>
-                                                <br />
-                                                <br />
-                                                <label for="fileUpload">Attach new file(s) to Log:</label>
+                                                <label for="fileUpload">Attach new file to Log:</label>
                                                 <input
                                                     type="file"
                                                     class="form-control-file"
                                                     id="fileUpload"
                                                     name="fileUpload"
-                                                    multiple
                                                     data-show-caption="true"
                                                     onchange={this.saveAttachmentModels}
                                                 />
                                                 <br />
-                                                <button class="btn btn-primary" onclick={this.postAttachments}>Save Attachment(s)</button>
+                                                <button
+                                                    id="save"
+                                                    class="btn btn-primary"
+                                                    onclick={this.postAttachments}
+                                                >Save Attachment
+                                                </button>
+                                                <br />
+                                                <label
+                                                    for="save"
+                                                    hidden={State.AttachmentModel.hasChosenAttachment}
+                                                >Select an attachment before saving.
+                                                </label>
                                             </div>
                                             <div class="col-md-6">
                                                 <dl class="row">
@@ -92,32 +88,42 @@ export default class Log implements m.Component {
                                                     <dt class="col-sm-6">Subtype:</dt>
                                                     <dd class="col-sm-6">
                                                         {State.LogModel.current.subtype === 'run' ?
-                                                            <span class="badge badge-warning">{State.LogModel.current.subtype}</span>
+                                                            <span class="badge badge-warning">
+                                                                {State.LogModel.current.subtype}
+                                                            </span>
                                                             : State.LogModel.current.subtype}
                                                     </dd>
 
                                                     <dt class="col-sm-6">Origin:</dt>
                                                     <dd class="col-sm-6">
                                                         {State.LogModel.current.origin === 'human' ?
-                                                            <span class="badge badge-success">{State.LogModel.current.origin}</span>
+                                                            <span class="badge badge-success">
+                                                                {State.LogModel.current.origin}
+                                                            </span>
                                                             : State.LogModel.current.origin}
                                                     </dd>
 
                                                     <dt class="col-sm-6">Creation time:</dt>
-                                                    <dd class="col-sm-6">{format(State.LogModel.current.creationTime, 'HH:mm:ss DD/MM/YYYY')}</dd>
+                                                    <dd class="col-sm-6">
+                                                        {format(
+                                                            State.LogModel.current.creationTime,
+                                                            'HH:mm:ss DD/MM/YYYY'
+                                                        )}
+                                                    </dd>
                                                 </dl>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer log-footer">
-                                        <QuillViewer id={State.LogModel.current.logId} content={State.LogModel.current.text} />
-                                    </div>
+                                    <Tabs
+                                        tabs={LogTabs}
+                                        entity={State.LogModel.current}
+                                    />
                                 </div>
                             </div>
                         </div>
                     </HttpErrorAlert>
                 </Spinner>
-            </div>
+            </div >
         );
     }
 }

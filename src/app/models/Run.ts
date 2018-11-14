@@ -25,26 +25,26 @@ const RunModel = {
             method: 'GET',
             url: `${process.env.API_URL}runs${query ? `?${query}` : ''}`,
             withCredentials: false
-        }).then((result: any) => {
+        }).then((result: Run[]) => {
             RunModel.isFetchingRuns = false;
-            this.list = result;
-        }).catch((e: HttpError) => {
+            RunModel.list = result;
+        }).catch((error: HttpError) => {
             RunModel.isFetchingRuns = false;
-            State.HttpErrorModel.add(e);
+            State.HttpErrorModel.add(error);
         });
     },
-    async fetchById(id: number) {
+    async fetchById(id: string | number) {
         RunModel.isFetchingRun = true;
         return m.request<Run>({
             method: 'GET',
             url: `${process.env.API_URL}runs/${id}`,
             withCredentials: false
-        }).then((result: any) => {
+        }).then((result: Run) => {
             RunModel.isFetchingRun = false;
             RunModel.current = result;
-            }).catch((e: HttpError) => {
+            }).catch((error: HttpError) => {
             RunModel.isFetchingRun = false;
-            State.HttpErrorModel.add(e);
+            State.HttpErrorModel.add(error);
         });
     },
 };

@@ -6,9 +6,8 @@
  * copied verbatim in the file "LICENSE"
  */
 
-/* Using an id selector (#) here because the wysiwyg Quill already uses a div with the id 'quill-container'. */
-#quill-container {
-    height: auto;
-    min-height: 10em;
-    overflow-y: visible; 
+export interface Column {
+    header: string;
+    accessor: string;
+    cell?: (row: object) => JSX.Element | string | number;
 }
