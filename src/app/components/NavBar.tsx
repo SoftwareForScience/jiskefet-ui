@@ -37,6 +37,11 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                         />
                         Jiskefet
                     </a>
+                    <ul class="jf-align-right">
+                        <a href="/api/auth" className="nav-link" target="_blank">
+                            <span class={`fas fa-sign-in-alt`} />
+                            &nbsp;Login</a>
+                    </ul>
                 </div>
             </nav >
         );
