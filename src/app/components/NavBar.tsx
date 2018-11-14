@@ -9,7 +9,7 @@
 import * as m from 'mithril';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import NavItem from './NavItem';
+// import NavItem from './NavItem';
 
 export default class NavBar extends MithrilTsxComponent<{}> {
 
