@@ -9,6 +9,7 @@
 import * as m from 'mithril';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
+import NavItem from './NavItem';
 
 export default class NavBar extends MithrilTsxComponent<{}> {
 
@@ -38,7 +39,8 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                         Jiskefet
                     </a>
                     <ul class="jf-align-right">
-                        <a href="/api/auth" className="nav-link" target="_blank">
+                        {/* <NavItem href="/api/auth" name="Login" icon="fa-sign-in-alt" /> */}
+                        <a href="/api/auth" className="nav-link">
                             <span class={`fas fa-sign-in-alt`} />
                             &nbsp;Login</a>
                     </ul>
