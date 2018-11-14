@@ -47,9 +47,6 @@ const MarkdownHelpText: ModalBody = {
 ### Images
     ![The Finished Dish](https://via.placeholder.com/150)
 
-col1|col2|col3
-----|----|----|
-bla | bla | bla|
     `,
     content: (text?: string): JSX.Element => (
         text
