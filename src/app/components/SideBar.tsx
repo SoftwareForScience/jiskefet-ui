@@ -27,7 +27,18 @@ export default class SideBar implements m.Component {
                     <NavItem href="/logs" name="Logs" />
                     <NavItem href="/runs" name="Runs" />
                     <NavItem href="/logs/create" name="Create new log" />
+                    <NavItem href="/tokens" name="Create new token" />
                 </ul>
+                <div class="container">
+                    <p>
+                        <a href="http://145.92.8.34/api/doc/" rel="external noopener" target="_blank">
+                            Link to the API doc
+                        </a>
+                    </p>
+                    <p>
+                        Jiskefet v0.2
+                    </p>
+                </div>
             </nav>
         );
     }

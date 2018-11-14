@@ -15,6 +15,7 @@ import Logs from './views/Logs';
 import Log from './views/Log';
 import Run from './views/Run';
 import CreateLog from './views/CreateLog';
+import CreateToken from './views/CreateToken';
 
 m.route(document.body, '/logs', {
     '/logs': {
@@ -56,6 +57,13 @@ m.route(document.body, '/logs', {
         view: (vnode) => (
             <Layout>
                 <Run id={vnode.attrs.id} />
+            </Layout>
+        ),
+    },
+    '/tokens': {
+        view: () => (
+            <Layout>
+                <CreateToken />
             </Layout>
         ),
     },
