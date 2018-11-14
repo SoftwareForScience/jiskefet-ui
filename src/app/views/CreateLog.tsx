@@ -48,7 +48,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
         });
     }
 
-    async saveAttachmentModels(event: any) {
+    async addFilesToCreateLog(event: any) {
         const files = event.target.files;
         await State.AttachmentModel.read(files[0], false);
     }
@@ -130,7 +130,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                     id="fileUpload"
                                     name="fileUpload"
                                     data-show-caption="true"
-                                    onchange={this.saveAttachmentModels}
+                                    onchange={this.addFilesToCreateLog}
                                 />
                             </div>
                             <img id="preview-image" src="" style="max-width:100px;padding:0px 0px 10px 10px;" />

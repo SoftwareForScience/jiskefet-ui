@@ -35,12 +35,6 @@ const AttachmentModel = {
             State.HttpErrorModel.add(e);
         });
     },
-    download(attachment: any): string {
-        if (attachment.fileData.indexOf('base64;') >= 0) {
-            attachment.fileData = attachment.fileData.split('base64;')[1];
-        }
-        return `data:${attachment.fileMime};base64,${attachment.fileData}`; // data:image/png;base64," + baseString
-    },
     async save() {
         return m.request<Attachment>({
             method: 'POST',
@@ -53,47 +47,66 @@ const AttachmentModel = {
             State.HttpErrorModel.add(e);
         });
     },
+    download(attachment: any): string {
+        if (attachment.fileData.indexOf('base64;') >= 0) {
+            attachment.fileData = attachment.fileData.split('base64;')[1];
+        }
+        return `data:${attachment.fileMime};base64,${attachment.fileData}`; // data:image/png;base64," + baseString
+    },
+    // Reads the file(s) into base64 encoded string
     async read(file: any, isExistingLog: boolean) {
         AttachmentModel.hasChosenAttachment = true;
-        // Read the file data
         const reader = new FileReader();
-        reader.readAsDataURL(file);
         reader.onload = () => {
-            // Store the base64 encoded file as a strings
+            // Store the base64 encoded file as a string
             const base64String = reader.result as string;
-            const fileMime = base64String.substring('data:'.length, base64String.indexOf(';base64,')) as string;
-            const fileData = base64String
-                .substring(base64String.indexOf(';base64,'))
-                .substring(';base64,'.length) as string;
+            // Save the file data in the state
+            AttachmentModel.saveAttachmentState(base64String, file.name, isExistingLog);
             // Set image preview
-            if (fileMime.indexOf('image') >= 0 && document.getElementById('preview-image')) {
+            if (base64String.indexOf('image') >= 0 && document.getElementById('preview-image')) {
                 const previewImage = document.getElementById('preview-image');
                 (previewImage as HTMLImageElement).src = base64String;
             }
-            // Save the file data in the state
-            AttachmentModel.createAttachment.title = file.name;
-            AttachmentModel.createAttachment.fileMime = fileMime;
-            AttachmentModel.createAttachment.fileData = fileData;
-            if (isExistingLog) {
-                AttachmentModel.createAttachment.log = State.LogModel.current;
-            } else {
-                // Check if attachment was not already added
-                if (State.LogModel.createLog.attachments === undefined
-                    || State.LogModel.createLog.attachments.length > 0) {
-
-                    State.LogModel.createLog.attachments = new Array();
-                }
-                State.LogModel.createLog.attachments.push(AttachmentModel.createAttachment);
-            }
         };
+        reader.readAsDataURL(file);
     },
-    saveAttachmentModels(event: any) {
+    // Saves the base64 encoded string into the state
+    saveAttachmentState(base64String: any, name: any, isExistingLog: boolean) {
+        // Save the encoded string to the state createAttachmentModel
+        AttachmentModel.createAttachment.title = name;
+        AttachmentModel.createAttachment.fileMime = base64String.
+            substring('data:'.length, base64String.indexOf(';base64,'));
+        AttachmentModel.createAttachment.fileData = base64String.split(';base64,')[1];
+        // Check if new Log or existing
+        if (isExistingLog) {
+            AttachmentModel.createAttachment.log = State.LogModel.current;
+        } else {
+            // Check if attachment was not already added (needs to be adjusted for multiple file upload)
+            if (State.LogModel.createLog.attachments === undefined
+                || State.LogModel.createLog.attachments.length > 0) {
+
+                State.LogModel.createLog.attachments = new Array();
+            }
+            State.LogModel.createLog.attachments.push(AttachmentModel.createAttachment);
+            console.log(State.LogModel.createLog.attachments[0].title);
+        }
+    },
+    // Gets called from AddAttachment Modal for existing Log
+    addFileToExistingLog(event: any) {
         const files = event.target.files;
         AttachmentModel.read(files[0], true);
     },
+    // Gets called from AddAttachment Modal for existing Log
     async postAttachments() {
         if (AttachmentModel.createAttachment && AttachmentModel.hasChosenAttachment) {
             await AttachmentModel.save().then(() => {
+                // Reset the input form
+                const fileInput = document.getElementById('addAttachment') as HTMLFormElement;
+                const imagePreview = document.getElementById('preview-image') as HTMLImageElement;
+                if (fileInput && imagePreview.src) {
+                    fileInput.reset();
+                    imagePreview.src = '';
+                }
                 // Redraw the current view
                 AttachmentModel.fetch(State.LogModel.current.logId);
             });
