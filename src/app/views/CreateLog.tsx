@@ -133,6 +133,8 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                     onchange={this.saveAttachmentModels}
                                 />
                             </div>
+                            <img id="preview-image" src="" style="max-width:100px;padding:0px 0px 10px 10px;" />
+                            <br />
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <button
                                 type="button"
@@ -149,7 +151,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                         </div>
                     </div>
                 </div>
-            </form>
+            </form >
         );
     }
 }

@@ -57,6 +57,7 @@ const AttachmentModel = {
         AttachmentModel.hasChosenAttachment = true;
         // Read the file data
         const reader = new FileReader();
+        reader.readAsDataURL(file);
         reader.onload = () => {
             // Store the base64 encoded file as a strings
             const base64String = reader.result as string;
@@ -65,7 +66,7 @@ const AttachmentModel = {
                 .substring(base64String.indexOf(';base64,'))
                 .substring(';base64,'.length) as string;
             // Set image preview
-            if (fileMime.indexOf('image') >= 0) {
+            if (fileMime.indexOf('image') >= 0 && document.getElementById('preview-image')) {
                 const previewImage = document.getElementById('preview-image');
                 (previewImage as HTMLImageElement).src = base64String;
             }
@@ -73,20 +74,18 @@ const AttachmentModel = {
             AttachmentModel.createAttachment.title = file.name;
             AttachmentModel.createAttachment.fileMime = fileMime;
             AttachmentModel.createAttachment.fileData = fileData;
-            // Add the current Log to the Attachment
             if (isExistingLog) {
                 AttachmentModel.createAttachment.log = State.LogModel.current;
+            } else {
+                // Check if attachment was not already added
+                if (State.LogModel.createLog.attachments === undefined
+                    || State.LogModel.createLog.attachments.length > 0) {
+
+                    State.LogModel.createLog.attachments = new Array();
+                }
+                State.LogModel.createLog.attachments.push(AttachmentModel.createAttachment);
             }
         };
-        // Save the Attachment to the Log that is going to be created
-        if (!isExistingLog) {
-            // Check if attachments have already been added
-            if (State.LogModel.createLog.attachments === undefined || State.LogModel.createLog.attachments.length > 0) {
-                State.LogModel.createLog.attachments = new Array();
-            }
-            State.LogModel.createLog.attachments.push(AttachmentModel.createAttachment);
-        }
-        reader.readAsDataURL(file);
     },
     saveAttachmentModels(event: any) {
         const files = event.target.files;
@@ -95,6 +94,7 @@ const AttachmentModel = {
     async postAttachments() {
         if (AttachmentModel.createAttachment && AttachmentModel.hasChosenAttachment) {
             await AttachmentModel.save().then(() => {
+                // Redraw the current view
                 AttachmentModel.fetch(State.LogModel.current.logId);
             });
         }
