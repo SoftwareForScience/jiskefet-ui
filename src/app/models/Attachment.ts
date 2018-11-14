@@ -58,17 +58,22 @@ const AttachmentModel = {
         // Read the file data
         const reader = new FileReader();
         reader.onload = () => {
-            // Store the base64 encoded file as a string
+            // Store the base64 encoded file as a strings
             const base64String = reader.result as string;
             const fileMime = base64String.substring('data:'.length, base64String.indexOf(';base64,')) as string;
             const fileData = base64String
                 .substring(base64String.indexOf(';base64,'))
                 .substring(';base64,'.length) as string;
+            // Set image preview
+            if (fileMime.indexOf('image') >= 0) {
+                const previewImage = document.getElementById('preview-image');
+                (previewImage as HTMLImageElement).src = base64String;
+            }
             // Save the file data in the state
             AttachmentModel.createAttachment.title = file.name;
             AttachmentModel.createAttachment.fileMime = fileMime;
             AttachmentModel.createAttachment.fileData = fileData;
-            // If the log already exists add the current Log to the Attachment
+            // Add the current Log to the Attachment
             if (isExistingLog) {
                 AttachmentModel.createAttachment.log = State.LogModel.current;
             }
@@ -82,7 +87,19 @@ const AttachmentModel = {
             State.LogModel.createLog.attachments.push(AttachmentModel.createAttachment);
         }
         reader.readAsDataURL(file);
+    },
+    saveAttachmentModels(event: any) {
+        const files = event.target.files;
+        AttachmentModel.read(files[0], true);
+    },
+    async postAttachments() {
+        if (AttachmentModel.createAttachment && AttachmentModel.hasChosenAttachment) {
+            await AttachmentModel.save().then(() => {
+                AttachmentModel.fetch(State.LogModel.current.logId);
+            });
+        }
     }
+
 };
 
 type AttachmentModel = typeof AttachmentModel;

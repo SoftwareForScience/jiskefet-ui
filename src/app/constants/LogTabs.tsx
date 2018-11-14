@@ -15,6 +15,8 @@ import RunColumns from './RunColumns';
 import Table from '../components/Table';
 import { Log } from '../interfaces/Log';
 import State from '../models/State';
+import Modal from '../components/Modal';
+import AddAttachment from './AddAttachment';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
@@ -26,7 +28,7 @@ const LogTabs: Tab[] = [
         active: true,
         content: (log: Log): JSX.Element | string => (
             log.text
-                ? <MarkdownViewer content={log.text} />
+                ? <MarkdownViewer key={'CreateLogMarkdown'} content={log.text} />
                 : 'This log has no text'
         )
     },
@@ -58,19 +60,34 @@ const LogTabs: Tab[] = [
         id: 'files',
         content: (log: Log): JSX.Element | string => (
             (
-                <ul>
-                    {State.AttachmentModel.list.map((attachment: any) =>
-                        <li key={attachment.id}>
-                            <a
-                                id={attachment.id}
-                                download={attachment.title}
-                                href={State.AttachmentModel.download(attachment)}
-                            >
-                                {attachment.title}
-                            </a>
-                        </li>
-                    )}
-                </ul>
+                <div>
+                    <ul>
+                        {State.AttachmentModel.list.map((attachment: any) =>
+                            <li key={attachment.id}>
+                                <a
+                                    id={attachment.id}
+                                    download={attachment.title}
+                                    href={State.AttachmentModel.download(attachment)}
+                                >
+                                    {attachment.title}
+                                </a>
+                            </li>
+                        )}
+                    </ul>
+                    <hr />
+                    <button
+                        type="button"
+                        class="btn btn-primary btn-lg"
+                        data-toggle="modal"
+                        data-target="#modal"
+                        style="margin-bottom:1rem;"
+                    >Add new file
+                    </button>
+                    <Modal
+                        title="Add attachment"
+                        body={AddAttachment}
+                    />
+                </div>
             )
         )
     }

@@ -6,12 +6,10 @@
  * copied verbatim in the file "LICENSE"
  */
 
-@import '../abstracts/variables';
-
-.jf-log-footer {
-    background-color: $main-theme-secondary-color;
-}
-
-.preview-image {
-    padding: 1rem;
+/**
+ * Interface with the fields for fetching one or more Log entries.
+ */
+export interface ModalBody {
+    text?: string;
+    content: (text?: string) => void;
 }

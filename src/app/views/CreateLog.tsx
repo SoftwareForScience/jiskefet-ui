@@ -7,10 +7,13 @@
  */
 
 import * as m from 'mithril';
-import MarkdownEditor from '../components/MarkdownEditor';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
+import Tabs from '../components/Tab';
+import CreateLogTabs from '../constants/CreateLogTabs';
+import Modal from '../components/Modal';
+import MarkdownHelpText from '../constants/MarkdownHelpText';
 
 interface Attrs {
     runNumber?: number;
@@ -110,9 +113,14 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="description">Description:</label>
-                                <input name="description" type="hidden" />
-                                <MarkdownEditor postContent={this.addDescription} />
+                                <div class="card shadow-sm bg-light">
+                                    <Tabs
+                                        tabs={CreateLogTabs}
+                                        entity={State.LogModel.createLog}
+                                        func={this.addDescription}
+                                        caller={'description'}
+                                    />
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="fileUpload">Attach file to Log:</label>
@@ -126,6 +134,18 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 />
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
+                            <button
+                                type="button"
+                                class="btn btn-info float-right"
+                                data-toggle="modal"
+                                data-target="#modal"
+                            >
+                                Formatting help
+                            </button>
+                            <Modal
+                                title="Markdown help"
+                                body={MarkdownHelpText}
+                            />
                         </div>
                     </div>
                 </div>

@@ -14,6 +14,7 @@ import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import LogTabs from '../constants/LogTabs';
 import Tabs from '../components/Tab';
+import SuccessMessage from '../components/SuccessMessage';
 
 interface Attrs {
     id: number;
@@ -29,24 +30,12 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         State.AttachmentModel.fetch(vnode.attrs.id);
     }
 
-    saveAttachmentModels(event: any) {
-        const files = event.target.files;
-        State.AttachmentModel.read(files[0], true);
-    }
-
-    async postAttachments() {
-        if (State.AttachmentModel.createAttachment && State.AttachmentModel.hasChosenAttachment) {
-            await State.AttachmentModel.save();
-        } else {
-            State.AttachmentModel.hasChosenAttachment = false;
-        }
-    }
-
     view() {
         return (
             <div class="container-fluid">
                 <Spinner isLoading={State.LogModel.isFetchingLog}>
                     <HttpErrorAlert>
+                        <SuccessMessage />
                         <div class="row">
                             <div class="col-md-12 mx-auto">
                                 <div class="card shadow-sm bg-light">
@@ -57,28 +46,6 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <h5 class="card-title">{State.LogModel.current.title}</h5>
-                                                <label for="fileUpload">Attach new file to Log:</label>
-                                                <input
-                                                    type="file"
-                                                    class="form-control-file"
-                                                    id="fileUpload"
-                                                    name="fileUpload"
-                                                    data-show-caption="true"
-                                                    onchange={this.saveAttachmentModels}
-                                                />
-                                                <br />
-                                                <button
-                                                    id="save"
-                                                    class="btn btn-primary"
-                                                    onclick={this.postAttachments}
-                                                >Save Attachment
-                                                </button>
-                                                <br />
-                                                <label
-                                                    for="save"
-                                                    hidden={State.AttachmentModel.hasChosenAttachment}
-                                                >Select an attachment before saving.
-                                                </label>
                                             </div>
                                             <div class="col-md-6">
                                                 <dl class="row">

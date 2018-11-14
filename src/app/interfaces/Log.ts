@@ -12,7 +12,7 @@ import { Attachment } from './Attachment';
  * Interface with the fields for fetching one or more Log entries.
  */
 export interface Log {
-    logId?: number;
+    logId: number;
     subtype: string;
     userId?: number;
     origin: string;
