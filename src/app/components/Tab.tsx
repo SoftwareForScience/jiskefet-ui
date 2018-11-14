@@ -23,7 +23,19 @@ interface Attrs {
      * The object that is shown in the details page. It is used
      * to fill the content for example a table.
      */
-    entity: object;
+    entity?: object;
+
+    /**
+     * This string is an indicator for which tab needs to use the given
+     * function from it's parent.
+     */
+    caller?: string;
+
+    /**
+     * Function that can be given on to the content of the tab.
+     * It can be used to pass through values to the parent.
+     */
+    func?: (param: string | number) => void;
 }
 
 type Vnode = m.Vnode<Attrs, Tabs>;
@@ -34,7 +46,7 @@ type Vnode = m.Vnode<Attrs, Tabs>;
 export default class Tabs extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
-        const { tabs, entity } = vnode.attrs;
+        const { tabs, entity, caller } = vnode.attrs;
         return (
             <div>
                 <div class="card-header">
@@ -52,7 +64,11 @@ export default class Tabs extends MithrilTsxComponent<Attrs> {
                                 id={tab.id}
                                 aria-labelledby={`${tab.id}-tab`}
                             >
-                                {tab.content && tab.content(entity)}
+                                {
+                                    tab.id === caller ?
+                                        tab.content(vnode.attrs.func) :
+                                        tab.content(entity)
+                                }
                             </div>
                         )}
                     </div>

@@ -28,5 +28,5 @@ export interface Tab {
     /**
      * Function to create the content of the tab body.
      */
-    content: (entity?: object) => JSX.Element | string;
+    content: (param?: object | string) => JSX.Element | string;
 }
