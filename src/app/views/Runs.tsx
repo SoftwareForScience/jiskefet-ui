@@ -25,62 +25,76 @@ const inputFields = [
     {
         name: 'runNumber',
         type: 'number',
-        event: 'onchange'
+        event: 'onchange',
+        label: 'Run number',
+        placeholder: 'e.g. 12'
     },
     {
         name: 'activityId',
         type: 'text',
-        event: 'onchange'
+        event: 'onchange',
+        label: 'Activity ID',
+        placeholder: 'e.g. xa1yb2zc3'
     },
     {
         name: 'runType',
         type: 'text',
-        event: 'onchange'
+        event: 'onchange',
+        label: 'Run type'
     },
     {
         name: 'runQuality',
         type: 'text',
-        event: 'onchange'
+        event: 'onchange',
+        label: 'Run quality'
     },
     {
         name: 'startTimeO2Start',
         type: 'datetime-local',
-        event: 'onblur'
+        event: 'onblur',
+        label: 'Start range - Time O2 Start'
     },
     {
         name: 'endTimeO2Start',
         type: 'datetime-local',
-        event: 'onblur'
-    },
-    {
-        name: 'startTimeTrgStart',
-        type: 'datetime-local',
-        event: 'onblur'
-    },
-    {
-        name: 'endTimeTrgStart',
-        type: 'datetime-local',
-        event: 'onblur'
-    },
-    {
-        name: 'startTimeTrgEnd',
-        type: 'datetime-local',
-        event: 'onblur'
-    },
-    {
-        name: 'endTimeTrgEnd',
-        type: 'datetime-local',
-        event: 'onblur'
+        event: 'onblur',
+        label: 'End range - Time O2 Start'
     },
     {
         name: 'startTimeO2End',
         type: 'datetime-local',
-        event: 'onblur'
+        event: 'onblur',
+        label: 'Start range - Time O2 End'
     },
     {
         name: 'endTimeO2End',
         type: 'datetime-local',
-        event: 'onblur'
+        event: 'onblur',
+        label: 'End range - Time O2 End'
+    },
+    {
+        name: 'startTimeTrgStart',
+        type: 'datetime-local',
+        event: 'onblur',
+        label: 'Start range - Time TRG Start'
+    },
+    {
+        name: 'endTimeTrgStart',
+        type: 'datetime-local',
+        event: 'onblur',
+        label: 'End range - Time TRG Start'
+    },
+    {
+        name: 'startTimeTrgEnd',
+        type: 'datetime-local',
+        event: 'onblur',
+        label: 'Start range - Time TRG End'
+    },
+    {
+        name: 'endTimeTrgEnd',
+        type: 'datetime-local',
+        event: 'onblur',
+        label: 'End range - Time TRG End'
     },
 ];
 
@@ -110,46 +124,48 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
         return (
             <div>
                 <HttpErrorAlert>
-                    <div class="col-md-12 py-2">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="text-muted">
-                                    <PageCounter
-                                        currentPage={State.FilterModel.getFilters('run').pageNumber}
-                                        rowsInTable={State.FilterModel.getFilters('run').pageSize}
-                                        totalCount={State.RunModel.count}
-                                    />
+                    <div class="row bg-light rounded mx-2 shadow-sm border">
+                        <div class="col-md-12 py-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="text-muted">
+                                        <PageCounter
+                                            currentPage={State.FilterModel.getFilters('run').pageNumber}
+                                            rowsInTable={State.FilterModel.getFilters('run').pageSize}
+                                            totalCount={State.RunModel.count}
+                                        />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <select
+                                        id="pageSize"
+                                        class="form-control form-control-sm"
+                                        name="pageSize"
+                                        onchange={(event: Event) => {
+                                            State.FilterModel.setFilter('run', 'pageSize', event.target.value);
+                                            State.FilterModel.setFilter('run', 'pageNumber', 1);
+                                            this.fetchWithFilters();
+                                        }}
+                                        value={State.FilterModel.getFilters('run').pageSize}
+                                    >
+                                        {pageSizes.map((pageSize: number) =>
+                                            // tslint:disable-next-line:jsx-key
+                                            <option value={pageSize}>{pageSize}</option>
+                                        )}
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <select
-                                    id="pageSize"
-                                    class="form-control form-control-sm"
-                                    name="pageSize"
-                                    onchange={(event: Event) => {
-                                        State.FilterModel.setFilter('run', 'pageSize', event.target.value);
-                                        State.FilterModel.setFilter('run', 'pageNumber', 1);
+                            <div class="col-md-12 py-2">
+                                <Pagination
+                                    currentPage={State.FilterModel.getFilters('run').pageNumber}
+                                    numberOfPages={Math.ceil(State.RunModel.count
+                                        / State.FilterModel.getFilters('run').pageSize)}
+                                    onChange={(newPage: number) => {
+                                        State.FilterModel.setFilter('run', 'pageNumber', newPage);
                                         this.fetchWithFilters();
                                     }}
-                                    value={State.FilterModel.getFilters('run').pageSize}
-                                >
-                                    {pageSizes.map((pageSize: number) =>
-                                        // tslint:disable-next-line:jsx-key
-                                        <option value={pageSize}>{pageSize}</option>
-                                    )}
-                                </select>
+                                />
                             </div>
-                        </div>
-                        <div class="col-md-12 py-2">
-                            <Pagination
-                                currentPage={State.FilterModel.getFilters('run').pageNumber}
-                                numberOfPages={Math.ceil(State.RunModel.count
-                                    / State.FilterModel.getFilters('run').pageSize)}
-                                onChange={(newPage: number) => {
-                                    State.FilterModel.setFilter('run', 'pageNumber', newPage);
-                                    this.fetchWithFilters();
-                                }}
-                            />
                         </div>
                     </div>
                     <div className="row">

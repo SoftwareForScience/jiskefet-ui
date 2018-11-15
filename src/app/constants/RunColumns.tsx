@@ -15,7 +15,7 @@ import { Run } from '../interfaces/Run';
  */
 const RunColumns = [
     {
-        header: 'Run id',
+        header: 'Run number',
         accessor: 'runNumber',
         cell: (row: Run): JSX.Element => (
             <a href={`/runs/${row.runNumber}`} oncreate={m.route.link}>
