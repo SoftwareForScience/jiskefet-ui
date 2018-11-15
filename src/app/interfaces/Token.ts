@@ -6,13 +6,11 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import * as m from 'mithril';
-
-export default class TokenGenerator implements m.Component {
-
-    view() {
-        return (
-            'test'
-        );
-    }
+/**
+ * Interface with the fields for creating a Token entry.
+ */
+export interface TokenCreate {
+    userId?: number;
+    token: string;
+    description: string;
 }

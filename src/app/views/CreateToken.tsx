@@ -7,10 +7,36 @@
  */
 
 import * as m from 'mithril';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+import State from '../models/State';
+import uuid = require('uuid/v4');
 
-export default class CreateToken implements m.Component {
+interface Attrs {
+    userId?: number;
+    token?: string;
+}
 
-    view() {
+type Vnode = m.Vnode<Attrs, CreateToken>;
+
+export default class CreateToken extends MithrilTsxComponent<Attrs> {
+
+    oninit() {
+        uuid();
+    }
+
+    addDescription = (content: string) => {
+        State.TokenModel.createToken.description = content;
+    }
+
+    // Need to change
+    saveToken(token: string | undefined) {
+        if (token) {
+            console.log(uuid());
+        }
+        State.TokenModel.save();
+    }
+
+    view(vnode: Vnode) {
         return (
             <div class="container-fluid">
                 <div class="row">
@@ -21,13 +47,25 @@ export default class CreateToken implements m.Component {
                                 a token needs to be generated. The token is linked to your account.
                             </p>
                         </div>
-                        <form>
+                        <form
+                            onsubmit={(event: Event) => {
+                                event.preventDefault();
+                                this.saveToken(vnode.attrs.token);
+                            }}
+                        >
                             <dl class="form-group">
                                 <dt class="input-label">
                                     <label autofocus="autofocus">Token description</label>
                                 </dt>
                                 <dd>
-                                    <input autofocus="autofocus" class="form-control" id="description" type="text" />
+                                    <input
+                                        id="description"
+                                        type="text"
+                                        autofocus="autofocus"
+                                        class="form-control"
+                                        oninput={this.addDescription}
+                                        required
+                                    />
                                     <p class="note">What's the token for?</p>
                                 </dd>
                             </dl>
