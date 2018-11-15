@@ -14,6 +14,7 @@ import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import LogTabs from '../constants/LogTabs';
 import Tabs from '../components/Tab';
+import SuccessMessage from '../components/SuccessMessage';
 
 interface Attrs {
     id: number;
@@ -26,6 +27,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     constructor(vnode: Vnode) {
         super();
         State.LogModel.fetchOne(vnode.attrs.id);
+        State.AttachmentModel.fetch(vnode.attrs.id);
     }
 
     view() {
@@ -33,6 +35,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
             <div class="container-fluid">
                 <Spinner isLoading={State.LogModel.isFetchingLog}>
                     <HttpErrorAlert>
+                        <SuccessMessage />
                         <div class="row">
                             <div class="col-md-12 mx-auto">
                                 <div class="card shadow-sm bg-light">

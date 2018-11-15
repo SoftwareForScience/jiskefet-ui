@@ -15,6 +15,7 @@ import CreateLogTabs from '../constants/CreateLogTabs';
 import Modal from '../components/Modal';
 import MarkdownViewer from '../components/MarkdownViewer';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
+import AttachmentComponent from '../components/Attachment';
 
 interface Attrs {
     runNumber?: number;
@@ -68,7 +69,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 </h3>
                             </div>
                             <div class="form-group">
-                                <label for="title">Title:</label>
+                                <label for="title">Add a Title:</label>
                                 <div class="field">
                                     <input
                                         id="title"
@@ -81,7 +82,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="subtype">Select subtype:</label>
+                                <label for="subtype">Select Subtype:</label>
                                 <div class="field">
                                     <select
                                         id="subtype"
@@ -118,6 +119,12 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                     />
                                 </div>
                             </div>
+                            <AttachmentComponent
+                                attachTo="Log"
+                                hideImagePreview={true}
+                                isExistingItem={false}
+                            />
+                            <br />
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <button
                                 type="button"
@@ -133,7 +140,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                         </div>
                     </div>
                 </div>
-            </form>
+            </form >
         );
     }
 }

@@ -36,7 +36,7 @@ export default class Modal extends MithrilTsxComponent<Attrs> {
                                 </button>
                             </div>
                             <div class="modal-body">
-                            {vnode.children}
+                                {vnode.children}
                             </div>
                         </div>
                     </div>
