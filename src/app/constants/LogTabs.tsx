@@ -9,20 +9,20 @@
  */
 
 import * as m from 'mithril';
-import { Tab } from '../interfaces/Tab';
+import { Tabs } from '../interfaces/Tabs';
 import MarkdownViewer from '../components/MarkdownViewer';
 import RunColumns from './RunColumns';
 import Table from '../components/Table';
 import { Log } from '../interfaces/Log';
 import State from '../models/State';
 import Modal from '../components/Modal';
-import AddAttachmentModalBody from './AddAttachmentModalBody';
 import { Attachment } from '../interfaces/Attachment';
+import AttachmentComponent from '../components/Attachment';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
  */
-const LogTabs: Tab[] = [
+const LogTabs: Tabs[] = [
     {
         name: 'Content',
         id: 'content',
@@ -84,10 +84,16 @@ const LogTabs: Tab[] = [
                         data-target="#modal"
                     >Add new file
                     </button>
-                    <Modal
-                        title="Add attachment"
-                        body={AddAttachmentModalBody}
-                    />
+                    <Modal title="Add attachment">
+                        <div>
+                            <form id="addAttachment">
+                                <AttachmentComponent
+                                    attachTo="Log"
+                                    isExistingItem={true}
+                                />
+                            </form>
+                        </div>
+                    </Modal>
                 </div>
             )
         )

@@ -25,9 +25,9 @@ interface Attrs {
     hideImagePreview?: boolean;
 }
 
-type Vnode = m.Vnode<Attrs, Attachment>;
+type Vnode = m.Vnode<Attrs, AttachmentComponent>;
 
-export default class Attachment extends MithrilTsxComponent<Attrs> {
+export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
 
     private isExistingItem: boolean;
     private hasChosenAttachment: boolean;

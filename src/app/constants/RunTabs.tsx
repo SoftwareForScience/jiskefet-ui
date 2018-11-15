@@ -9,7 +9,7 @@
  */
 
 import * as m from 'mithril';
-import { Tab } from '../interfaces/Tab';
+import { Tabs } from '../interfaces/Tabs';
 import { Run } from '../interfaces/Run';
 import Table from '../components/Table';
 import LogColumns from './LogColumns';
@@ -17,7 +17,7 @@ import LogColumns from './LogColumns';
 /**
  * The tab information used by the TabHeader and TabContent of the Run detail page.
  */
-const RunTabs: Tab[] = [
+const RunTabs: Tabs[] = [
     {
         name: 'Logs',
         id: 'logs',

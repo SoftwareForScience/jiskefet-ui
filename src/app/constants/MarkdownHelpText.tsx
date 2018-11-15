@@ -5,15 +5,13 @@
  * GNU General Public Licence version 3 (GPL) version 3,
  * copied verbatim in the file "LICENSE"
  *
- * The tabs used by the Log details page.
+ * This text contains explenation for the markdown editor.
+ * It explains the basics of markdown, it also gives a link that
+ * redirects to a website with a more detailed explanation.
  */
 
-import * as m from 'mithril';
-import MarkdownViewer from '../components/MarkdownViewer';
-import { ModalBody } from '../interfaces/ModalBody';
-
-const MarkdownHelpText: ModalBody = {
-    text: `Jiskefet uses markdown for text formatting and editing.
+const MarkdownHelpText: string =
+    `Jiskefet uses markdown for text formatting and editing.
     These are the basic techniques.
     For a more detailed explanation
     [go here](https://guides.github.com/features/mastering-markdown/).
@@ -47,26 +45,7 @@ const MarkdownHelpText: ModalBody = {
 ### Images
     ![The Finished Dish](https://via.placeholder.com/150)
 
-col1|col2|col3
-----|----|----|
-bla | bla | bla|
-    `,
-    content: (text?: string): JSX.Element => (
-        text
-            ? <MarkdownViewer key={'MarkdownHelpText'} content={text} />
-            : (
-                <div>
-                    <a
-                        href={'https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet'}
-                        target="_blank"
-                    >
-                        Markdown help
-                    </a>
-                </div>
-            )
-    )
-
-};
+    `;
 
 type MarkdownHelpText = typeof MarkdownHelpText;
 export default MarkdownHelpText;

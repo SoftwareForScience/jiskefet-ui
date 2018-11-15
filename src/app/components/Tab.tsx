@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Tab } from '../interfaces/Tab';
+import { Tabs } from '../interfaces/Tabs';
 import TabHeader from './TabHeader';
 
 interface Attrs {
@@ -17,7 +17,7 @@ interface Attrs {
      * represents a tab. It is used to set the id and content
      * of the tabs.
      */
-    tabs: Tab[];
+    tabs: Tabs[];
 
     /**
      * The object that is shown in the details page. It is used
@@ -38,12 +38,12 @@ interface Attrs {
     func?: (param: string | number) => void;
 }
 
-type Vnode = m.Vnode<Attrs, Tabs>;
+type Vnode = m.Vnode<Attrs, Tab>;
 
 /**
  * This component creates the tabs and adds content to its body.
  */
-export default class Tabs extends MithrilTsxComponent<Attrs> {
+export default class Tab extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         const { tabs, entity, caller } = vnode.attrs;
@@ -56,7 +56,7 @@ export default class Tabs extends MithrilTsxComponent<Attrs> {
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
-                        {tabs && tabs.map((tab: Tab) =>
+                        {tabs && tabs.map((tab: Tabs) =>
                             // tslint:disable-next-line:jsx-key
                             <div
                                 role="tabpanel"
