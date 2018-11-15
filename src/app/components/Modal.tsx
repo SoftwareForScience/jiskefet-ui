@@ -8,20 +8,12 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { ModalBody } from '../interfaces/ModalBody';
 
 interface Attrs {
     /**
      * Title of the modal self
      */
     title: string;
-
-    /**
-     * This attribute contains a function that returns the JSX.Element
-     * that will be the body and an optianl variable that can be given
-     * to that function.
-     */
-    body: ModalBody;
 }
 
 type Vnode = m.Vnode<Attrs, Modal>;
@@ -31,7 +23,7 @@ type Vnode = m.Vnode<Attrs, Modal>;
  */
 export default class Modal extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { title, body } = vnode.attrs;
+        const { title } = vnode.attrs;
         return (
             <div>
                 <div class="modal" tabindex="-1" role="dialog" id="modal">
@@ -44,9 +36,7 @@ export default class Modal extends MithrilTsxComponent<Attrs> {
                                 </button>
                             </div>
                             <div class="modal-body">
-                            {body.text
-                            ? body.content(body.text)
-                            : body.content()}
+                            {vnode.children}
                             </div>
                         </div>
                     </div>

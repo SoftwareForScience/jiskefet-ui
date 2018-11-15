@@ -9,7 +9,7 @@
  */
 
 import * as m from 'mithril';
-import { Tab } from '../interfaces/Tab';
+import { Tabs } from '../interfaces/Tabs';
 import MarkdownViewer from '../components/MarkdownViewer';
 import RunColumns from './RunColumns';
 import Table from '../components/Table';
@@ -18,7 +18,7 @@ import { Log } from '../interfaces/Log';
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
  */
-const LogTabs: Tab[] = [
+const LogTabs: Tabs[] = [
     {
         name: 'Content',
         id: 'content',

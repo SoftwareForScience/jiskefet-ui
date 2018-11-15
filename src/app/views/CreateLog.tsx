@@ -13,6 +13,7 @@ import { Event } from '../interfaces/Event';
 import Tabs from '../components/Tab';
 import CreateLogTabs from '../constants/CreateLogTabs';
 import Modal from '../components/Modal';
+import MarkdownViewer from '../components/MarkdownViewer';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
 
 interface Attrs {
@@ -126,10 +127,9 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                             >
                                 Formatting help
                             </button>
-                            <Modal
-                                title="Markdown help"
-                                body={MarkdownHelpText}
-                            />
+                            <Modal title="Markdown help">
+                                <MarkdownViewer key={'MarkdownHelpText'} content={MarkdownHelpText} />
+                            </Modal>
                         </div>
                     </div>
                 </div>

@@ -11,22 +11,32 @@ import * as marked from 'marked';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 
 interface Attrs {
+    /**
+     * This key sets the viewer id in html so that there will be no
+     * conflicts between multiple markdown viewers.
+     */
     key: string;
+
+    /**
+     * This string contains the markdown text that needs to be parsed to
+     * html.
+     */
     content: string;
 }
 
 type Vnode = m.Vnode<Attrs, MarkdownViewer>;
+type VnodeDOM = m.VnodeDOM<Attrs, MarkdownViewer>;
 
 /**
  * Displays markdown as html.
  */
 export default class MarkdownViewer extends MithrilTsxComponent<Attrs> {
 
-    oncreate(vnode: Vnode) {
+    oncreate(vnode: VnodeDOM) {
         this.parse(vnode.attrs.key, vnode.attrs.content);
     }
 
-    onupdate(vnode: Vnode) {
+    onupdate(vnode: VnodeDOM) {
         this.parse(vnode.attrs.key, vnode.attrs.content);
     }
 
