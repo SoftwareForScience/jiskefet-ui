@@ -36,7 +36,17 @@ const inputFields = [
         label: 'Title',
         event: 'onchange',
         placeholder: 'e.g. EOR report'
-    }
+    },
+    {
+        name: 'startCreationTime',
+        type: 'datetime-local',
+        event: 'onblur'
+    },
+    {
+        name: 'endCreationTime',
+        type: 'datetime-local',
+        event: 'onblur'
+    },
 ];
 
 export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<Log> {

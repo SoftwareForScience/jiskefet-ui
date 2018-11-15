@@ -27,22 +27,57 @@ const inputFields = [
         event: 'onchange'
     },
     {
-        name: 'timeO2Start',
+        name: 'activityId',
+        type: 'text',
+        event: 'onchange'
+    },
+    {
+        name: 'runType',
+        type: 'text',
+        event: 'onchange'
+    },
+    {
+        name: 'runQuality',
+        type: 'text',
+        event: 'onchange'
+    },
+    {
+        name: 'startTimeO2Start',
         type: 'datetime-local',
         event: 'onblur'
     },
     {
-        name: 'timeO2End',
+        name: 'endTimeO2Start',
         type: 'datetime-local',
         event: 'onblur'
     },
     {
-        name: 'timeTrgStart',
+        name: 'startTimeTrgStart',
         type: 'datetime-local',
         event: 'onblur'
     },
     {
-        name: 'timeTrgEnd',
+        name: 'endTimeTrgStart',
+        type: 'datetime-local',
+        event: 'onblur'
+    },
+    {
+        name: 'startTimeTrgEnd',
+        type: 'datetime-local',
+        event: 'onblur'
+    },
+    {
+        name: 'endTimeTrgEnd',
+        type: 'datetime-local',
+        event: 'onblur'
+    },
+    {
+        name: 'startTimeO2End',
+        type: 'datetime-local',
+        event: 'onblur'
+    },
+    {
+        name: 'endTimeO2End',
         type: 'datetime-local',
         event: 'onblur'
     },
