@@ -38,7 +38,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         super();
         this.isExistingItem = vnode.attrs.isExistingItem;
         this.hasChosenAttachment = false;
-        this.maxFileSize = 50000;
+        this.maxFileSize = 50000000;
     }
 
     /**
@@ -71,9 +71,11 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
             // Save the file data in the state
             this.saveAttachmentState(base64String, file.name, isExistingItem);
             // Set image preview
-            if (base64String.indexOf('image') >= 0 && document.getElementById('preview-image')) {
-                const previewImage = document.getElementById('preview-image');
+            const previewImage = document.getElementById('preview-image');
+            if (base64String.indexOf('image') >= 0 && previewImage) {
                 (previewImage as HTMLImageElement).src = base64String;
+            } else {
+                (previewImage as HTMLImageElement).src = '';
             }
         };
         reader.readAsDataURL(file);
@@ -132,6 +134,9 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         const { attachTo, hideImagePreview } = vnode.attrs;
         return (
             <div>
+                <div class="alert alert-danger" role="alert" id="maximum-size-label" for="save" hidden>
+                    Maximum file size is 50MB! Please select a smaller file.
+                </div>
                 <label for="fileUpload">Attach file to {attachTo}:</label>
                 <input
                     type="file"
@@ -141,14 +146,12 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                     data-show-caption="true"
                     onchange={this.getSelectedFiles}
                 />
-                <br />
                 <img
                     id="preview-image"
                     src=""
-                    style="max-width:100px;padding:0px 0px 10px 10px;"
+                    style="max-width:40%; padding:10px 10px 10px 0px;"
                     hidden={hideImagePreview}
                 />
-                <br />
                 <div hidden={!this.isExistingItem}>
                     <span
                         class="d-inline-block"
@@ -166,10 +169,6 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                         >Save File
                         </button>
                     </span>
-                </div>
-                <br />
-                <div class="alert alert-danger" role="alert" id="maximum-size-label" for="save" hidden>
-                    Maximum file size is 50kb! Please select a smaller file.
                 </div>
             </div>
         );
