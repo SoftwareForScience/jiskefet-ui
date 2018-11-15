@@ -11,9 +11,20 @@ import * as marked from 'marked';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 
 interface Attrs {
+    /**
+     * This key sets the viewer id in html so that there will be no
+     * conflicts between multiple markdown viewers.
+     */
+    key: string;
+
+    /**
+     * This string contains the markdown text that needs to be parsed to
+     * html.
+     */
     content: string;
 }
 
+type Vnode = m.Vnode<Attrs, MarkdownViewer>;
 type VnodeDOM = m.VnodeDOM<Attrs, MarkdownViewer>;
 
 /**
@@ -22,18 +33,18 @@ type VnodeDOM = m.VnodeDOM<Attrs, MarkdownViewer>;
 export default class MarkdownViewer extends MithrilTsxComponent<Attrs> {
 
     oncreate(vnode: VnodeDOM) {
-        this.parse(vnode.attrs.content);
+        this.parse(vnode.attrs.key, vnode.attrs.content);
     }
 
     onupdate(vnode: VnodeDOM) {
-        this.parse(vnode.attrs.content);
+        this.parse(vnode.attrs.key, vnode.attrs.content);
     }
 
     /**
      * Inserts raw markdown content into viewer as HMTL.
      */
-    parse(content: string): void {
-        const markdownViewer: HTMLElement | null = document.getElementById('jf-markdown-viewer');
+    parse(key: string, content: string): void {
+        const markdownViewer: HTMLElement | null = document.getElementById(key);
         if (markdownViewer) {
             if (content) {
                 markdownViewer.innerHTML = marked(content);
@@ -42,10 +53,13 @@ export default class MarkdownViewer extends MithrilTsxComponent<Attrs> {
             }
         }
     }
-
-    view() {
+    view(vnode: Vnode) {
         return (
-            <div id="jf-markdown-viewer" />
+            <div class="row">
+                <div class="col-md-12 jf-markdown-wrapper" >
+                    <div id={vnode.attrs.key} class="jf-markdown-viewer" />
+                </div >
+            </div>
         );
     }
 }

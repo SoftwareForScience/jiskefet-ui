@@ -9,7 +9,7 @@
  /**
   * Interface for the creation of different tabs.
   */
-export interface Tab {
+export interface Tabs {
     /**
      * The name of the tab
      */
@@ -28,5 +28,5 @@ export interface Tab {
     /**
      * Function to create the content of the tab body.
      */
-    content: (entity?: object) => JSX.Element | string;
+    content: (param?: object | string) => JSX.Element | string;
 }
