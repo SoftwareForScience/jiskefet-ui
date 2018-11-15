@@ -9,6 +9,7 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import State from '../models/State';
+import { HttpError } from '../interfaces/HttpError';
 
 interface Attrs {
     /**
@@ -31,11 +32,13 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
 
     private isExistingItem: boolean;
     private hasChosenAttachment: boolean;
+    private maxFileSize: number;
 
     constructor(vnode: Vnode) {
         super();
         this.isExistingItem = vnode.attrs.isExistingItem;
         this.hasChosenAttachment = false;
+        this.maxFileSize = 50000;
     }
 
     /**
@@ -44,7 +47,14 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
      */
     getSelectedFiles = (event: Event) => {
         const files = (event.target as HTMLInputElement).files as FileList;
-        this.read(files[0], this.isExistingItem);
+        const maxSizeLabel = document.getElementById('maximum-size-label') as HTMLElement;
+
+        if (files[0].size > this.maxFileSize) {
+            maxSizeLabel.hidden = false;
+        } else {
+            maxSizeLabel.hidden = true;
+            this.read(files[0], this.isExistingItem);
+        }
     }
 
     /**
@@ -100,17 +110,21 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
      */
     postAttachments = async () => {
         if (State.AttachmentModel.createAttachment && this.hasChosenAttachment) {
-            await State.AttachmentModel.save().then(() => {
-                // Reset the input form
-                const fileInput = document.getElementById('addAttachment') as HTMLFormElement;
-                const imagePreview = document.getElementById('preview-image') as HTMLImageElement;
-                if (fileInput && imagePreview.src) {
-                    fileInput.reset();
-                    imagePreview.src = '';
-                }
-                // Redraw the current view
-                State.AttachmentModel.fetch(State.LogModel.current.logId);
-            });
+            await State.AttachmentModel.save()
+                .catch((e: HttpError) => {
+                    State.HttpErrorModel.add(e);
+                })
+                .then(async () => {
+                    // Reset the input form
+                    const fileInput = document.getElementById('addAttachment') as HTMLFormElement;
+                    const imagePreview = document.getElementById('preview-image') as HTMLImageElement;
+                    if (fileInput && imagePreview.src) {
+                        fileInput.reset();
+                        imagePreview.src = '';
+                    }
+                    // Redraw the current view
+                    await State.AttachmentModel.fetch(State.LogModel.current.logId);
+                });
         }
     }
 
@@ -152,6 +166,10 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                         >Save File
                         </button>
                     </span>
+                </div>
+                <br />
+                <div class="alert alert-danger" role="alert" id="maximum-size-label" for="save" hidden>
+                    Maximum file size is 50kb! Please select a smaller file.
                 </div>
             </div>
         );
