@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Tab } from '../interfaces/Tab';
+import { Tabs } from '../interfaces/Tabs';
 import TabHeader from './TabHeader';
 
 interface Attrs {
@@ -17,24 +17,36 @@ interface Attrs {
      * represents a tab. It is used to set the id and content
      * of the tabs.
      */
-    tabs: Tab[];
+    tabs: Tabs[];
 
     /**
      * The object that is shown in the details page. It is used
      * to fill the content for example a table.
      */
-    entity: object;
+    entity?: object;
+
+    /**
+     * This string is an indicator for which tab needs to use the given
+     * function from it's parent.
+     */
+    caller?: string;
+
+    /**
+     * Function that can be given on to the content of the tab.
+     * It can be used to pass through values to the parent.
+     */
+    func?: (param: string | number) => void;
 }
 
-type Vnode = m.Vnode<Attrs, Tabs>;
+type Vnode = m.Vnode<Attrs, Tab>;
 
 /**
  * This component creates the tabs and adds content to its body.
  */
-export default class Tabs extends MithrilTsxComponent<Attrs> {
+export default class Tab extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
-        const { tabs, entity } = vnode.attrs;
+        const { tabs, entity, caller } = vnode.attrs;
         return (
             <div>
                 <div class="card-header">
@@ -44,7 +56,7 @@ export default class Tabs extends MithrilTsxComponent<Attrs> {
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
-                        {tabs && tabs.map((tab: Tab) =>
+                        {tabs && tabs.map((tab: Tabs) =>
                             // tslint:disable-next-line:jsx-key
                             <div
                                 role="tabpanel"
@@ -52,7 +64,11 @@ export default class Tabs extends MithrilTsxComponent<Attrs> {
                                 id={tab.id}
                                 aria-labelledby={`${tab.id}-tab`}
                             >
-                                {tab.content && tab.content(entity)}
+                                {
+                                    tab.id === caller ?
+                                        tab.content(vnode.attrs.func) :
+                                        tab.content(entity)
+                                }
                             </div>
                         )}
                     </div>
