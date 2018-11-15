@@ -56,7 +56,7 @@ export default class PageCounter extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         return (
-            <div>
+            <div class="jf-pagecounter">
                 {this.start(vnode.attrs)}-{this.end(vnode.attrs)} of {vnode.attrs.totalCount} rows
             </div>
         );

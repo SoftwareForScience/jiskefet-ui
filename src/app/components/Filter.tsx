@@ -10,110 +10,61 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
 
-interface FilterParam {
-    name: string;
+interface InputField {
+    name: string; // name should exist as a key in the filters attribute.
     type: string;
-    value?: string | null;
     placeholder?: string;
     label?: string;
     event: string;
 }
 
 interface Attrs {
-    inputFields: FilterParam[];
-    fetch: (queryString: string) => void;
-    route: string;
-}
-
-interface RouteFilters {
-    [name: string]: string;
+    /**
+     * The input fields used for filtering.
+     */
+    inputFields: InputField[];
+    /**
+     * Function being called when the event happens on an input field.
+     */
+    onEvent: (key: string, value: string | number) => void;
+    /**
+     * The values of the filters.
+     */
+    filters: { [key: string]: string | number | null };
 }
 
 type Vnode = m.Vnode<Attrs, Filter>;
-type VnodeDOM = m.VnodeDOM<Attrs, Filter>;
 
 export default class Filter extends MithrilTsxComponent<Attrs> {
-    private routeFilters: RouteFilters; // The route's query parameters.
-    private mergedFilters: FilterParam[]; // The data from inputFields and the values from routeFilters combined.
-
-    constructor(vnode: Vnode) {
-        super();
-        this.routeFilters = m.route.param() as RouteFilters;
-        this.mergedFilters = this.mergeFilters(vnode.attrs.inputFields, this.routeFilters);
-    }
-
-    /**
-     * Merges the filterParams with the filters in the route.
-     */
-    mergeFilters = (inputParams: FilterParam[], routeFilters: RouteFilters): FilterParam[] => {
-        const merged: FilterParam[] = inputParams.map((filter: FilterParam) => ({
-            ...filter,
-            value: routeFilters[filter.name] || null
-        }));
-        return merged;
-    }
-
-    /**
-     * Update the route with query params in routeFilters.
-     * @param routeFilters The filters object to be inserted into the route as query params.
-     * @param route e.g. 'runs', as in site.com/runs
-     */
-    updateRoute(routeFilters: RouteFilters, route: string): void {
-        const queryString: string = m.buildQueryString(routeFilters);
-        m.route.set(`/${route}?${queryString}`);
-    }
-
-    /**
-     * Update the filters. If value is null, remove the key from route filters.
-     */
-    updateFilter = (key: string, value: string | null, filters: RouteFilters): RouteFilters => {
-        value ? filters[key] = value : delete filters[key];
-        return filters;
-    }
-
-    /**
-     * Fetch the entities that match the filters.
-     * Example: {key: 'value'} will fetch with a query param of '?key=value'.
-     * @param filters The filters.
-     */
-    fetchWithFilters = (filters: object, fetch: (queryString: string) => void) => {
-        const queryString: string = m.buildQueryString(filters);
-        fetch(queryString);
-    }
-
-    oninit(vnode: VnodeDOM) {
-        this.fetchWithFilters(this.routeFilters, vnode.attrs.fetch);
-    }
-
     view(vnode: Vnode) {
+        const { inputFields, onEvent, filters } = vnode.attrs;
         return (
-            <div class="filters-responsive">
-                <div class="bg-light rounded p-4 shadow-sm border">
-                    {this.mergedFilters && this.mergedFilters.map((filter: FilterParam) =>
-                        (
-                            <div class="form-group">
-                                <label key={filter.name} for={filter.name}>
-                                    {filter.label || `Filter for ${filter.name}`}
-                                </label>
-                                <input
-                                    type={filter.type}
-                                    class="form-control"
-                                    id={filter.name}
-                                    {...{
-                                        [filter.event]: (event: Event) => {
-                                            this.routeFilters = this.updateFilter(event.target.id, event.target.value, this.routeFilters);
-                                            this.updateRoute(this.routeFilters, vnode.attrs.route);
-                                            this.mergedFilters = this.mergeFilters(vnode.attrs.inputFields, this.routeFilters);
-                                            this.fetchWithFilters(this.routeFilters, vnode.attrs.fetch);
-                                        }
-                                    }}
-                                    value={filter.value}
-                                    placeholder={filter.placeholder}
-                                />
-                            </div>
-                        )
-                    )}
-                </div>
+            <div>
+                {inputFields && inputFields.map((inputField: InputField) =>
+                    (
+                        <div class="form-group">
+                            <label
+                                key={inputField.name}
+                                for={inputField.name}
+                                class="col-form-label-sm"
+                            >
+                                {inputField.label || `Filter for ${inputField.name}`}
+                            </label>
+                            <input
+                                type={inputField.type}
+                                class="form-control form-control-sm"
+                                id={inputField.name}
+                                {...{
+                                    [inputField.event]: (event: Event) => {
+                                        onEvent(inputField.name, event.target.value);
+                                    }
+                                }}
+                                value={filters[inputField.name]}
+                                placeholder={inputField.placeholder}
+                            />
+                        </div>
+                    )
+                )}
             </div>
         );
     }

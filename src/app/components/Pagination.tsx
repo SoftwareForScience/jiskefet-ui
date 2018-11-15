@@ -30,8 +30,8 @@ interface Attrs {
 type Vnode = m.Vnode<Attrs, Pagination>;
 
 /**
- * Pagination component, that is able to select a page over a range, calling onChange when switching pages.
- * (onChange should handle state mutation.)
+ * Pagination component that is able to select a page over a range, calling onChange when switching pages.
+ * (onChange should handle state mutation, i.e. changing the currentPage given to the component externally.)
  */
 export default class Pagination extends MithrilTsxComponent<Attrs> {
     /**
@@ -40,9 +40,10 @@ export default class Pagination extends MithrilTsxComponent<Attrs> {
     inputIsActive: boolean = false;
 
     /**
-     * A block that does not represent a page.
+     * A block that does not represent a page, but displays a string.
+     * To be used in-between buttons.
      */
-    nonPageBlock = (content: string) => (
+    nonPageBlock = (content: string): JSX.Element => (
         <li class={`page-item disabled `}>
             <a class="page-link jf-page-non-link">
                 {content}
@@ -50,11 +51,14 @@ export default class Pagination extends MithrilTsxComponent<Attrs> {
         </li >
     )
 
+    /**
+     * Button that shows the current page, becoming an input element on click that
+     * enables changes the page with user input.
+     */
     currentPageButton = (attrs: Attrs): JSX.Element => {
         const { numberOfPages, currentPage, onChange } = attrs;
         return (
             <li class="page-item active">
-                {/* {this.pageInput(attrs.currentPage, attrs.numberOfPages, attrs.onChange)} */}
                 {<input
                     {...{ type: this.inputIsActive ? 'text' : 'hidden' }}
                     class="page-selector form-control form-control-sm"
@@ -89,7 +93,10 @@ export default class Pagination extends MithrilTsxComponent<Attrs> {
         );
     }
 
-    regularPageButton = (pageNumber: string | number, onChange: (newPage: number) => void): JSX.Element => {
+    /**
+     * Button that shows a page number and calles a function onClick.
+     */
+    regularPageButton = (pageNumber: string | number, onClick: (newPage: number) => void): JSX.Element => {
         return (
             <li class="page-item">
                 <a
@@ -97,7 +104,7 @@ export default class Pagination extends MithrilTsxComponent<Attrs> {
                     id={pageNumber}
                     onclick={() => {
                         this.inputIsActive = false;
-                        onChange(+pageNumber);
+                        onClick(+pageNumber);
                     }}
                 >
                     {pageNumber}
@@ -185,6 +192,8 @@ export default class Pagination extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
         const { currentPage, numberOfPages, onChange } = vnode.attrs;
         const pageValues: Array<string | number> = this.getPageValues(numberOfPages, currentPage);
+
+        // JQuery needed to initialize the bootstrap tooltip.
         $(() => {
             ($('[data-toggle="tooltip"]') as any).tooltip();
         });

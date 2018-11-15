@@ -12,6 +12,9 @@ import { MithrilTsxComponent } from 'mithril-tsx-component';
 
 type Vnode = m.Vnode<{}, Content>;
 
+/**
+ * Wrapper component holding the main content of the app.
+ */
 export default class Content extends MithrilTsxComponent<{}> {
     view(vnode: Vnode) {
         return (

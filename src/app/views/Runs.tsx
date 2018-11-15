@@ -15,11 +15,13 @@ import RunColumns from '../constants/RunColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import Fetchable from '../interfaces/Fetchable';
 import { Run } from '../interfaces/Run';
-import NewFilter from '../components/NewFilter';
+import Filter from '../components/Filter';
 import { createDummyTable } from '../utility/DummyService';
 import PageCounter from '../components/PageCounter';
 import Pagination from '../components/Pagination';
 import { Event } from '../interfaces/Event';
+import ContentBlock from '../components/ContentBlock';
+import SuccessMessage from '../components/SuccessMessage';
 
 const inputFields = [
     {
@@ -124,75 +126,86 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
         return (
             <div>
                 <HttpErrorAlert>
-                    <div class="row bg-light rounded mx-2 shadow-sm border">
-                        <div class="col-md-12 py-2">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="text-muted">
-                                        <PageCounter
-                                            currentPage={State.FilterModel.getFilters('run').pageNumber}
-                                            rowsInTable={State.FilterModel.getFilters('run').pageSize}
-                                            totalCount={State.RunModel.count}
-                                        />
+                    <SuccessMessage />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <ContentBlock class="mb-2">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label
+                                            for="pageSize"
+                                            class="col-form-label col-form-label-sm"
+                                        >
+                                            Page size
+                                        </label>
+                                        <select
+                                            id="pageSize"
+                                            class="form-control form-control-sm"
+                                            name="pageSize"
+                                            onchange={(event: Event) => {
+                                                State.FilterModel.setFilter('run', 'pageSize', event.target.value);
+                                                State.FilterModel.setFilter('run', 'pageNumber', 1);
+                                                this.fetchWithFilters();
+                                            }}
+                                            value={State.FilterModel.getFilters('run').pageSize}
+                                        >
+                                            {pageSizes.map((pageSize: number) =>
+                                                // tslint:disable-next-line:jsx-key
+                                                <option value={pageSize}>{pageSize}</option>
+                                            )}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-muted mt-2">
+                                            <PageCounter
+                                                currentPage={State.FilterModel.getFilters('run').pageNumber}
+                                                rowsInTable={State.FilterModel.getFilters('run').pageSize}
+                                                totalCount={State.RunModel.count}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <select
-                                        id="pageSize"
-                                        class="form-control form-control-sm"
-                                        name="pageSize"
-                                        onchange={(event: Event) => {
-                                            State.FilterModel.setFilter('run', 'pageSize', event.target.value);
-                                            State.FilterModel.setFilter('run', 'pageNumber', 1);
+                            </ContentBlock>
+                            <ContentBlock>
+                                <Filter
+                                    inputFields={inputFields}
+                                    onEvent={(key: string, value: string | number | null) => {
+                                        State.FilterModel.setFilter('run', key, value);
+                                        State.FilterModel.setFilter('run', 'pageNumber', 1);
+                                        this.fetch(State.FilterModel.getQueryString('run'));
+                                    }}
+                                    filters={State.FilterModel.getFilters('run')}
+                                />
+                            </ContentBlock>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="mb-2">
+                                <ContentBlock padding={1} >
+                                    <Pagination
+                                        currentPage={State.FilterModel.getFilters('run').pageNumber}
+                                        numberOfPages={Math.ceil(State.RunModel.count
+                                            / State.FilterModel.getFilters('run').pageSize)}
+                                        onChange={(newPage: number) => {
+                                            State.FilterModel.setFilter('run', 'pageNumber', newPage);
                                             this.fetchWithFilters();
                                         }}
-                                        value={State.FilterModel.getFilters('run').pageSize}
-                                    >
-                                        {pageSizes.map((pageSize: number) =>
-                                            // tslint:disable-next-line:jsx-key
-                                            <option value={pageSize}>{pageSize}</option>
-                                        )}
-                                    </select>
-                                </div>
+                                    />
+                                </ContentBlock>
                             </div>
-                            <div class="col-md-12 py-2">
-                                <Pagination
-                                    currentPage={State.FilterModel.getFilters('run').pageNumber}
-                                    numberOfPages={Math.ceil(State.RunModel.count
-                                        / State.FilterModel.getFilters('run').pageSize)}
-                                    onChange={(newPage: number) => {
-                                        State.FilterModel.setFilter('run', 'pageNumber', newPage);
-                                        this.fetchWithFilters();
-                                    }}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-3 mt-2">
-                            <NewFilter
-                                inputFields={inputFields}
-                                onEvent={(key: string, value: string | number | null) => {
-                                    State.FilterModel.setFilter('run', key, value);
-                                    State.FilterModel.setFilter('run', 'pageNumber', 1);
-                                    this.fetch(State.FilterModel.getQueryString('run'));
-                                }}
-                                filters={State.FilterModel.getFilters('run')}
-                            />
-                        </div>
-                        <div className="col-md-9 mt-2">
                             <Spinner
                                 isLoading={State.RunModel.isFetchingRuns}
-                                component={createDummyTable(
-                                    State.FilterModel.getFilters('run').pageSize,
-                                    RunColumns,
-                                    'jf-font-sm'
-                                )}
+                                component={
+                                    createDummyTable(
+                                        State.FilterModel.getFilters('run').pageSize,
+                                        RunColumns,
+                                        'jf-font-sm'
+                                    )
+                                }
                             >
                                 <Table
                                     data={State.RunModel.list}
                                     columns={RunColumns}
-                                    className="jf-font-sm"
+                                    className={'jf-font-sm'}
                                     orderBy={State.FilterModel.getFilters('run').orderBy}
                                     orderDirection={State.FilterModel.getFilters('run').orderDirection}
                                     onHeaderClick={(accessor: string) => {
