@@ -49,11 +49,6 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
         });
     }
 
-    async addFilesToCreateLog(event: any) {
-        const files = event.target.files;
-        await State.AttachmentModel.read(files[0], false);
-    }
-
     view(vnode: Vnode) {
         return (
             <form
@@ -125,8 +120,8 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                             </div>
                             <Attachment
                                 attachTo="Log"
-                                addFiles={this.addFilesToCreateLog}
                                 hideImagePreview={true}
+                                isExistingItem={false}
                             />
                             <br />
                             <button type="submit" class="btn btn-primary">Submit</button>

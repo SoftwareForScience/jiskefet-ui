@@ -10,7 +10,6 @@
 
 import * as m from 'mithril';
 import { ModalBody } from '../interfaces/ModalBody';
-import State from '../models/State';
 import Attachment from '../components/Attachment';
 
 const AddAttachmentModalBody: ModalBody = {
@@ -21,25 +20,8 @@ const AddAttachmentModalBody: ModalBody = {
                 <form id="addAttachment">
                     <Attachment
                         attachTo="Log"
-                        addFiles={State.AttachmentModel.addFileToExistingLog}
+                        isExistingItem={true}
                     />
-                    <br />
-                    <span
-                        class="d-inline-block"
-                        tabindex="0"
-                        data-toggle="tooltip"
-                        data-placement="right"
-                        title="Select a file before saving."
-                    >
-                        <button
-                            id="save"
-                            class="btn btn-primary"
-                            data-dismiss="modal"
-                            onclick={State.AttachmentModel.postAttachments}
-                            disabled={!State.AttachmentModel.hasChosenAttachment}
-                        >Save File
-                        </button>
-                    </span>
                 </form>
             </div>
         )
