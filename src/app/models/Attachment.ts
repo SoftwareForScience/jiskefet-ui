@@ -10,6 +10,7 @@ import * as m from 'mithril';
 import { Attachment, AttachmentCreate } from '../interfaces/Attachment';
 import State from './State';
 import SuccesModel from './Success';
+import { HttpError } from '../interfaces/HttpError';
 
 /**
  * Stores the state around Attachment entities.
@@ -19,17 +20,16 @@ const AttachmentModel = {
     list: [] as Attachment[],
     current: {} as Attachment,
     createAttachment: {} as AttachmentCreate, // attachment being created
-    attachmentsToAdd: [] as any[],
     async fetch(id: number) {
         AttachmentModel.isFetchingAttachment = true;
         return m.request({
             method: 'GET',
             url: `${process.env.API_URL}attachments/${id}/logs`,
             withCredentials: false
-        }).then((result: any) => {
+        }).then((result: Attachment[]) => {
             AttachmentModel.isFetchingAttachment = false;
             AttachmentModel.list = result;
-        }).catch((e: any) => {
+        }).catch((e: HttpError) => {
             AttachmentModel.isFetchingAttachment = false;
             State.HttpErrorModel.add(e);
         });
@@ -42,11 +42,11 @@ const AttachmentModel = {
             withCredentials: false
         }).then(() => {
             SuccesModel.add('Successfully saved attachment.');
-        }).catch((e: any) => {
+        }).catch((e: HttpError) => {
             State.HttpErrorModel.add(e);
         });
     },
-    download(attachment: any): string {
+    download(attachment: Attachment): string {
         if (attachment.fileData.indexOf('base64;') >= 0) {
             attachment.fileData = attachment.fileData.split('base64;')[1];
         }

@@ -8,10 +8,11 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { ModalBody } from '../interfaces/ModalBody';
 
 interface Attrs {
     title: string;
-    body: any;
+    body: ModalBody;
 }
 
 type Vnode = m.Vnode<Attrs, Modal>;
@@ -32,7 +33,7 @@ export default class Modal extends MithrilTsxComponent<Attrs> {
                                 </button>
                             </div>
                             <div class="modal-body">
-                               {body.content(body.text)}
+                                {body.content(body.text)}
                             </div>
                         </div>
                     </div>

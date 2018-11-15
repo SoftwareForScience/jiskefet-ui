@@ -42,8 +42,8 @@ export default class Attachment extends MithrilTsxComponent<Attrs> {
      * Gets called after User selects a file.
      * @param event The event of having selected a file.
      */
-    getSelectedFiles = (event: any) => {
-        const files = event.target.files;
+    getSelectedFiles = (event: Event) => {
+        const files = (event.target as HTMLInputElement).files as FileList;
         this.read(files[0], this.isExistingItem);
     }
 
@@ -52,7 +52,7 @@ export default class Attachment extends MithrilTsxComponent<Attrs> {
      * @param file The file that the user has chosen (event.target.files).
      * @param isExistingItem Whether the attachment is added to an existing Item.
      */
-    read = (file: any, isExistingItem: boolean) => {
+    read = (file: File, isExistingItem: boolean) => {
         this.hasChosenAttachment = true;
         const reader = new FileReader();
         reader.onload = () => {
@@ -75,7 +75,7 @@ export default class Attachment extends MithrilTsxComponent<Attrs> {
      * @param name The name of the file.
      * @param isExistingItem Whether the attachment is added to an existing Item.
      */
-    saveAttachmentState = (base64String: any, name: any, isExistingItem: boolean) => {
+    saveAttachmentState = (base64String: string, name: string, isExistingItem: boolean) => {
 
         State.AttachmentModel.createAttachment.title = name;
         State.AttachmentModel.createAttachment.fileMime = base64String.

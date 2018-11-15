@@ -17,6 +17,7 @@ import { Log } from '../interfaces/Log';
 import State from '../models/State';
 import Modal from '../components/Modal';
 import AddAttachmentModalBody from './AddAttachmentModalBody';
+import { Attachment } from '../interfaces/Attachment';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
@@ -62,10 +63,10 @@ const LogTabs: Tab[] = [
             (
                 <div>
                     <ul>
-                        {State.AttachmentModel.list.map((attachment: any) =>
-                            <li key={attachment.id}>
+                        {State.AttachmentModel.list.map((attachment: Attachment) =>
+                            <li key={attachment.fileId}>
                                 <a
-                                    id={attachment.id}
+                                    id={attachment.fileId}
                                     download={attachment.title}
                                     href={State.AttachmentModel.download(attachment)}
                                 >
