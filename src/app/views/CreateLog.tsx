@@ -113,7 +113,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                     <Tabs
                                         tabs={CreateLogTabs}
                                         entity={State.LogModel.createLog}
-                                        func={this.addDescription}
+                                        func={(content: string) => this.addDescription(content)}
                                         caller={'description'}
                                     />
                                 </div>

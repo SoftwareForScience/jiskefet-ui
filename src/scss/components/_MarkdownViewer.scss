@@ -10,12 +10,14 @@
     word-break: break-word;
     overflow: auto;
     padding: 10px;
+    background-color: white;
+    border-radius: 5px;
 
     & pre {
         overflow: auto;
         font-size: 85%;
         line-height: 1.45;
-        background-color: #dadada;
+        background-color: #f6f8fa;
         border-radius: 3px;
         padding: 10px 20px;
         margin-top: 0;

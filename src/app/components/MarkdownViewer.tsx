@@ -41,7 +41,7 @@ export default class MarkdownViewer extends MithrilTsxComponent<Attrs> {
     }
 
     /**
-     * Inserts raw markdown content into viewer as HMTL.
+     * Inserts raw markdown content into viewer as HTML.
      */
     parse(key: string, content: string): void {
         const markdownViewer: HTMLElement | null = document.getElementById(key);
@@ -55,11 +55,9 @@ export default class MarkdownViewer extends MithrilTsxComponent<Attrs> {
     }
     view(vnode: Vnode) {
         return (
-            <div class="row">
-                <div class="col-md-12 jf-markdown-wrapper" >
-                    <div id={vnode.attrs.key} class="jf-markdown-viewer" />
-                </div >
-            </div>
+            <div class="jf-markdown-wrapper" >
+                <div id={vnode.attrs.key} class="jf-markdown-viewer" />
+            </div >
         );
     }
 }
