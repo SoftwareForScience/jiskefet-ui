@@ -28,7 +28,7 @@ const DefaultFilters = {
         orderBy: null as string | null,
         orderDirection: null as OrderDirection | null,
         pageSize: 16 as number,
-        pageNumber: null as number | null
+        pageNumber: 1 as number | null
     }
 };
 

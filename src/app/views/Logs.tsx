@@ -50,24 +50,16 @@ const inputFields = [
 ];
 
 export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<Log> {
-    private columns: any[];
-
-    constructor() {
-        super();
-        this.columns = LogColumns;
+    oninit() {
+        State.FilterModel.setFiltersToDefaults('log');
+        State.FilterModel.setFiltersFromUrl('log');
+        this.fetch(State.FilterModel.getQueryString('log'));
     }
-
     /**
      * Fetch logs with the query param given.
      */
     fetch = (queryParam: string = ''): void => {
         State.LogModel.fetch(queryParam);
-    }
-
-    oninit() {
-        State.FilterModel.setFiltersToDefaults('log');
-        State.FilterModel.setFiltersFromUrl('log');
-        this.fetch(State.FilterModel.getQueryString('log'));
     }
 
     /**
@@ -146,7 +138,7 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                             >
                                 <Table
                                     data={State.LogModel.list}
-                                    columns={this.columns}
+                                    columns={LogColumns}
                                     orderBy={State.FilterModel.getFilters('log').orderBy}
                                     orderDirection={State.FilterModel.getFilters('log').orderDirection}
                                     onHeaderClick={(accessor: string) => {

@@ -19,6 +19,7 @@ import NewFilter from '../components/NewFilter';
 import { createDummyTable } from '../utility/DummyService';
 import PageCounter from '../components/PageCounter';
 import Pagination from '../components/Pagination';
+import { Event } from '../interfaces/Event';
 
 const inputFields = [
     {
