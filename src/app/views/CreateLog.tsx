@@ -14,6 +14,7 @@ import Tabs from '../components/Tab';
 import CreateLogTabs from '../constants/CreateLogTabs';
 import Modal from '../components/Modal';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
+import Attachment from '../components/Attachment';
 
 interface Attrs {
     runNumber?: number;
@@ -122,18 +123,11 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                     />
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="fileUpload">Attach file to Log:</label>
-                                <input
-                                    type="file"
-                                    class="form-control-file"
-                                    id="fileUpload"
-                                    name="fileUpload"
-                                    data-show-caption="true"
-                                    onchange={this.addFilesToCreateLog}
-                                />
-                            </div>
-                            <img id="preview-image" src="" style="max-width:100px;padding:0px 0px 10px 10px;" />
+                            <Attachment
+                                attachTo="Log"
+                                addFiles={this.addFilesToCreateLog}
+                                hideImagePreview={true}
+                            />
                             <br />
                             <button type="submit" class="btn btn-primary">Submit</button>
                             <button

@@ -53,15 +53,19 @@ const AttachmentModel = {
         }
         return `data:${attachment.fileMime};base64,${attachment.fileData}`; // data:image/png;base64," + baseString
     },
-    // Reads the file(s) into base64 encoded string
-    async read(file: any, isExistingLog: boolean) {
+    /**
+     *  Read the files with the reader object into a Base64 encoded string.
+     * @param file The file that the user has chosen (event.target.files).
+     * @param isExistingItem Whether the attachment is added to an existing Item.
+     */
+    async read(file: any, isExistingItem: boolean) {
         AttachmentModel.hasChosenAttachment = true;
         const reader = new FileReader();
         reader.onload = () => {
             // Store the base64 encoded file as a string
             const base64String = reader.result as string;
             // Save the file data in the state
-            AttachmentModel.saveAttachmentState(base64String, file.name, isExistingLog);
+            AttachmentModel.saveAttachmentState(base64String, file.name, isExistingItem);
             // Set image preview
             if (base64String.indexOf('image') >= 0 && document.getElementById('preview-image')) {
                 const previewImage = document.getElementById('preview-image');
@@ -70,14 +74,19 @@ const AttachmentModel = {
         };
         reader.readAsDataURL(file);
     },
-    // Saves the base64 encoded string into the state
+    /**
+     * Saves the base64 encoded string into the state.
+     * @param base64String The file base64 encoded string.
+     * @param name The name of the file.
+     * @param isExistingLog Whether the attachment is added to an existing Item.
+     */
     saveAttachmentState(base64String: any, name: any, isExistingLog: boolean) {
-        // Save the encoded string to the state createAttachmentModel
+
         AttachmentModel.createAttachment.title = name;
         AttachmentModel.createAttachment.fileMime = base64String.
             substring('data:'.length, base64String.indexOf(';base64,'));
         AttachmentModel.createAttachment.fileData = base64String.split(';base64,')[1];
-        // Check if new Log or existing
+
         if (isExistingLog) {
             AttachmentModel.createAttachment.log = State.LogModel.current;
         } else {
@@ -91,7 +100,10 @@ const AttachmentModel = {
             console.log(State.LogModel.createLog.attachments[0].title);
         }
     },
-    // Gets called from AddAttachment Modal for existing Log
+    /**
+     * Gets called from AddAttachment Modal for existing Log
+     * @param event The event of choosing a file.
+     */
     addFileToExistingLog(event: any) {
         const files = event.target.files;
         AttachmentModel.read(files[0], true);

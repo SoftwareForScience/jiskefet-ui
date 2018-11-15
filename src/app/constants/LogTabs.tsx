@@ -16,7 +16,7 @@ import Table from '../components/Table';
 import { Log } from '../interfaces/Log';
 import State from '../models/State';
 import Modal from '../components/Modal';
-import AddAttachment from './AddAttachment';
+import AddAttachmentModalBody from './AddAttachmentModalBody';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
@@ -78,14 +78,14 @@ const LogTabs: Tab[] = [
                     <button
                         type="button"
                         class="btn btn-primary btn-lg"
+                        style="margin-bottom:1rem;"
                         data-toggle="modal"
                         data-target="#modal"
-                        style="margin-bottom:1rem;"
                     >Add new file
                     </button>
                     <Modal
                         title="Add attachment"
-                        body={AddAttachment}
+                        body={AddAttachmentModalBody}
                     />
                 </div>
             )
