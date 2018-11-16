@@ -29,6 +29,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     constructor(vnode: Vnode) {
         super();
         State.LogModel.fetchOne(vnode.attrs.logId);
+        State.AttachmentModel.fetch(vnode.attrs.logId);
     }
 
     view(vnode: Vnode) {
@@ -38,6 +39,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                 <Spinner isLoading={State.LogModel.isFetchingLog || State.LogModel.isPatchingLinkRunToLog}>
                     <SuccessMessage />
                     <HttpErrorAlert>
+                        <SuccessMessage />
                         <div class="row">
                             <div class="col-md-12 mx-auto">
                                 <div class="card shadow-sm bg-light">

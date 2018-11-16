@@ -11,6 +11,7 @@ import RunModel from './Run';
 import AppState from './AppState';
 import HttpErrorModel from './HttpError';
 import SuccessModel from './Success';
+import AttachmentModel from './Attachment';
 
 /**
  * The single state container for the application.
@@ -21,5 +22,6 @@ export default {
     HttpErrorModel,
     SuccessModel,
     LogModel,
-    RunModel
+    RunModel,
+    AttachmentModel
 };
