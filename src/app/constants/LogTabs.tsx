@@ -34,7 +34,13 @@ const LogTabs: Tabs[] = [
         id: 'runs',
         content: (log: Log): JSX.Element | string => (
             log.runs && log.runs.length > 0
-            ? <Table data={log.runs} columns={RunColumns} />
+                ? (
+                    <Table
+                        data={log.runs}
+                        columns={RunColumns}
+                        className="font-sm"
+                    />
+                )
             : 'This log has no runs'
         )
     },

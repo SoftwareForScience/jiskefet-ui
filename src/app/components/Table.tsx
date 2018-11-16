@@ -23,7 +23,7 @@ export default class Table extends MithrilTsxComponent<Attrs> {
         const { columns, className, data } = vnode.attrs;
         return (
             <div class="table-responsive">
-                <table class={`table table-sm table-bordered table-hover shadow-sm ${className || ''}`}>
+                <table class={`table table-sm table-bordered table-hover ${className || ''}`}>
                     <thead class="thead-light">
                         <tr>
                             {columns && columns.map((column: Column) =>

@@ -11,6 +11,11 @@ import { MithrilTsxComponent } from 'mithril-tsx-component';
 
 interface Attrs {
     /**
+     * The unique identifier of the modal,
+     * used to open the correct modal when using multiple modals.
+     */
+    id: string;
+    /**
      * Title of the modal self
      */
     title: string;
@@ -23,11 +28,11 @@ type Vnode = m.Vnode<Attrs, Modal>;
  */
 export default class Modal extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { title } = vnode.attrs;
+        const { id, title } = vnode.attrs;
         return (
             <div>
-                <div class="modal" tabindex="-1" role="dialog" id="modal">
-                    <div class="modal-dialog modal-lg" role="document">
+                <div class="modal" tabindex="-1" role="dialog" id={id}>
+                    <div class="modal-dialog modal-lg " role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">{title}</h5>
@@ -36,7 +41,7 @@ export default class Modal extends MithrilTsxComponent<Attrs> {
                                 </button>
                             </div>
                             <div class="modal-body">
-                            {vnode.children}
+                                {vnode.children}
                             </div>
                         </div>
                     </div>

@@ -123,11 +123,11 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 type="button"
                                 class="btn btn-info float-right"
                                 data-toggle="modal"
-                                data-target="#modal"
+                                data-target="#MarkdownHelpText"
                             >
                                 Formatting help
                             </button>
-                            <Modal title="Markdown help">
+                            <Modal id="MarkdownHelpText" title="Markdown help">
                                 <MarkdownViewer key={'MarkdownHelpText'} content={MarkdownHelpText} />
                             </Modal>
                         </div>
