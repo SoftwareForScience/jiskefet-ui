@@ -12,6 +12,7 @@ import AppState from './AppState';
 import HttpErrorModel from './HttpError';
 import SuccessModel from './Success';
 import FilterModel from './Filter';
+import AttachmentModel from './Attachment';
 
 /**
  * The single state container for the application.
@@ -23,5 +24,6 @@ export default {
     SuccessModel,
     LogModel,
     RunModel,
-    FilterModel
+    FilterModel,
+    AttachmentModel
 };

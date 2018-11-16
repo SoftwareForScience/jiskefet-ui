@@ -19,7 +19,7 @@ import MarkdownEditor from '../components/MarkdownEditor';
  */
 const CreateLogTabs: Tabs[] = [
     {
-        name: 'Description',
+        name: 'Edit',
         id: 'description',
         active: true,
         content: (addDescription: () => void): JSX.Element => (

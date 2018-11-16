@@ -1,3 +1,5 @@
+import { Attachment } from './Attachment';
+
 /*
  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
  *
@@ -10,7 +12,7 @@
  * Interface with the fields for fetching one or more Log entries.
  */
 export interface Log {
-    logId?: number;
+    logId: number;
     subtype: string;
     userId?: number;
     origin: string;
@@ -18,6 +20,7 @@ export interface Log {
     title: string;
     text: string;
     runs?: any[];
+    attachments?: any[];
 }
 
 /**
@@ -31,4 +34,5 @@ export interface LogCreate {
     title: string;
     text: string;
     runs: any[];
+    attachments?: Attachment[];
 }
