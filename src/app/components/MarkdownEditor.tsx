@@ -22,10 +22,6 @@ type Vnode = m.Vnode<Attrs, MarkdownEditor>;
 export default class MarkdownEditor extends MithrilTsxComponent<Attrs> {
     content: string;
 
-    constructor(vnode: Vnode) {
-        super();
-    }
-
     /**
      * Bind event.target.value to this.content;
      */

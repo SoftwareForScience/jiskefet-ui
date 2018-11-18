@@ -17,6 +17,7 @@ import State from './State';
 const RunModel = {
     isFetchingRuns: false as boolean,
     isFetchingRun: false as boolean,
+    count: 0 as number, // number of total rows available.
     list: [] as Run[],
     current: {} as Run,
     async fetch(query?: string) {
@@ -25,9 +26,10 @@ const RunModel = {
             method: 'GET',
             url: `${process.env.API_URL}runs${query ? `?${query}` : ''}`,
             withCredentials: false
-        }).then((result: Run[]) => {
+        }).then((result: { runs: Run[], count: number }) => {
             RunModel.isFetchingRuns = false;
-            RunModel.list = result;
+            RunModel.list = result.runs;
+            RunModel.count = result.count;
         }).catch((error: HttpError) => {
             RunModel.isFetchingRuns = false;
             State.HttpErrorModel.add(error);

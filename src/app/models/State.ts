@@ -11,6 +11,7 @@ import RunModel from './Run';
 import AppState from './AppState';
 import HttpErrorModel from './HttpError';
 import SuccessModel from './Success';
+import FilterModel from './Filter';
 import AttachmentModel from './Attachment';
 
 /**
@@ -23,5 +24,6 @@ export default {
     SuccessModel,
     LogModel,
     RunModel,
+    FilterModel,
     AttachmentModel
 };

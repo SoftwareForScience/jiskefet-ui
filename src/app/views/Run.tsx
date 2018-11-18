@@ -38,7 +38,7 @@ export default class Run extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         return (
-            <div class="container-fluid">
+            <div>
                 <Spinner isLoading={State.RunModel.isFetchingRun}>
                     <HttpErrorAlert>
                         <div class="row">

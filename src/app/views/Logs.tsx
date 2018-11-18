@@ -9,7 +9,6 @@
 import * as m from 'mithril';
 import Spinner from '../components/Spinner';
 import Table from '../components/Table';
-import Filter from '../components/Filter';
 import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
@@ -17,30 +16,46 @@ import LogColumns from '../constants/LogColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import Fetchable from '../interfaces/Fetchable';
 import { Log } from '../interfaces/Log';
+import Filter from '../components/Filter';
+import Pagination from '../components/Pagination';
+import { Event } from '../interfaces/Event';
+import PageCounter from '../components/PageCounter';
+import { createDummyTable } from '../utility/DummyService';
+import ContentBlock from '../components/ContentBlock';
 
 const inputFields = [
     {
         name: 'logId',
         type: 'number',
         label: 'Log id',
-        event: 'onchange'
+        event: 'onchange',
+        placeholder: 'e.g. 1'
     },
     {
         name: 'searchterm',
         type: 'text',
         label: 'Title',
-        event: 'onchange'
-    }
+        event: 'onchange',
+        placeholder: 'e.g. EOR report'
+    },
+    {
+        name: 'startCreationTime',
+        type: 'datetime-local',
+        event: 'onblur'
+    },
+    {
+        name: 'endCreationTime',
+        type: 'datetime-local',
+        event: 'onblur'
+    },
 ];
 
 export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<Log> {
-    private columns: any[];
-
-    constructor() {
-        super();
-        this.columns = LogColumns;
+    oninit() {
+        State.FilterModel.setFiltersToDefaults('log');
+        State.FilterModel.setFiltersFromUrl('log');
+        this.fetch(State.FilterModel.getQueryString('log'));
     }
-
     /**
      * Fetch logs with the query param given.
      */
@@ -48,40 +63,102 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
         State.LogModel.fetch(queryParam);
     }
 
-    oninit() {
-        this.fetch();
+    /**
+     * Fetch logs with the filters currently in the state (in FilterModel).
+     */
+    fetchWithFilters = (): void => {
+        this.fetch(State.FilterModel.getQueryString('log'));
     }
 
     view() {
+        const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         return (
-            <div className="container-fluid">
-                <Spinner isLoading={State.LogModel.isFetchingLogs}>
-                    <HttpErrorAlert>
-                        <SuccessMessage />
-                        {/* <div className="row">
-                            <div className="col-md-12">
-                                <button class="btn btn-light border mb-2 float-right" onclick={this.togglePreview}>
-                                    {this.previewContent ? 'Hide content' : 'Preview content'}
-                                </button>
-                            </div>
-                        </div> */}
-                        <div className="row">
-                            <div className="col-md-3 mt-2">
+            <div>
+                <HttpErrorAlert>
+                    <SuccessMessage />
+                    <div class="row">
+                        <div class="col-md-3">
+                            <ContentBlock class="mb-2">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label
+                                            for="pageSize"
+                                            class="col-form-label col-form-label-sm"
+                                        >
+                                            Page size
+                                        </label>
+                                        <select
+                                            id="pageSize"
+                                            class="form-control form-control-sm"
+                                            name="pageSize"
+                                            onchange={(event: Event) => {
+                                                State.FilterModel.setFilter('log', 'pageSize', event.target.value);
+                                                State.FilterModel.setFilter('log', 'pageNumber', 1);
+                                                this.fetchWithFilters();
+                                            }}
+                                            value={State.FilterModel.getFilters('log').pageSize}
+                                        >
+                                            {pageSizes.map((pageSize: number) =>
+                                                // tslint:disable-next-line:jsx-key
+                                                <option value={pageSize}>{pageSize}</option>
+                                            )}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="text-muted mt-2">
+                                            <PageCounter
+                                                currentPage={State.FilterModel.getFilters('log').pageNumber}
+                                                rowsInTable={State.FilterModel.getFilters('log').pageSize}
+                                                totalCount={State.LogModel.count}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </ContentBlock>
+                            <ContentBlock>
                                 <Filter
                                     inputFields={inputFields}
-                                    fetch={this.fetch}
-                                    route="logs"
+                                    onEvent={(key: string, value: string | number | null) => {
+                                        State.FilterModel.setFilter('log', key, value);
+                                        State.FilterModel.setFilter('log', 'pageNumber', 1);
+                                        this.fetch(State.FilterModel.getQueryString('log'));
+                                    }}
+                                    filters={State.FilterModel.getFilters('log')}
                                 />
+                            </ContentBlock>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="mb-2">
+                                <ContentBlock padding={1} >
+                                    <Pagination
+                                        currentPage={State.FilterModel.getFilters('log').pageNumber}
+                                        numberOfPages={Math.ceil(State.LogModel.count
+                                            / State.FilterModel.getFilters('log').pageSize)}
+                                        onChange={(newPage: number) => {
+                                            State.FilterModel.setFilter('log', 'pageNumber', newPage);
+                                            this.fetchWithFilters();
+                                        }}
+                                    />
+                                </ContentBlock>
                             </div>
-                            <div className="col-md-9 mt-2">
+                            <Spinner
+                                isLoading={State.LogModel.isFetchingLogs}
+                                component={createDummyTable(State.FilterModel.getFilters('log').pageSize, LogColumns)}
+                            >
                                 <Table
                                     data={State.LogModel.list}
-                                    columns={this.columns}
+                                    columns={LogColumns}
+                                    orderBy={State.FilterModel.getFilters('log').orderBy}
+                                    orderDirection={State.FilterModel.getFilters('log').orderDirection}
+                                    onHeaderClick={(accessor: string) => {
+                                        State.FilterModel.switchOrderBy('log', accessor);
+                                        this.fetchWithFilters();
+                                    }}
                                 />
-                            </div>
+                            </Spinner>
                         </div>
-                    </HttpErrorAlert>
-                </Spinner>
+                    </div>
+                </HttpErrorAlert>
             </div>
         );
     }

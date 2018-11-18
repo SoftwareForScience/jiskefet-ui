@@ -18,6 +18,7 @@ import { HttpError } from '../interfaces/HttpError';
 const LogModel = {
     isFetchingLogs: false as boolean,
     isFetchingLog: false as boolean,
+    count: 0 as number, // number of total rows available.
     list: [] as Log[],
     current: {} as Log,
     createLog: {} as LogCreate, // log being created
@@ -27,9 +28,10 @@ const LogModel = {
             method: 'GET',
             url: `${process.env.API_URL}logs${query ? `?${query}` : ''}`,
             withCredentials: false
-        }).then((result: Log[]) => {
+        }).then((result: { logs: Log[], count: number }) => {
             LogModel.isFetchingLogs = false;
-            LogModel.list = result;
+            LogModel.list = result.logs;
+            LogModel.count = result.count;
         }).catch((error: HttpError) => {
             LogModel.isFetchingLogs = false;
             State.HttpErrorModel.add(error);

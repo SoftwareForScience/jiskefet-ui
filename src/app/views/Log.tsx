@@ -32,7 +32,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
 
     view() {
         return (
-            <div class="container-fluid">
+            <div>
                 <Spinner isLoading={State.LogModel.isFetchingLog}>
                     <HttpErrorAlert>
                         <SuccessMessage />
