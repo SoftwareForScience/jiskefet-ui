@@ -9,7 +9,7 @@
 @charset 'utf-8';
 
 /* Vendor Dependencies */
-@import 'node_modules/bootstrap/scss/bootstrap';
+@import '../../node_modules/bootstrap/scss/bootstrap';
 
 /* Authored Dependencies */
 @import './abstracts/variables';
@@ -21,3 +21,7 @@
 @import './components/MarkdownEditor';
 @import './components/MarkdownViewer';
 @import './themes/theme';
+@import './components/Table';
+@import './components/TableHeader';
+@import './components/Pagination';
+@import './components/PageCounter';

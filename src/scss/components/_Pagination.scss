@@ -1,0 +1,36 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+@import '../abstracts/mixins';
+
+.jf-pagination {
+    margin-bottom: inherit;
+
+    .page-link {
+        @include no-select();
+        
+        &.jf-page-non-link {
+            color: #757575;
+            background-color: #f4f4f4;
+        }
+    }
+
+    .page-selector {
+        width: 50px;
+    }
+
+    .page-selector-label:hover {
+        background-color: #1565c0;
+        border-color: #1565c0;
+    }
+
+    & input[type=number]::-webkit-inner-spin-button, 
+    & input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+}
