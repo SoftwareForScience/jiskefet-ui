@@ -32,7 +32,7 @@ export default class Modal extends MithrilTsxComponent<Attrs> {
         return (
             <div>
                 <div class="modal" tabindex="-1" role="dialog" id={id}>
-                    <div class="modal-dialog modal-lg " role="document">
+                    <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">{title}</h5>
