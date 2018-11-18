@@ -15,7 +15,7 @@ interface Attrs {
      * This key sets the viewer id in html so that there will be no
      * conflicts between multiple markdown viewers.
      */
-    key: string;
+    id: string;
 
     /**
      * This string contains the markdown text that needs to be parsed to
@@ -33,11 +33,11 @@ type VnodeDOM = m.VnodeDOM<Attrs, MarkdownViewer>;
 export default class MarkdownViewer extends MithrilTsxComponent<Attrs> {
 
     oncreate(vnode: VnodeDOM) {
-        this.parse(vnode.attrs.key, vnode.attrs.content);
+        this.parse(vnode.attrs.id, vnode.attrs.content);
     }
 
     onupdate(vnode: VnodeDOM) {
-        this.parse(vnode.attrs.key, vnode.attrs.content);
+        this.parse(vnode.attrs.id, vnode.attrs.content);
     }
 
     /**
@@ -56,7 +56,7 @@ export default class MarkdownViewer extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
         return (
             <div class="jf-markdown-wrapper" >
-                <div id={vnode.attrs.key} class="jf-markdown-viewer" />
+                <div id={vnode.attrs.id} class="jf-markdown-viewer" />
             </div >
         );
     }

@@ -31,7 +31,7 @@ const LogTabs: Tabs[] = [
         active: true,
         content: (log: Log): JSX.Element | string => (
             log.text
-                ? <MarkdownViewer key={'CreateLogMarkdown'} content={log.text} />
+                ? <MarkdownViewer id={'CreateLogMarkdown'} content={log.text} />
                 : 'This log has no text'
         )
     },

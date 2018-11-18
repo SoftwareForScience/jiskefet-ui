@@ -135,7 +135,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 Formatting help
                             </button>
                             <Modal id="MarkdownHelpText" title="Markdown help">
-                                <MarkdownViewer key={'MarkdownHelpText'} content={MarkdownHelpText} />
+                                <MarkdownViewer id={'MarkdownHelpTextViewer'} content={MarkdownHelpText} />
                             </Modal>
                         </div>
                     </div>
