@@ -9,15 +9,16 @@
 import * as m from 'mithril';
 import { Log, LogCreate } from '../interfaces/Log';
 import State from './State';
-import SuccesModel from './Success';
+import SuccessModel from './Success';
 import { HttpError } from '../interfaces/HttpError';
 
 /**
- * Stores the state around Log entities.
+ * Stores the state around Log entities and contains api calls to change that state.
  */
 const LogModel = {
     isFetchingLogs: false as boolean,
     isFetchingLog: false as boolean,
+    isPatchingLinkRunToLog: false as boolean,
     count: 0 as number, // number of total rows available.
     list: [] as Log[],
     current: {} as Log,
@@ -59,8 +60,23 @@ const LogModel = {
             data: LogModel.createLog,
             withCredentials: false
         }).then(() => {
-            SuccesModel.add('Successfully saved log.');
+            SuccessModel.add('Successfully saved log.');
         }).catch((error: HttpError) => {
+            State.HttpErrorModel.add(error);
+        });
+    },
+    async linkRunToLog(runNumber: number, logId: number) {
+        LogModel.isPatchingLinkRunToLog = true;
+        return m.request<Log>({
+            method: 'PATCH',
+            url: `${process.env.API_URL}logs/${logId}/runs`,
+            data: { runNumber: runNumber as number },
+            withCredentials: false
+        }).then(() => {
+            LogModel.isPatchingLinkRunToLog = false;
+            SuccessModel.add(`Successfully linked run ${runNumber} to log ${logId}.`);
+        }).catch((error: HttpError) => {
+            LogModel.isPatchingLinkRunToLog = false;
             State.HttpErrorModel.add(error);
         });
     }

@@ -10,13 +10,15 @@ import * as m from 'mithril';
 import { HttpError } from '../interfaces/HttpError';
 import { Run } from '../interfaces/Run';
 import State from './State';
+import SuccessModel from './Success';
 
 /**
- * Stores the state around Run entities.
+ * Stores the state around Run entities and contains api calls to change that state.
  */
 const RunModel = {
     isFetchingRuns: false as boolean,
     isFetchingRun: false as boolean,
+    isPatchingLinkLogToRun: false as boolean,
     count: 0 as number, // number of total rows available.
     list: [] as Run[],
     current: {} as Run,
@@ -49,6 +51,21 @@ const RunModel = {
             State.HttpErrorModel.add(error);
         });
     },
+    async linkLogToRun(logId: number, runNumber: number) {
+        RunModel.isPatchingLinkLogToRun = true;
+        return m.request<Run>({
+            method: 'PATCH',
+            url: `${process.env.API_URL}runs/${runNumber}/logs`,
+            data: { logId: logId as number },
+            withCredentials: false
+        }).then(() => {
+            RunModel.isPatchingLinkLogToRun = false;
+            SuccessModel.add(`Successfully linked log ${logId} to run ${runNumber}.`);
+        }).catch((error: HttpError) => {
+            RunModel.isPatchingLinkLogToRun = false;
+            State.HttpErrorModel.add(error);
+        });
+    }
 };
 
 type RunModel = typeof RunModel;
