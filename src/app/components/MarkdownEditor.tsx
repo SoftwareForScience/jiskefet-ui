@@ -7,7 +7,6 @@
  */
 
 import * as m from 'mithril';
-import MarkdownViewer from './MarkdownViewer';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
 
@@ -23,10 +22,6 @@ type Vnode = m.Vnode<Attrs, MarkdownEditor>;
 export default class MarkdownEditor extends MithrilTsxComponent<Attrs> {
     content: string;
 
-    constructor(vnode: Vnode) {
-        super();
-    }
-
     /**
      * Bind event.target.value to this.content;
      */
@@ -37,20 +32,16 @@ export default class MarkdownEditor extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
         return (
             <div class="row">
-                <div class="col-md-6 jf-markdown-wrapper">
+                <div class="col-md-12 jf-markdown-wrapper">
                     <textarea
                         id="markdown"
+                        class="rounded"
                         placeholder="Type your description here"
                         oninput={(event: Event) => {
                             this.handleInput(event);
                             vnode.attrs.postContent(this.content);
                         }}
                     />
-                </div>
-                <div class="col-md-6 jf-markdown-wrapper">
-                    <div class="jf-markdown-preview">
-                        <MarkdownViewer content={this.content} />
-                    </div>
                 </div>
             </div>
         );

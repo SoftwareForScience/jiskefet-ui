@@ -14,9 +14,12 @@ import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import LogTabs from '../constants/LogTabs';
 import Tabs from '../components/Tab';
+import Modal from '../components/Modal';
+import LinkRunToLog from '../components/LinkRunToLog';
+import SuccessMessage from '../components/SuccessMessage';
 
 interface Attrs {
-    id: number;
+    logId: number;
 }
 
 type Vnode = m.Vnode<Attrs, Log>;
@@ -25,19 +28,39 @@ export default class Log extends MithrilTsxComponent<Attrs> {
 
     constructor(vnode: Vnode) {
         super();
-        State.LogModel.fetchOne(vnode.attrs.id);
+        State.LogModel.fetchOne(vnode.attrs.logId);
+        State.AttachmentModel.fetch(vnode.attrs.logId);
     }
 
-    view() {
+    view(vnode: Vnode) {
+        const addExistingRunId = 'add-existing-run';
         return (
             <div class="container-fluid">
-                <Spinner isLoading={State.LogModel.isFetchingLog}>
+                <Spinner isLoading={State.LogModel.isFetchingLog || State.LogModel.isPatchingLinkRunToLog}>
+                    <SuccessMessage />
                     <HttpErrorAlert>
+                        <SuccessMessage />
                         <div class="row">
                             <div class="col-md-12 mx-auto">
                                 <div class="card shadow-sm bg-light">
                                     <div class="card-header">
-                                        <h3>Log</h3>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h3>Log</h3>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="row justify-content-end">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-primary btn-sm mr-1"
+                                                        data-toggle="modal"
+                                                        data-target={`#${addExistingRunId}`}
+                                                    >
+                                                        Link existing run
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -87,6 +110,9 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                         </div>
                     </HttpErrorAlert>
                 </Spinner>
+                <Modal id={addExistingRunId} title="Link existing log">
+                    <LinkRunToLog logId={vnode.attrs.logId} />
+                </Modal>
             </div >
         );
     }

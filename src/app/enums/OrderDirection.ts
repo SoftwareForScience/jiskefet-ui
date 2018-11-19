@@ -6,12 +6,10 @@
  * copied verbatim in the file "LICENSE"
  */
 
-@import '../abstracts/variables';
-
-.jf-log-footer {
-    background-color: $main-theme-secondary-color;
-}
-
-.preview-image {
-    padding: 1rem;
+/**
+ * The order directions for orderBy query params.
+ */
+export enum OrderDirection {
+    Ascending = 'ASC',
+    Descending = 'DESC'
 }

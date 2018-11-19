@@ -11,17 +11,29 @@ import { format } from 'date-fns';
 import { Run } from '../interfaces/Run';
 
 /**
- * The columns used by the Table that holds Run entities.
+ * The columns for the Log table in LinklogToRun.
  */
-const RunColumns = [
+const LinkRunToLogColumns = (
+    logId: number,
+    linkAction: (runNumber: number, logId: number) => void
+): any[] => [
     {
-        header: 'Run number',
-        accessor: 'runNumber',
+        header: 'Action',
+        accessor: null,
         cell: (row: Run): JSX.Element => (
-            <a href={`/runs/${row.runNumber}`} oncreate={m.route.link}>
-                {row.runNumber}
-            </a>
+            <button
+                type="button"
+                class="btn btn-primary btn-sm btn-block"
+                onclick={() => linkAction(row.runNumber, logId)}
+                data-dismiss="modal"
+            >
+                Link
+            </button>
         )
+    },
+    {
+        header: 'Run id',
+        accessor: 'runNumber'
     },
     {
         header: 'Time 02 start',
@@ -82,8 +94,8 @@ const RunColumns = [
     {
         header: 'B timeframe builder',
         accessor: 'bytesTimeframeBuilder'
-    },
+    }
 ];
 
-type RunColumns = typeof RunColumns;
-export default RunColumns;
+type LinkRunToLogColumns = typeof LinkRunToLogColumns;
+export default LinkRunToLogColumns;

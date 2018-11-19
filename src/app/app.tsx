@@ -42,7 +42,7 @@ m.route(document.body, '/logs', {
     '/logs/:id': {
         view: (vnode: m.Vnode<{ id: number }>) => (
             <Layout>
-                <Log id={vnode.attrs.id} />
+                <Log logId={vnode.attrs.id} />
             </Layout>
         ),
     },
@@ -56,7 +56,7 @@ m.route(document.body, '/logs', {
     '/runs/:id': {
         view: (vnode: m.Vnode<{id: number}>) => (
             <Layout>
-                <Run id={vnode.attrs.id} />
+                <Run runNumber={vnode.attrs.id} />
             </Layout>
         ),
     },
