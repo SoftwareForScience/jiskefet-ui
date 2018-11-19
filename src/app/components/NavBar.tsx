@@ -9,12 +9,18 @@
 import * as m from 'mithril';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-// import NavItem from './NavItem';
+import * as Cookie from 'js-cookie';
 
 export default class NavBar extends MithrilTsxComponent<{}> {
-
     toggleSidebar = () => {
         State.AppState.showSidebar = !State.AppState.showSidebar;
+    }
+
+    logout = () => {
+        const token = Cookie.get('token');
+        if (token) {
+            State.AuthModel.logout(token);
+        }
     }
 
     view() {
@@ -39,10 +45,18 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                         Jiskefet
                     </a>
                     <ul class="jf-align-right">
-                        {/* <NavItem href="/api/auth" name="Login" icon="fa-sign-in-alt" /> */}
-                        <a href="/api/auth" className="nav-link">
+                        {Cookie.get('token') ?
+                        <button
+                            type="button"
+                            class="btn btn-default nav-link"
+                            onclick={this.logout}
+                        >
+                            &nbsp;Logout
+                        </button>
+                        : <a href={`${process.env.AUTH_URL}`} className="nav-link">
                             <span class={`fas fa-sign-in-alt`} />
-                            &nbsp;Login</a>
+                            &nbsp;Login
+                        </a>}
                     </ul>
                 </div>
             </nav >

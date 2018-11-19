@@ -18,12 +18,14 @@
     "dotenv-webpack": "^1.5.7",
     "highlightjs": "^9.10.0",
     "jquery": "^3.3.1",
+    "js-cookie": "^2.2.0",
     "marked": "^0.5.1",
     "mithril": "^1.1.6",
     "popper.js": "^1.14.4"
   },
   "devDependencies": {
     "@types/jquery": "^3.3.6",
+    "@types/js-cookie": "^2.2.0",
     "@types/marked": "^0.4.2",
     "@types/mithril": "^1.1.12",
     "@types/node": "^10.9.4",
