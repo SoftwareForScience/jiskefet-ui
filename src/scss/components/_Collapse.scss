@@ -7,8 +7,8 @@
  */
 
 [data-toggle="collapse"][aria-expanded="true"] > .js-rotate-if-collapsed {
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
     -webkit-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
     -ms-transform: rotate(180deg);
@@ -17,8 +17,8 @@
 }
 
 [data-toggle="collapse"][aria-expanded="false"] > .js-rotate-if-not-collapsed {
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
     -webkit-transform: rotate(360deg);
     -moz-transform: rotate(360deg);
     -ms-transform: rotate(360deg);

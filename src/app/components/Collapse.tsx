@@ -40,10 +40,10 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
                         <button
                             type="button"
                             style="background: transparent"
-                            class="btn jf-hamburger-button mt-1"
+                            class="btn jf-hamburger-button"
                             data-toggle="collapse"
                             data-target={`#${id}`}
-                            aria-expanded="true"
+                            aria-expanded="false"
                             aria-controls={`${id}`}
                             data-fa-transform="grow-10"
                         >
@@ -52,7 +52,7 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
                         </button>
                     </div>
                 </div>
-                <div id={id}>
+                <div class="collapse" id={id}>
                     {vnode.children}
                 </div>
             </div >
