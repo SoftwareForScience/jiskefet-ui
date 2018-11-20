@@ -10,44 +10,37 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import * as Cookie from 'js-cookie';
+import { initialize } from '../app';
 
 export default class Login extends MithrilTsxComponent<{}> {
     code?: string;
 
     oninit() {
-        console.log(m.route.param());
         const { code } = m.route.param();
-        console.log('code:');
-        console.log(code);
-
         if (code) {
             m.request({
                 method: 'GET',
                 url: `${process.env.API_URL}auth?grant=${code}`
-            }).then((result: { token: string}) => {
-                console.log('jwt: ' + result.token);
+            }).then((result: { token: string }) => {
                 Cookie.set('token', result.token);
-
-                console.log('cookies:');
-                console.log(Cookie.get('token'));
+                initialize();
             });
         }
-        console.log('cookies:');
-        console.log(Cookie.get('token'));
-        m.redraw();
     }
 
     view() {
         return (
-            <div className="container-fluid">
-                <HttpErrorAlert>
+            <HttpErrorAlert>
+                <div class="jumbotron jumbotron-fluid">
+                    <h1 class="display-2">Welcome to Jiskefet</h1>
+                    <p class="lead">Please sign in with GitHub to use the application.</p>
                     <a href={process.env.AUTH_URL}>
-                        <button type="button" class="btn btn-default btn-primary">
-                                Login
+                        <button type="button" class="btn btn-success btn-lg">
+                            Sign in with GitHub
                         </button>
                     </a>
-                </HttpErrorAlert>
-            </div>
+                </div>
+            </HttpErrorAlert>
         );
     }
 }

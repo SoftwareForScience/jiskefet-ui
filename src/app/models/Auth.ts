@@ -7,15 +7,14 @@
  */
 
 import * as Cookie from 'js-cookie';
+import * as m from 'mithril';
+import { initialize } from '../app';
 
 const AuthModel = {
-    async logout(token: string) {
-        console.log('calling Auth.logout');
+    async logout() {
         Cookie.remove('token');
-        // m.request({
-        //     method: 'GET',
-        //     url: `${process.env.API_URL}logout?${token}`
-        // });
+        initialize();
+        m.route.set('/');
     },
 };
 

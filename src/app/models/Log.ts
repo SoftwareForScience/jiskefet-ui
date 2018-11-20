@@ -6,7 +6,6 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import * as m from 'mithril';
 import { Log, LogCreate } from '../interfaces/Log';
 import State from './State';
 import SuccesModel from './Success';
