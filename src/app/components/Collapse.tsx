@@ -8,6 +8,8 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
+import State from '../models/State';
+import { Event } from '../interfaces/Event';
 
 interface Attrs {
     /**
@@ -15,21 +17,35 @@ interface Attrs {
      * button. Example: <span class="fas fa-bars" />
      */
     icon?: JSX.Element;
-
     /**
      * String that contains the title of the collapseble item.
      */
     title?: string;
-
     /**
      * String that contains the id of the collapseble item.
      */
-    id?: string;
+    id: string;
 }
 
 type Vnode = m.Vnode<Attrs, Collapse>;
+type VnodeDOM = m.VnodeDOM<Attrs, Collapse>;
 
 export default class Collapse extends MithrilTsxComponent<Attrs> {
+
+    constructor(vnode: VnodeDOM) {
+        super();
+        State.AppState.showFilter[`id${vnode.attrs.id}`] = true;
+    }
+
+    changeCollapseState(event: Event) {
+        if (State.AppState.showFilter[event.target.id]) {
+            State.AppState.showFilter[event.target.id] = false;
+            console.log(State.AppState.showFilter);
+        } else {
+            State.AppState.showFilter[event.target.id] = true;
+            console.log(State.AppState.showFilter);
+        }
+    }
 
     view(vnode: Vnode) {
         const { icon, title, id } = vnode.attrs;
@@ -39,20 +55,18 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
                     <div class="col-sm-10">
                         <button
                             type="button"
-                            style="background: transparent"
-                            class="btn jf-hamburger-button"
-                            data-toggle="collapse"
-                            data-target={`#${id}`}
-                            aria-expanded="false"
-                            aria-controls={`${id}`}
+                            id={`${id}`}
+                            class="btn jf-hamburger-button button-background"
+                            aria-expanded={State.AppState.showFilter[id] ? 'true' : 'false'}
                             data-fa-transform="grow-10"
+                            onclick={this.changeCollapseState}
                         >
                             {icon}
                             &nbsp;{title}
                         </button>
                     </div>
                 </div>
-                <div class="collapse" id={id}>
+                <div class={State.AppState.showFilter[id] ? 'collapseIn' : ''} id={id}>
                     {vnode.children}
                 </div>
             </div >

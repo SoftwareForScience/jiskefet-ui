@@ -6,7 +6,11 @@
  * copied verbatim in the file "LICENSE"
  */
 
-[data-toggle="collapse"][aria-expanded="true"] > .js-rotate-if-collapsed {
+ .button-background{
+     background: transparent
+ }
+
+[aria-expanded="true"] > .js-rotate-if-collapsed {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     -webkit-transform: rotate(180deg);
@@ -16,7 +20,7 @@
     transform: rotate(180deg);
 }
 
-[data-toggle="collapse"][aria-expanded="false"] > .js-rotate-if-not-collapsed {
+[aria-expanded="false"] > .js-rotate-if-not-collapsed {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     -webkit-transform: rotate(360deg);
@@ -25,3 +29,9 @@
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
 }
+
+.collapseIn {
+    height: 0px;
+    overflow: hidden;
+}
+
