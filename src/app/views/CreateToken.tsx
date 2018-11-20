@@ -9,7 +9,6 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import State from '../models/State';
-import uuid = require('uuid/v4');
 
 interface Attrs {
     userId?: number;
@@ -20,10 +19,6 @@ type Vnode = m.Vnode<Attrs, CreateToken>;
 
 export default class CreateToken extends MithrilTsxComponent<Attrs> {
 
-    oninit() {
-        uuid();
-    }
-
     addDescription = (content: string) => {
         State.TokenModel.createToken.description = content;
     }
@@ -31,7 +26,7 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
     // Need to change
     saveToken(token: string | undefined) {
         if (token) {
-            console.log(uuid());
+            // console.log(uuid());
         }
         State.TokenModel.save();
     }
@@ -83,13 +78,12 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
                                 </div>
                             </div>
+                            <div>
+                                <button type="submit" class="btn btn-primary">Generate Token</button>
+                            </div>
                         </form>
-                        <div>
-                            <button type="submit" class="btn btn-primary">Generate Token</button>
-                        </div>
                     </div>
                 </div>
             </div>
