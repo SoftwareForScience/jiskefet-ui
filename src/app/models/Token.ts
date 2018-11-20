@@ -14,6 +14,7 @@ import { TokenCreate } from '../interfaces/Token';
 
 /**
  * Stores the state around Token entities.
+ * Still need a place to save it.
  */
 const TokenModel = {
     createToken: {} as TokenCreate,
