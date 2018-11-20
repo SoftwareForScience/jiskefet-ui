@@ -34,16 +34,16 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
 
     constructor(vnode: VnodeDOM) {
         super();
-        State.AppState.showFilter[`id${vnode.attrs.id}`] = true;
+        State.AppState.showFilter[vnode.attrs.id] = true;
+        console.log(State.AppState.showFilter);
+
     }
 
     changeCollapseState(event: Event) {
         if (State.AppState.showFilter[event.target.id]) {
             State.AppState.showFilter[event.target.id] = false;
-            console.log(State.AppState.showFilter);
         } else {
             State.AppState.showFilter[event.target.id] = true;
-            console.log(State.AppState.showFilter);
         }
     }
 
@@ -66,7 +66,7 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
                         </button>
                     </div>
                 </div>
-                <div class={State.AppState.showFilter[id] ? 'collapseIn' : ''} id={id}>
+                <div class={State.AppState.showFilter[id] ? '' : 'collapseIn'} id={id}>
                     {vnode.children}
                 </div>
             </div >
