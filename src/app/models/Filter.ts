@@ -10,7 +10,7 @@ import * as _ from 'lodash';
  * copied verbatim in the file "LICENSE"
  */
 
- // Todo: think about moving this object, so that this class can accept a generic object
+// Todo: think about moving this object, so that this class can accept a generic object
 const DefaultFilters = {
     log: {
         logId: null as string | null,
@@ -70,7 +70,7 @@ const updateUrlFromFilters = (filterKey: string): void => {
  * Returns the filters that are not null.
  * @param filterKey e.g. 'log' or 'run'
  */
-const getCleanFilters = (filterKey: string): {[key: string]: string} => {
+const getCleanFilters = (filterKey: string): { [key: string]: string } => {
     return _.pickBy(Filters[filterKey], _.identity);
 };
 

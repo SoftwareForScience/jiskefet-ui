@@ -22,6 +22,7 @@ import { Event } from '../interfaces/Event';
 import PageCounter from '../components/PageCounter';
 import { createDummyTable } from '../utility/DummyService';
 import ContentBlock from '../components/ContentBlock';
+import Badges from '../components/Badges';
 
 const inputFields = [
     {
@@ -128,19 +129,23 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                             </ContentBlock>
                         </div>
                         <div class="col-md-9">
-                            <div class="mb-2">
-                                <ContentBlock padding={1} >
-                                    <Pagination
-                                        currentPage={State.FilterModel.getFilters('log').pageNumber}
-                                        numberOfPages={Math.ceil(State.LogModel.count
-                                            / State.FilterModel.getFilters('log').pageSize)}
-                                        onChange={(newPage: number) => {
-                                            State.FilterModel.setFilter('log', 'pageNumber', newPage);
-                                            this.fetchWithFilters();
-                                        }}
-                                    />
-                                </ContentBlock>
-                            </div>
+                            <Badges
+                                filters={State.FilterModel.getFilters('log')}
+                                onEvent={(key: string) => {
+                                    State.FilterModel.setFilter('log', key, null);
+                                    this.fetchWithFilters();
+                                }}
+                                onEventAll={() => {
+                                    State.FilterModel.setFiltersToDefaults('log');
+                                    this.fetchWithFilters();
+                                }}
+                                ignoredFilters={[
+                                    'orderBy',
+                                    'orderDirection',
+                                    'pageSize',
+                                    'pageNumber'
+                                ]}
+                            />
                             <Spinner
                                 isLoading={State.LogModel.isFetchingLogs}
                                 component={createDummyTable(State.FilterModel.getFilters('log').pageSize, LogColumns)}
@@ -156,6 +161,17 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                     }}
                                 />
                             </Spinner>
+                            <ContentBlock padding={1} >
+                                <Pagination
+                                    currentPage={State.FilterModel.getFilters('log').pageNumber}
+                                    numberOfPages={Math.ceil(State.LogModel.count
+                                        / State.FilterModel.getFilters('log').pageSize)}
+                                    onChange={(newPage: number) => {
+                                        State.FilterModel.setFilter('log', 'pageNumber', newPage);
+                                        this.fetchWithFilters();
+                                    }}
+                                />
+                            </ContentBlock>
                         </div>
                     </div>
                 </HttpErrorAlert>
