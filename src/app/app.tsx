@@ -73,14 +73,6 @@ const authenticatedRoutes = {
                 <Run id={vnode.attrs.id} />
             </Layout>
         ),
-    },
-    '/callback': {
-        view: () => (
-            <Layout>
-                <Login />
-                Callback called!
-            </Layout>
-        ),
     }
 };
 
@@ -99,7 +91,6 @@ const lockedOutRoutes = {
         view: () => (
             <UnauthorizedLayout>
                 <Login />
-                Callback called!
             </UnauthorizedLayout>
         ),
     }

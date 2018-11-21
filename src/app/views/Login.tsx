@@ -13,6 +13,7 @@ import * as Cookie from 'js-cookie';
 import { initialize } from '../app';
 import Spinner from '../components/Spinner';
 import State from '../models/State';
+import { HttpError } from '../interfaces/HttpError';
 
 export default class Login extends MithrilTsxComponent<{}> {
     code?: string;
@@ -28,6 +29,9 @@ export default class Login extends MithrilTsxComponent<{}> {
                 State.AuthModel.isLogginIn = false;
                 Cookie.set('token', result.token);
                 initialize();
+            }).catch((err: HttpError) => {
+                State.AuthModel.isLogginIn = false;
+                State.HttpErrorModel.add(err);
             });
         }
     }

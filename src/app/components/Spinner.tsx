@@ -22,7 +22,7 @@ export default class Spinner extends MithrilTsxComponent<Attrs> {
             <div>
                 {isLoading ?
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-12 mt-2">
                             <div className="jf-loader text-center" />
                         </div>
                     </div>

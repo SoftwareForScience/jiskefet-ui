@@ -19,11 +19,11 @@ export const request = (options: any): Promise<any> => {
     }
     return new Promise((resolve: any) => {
         m.request(options).then((response: any) => {
-            // Request was done with or without an authorization header and a 2xx code was received.
             resolve(response);
-        }).catch(() => {
-            // Request was done without an authorization header and non 2xx code was received.
-            State.AuthModel.logout();
+        }).catch((response: any) => {
+            if (response.statusCode === 401) {
+                State.AuthModel.logout();
+            }
         });
     });
 };
