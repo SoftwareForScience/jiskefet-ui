@@ -22,6 +22,7 @@ import Pagination from '../components/Pagination';
 import { Event } from '../interfaces/Event';
 import ContentBlock from '../components/ContentBlock';
 import SuccessMessage from '../components/SuccessMessage';
+import Badges from '../components/Badges';
 
 const inputFields = [
     {
@@ -180,17 +181,23 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                         </div>
                         <div class="col-md-9">
                             <div class="mb-2">
-                                <ContentBlock padding={1} >
-                                    <Pagination
-                                        currentPage={State.FilterModel.getFilters('run').pageNumber}
-                                        numberOfPages={Math.ceil(State.RunModel.count
-                                            / State.FilterModel.getFilters('run').pageSize)}
-                                        onChange={(newPage: number) => {
-                                            State.FilterModel.setFilter('run', 'pageNumber', newPage);
-                                            this.fetchWithFilters();
-                                        }}
-                                    />
-                                </ContentBlock>
+                                <Badges
+                                    filters={State.FilterModel.getFilters('run')}
+                                    onEvent={(key: string) => {
+                                        State.FilterModel.setFilter('run', key, null);
+                                        this.fetchWithFilters();
+                                    }}
+                                    onEventAll={() => {
+                                        State.FilterModel.setFiltersToDefaults('run');
+                                        this.fetchWithFilters();
+                                    }}
+                                    ignoredFilters={[
+                                        'orderBy',
+                                        'orderDirection',
+                                        'pageSize',
+                                        'pageNumber'
+                                    ]}
+                                />
                             </div>
                             <Spinner
                                 isLoading={State.RunModel.isFetchingRuns}
@@ -214,6 +221,17 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                                     }}
                                 />
                             </Spinner>
+                            <ContentBlock padding={1} >
+                                <Pagination
+                                    currentPage={State.FilterModel.getFilters('run').pageNumber}
+                                    numberOfPages={Math.ceil(State.RunModel.count
+                                        / State.FilterModel.getFilters('run').pageSize)}
+                                    onChange={(newPage: number) => {
+                                        State.FilterModel.setFilter('run', 'pageNumber', newPage);
+                                        this.fetchWithFilters();
+                                    }}
+                                />
+                            </ContentBlock>
                         </div>
                     </div>
                 </HttpErrorAlert>

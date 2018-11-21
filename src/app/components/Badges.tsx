@@ -40,40 +40,64 @@ export default class Badges extends MithrilTsxComponent<Attrs> {
         return _.omit(filters, ignoredFilters);
     }
 
+    assertActiveFilters(filters: { [key: string]: string | number | null }) {
+        let assertActiveFilters: boolean = false;
+        Object.keys(filters).map((key: string) => {
+            if (filters[key] !== null) {
+                assertActiveFilters = true;
+            }
+        });
+        return assertActiveFilters;
+    }
+
+    sliceValue(value: string | number | null) {
+        if ((value !== null) && (value.toString().length > 5)) {
+            return `${value.toString().slice(0, 5)}...`;
+        } else if (value !== null) {
+            return value.toString();
+        } else {
+            return '';
+        }
+    }
+
     view(vnode: Vnode) {
         const { filters, onEvent, onEventAll, ignoredFilters } = vnode.attrs;
-
         const filteredFilters = this.filteredFilters(filters, ignoredFilters);
+        const activeFilters = this.assertActiveFilters(filteredFilters);
         return (
-            <div class="pr-1 pb-2 mb-2">
-                {filteredFilters && Object.keys(filteredFilters).map((key: string) =>
-                    (
-                        filteredFilters[key] !== null ?
-                            <button
-                                class="badge badge-light mr-1"
-                                id={key}
-                                onclick={() => {
-                                    onEvent(key);
-                                    delete filteredFilters[key];
-                                }}
-                            >
-                                <i class="fas fa-times" />
-                                &nbsp;{key}
-                            </button> :
-                            ''
-                    )
-                )}
-                {true ?
-                    <button
-                        id="removeFilters"
-                        class="badge badge-danger float-right"
-                        onclick={onEventAll}
-                    >
-                        <i class="fas fa-times" />
-                        &nbsp;Remove filters
-                    </button> :
-                    ''
-                }
+            <div class="row mb-2 ">
+                <div class="col-md-10">
+                    {filteredFilters && Object.keys(filteredFilters).map((key: string) =>
+                        (
+                            filteredFilters[key] !== null ?
+                                <button
+                                    class="badge badge-light mr-1"
+                                    id={key}
+                                    onclick={() => {
+                                        onEvent(key);
+                                        delete filteredFilters[key];
+                                    }}
+                                >
+                                    <i class="fas fa-times" />
+                                    &nbsp;{`${key}: ${this.sliceValue(filteredFilters[key])}`}
+                                </button> :
+                                ''
+                        )
+                    )}
+                </div>
+                <div class="col-md-2">
+                    {activeFilters ?
+                        <button
+                            id="removeFilters"
+                            class="badge badge-danger float-right"
+                            onclick={onEventAll}
+                        >
+                            <i class="fas fa-times" />
+                            &nbsp;Remove filters
+                        </button> :
+                        ''
+                    }
+                </div>
             </div>
         );
     }

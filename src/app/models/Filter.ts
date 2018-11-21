@@ -104,6 +104,7 @@ const FilterModel = {
      */
     setFiltersToDefaults: (filterKey: string) => {
         Object.assign(Filters[filterKey], DefaultFilters[filterKey]);
+        updateUrlFromFilters(filterKey);
     },
     /**
      * Switches the orderDirection for the columnName given.
