@@ -11,6 +11,7 @@ import * as m from 'mithril';
 import { initialize } from '../app';
 
 const AuthModel = {
+    isLogginIn: false as boolean,
     async logout() {
         Cookie.remove('token');
         initialize();

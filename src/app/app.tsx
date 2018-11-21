@@ -18,11 +18,13 @@ import Run from './views/Run';
 import CreateLog from './views/CreateLog';
 import * as Cookie from 'js-cookie';
 import Login from './views/Login';
-// import { request } from './request';
 
 m.route.prefix('');
 
-const  authenticatedRoutes = {
+/**
+ * Routes enabled when user is authenticated.
+ */
+const authenticatedRoutes = {
     '/': {
         view: () => (
             <Layout>
@@ -82,6 +84,9 @@ const  authenticatedRoutes = {
     }
 };
 
+/**
+ * Routes enabled when user is not authenticated.
+ */
 const lockedOutRoutes = {
     '/': {
         view: () => (
@@ -99,24 +104,15 @@ const lockedOutRoutes = {
         ),
     }
 };
-
-// const validate = (jwtToken: string) => {
-//     return request({
-//         method: 'GET',
-//         url: `${process.env.API_URL}login`
-//     });
-// };
-
+/**
+ * Determine the routing table for the app, based on if the user is logged in or not.
+ * (logged in is in essence: does the user have a cookie with a JWT)
+ */
 export const initialize = () => {
     const token = Cookie.get('token');
-    console.log('token: ' + token);
     if (token) {
         m.route(document.body, '/', authenticatedRoutes);
-        m.route.set('/');
-        // validate(token).then(
-        //     () => m.route(document.body, '/', authenticatedRoutes),
-        //     () => m.route(document.body, '/login', lockedOutRoutes)
-        // );
+        m.route.set('/logs');
     } else {
         m.route(document.body, '/', lockedOutRoutes);
         m.route.set('/');
