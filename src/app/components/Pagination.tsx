@@ -200,7 +200,7 @@ export default class Pagination extends MithrilTsxComponent<Attrs> {
 
         return (
             <nav aria-label="Pages">
-                <ul class="pagination pagination-sm justify-content-center jf-pagination">
+                <ul class="pagination pagination-sm jf-pagination">
                     <li class={`page-item ${currentPage <= 1 && 'disabled'}`}>
                         <a
                             class="page-link"
