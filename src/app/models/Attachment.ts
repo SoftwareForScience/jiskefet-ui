@@ -20,11 +20,11 @@ const AttachmentModel = {
     list: [] as Attachment[],
     current: {} as Attachment,
     createAttachment: {} as AttachmentCreate, // attachment being created
-    async fetch(id: number) {
+    async fetchForLog(logId: number) {
         AttachmentModel.isFetchingAttachment = true;
         return m.request({
             method: 'GET',
-            url: `${process.env.API_URL}attachments/${id}/logs`,
+            url: `${process.env.API_URL}attachments/${logId}/logs`,
             withCredentials: false
         }).then((result: Attachment[]) => {
             AttachmentModel.isFetchingAttachment = false;

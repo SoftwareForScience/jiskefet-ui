@@ -15,6 +15,7 @@ import Logs from './views/Logs';
 import Log from './views/Log';
 import Run from './views/Run';
 import CreateLog from './views/CreateLog';
+import SubsystemsOverview from './views/SubsystemsOverview';
 
 m.route(document.body, '/logs', {
     '/logs': {
@@ -32,7 +33,7 @@ m.route(document.body, '/logs', {
         ),
     },
     '/logs/create/runs/:id': {
-        view: (vnode: m.Vnode<{id: number}>) => (
+        view: (vnode: m.Vnode<{ id: number }>) => (
             <Layout>
                 <CreateLog runNumber={vnode.attrs.id} />
             </Layout>
@@ -53,9 +54,16 @@ m.route(document.body, '/logs', {
         ),
     },
     '/runs/:id': {
-        view: (vnode: m.Vnode<{id: number}>) => (
+        view: (vnode: m.Vnode<{ id: number }>) => (
             <Layout>
                 <Run runNumber={vnode.attrs.id} />
+            </Layout>
+        ),
+    },
+    '/subsystems': {
+        view: () => (
+            <Layout>
+                <SubsystemsOverview />
             </Layout>
         ),
     },
