@@ -19,6 +19,7 @@ import CreateLog from './views/CreateLog';
 import * as Cookie from 'js-cookie';
 import Login from './views/Login';
 import Profile from './views/Profile';
+import SubsystemsOverview from './views/SubsystemsOverview';
 
 m.route.prefix('');
 
@@ -73,6 +74,13 @@ const authenticatedRoutes = {
         view: (vnode: m.Vnode<{ id: number }>) => (
             <Layout>
                 <Run runNumber={vnode.attrs.id} />
+            </Layout>
+        ),
+    },
+    '/subsystems': {
+        view: () => (
+            <Layout>
+                <SubsystemsOverview />
             </Layout>
         ),
     },

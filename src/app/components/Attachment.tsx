@@ -125,7 +125,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                         imagePreview.src = '';
                     }
                     // Redraw the current view
-                    await State.AttachmentModel.fetch(State.LogModel.current.logId);
+                    await State.AttachmentModel.fetchForLog(State.LogModel.current.logId);
                 });
         }
     }
