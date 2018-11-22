@@ -32,7 +32,6 @@ const SubsystemPermissionModel = {
         });
     },
     async fetch(id: number) {
-        console.log('doe');
         return m.request<SubsystemPermission[]>({
             method: 'GET',
             url: `${process.env.API_URL}users/${id}/tokens`,

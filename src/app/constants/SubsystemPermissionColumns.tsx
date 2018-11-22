@@ -12,7 +12,7 @@
 const SubsystemPermissionColumns: any[] = [
     {
         header: 'Subsystem permission id',
-        accessor: 'subsystemPermissionId'
+        accessor: 'subSystemPermissionId'
     },
     {
         header: 'Description',

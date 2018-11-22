@@ -22,6 +22,5 @@ export interface SubsystemPermissionCreate {
 
 export interface SubsystemPermission {
     subsystemPermissionId: number;
-    subsystem: SubSystem;
     subSystemTokenDescription: string;
 }
