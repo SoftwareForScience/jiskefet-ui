@@ -9,7 +9,7 @@
 import { SubsystemOverview } from '../interfaces/SubsystemOverview';
 import State from './State';
 import { HttpError } from '../interfaces/HttpError';
-import * as m from 'mithril';
+import { request } from '../request';
 
 /**
  * Stores the state around SubsystemOverview entities and contains api calls to change that state.
@@ -19,7 +19,7 @@ const SubsystemOverviewModel = {
     list: [] as SubsystemOverview[],
     async fetch(query?: string) {
         this.isFetchingSubsystemOverviews = true;
-        return m.request({
+        return request({
             method: 'GET',
             url: `${process.env.API_URL}overview${query ? `?${query}` : ''}`,
             withCredentials: false
