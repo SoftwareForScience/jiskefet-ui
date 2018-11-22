@@ -6,13 +6,12 @@
  * copied verbatim in the file "LICENSE"
  */
 
-/**
- * Contains the general state of the app, e.g. UI state.
- */
-const AppState = {
-    showSidebar: true as boolean,
-    showFilter: [{}] as object[]
-};
+import { format } from 'date-fns';
 
-type AppState = typeof AppState;
-export default AppState;
+/**
+ * Format a date field to a predefined format.
+ * @param date date to be formatted.
+ */
+export const formatDateField = (date: string | Date): string => {
+    return format(date, 'HH:mm:ss DD/MM/YYYY');
+};

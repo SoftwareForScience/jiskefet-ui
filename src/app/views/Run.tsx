@@ -8,38 +8,34 @@
 
 import * as m from 'mithril';
 import Spinner from '../components/Spinner';
-import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import RunTabs from '../constants/RunTabs';
 import Tabs from '../components/Tab';
+import Modal from '../components/Modal';
+import LinkLogToRun from '../components/LinkLogToRun';
+import SuccessMessage from '../components/SuccessMessage';
+import { formatDateField } from '../utility/DateUtil';
 
 interface Attrs {
-    id: number;
+    runNumber: number;
 }
 
 type Vnode = m.Vnode<Attrs, Run>;
+type VnodeDOM = m.VnodeDOM<Attrs, Run>;
 
 export default class Run extends MithrilTsxComponent<Attrs> {
-    constructor(vnode: Vnode) {
-        super();
-        State.RunModel.fetchById(vnode.attrs.id).then(() => {
-            this.formatDateFields();
-        });
-    }
-
-    formatDateFields = () => {
-        State.RunModel.current.timeO2Start = format(State.RunModel.current.timeO2Start, 'HH:mm:ss DD/MM/YYYY');
-        State.RunModel.current.timeO2End = format(State.RunModel.current.timeO2End, 'HH:mm:ss DD/MM/YYYY');
-        State.RunModel.current.timeTrgStart = format(State.RunModel.current.timeTrgStart, 'HH:mm:ss DD/MM/YYYY');
-        State.RunModel.current.timeTrgEnd = format(State.RunModel.current.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY');
+    oninit(vnode: VnodeDOM) {
+        State.RunModel.fetchById(vnode.attrs.runNumber);
     }
 
     view(vnode: Vnode) {
+        const addExistingRunId = 'add-existing-run';
         return (
             <div class="container-fluid">
-                <Spinner isLoading={State.RunModel.isFetchingRun}>
+                <Spinner isLoading={State.RunModel.isFetchingRun || State.RunModel.isPatchingLinkLogToRun}>
+                    <SuccessMessage />
                     <HttpErrorAlert>
                         <div class="row">
                             <div class="col-md-12 mx-auto">
@@ -49,13 +45,26 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                             <div class="col-md-6">
                                                 <h3>Run</h3>
                                             </div>
-                                            <div class="col-md-6 float-right">
-                                                <button
-                                                    class="btn btn-light border mb-2 float-right"
-                                                    onclick={() => m.route.set(`/logs/create/runs/${vnode.attrs.id}`)}
-                                                >
-                                                    Create log
-                                                </button>
+                                            <div class="col-md-6">
+                                                <div class="row justify-content-end">
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-success btn-sm mr-1"
+                                                        onclick={() => m.route.set(
+                                                            `/logs/create/runs/${vnode.attrs.runNumber}`
+                                                        )}
+                                                    >
+                                                        Add new log to run
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-primary btn-sm mr-1"
+                                                        data-toggle="modal"
+                                                        data-target={`#${addExistingRunId}`}
+                                                    >
+                                                        Link existing log
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -69,19 +78,19 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                     </dd>
                                                     <dt class="col-sm-6">Time O2 start</dt>
                                                     <dd class="col-sm-6">
-                                                        {State.RunModel.current.timeO2Start}
+                                                        {formatDateField(State.RunModel.current.timeO2Start)}
                                                     </dd>
                                                     <dt class="col-sm-6">Time O2 end</dt>
                                                     <dd class="col-sm-6">
-                                                        {State.RunModel.current.timeO2End}
+                                                        {formatDateField(State.RunModel.current.timeO2End)}
                                                     </dd>
                                                     <dt class="col-sm-6">Time TRG start</dt>
                                                     <dd class="col-sm-6">
-                                                        {State.RunModel.current.timeTrgStart}
+                                                        {formatDateField(State.RunModel.current.timeTrgStart)}
                                                     </dd>
                                                     <dt class="col-sm-6">Time TRG end</dt>
                                                     <dd class="col-sm-6">
-                                                        {State.RunModel.current.timeTrgEnd}
+                                                        {formatDateField(State.RunModel.current.timeTrgEnd)}
                                                     </dd>
                                                     <dt class="col-sm-6">Run type</dt>
                                                     <dd class="col-sm-6">
@@ -138,6 +147,9 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                         </div>
                     </HttpErrorAlert >
                 </Spinner >
+                <Modal id={addExistingRunId} title="Link existing log">
+                    <LinkLogToRun runNumber={vnode.attrs.runNumber} />
+                </Modal>
             </div >
         );
     }

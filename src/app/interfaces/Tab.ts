@@ -7,7 +7,7 @@
  */
 
  /**
-  * Interface for the creation of different tabs.
+  * Interface for a tab.
   */
 export interface Tab {
     /**
@@ -16,17 +16,17 @@ export interface Tab {
     name: string;
 
     /**
-     * the id of the tab
+     * The id of the tab
      */
     id: string;
 
     /**
-     * Indicator that sets it the class to active if true
+     * If the tab is active i.e. selected or not.
      */
     active?: boolean;
 
     /**
      * Function to create the content of the tab body.
      */
-    content: (entity?: object) => JSX.Element | string;
+    content: (param?: object | string) => JSX.Element | string;
 }

@@ -43,6 +43,7 @@ const authenticatedRoutes = {
     '/logs/create': {
         view: () => (
             <Layout>
+                {console.log('trying')}
                 <CreateLog />
             </Layout>
         ),
@@ -57,7 +58,7 @@ const authenticatedRoutes = {
     '/logs/:id': {
         view: (vnode: m.Vnode<{ id: number }>) => (
             <Layout>
-                <Log id={vnode.attrs.id} />
+                <Log logId={vnode.attrs.id} />
             </Layout>
         ),
     },
@@ -71,12 +72,12 @@ const authenticatedRoutes = {
     '/runs/:id': {
         view: (vnode: m.Vnode<{ id: number }>) => (
             <Layout>
-                <Run id={vnode.attrs.id} />
+                <Run runNumber={vnode.attrs.id} />
             </Layout>
         ),
     },
     '/profile': {
-        view: (vnode: m.Vnode<{ id: number }>) => (
+        view: () => (
             <Layout>
                 <Profile />
             </Layout>

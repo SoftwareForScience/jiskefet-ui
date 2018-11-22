@@ -12,6 +12,8 @@ import AppState from './AppState';
 import AuthModel from './Auth';
 import HttpErrorModel from './HttpError';
 import SuccessModel from './Success';
+import FilterModel from './Filter';
+import AttachmentModel from './Attachment';
 
 /**
  * The single state container for the application.
@@ -24,6 +26,8 @@ export default {
     LogModel,
     RunModel,
     AuthModel,
+    FilterModel,
+    AttachmentModel,
     /**
      * Clears state of resources that require authorization.
      */
