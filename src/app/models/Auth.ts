@@ -16,7 +16,7 @@ import State from './State';
 
 const AuthModel = {
     profile: null as GithubProfileDto | null,
-    isLogginIn: false as boolean,
+    isAuthorizing: false as boolean,
     isFetchingProfile: false as boolean,
     async fetchProfile() {
         AuthModel.isFetchingProfile = true;
