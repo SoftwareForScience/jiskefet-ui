@@ -10,6 +10,7 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import State from '../models/State';
 import { HttpError } from '../interfaces/HttpError';
+import { AttachmentCreate } from '../interfaces/Attachment';
 
 interface Attrs {
     /**
@@ -38,7 +39,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         super();
         this.isExistingItem = vnode.attrs.isExistingItem;
         this.hasChosenAttachment = false;
-        this.maxFileSize = 50000000;
+        this.maxFileSize = 5000000; // Equals to 5MB
     }
 
     /**
@@ -48,7 +49,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
     getSelectedFiles = (event: Event) => {
         const files = (event.target as HTMLInputElement).files as FileList;
         const maxSizeLabel = document.getElementById('maximum-size-label') as HTMLElement;
-
+        console.log(files[0].name);
         if (files[0].size > this.maxFileSize) {
             maxSizeLabel.hidden = false;
         } else {
@@ -125,7 +126,10 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                         imagePreview.src = '';
                     }
                     // Redraw the current view
-                    await State.AttachmentModel.fetch(State.LogModel.current.logId);
+                    await State.AttachmentModel.fetch(State.LogModel.current.logId).then(() => {
+                        State.AttachmentModel.createAttachment = {} as AttachmentCreate;
+                        this.hasChosenAttachment = false;
+                    });
                 });
         }
     }
@@ -135,7 +139,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         return (
             <div>
                 <div class="alert alert-danger" role="alert" id="maximum-size-label" for="save" hidden>
-                    Maximum file size is 50MB! Please select a smaller file.
+                    Maximum file size is 5MB! Please select a smaller file.
                 </div>
                 <label for="fileUpload">Attach file to {attachTo}:</label>
                 <input

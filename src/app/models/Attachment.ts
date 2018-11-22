@@ -50,7 +50,29 @@ const AttachmentModel = {
         if (attachment.fileData.indexOf('base64;') >= 0) {
             attachment.fileData = attachment.fileData.split('base64;')[1];
         }
-        return `data:${attachment.fileMime};base64,${attachment.fileData}`; // data:image/png;base64," + baseString
+        const sliceSize = 512;
+
+        const byteCharacters = atob(attachment.fileData);
+        const byteArrays = [] as Uint8Array[];
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+            const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+            const byteNumbers = new Array(slice.length);
+
+            for (let i = 0; i < slice.length; i++) {
+                byteNumbers[i] = slice.charCodeAt(i);
+            }
+
+            const byteArray = new Uint8Array(byteNumbers);
+
+            byteArrays.push(byteArray);
+        }
+
+        const blob = new Blob(byteArrays, { type: attachment.fileMime });
+        const blobUrl = URL.createObjectURL(blob);
+
+        return blobUrl;
     }
 };
 
