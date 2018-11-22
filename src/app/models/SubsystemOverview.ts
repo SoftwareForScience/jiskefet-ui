@@ -17,11 +17,11 @@ import * as m from 'mithril';
 const SubsystemOverviewModel = {
     isFetchingSubsystemOverviews: false as boolean,
     list: [] as SubsystemOverview[],
-    async fetch() {
+    async fetch(query?: string) {
         this.isFetchingSubsystemOverviews = true;
         return m.request({
             method: 'GET',
-            url: `${process.env.API_URL}overview`,
+            url: `${process.env.API_URL}overview${query ? `?${query}` : ''}`,
             withCredentials: false
         }).then((result: SubsystemOverview[]) => {
             this.isFetchingSubsystemOverviews = false;

@@ -23,20 +23,16 @@ const SubsystemOverviewColumns: any[] = [
     },
     {
         header: 'Last Log Entry',
-        accessor: 'lastLog'
+        accessor: 'lastLog',
+        cell: (row: SubsystemOverview): JSX.Element => (
+            <a href={`/logs/${row.logId}`} oncreate={m.route.link}>
+                {row.lastLog}
+            </a>
+        )
     },
     {
         header: 'Author',
         accessor: 'userId'
-    },
-    {
-        header: 'ID',
-        accessor: 'logId',
-        cell: (row: SubsystemOverview): JSX.Element => (
-            <a href={`/logs/${row.logId}`} oncreate={m.route.link}>
-                {row.logId}
-            </a>
-        )
     },
 ];
 

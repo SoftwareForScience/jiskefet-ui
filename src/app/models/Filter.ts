@@ -29,6 +29,11 @@ const DefaultFilters = {
         orderDirection: null as OrderDirection | null,
         pageSize: 16 as number,
         pageNumber: 1 as number | null
+    },
+    subsystem: {
+        orderBy: 'subsystemName' as string | null,
+        orderDirection: 'ASC' as OrderDirection | null,
+        timeRange: '24' as string
     }
 };
 
@@ -50,6 +55,11 @@ const Filters = {
         orderDirection: null as OrderDirection | null,
         pageSize: null as number | null,
         pageNumber: null as number | null
+    },
+    subsystem: {
+        orderBy: null as string | null,
+        orderDirection: null as OrderDirection | null,
+        timeRange: null as string | null
     }
 };
 
