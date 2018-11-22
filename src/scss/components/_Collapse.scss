@@ -1,0 +1,37 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+
+ .button-background{
+     background: transparent
+ }
+
+[aria-expanded="true"] > .js-rotate-if-collapsed {
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+[aria-expanded="false"] > .js-rotate-if-not-collapsed {
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+.collapseIn {
+    height: 0px;
+    overflow: hidden;
+}
+
