@@ -11,6 +11,7 @@ import { MithrilTsxComponent } from 'mithril-tsx-component';
 
 interface Attrs {
     isLoading: boolean;
+    class?: string;
 }
 
 type Vnode = m.Vnode<Attrs, Spinner>;
@@ -23,7 +24,7 @@ export default class Spinner extends MithrilTsxComponent<Attrs> {
                 {isLoading ?
                     <div className="row">
                         <div className="col-md-12 mt-2">
-                            <div className="jf-loader text-center" />
+                            <div className={`jf-loader text-center ${vnode.attrs.class}`} />
                         </div>
                     </div>
                     : vnode.children

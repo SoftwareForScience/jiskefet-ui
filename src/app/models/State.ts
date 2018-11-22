@@ -23,5 +23,12 @@ export default {
     SuccessModel,
     LogModel,
     RunModel,
-    AuthModel
+    AuthModel,
+    /**
+     * Clears state of resources that require authorization.
+     */
+    clearState() {
+        delete this.LogModel;
+        delete this.RunModel;
+    }
 };

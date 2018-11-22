@@ -18,6 +18,7 @@ import Run from './views/Run';
 import CreateLog from './views/CreateLog';
 import * as Cookie from 'js-cookie';
 import Login from './views/Login';
+import Profile from './views/Profile';
 
 m.route.prefix('');
 
@@ -73,6 +74,13 @@ const authenticatedRoutes = {
                 <Run id={vnode.attrs.id} />
             </Layout>
         ),
+    },
+    '/profile': {
+        view: (vnode: m.Vnode<{ id: number }>) => (
+            <Layout>
+                <Profile />
+            </Layout>
+        ),
     }
 };
 
@@ -103,10 +111,8 @@ export const initialize = () => {
     const token = Cookie.get('token');
     if (token) {
         m.route(document.body, '/', authenticatedRoutes);
-        m.route.set('/logs');
     } else {
         m.route(document.body, '/', lockedOutRoutes);
-        m.route.set('/');
     }
 };
 

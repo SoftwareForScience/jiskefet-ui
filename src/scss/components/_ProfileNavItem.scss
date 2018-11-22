@@ -1,0 +1,31 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+ 
+.jf-profile-nav-item {
+    cursor: pointer;
+
+    .jf-caret-down {
+        color: #9e9e9e;
+        &:hover {
+            color: white;
+        }
+    }
+
+    .jf-dropdown-item {
+        cursor: pointer;
+        &:hover {
+            color: white;
+            background-color: #0366d6;
+        }
+    }
+
+    .jf-dropdown-name {
+        font-size: 0.8rem;
+        font-weight: 400;
+    }
+}
