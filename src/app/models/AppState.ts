@@ -11,6 +11,7 @@
  */
 const AppState = {
     showSidebar: true as boolean,
+    showFilter: [{}] as object[]
 };
 
 type AppState = typeof AppState;
