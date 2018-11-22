@@ -44,7 +44,6 @@ const authenticatedRoutes = {
     '/logs/create': {
         view: () => (
             <Layout>
-                {console.log('trying')}
                 <CreateLog />
             </Layout>
         ),
