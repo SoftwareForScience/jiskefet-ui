@@ -59,7 +59,7 @@ const Filters = {
     subsystem: {
         orderBy: null as string | null,
         orderDirection: null as OrderDirection | null,
-        timeRange: null as string | null
+        timeRange: null as number | null
     }
 };
 

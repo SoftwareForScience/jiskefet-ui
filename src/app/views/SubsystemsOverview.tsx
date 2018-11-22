@@ -22,7 +22,9 @@ import { Event } from '../interfaces/Event';
 export default class SubsystemsOverview extends MithrilTsxComponent<{}> implements Fetchable<SubsystemsOverview> {
 
     oninit() {
-        State.SubsystemOverviewModel.fetch();
+        State.FilterModel.setFiltersToDefaults('subsystem');
+        State.FilterModel.setFiltersFromUrl('subsystem');
+        this.fetch(State.FilterModel.getQueryString('subsystem'));
     }
 
     /**
