@@ -6,11 +6,11 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import * as m from 'mithril';
 import { Attachment, AttachmentCreate } from '../interfaces/Attachment';
 import State from './State';
 import SuccesModel from './Success';
 import { HttpError } from '../interfaces/HttpError';
+import { request } from '../request';
 
 /**
  * Stores the state around Attachment entities.
@@ -20,11 +20,11 @@ const AttachmentModel = {
     list: [] as Attachment[],
     current: {} as Attachment,
     createAttachment: {} as AttachmentCreate, // attachment being created
-    async fetch(id: number) {
+    async fetchForLog(logId: number) {
         AttachmentModel.isFetchingAttachment = true;
-        return m.request({
+        return request({
             method: 'GET',
-            url: `${process.env.API_URL}attachments/${id}/logs`,
+            url: `${process.env.API_URL}attachments/${logId}/logs`,
             withCredentials: false
         }).then((result: Attachment[]) => {
             AttachmentModel.isFetchingAttachment = false;
@@ -35,7 +35,7 @@ const AttachmentModel = {
         });
     },
     async save() {
-        return m.request<Attachment>({
+        return request({
             method: 'POST',
             url: `${process.env.API_URL}attachments`,
             data: AttachmentModel.createAttachment,

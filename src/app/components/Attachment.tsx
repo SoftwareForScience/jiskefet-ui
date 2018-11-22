@@ -49,7 +49,6 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
     getSelectedFiles = (event: Event) => {
         const files = (event.target as HTMLInputElement).files as FileList;
         const maxSizeLabel = document.getElementById('maximum-size-label') as HTMLElement;
-        console.log(files[0].name);
         if (files[0].size > this.maxFileSize) {
             maxSizeLabel.hidden = false;
         } else {
@@ -126,7 +125,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                         imagePreview.src = '';
                     }
                     // Redraw the current view
-                    await State.AttachmentModel.fetch(State.LogModel.current.logId).then(() => {
+                    await State.AttachmentModel.fetchForLog(State.LogModel.current.logId).then(() => {
                         State.AttachmentModel.createAttachment = {} as AttachmentCreate;
                         this.hasChosenAttachment = false;
                     });
