@@ -18,8 +18,6 @@ import Spinner from '../components/Spinner';
 import { createDummyTable } from '../utility/DummyService';
 import Fetchable from '../interfaces/Fetchable';
 import { Event } from '../interfaces/Event';
-// import PageCounter from '../components/PageCounter';
-// import Filter from '../components/Filter';
 
 export default class SubsystemsOverview extends MithrilTsxComponent<{}> implements Fetchable<SubsystemsOverview> {
 
@@ -42,7 +40,7 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> implemen
     }
 
     view() {
-        const timeRanges = ['24', '48', '72', '96'];
+        const timeRanges = [24, 48, 72, 96];
         return (
             <div>
                 <HttpErrorAlert>
@@ -68,7 +66,7 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> implemen
                                     }}
                                     value={State.FilterModel.getFilters('subsystem').timeRange}
                                 >
-                                    {timeRanges.map((timeRange: string) =>
+                                    {timeRanges.map((timeRange: number) =>
                                         <option key={timeRange} value={timeRange}>{timeRange}</option>
                                     )}
                                 </select>

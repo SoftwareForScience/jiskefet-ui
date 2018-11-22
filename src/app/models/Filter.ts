@@ -33,7 +33,7 @@ const DefaultFilters = {
     subsystem: {
         orderBy: 'subsystemName' as string | null,
         orderDirection: 'ASC' as OrderDirection | null,
-        timeRange: '24' as string
+        timeRange: 24 as number
     }
 };
 

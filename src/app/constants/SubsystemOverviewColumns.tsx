@@ -1,6 +1,3 @@
-import { SubsystemOverview } from '../interfaces/SubsystemOverview';
-import * as m from 'mithril';
-
 /*
  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
  *
@@ -9,8 +6,11 @@ import * as m from 'mithril';
  * copied verbatim in the file "LICENSE"
  */
 
+import { SubsystemOverview } from '../interfaces/SubsystemOverview';
+import * as m from 'mithril';
+
 /**
- * The columns used by the Table that holds Log entities.
+ * The columns used by the Table that holds SubsystemOverview entities.
  */
 const SubsystemOverviewColumns: any[] = [
     {
