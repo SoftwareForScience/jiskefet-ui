@@ -78,7 +78,14 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                 <HttpErrorAlert>
                     <SuccessMessage />
                     <div class="row">
-                        <div class="col-md-3">
+                        <div
+                            class={
+                                // tslint:disable-next-line:no-string-literal
+                                State.AppState.showFilter['filters'] ?
+                                    'col-md-3 collapse-transition' :
+                                    'col-md-1 collapse-transition'
+                                }
+                        >
                             <ContentBlock>
                                 <Filter
                                     inputFields={inputFields}
@@ -91,7 +98,14 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                 />
                             </ContentBlock>
                         </div>
-                        <div class="col-md-9 mb-5">
+                        <div
+                            class={
+                                // tslint:disable-next-line:no-string-literal
+                                State.AppState.showFilter['filters'] ?
+                                    'col-md-9 mb-5 collapse-transition' :
+                                    'col-md-11 mb-5 collapse-transition'
+                                }
+                        >
                             <Badges
                                 filters={State.FilterModel.getFilters('log')}
                                 onEvent={(key: string) => {

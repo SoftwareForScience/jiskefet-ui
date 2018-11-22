@@ -6,6 +6,13 @@
  * copied verbatim in the file "LICENSE"
  */
 
+ .collapse-transition {
+   -webkit-transition: all 0.1s linear;
+   -moz-transition: all 0.1s linear;
+   -o-transition: all 0.1s linear;
+   transition: all 0.1s linear;
+ }
+ 
  .pagination-block {
     display: inline-block;
  }
