@@ -10,7 +10,7 @@ import * as _ from 'lodash';
  * copied verbatim in the file "LICENSE"
  */
 
- // Todo: think about moving this object, so that this class can accept a generic object
+// Todo: think about moving this object, so that this class can accept a generic object
 const DefaultFilters = {
     log: {
         logId: null as string | null,
@@ -29,6 +29,11 @@ const DefaultFilters = {
         orderDirection: null as OrderDirection | null,
         pageSize: 16 as number,
         pageNumber: 1 as number | null
+    },
+    subsystem: {
+        orderBy: 'subsystemName' as string | null,
+        orderDirection: 'ASC' as OrderDirection | null,
+        timeRange: 24 as number
     }
 };
 
@@ -50,6 +55,11 @@ const Filters = {
         orderDirection: null as OrderDirection | null,
         pageSize: null as number | null,
         pageNumber: null as number | null
+    },
+    subsystem: {
+        orderBy: null as string | null,
+        orderDirection: null as OrderDirection | null,
+        timeRange: null as number | null
     }
 };
 
@@ -70,7 +80,7 @@ const updateUrlFromFilters = (filterKey: string): void => {
  * Returns the filters that are not null.
  * @param filterKey e.g. 'log' or 'run'
  */
-const getCleanFilters = (filterKey: string): {[key: string]: string} => {
+const getCleanFilters = (filterKey: string): { [key: string]: string } => {
     return _.pickBy(Filters[filterKey], _.identity);
 };
 
