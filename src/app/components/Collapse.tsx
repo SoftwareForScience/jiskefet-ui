@@ -35,8 +35,6 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
     constructor(vnode: VnodeDOM) {
         super();
         State.AppState.showFilter[vnode.attrs.id] = true;
-        console.log(State.AppState.showFilter);
-
     }
 
     changeCollapseState(event: Event) {

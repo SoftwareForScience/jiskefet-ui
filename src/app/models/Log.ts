@@ -6,11 +6,11 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import * as m from 'mithril';
 import { Log, LogCreate } from '../interfaces/Log';
 import State from './State';
 import SuccessModel from './Success';
 import { HttpError } from '../interfaces/HttpError';
+import { request } from '../request';
 
 /**
  * Stores the state around Log entities and contains api calls to change that state.
@@ -25,10 +25,9 @@ const LogModel = {
     createLog: {} as LogCreate, // log being created
     async fetch(query?: string) {
         LogModel.isFetchingLogs = true;
-        return m.request({
+        return request({
             method: 'GET',
             url: `${process.env.API_URL}logs${query ? `?${query}` : ''}`,
-            withCredentials: false
         }).then((result: { logs: Log[], count: number }) => {
             LogModel.isFetchingLogs = false;
             LogModel.list = result.logs;
@@ -40,7 +39,7 @@ const LogModel = {
     },
     async fetchOne(id: number) {
         LogModel.isFetchingLog = true;
-        return m.request({
+        return request({
             method: 'GET',
             url: `${process.env.API_URL}logs/${id}`,
             withCredentials: false
@@ -54,7 +53,7 @@ const LogModel = {
     },
     async save() {
         LogModel.createLog.origin = 'human';
-        return m.request<Log>({
+        return request({
             method: 'POST',
             url: `${process.env.API_URL}logs`,
             data: LogModel.createLog,
@@ -67,7 +66,7 @@ const LogModel = {
     },
     async linkRunToLog(runNumber: number, logId: number) {
         LogModel.isPatchingLinkRunToLog = true;
-        return m.request<Log>({
+        return request({
             method: 'PATCH',
             url: `${process.env.API_URL}logs/${logId}/runs`,
             data: { runNumber: runNumber as number },

@@ -6,10 +6,10 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import * as m from 'mithril';
 import { HttpError } from '../interfaces/HttpError';
 import { Run } from '../interfaces/Run';
 import State from './State';
+import { request } from '../request';
 import SuccessModel from './Success';
 
 /**
@@ -24,7 +24,7 @@ const RunModel = {
     current: {} as Run,
     async fetch(query?: string) {
         RunModel.isFetchingRuns = true;
-        return m.request({
+        return request({
             method: 'GET',
             url: `${process.env.API_URL}runs${query ? `?${query}` : ''}`,
             withCredentials: false
@@ -39,7 +39,7 @@ const RunModel = {
     },
     async fetchById(id: string | number) {
         RunModel.isFetchingRun = true;
-        return m.request<Run>({
+        return request({
             method: 'GET',
             url: `${process.env.API_URL}runs/${id}`,
             withCredentials: false
@@ -53,7 +53,7 @@ const RunModel = {
     },
     async linkLogToRun(logId: number, runNumber: number) {
         RunModel.isPatchingLinkLogToRun = true;
-        return m.request<Run>({
+        return request({
             method: 'PATCH',
             url: `${process.env.API_URL}runs/${runNumber}/logs`,
             data: { logId: logId as number },

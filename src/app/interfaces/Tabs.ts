@@ -7,7 +7,7 @@
  */
 
  /**
-  * Interface for the creation of different tabs.
+  * Interface for a tab.
   */
 export interface Tabs {
     /**
@@ -16,12 +16,12 @@ export interface Tabs {
     name: string;
 
     /**
-     * the id of the tab
+     * The id of the tab
      */
     id: string;
 
     /**
-     * Indicator that sets it the class to active if true
+     * If the tab is active i.e. selected or not.
      */
     active?: boolean;
 
