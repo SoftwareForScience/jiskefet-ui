@@ -44,7 +44,7 @@ export default class Filter extends MithrilTsxComponent<Attrs> {
             <div>
                 <Collapse
                     id={'filters'}
-                    icon={<span class="fas fa-bars" />}
+                    icon={<span class="fas fa-filter" />}
                     title={'Filters'}
                 >
                     {inputFields && inputFields.map((inputField: InputField) =>

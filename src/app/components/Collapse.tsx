@@ -52,7 +52,7 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
         return (
             <div>
                 <div class="row">
-                    <div class="col-sm-10">
+                    <div class="col-sm-12">
                         <button
                             type="button"
                             id={`${id}`}

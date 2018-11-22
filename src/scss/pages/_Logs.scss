@@ -12,6 +12,10 @@
    -o-transition: all 0.1s linear;
    transition: all 0.1s linear;
  }
+
+.collapsed-width {
+   max-width: 7%;
+}
  
  .pagination-block {
     display: inline-block;

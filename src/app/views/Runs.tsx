@@ -137,43 +137,6 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                                     'col-md-1 collapse-transition'
                             }
                         >
-                            <ContentBlock class="mb-2">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label
-                                            for="pageSize"
-                                            class="col-form-label col-form-label-sm"
-                                        >
-                                            Page size
-                                        </label>
-                                        <select
-                                            id="pageSize"
-                                            class="form-control form-control-sm"
-                                            name="pageSize"
-                                            onchange={(event: Event) => {
-                                                State.FilterModel.setFilter('run', 'pageSize', event.target.value);
-                                                State.FilterModel.setFilter('run', 'pageNumber', 1);
-                                                this.fetchWithFilters();
-                                            }}
-                                            value={State.FilterModel.getFilters('run').pageSize}
-                                        >
-                                            {pageSizes.map((pageSize: number) =>
-                                                // tslint:disable-next-line:jsx-key
-                                                <option value={pageSize}>{pageSize}</option>
-                                            )}
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="text-muted mt-2">
-                                            <PageCounter
-                                                currentPage={State.FilterModel.getFilters('run').pageNumber}
-                                                rowsInTable={State.FilterModel.getFilters('run').pageSize}
-                                                totalCount={State.RunModel.count}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </ContentBlock>
                             <ContentBlock>
                                 <Filter
                                     inputFields={inputFields}
@@ -192,7 +155,7 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                                 State.AppState.showFilter['filters'] ?
                                     'col-md-9 mb-5 collapse-transition' :
                                     'col-md-11 mb-5 collapse-transition'
-                                }
+                            }
                         >
                             <div class="mb-2">
                                 <Badges
@@ -236,20 +199,59 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                                 />
                             </Spinner>
                             <ContentBlock padding={1} >
-                                <Pagination
-                                    currentPage={State.FilterModel.getFilters('run').pageNumber}
-                                    numberOfPages={Math.ceil(State.RunModel.count
-                                        / State.FilterModel.getFilters('run').pageSize)}
-                                    onChange={(newPage: number) => {
-                                        State.FilterModel.setFilter('run', 'pageNumber', newPage);
-                                        this.fetchWithFilters();
-                                    }}
-                                />
+                                <div class="row">
+                                    <div class="col-md-4 m-1 small-center">
+                                        <div class="pagination-block">
+                                            <label
+                                                for="pageSize"
+                                                class="col-form-label col-form-label-sm mr-2"
+                                            >
+                                                Page size
+                                            </label>
+                                        </div>
+                                        <div class="pagination-block">
+                                            <select
+                                                id="pageSize"
+                                                class="form-control form-control-sm"
+                                                name="pageSize"
+                                                onchange={(event: Event) => {
+                                                    State.FilterModel.setFilter('run', 'pageSize', event.target.value);
+                                                    State.FilterModel.setFilter('run', 'pageNumber', 1);
+                                                    this.fetchWithFilters();
+                                                }}
+                                                value={State.FilterModel.getFilters('run').pageSize}
+                                            >
+                                                {pageSizes.map((pageSize: number) =>
+                                                    // tslint:disable-next-line:jsx-key
+                                                    <option value={pageSize}>{pageSize}</option>
+                                                )}
+                                            </select>
+                                        </div>
+                                        <div class="text-muted mt-2 ml-2 pagination-block">
+                                            <PageCounter
+                                                currentPage={State.FilterModel.getFilters('run').pageNumber}
+                                                rowsInTable={State.FilterModel.getFilters('run').pageSize}
+                                                totalCount={State.RunModel.count}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 m-1 small-center">
+                                        <Pagination
+                                            currentPage={State.FilterModel.getFilters('run').pageNumber}
+                                            numberOfPages={Math.ceil(State.RunModel.count
+                                                / State.FilterModel.getFilters('run').pageSize)}
+                                            onChange={(newPage: number) => {
+                                                State.FilterModel.setFilter('run', 'pageNumber', newPage);
+                                                this.fetchWithFilters();
+                                            }}
+                                        />
+                                    </div>
+                                </div>
                             </ContentBlock>
                         </div>
                     </div>
                 </HttpErrorAlert>
-            </div>
+            </div >
         );
     }
 }
