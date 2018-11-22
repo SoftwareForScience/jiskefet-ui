@@ -9,11 +9,18 @@
 import * as m from 'mithril';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
+import * as Cookie from 'js-cookie';
+import ProfileNavItem from './ProfileNavItem';
 
 export default class NavBar extends MithrilTsxComponent<{}> {
-
     toggleSidebar = () => {
         State.AppState.showSidebar = !State.AppState.showSidebar;
+    }
+
+    oninit() {
+        if (Cookie.get('token') && !State.AuthModel.profile) {
+            State.AuthModel.fetchProfile();
+        }
     }
 
     view() {
@@ -37,6 +44,17 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                         />
                         Jiskefet
                     </a>
+                    <ul class="jf-align-right mr-2">
+                        {Cookie.get('token') ?
+                            <ProfileNavItem profile={State.AuthModel.profile} />
+                            :
+                            <a href={process.env.AUTH_URL}>
+                                <button type="button" class="btn btn-outline-success">
+                                    Sign in
+                                </button>
+                            </a>
+                        }
+                    </ul>
                 </div>
             </nav >
         );

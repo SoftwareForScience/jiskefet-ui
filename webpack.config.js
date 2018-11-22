@@ -27,5 +27,8 @@ module.exports = {
     },
     plugins: [
         new Dotenv()
-    ]
+    ],
+    devServer: {
+        historyApiFallback: true
+    }
 }

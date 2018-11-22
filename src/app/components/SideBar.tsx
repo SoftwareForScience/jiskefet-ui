@@ -26,7 +26,8 @@ export default class SideBar extends MithrilTsxComponent<{}> {
                 <ul class="list-unstyled components">
                     <NavItem href="/logs" name="Logs" />
                     <NavItem href="/runs" name="Runs" />
-                    <NavItem href="/logs/create" name="Create new log" />
+                    <NavItem href="/subsystems" name="Subsystems Overview" />
+                    <NavItem href="/logs/create" name="Create Log" />
                 </ul>
             </nav>
         );
