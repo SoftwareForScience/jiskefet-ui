@@ -6,11 +6,22 @@
  * copied verbatim in the file "LICENSE"
  */
 
- .button-background{
-     background: transparent
- }
+.jf-collapse-toggle {
+    color: #424242;
+    padding: 0px 0px 5px 8px;
+    margin: 0px -9px;
+    
+    &:hover {
+        background-color: #8080801c;
+        cursor: pointer;
+    }
 
-[aria-expanded="true"] > .js-rotate-if-collapsed {
+    &:active {
+        background-color: #0000001c;
+    }
+}
+
+[aria-expanded="true"] > .jf-rotate-if-collapsed {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     -webkit-transform: rotate(180deg);
@@ -20,7 +31,7 @@
     transform: rotate(180deg);
 }
 
-[aria-expanded="false"] > .js-rotate-if-not-collapsed {
+[aria-expanded="false"] > .jf-rotate-if-not-collapsed {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     -webkit-transform: rotate(360deg);
@@ -30,12 +41,12 @@
     transform: rotate(360deg);
 }
 
-.collapseIn {
+.jf-collapse-in {
     height: 0px;
     overflow: hidden;
 }
 
-.collapseSideways {
+.jf-collapseSideways {
     width: 0px;
     overflow: hidden;
 }

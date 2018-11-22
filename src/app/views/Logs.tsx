@@ -81,7 +81,7 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                         <div
                             class={
                                 // tslint:disable-next-line:no-string-literal
-                                State.AppState.showFilter['filters'] ?
+                                State.AppState.isCollapsed['filters'] ?
                                     'col-md-3 collapse-transition' :
                                     'col-md-1 collapse-transition'
                                 }
@@ -101,7 +101,7 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                         <div
                             class={
                                 // tslint:disable-next-line:no-string-literal
-                                State.AppState.showFilter['filters'] ?
+                                State.AppState.isCollapsed['filters'] ?
                                     'col-md-9 mb-5 collapse-transition' :
                                     'col-md-11 mb-5 collapse-transition'
                                 }

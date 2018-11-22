@@ -71,7 +71,7 @@ export default class Badges extends MithrilTsxComponent<Attrs> {
                         (
                             filteredFilters[key] !== null ?
                                 <button
-                                    class="badge badge-light mr-1"
+                                    class="badge badge-light mr-1 jf-badge"
                                     id={key}
                                     onclick={() => {
                                         onEvent(key);
@@ -89,7 +89,7 @@ export default class Badges extends MithrilTsxComponent<Attrs> {
                     {activeFilters ?
                         <button
                             id="removeFilters"
-                            class="badge badge-danger float-right"
+                            class="badge badge-danger jf-badge jf-remove-badge float-right"
                             onclick={onEventAll}
                         >
                             <i class="fas fa-times" />
