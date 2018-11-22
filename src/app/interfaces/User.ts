@@ -9,10 +9,9 @@
 /**
  * Interface with the fields for creating a Token entry.
  */
-export interface TokenCreate {
+export interface User {
     userId: number;
-    subsystemId: number;
-    subSystemTokenDescription: string;
-    isMember: boolean;
-    editEorReason: boolean;
+    externalUserId: number;
+    samsId: number;
+    token: string;
 }

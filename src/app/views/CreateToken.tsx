@@ -10,6 +10,9 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
 import State from '../models/State';
+import { SubSystem } from '../interfaces/SubSytem';
+import Table from '../components/Table';
+import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns';
 
 interface Attrs {
     userId?: number;
@@ -20,22 +23,26 @@ type Vnode = m.Vnode<Attrs, CreateToken>;
 
 export default class CreateToken extends MithrilTsxComponent<Attrs> {
 
+    oninit() {
+        State.SubsystemModel.fetch();
+        State.SubsystemPermissionModel.fetch(1);
+    }
+
     addDescription = (event: Event) => {
-        State.TokenModel.createToken.subSystemTokenDescription = event.target.value;
+        State.SubsystemPermissionModel.createToken.subSystemTokenDescription = event.target.value;
     }
 
     addToCreateToken = (event: Event) => {
-        State.TokenModel.createToken[event.target.id] = 1;
-        console.log(State.TokenModel.createToken[event.target.id]);
+        State.SubsystemModel.fetchById(+event.target.value).then(() => {
+            State.SubsystemPermissionModel.createToken.subsystem = State.SubsystemModel.current;
+        });
     }
 
-    // Need to change
     saveTokenForUser() {
-        console.log(State.TokenModel.createToken);
-        State.TokenModel.createToken.userId = 1;
-        State.TokenModel.createToken.isMember = true;
-        State.TokenModel.createToken.editEorReason = false;
-        State.TokenModel.save();
+        State.SubsystemPermissionModel.createToken.user = { userId: 1, externalUserId: 1, samsId: 1, token: '1' };
+        State.SubsystemPermissionModel.createToken.isMember = true;
+        State.SubsystemPermissionModel.createToken.editEorReason = true;
+        State.SubsystemPermissionModel.save(1);
     }
 
     view(vnode: Vnode) {
@@ -74,31 +81,41 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
                                 </dt>
                                 <div class="field">
                                     <select
-                                        id="subsystemId"
+                                        id="subsystem"
                                         class="form-control"
                                         name="subsystem"
                                         required
                                         onclick={this.addToCreateToken}
                                     >
-                                        <option value="acorde">ACORDE</option>
-                                        <option value="bcm">BCM</option>
-                                        <option value="cpv">CPV</option>
-                                        <option value="dag">DAQ</option>
+                                        {
+                                            State.SubsystemModel.list.map((sub: SubSystem) => (
+                                                <option
+                                                    value={sub.subsystemId}
+                                                >
+                                                    {sub.subsystemName}
+                                                </option>
+                                            ))
+                                        }
                                     </select>
                                 </div>
-                                <dl class="form-group">
-                                    <dt class="input-label">
-                                        <label autofocus="autofocus">Select role</label>
-                                    </dt>
-                                    <dd>
-                                        <p>What the subsystem is allowed to do.</p>
-                                    </dd>
-                                </dl>
                             </div>
-                            <div>
+                            <dl class="form-group">
+                                <dt class="input-label">
+                                    <label autofocus="autofocus">Select role</label>
+                                </dt>
+                                <dd>
+                                    <p>What the subsystem is allowed to do.</p>
+                                </dd>
+                            </dl>
+                            <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Generate Token</button>
                             </div>
                         </form>
+                        <hr />
+                        <Table
+                            data={State.SubsystemPermissionModel.list}
+                            columns={SubsystemPermissionColumns}
+                        />
                     </div>
                 </div>
             </div>

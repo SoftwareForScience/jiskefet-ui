@@ -7,6 +7,6 @@
  */
 
 export class SubSystem {
-    subSystemId: number;
-    subSystemName: string;
+    subsystemId: number;
+    subsystemName: string;
 }

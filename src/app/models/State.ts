@@ -11,9 +11,10 @@ import RunModel from './Run';
 import AppState from './AppState';
 import HttpErrorModel from './HttpError';
 import SuccessModel from './Success';
-import TokenModel from './Token';
+import SubsystemPermissionModel from './SubsystemPermission';
 import FilterModel from './Filter';
 import AttachmentModel from './Attachment';
+import SubsystemModel from './Subsystem';
 
 /**
  * The single state container for the application.
@@ -25,7 +26,8 @@ export default {
     SuccessModel,
     LogModel,
     RunModel,
-    TokenModel,
+    SubsystemPermissionModel,
     FilterModel,
-    AttachmentModel
+    AttachmentModel,
+    SubsystemModel
 };
