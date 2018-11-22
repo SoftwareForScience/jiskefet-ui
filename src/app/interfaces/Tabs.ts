@@ -9,7 +9,7 @@
  /**
   * Interface for a tab.
   */
-export interface Tab {
+export interface Tabs {
     /**
      * The name of the tab
      */
