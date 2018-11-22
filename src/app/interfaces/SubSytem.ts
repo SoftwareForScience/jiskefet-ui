@@ -6,10 +6,7 @@
  * copied verbatim in the file "LICENSE"
  */
 
-/**
- * Interface with the fields for creating a Token entry.
- */
-export interface SubSystem {
+export class SubSystem {
     subSystemId: number;
     subSystemName: string;
 }

@@ -17,6 +17,8 @@ import { TokenCreate } from '../interfaces/Token';
  * Still need a place to save it.
  */
 const TokenModel = {
+    // list: [] as SubSystem[],
+    // isFetchingRuns: false as boolean,
     createToken: {} as TokenCreate,
     async save() {
         return m.request<TokenCreate>({
@@ -29,7 +31,21 @@ const TokenModel = {
         }).catch((error: HttpError) => {
             State.HttpErrorModel.add(error);
         });
-    }
+    },
+    // async fetchSubSystem(query?: string) {
+    //     TokenModel.isFetchingRuns = true;
+    //     return m.request({
+    //         method: 'GET',
+    //         url: `${process.env.API_URL}tokens${query ? `?${query}` : ''}`,
+    //         withCredentials: false
+    //     }).then((result: { subSystem: SubSystem[] }) => {
+    //         TokenModel.isFetchingRuns = false;
+    //         TokenModel.list = result.subSystem;
+    //     }).catch((error: HttpError) => {
+    //         TokenModel.isFetchingRuns = false;
+    //         State.HttpErrorModel.add(error);
+    //     });
+    // },
 };
 
 type TokenModel = typeof TokenModel;

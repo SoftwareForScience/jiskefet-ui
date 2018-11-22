@@ -8,6 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { Event } from '../interfaces/Event';
 import State from '../models/State';
 
 interface Attrs {
@@ -23,11 +24,12 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
         State.TokenModel.createToken.description = content;
     }
 
+    addToCreateToken = (event: Event) => {
+        State.TokenModel.createToken[event.target.id] = event.target.value;
+    }
+
     // Need to change
-    saveToken(token: string | undefined) {
-        if (token) {
-            // console.log(uuid());
-        }
+    saveTokenForUser() {
         State.TokenModel.save();
     }
 
@@ -45,7 +47,7 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
                         <form
                             onsubmit={(event: Event) => {
                                 event.preventDefault();
-                                this.saveToken(vnode.attrs.token);
+                                this.saveTokenForUser();
                             }}
                         >
                             <dl class="form-group">
@@ -64,21 +66,32 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
                                     <p class="note">What's the token for?</p>
                                 </dd>
                             </dl>
-                            <div class="dropdown">
-                                <button
-                                    class="btn btn-secondary dropdown-toggle"
-                                    type="button"
-                                    id="dropdownMenuButton"
-                                    data-toggle="dropdown"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                >
-                                    Choose a Subsystem
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
+                            <div class="form-group">
+                                <dt>
+                                    <label for="subsystem">Select SubSystem:</label>
+                                </dt>
+                                <div class="field">
+                                    <select
+                                        id="subsystem"
+                                        class="form-control"
+                                        name="subsystem"
+                                        required
+                                        onclick={this.addToCreateToken}
+                                    >
+                                        <option value="acorde">ACORDE</option>
+                                        <option value="bcm">BCM</option>
+                                        <option value="cpv">CPV</option>
+                                        <option value="dag">DAQ</option>
+                                    </select>
                                 </div>
+                                <dl class="form-group">
+                                    <dt class="input-label">
+                                        <label autofocus="autofocus">Select role</label>
+                                    </dt>
+                                    <dd>
+                                        <p>What the subsystem is allowed to do.</p>
+                                    </dd>
+                                </dl>
                             </div>
                             <div>
                                 <button type="submit" class="btn btn-primary">Generate Token</button>
