@@ -20,16 +20,21 @@ type Vnode = m.Vnode<Attrs, CreateToken>;
 
 export default class CreateToken extends MithrilTsxComponent<Attrs> {
 
-    addDescription = (content: string) => {
-        State.TokenModel.createToken.description = content;
+    addDescription = (event: Event) => {
+        State.TokenModel.createToken.subSystemTokenDescription = event.target.value;
     }
 
     addToCreateToken = (event: Event) => {
-        State.TokenModel.createToken[event.target.id] = event.target.value;
+        State.TokenModel.createToken[event.target.id] = 1;
+        console.log(State.TokenModel.createToken[event.target.id]);
     }
 
     // Need to change
     saveTokenForUser() {
+        console.log(State.TokenModel.createToken);
+        State.TokenModel.createToken.userId = 1;
+        State.TokenModel.createToken.isMember = true;
+        State.TokenModel.createToken.editEorReason = false;
         State.TokenModel.save();
     }
 
@@ -45,10 +50,7 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
                             </p>
                         </div>
                         <form
-                            onsubmit={(event: Event) => {
-                                event.preventDefault();
-                                this.saveTokenForUser();
-                            }}
+                            onsubmit={this.saveTokenForUser}
                         >
                             <dl class="form-group">
                                 <dt class="input-label">
@@ -72,7 +74,7 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
                                 </dt>
                                 <div class="field">
                                     <select
-                                        id="subsystem"
+                                        id="subsystemId"
                                         class="form-control"
                                         name="subsystem"
                                         required

@@ -10,6 +10,9 @@
  * Interface with the fields for creating a Token entry.
  */
 export interface TokenCreate {
-    subSystemId: string;
-    description: string;
+    userId: number;
+    subsystemId: number;
+    subSystemTokenDescription: string;
+    isMember: boolean;
+    editEorReason: boolean;
 }
