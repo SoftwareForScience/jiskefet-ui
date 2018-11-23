@@ -6,20 +6,19 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import * as m from 'mithril';
 import State from './State';
 import { HttpError } from '../interfaces/HttpError';
 import { SubSystem } from '../interfaces/SubSytem';
+import { request } from '../request';
 
 /**
  * Stores the state around Token entities.
- * Still need a place to save it.
  */
 const SubsystemModel = {
     list: [] as SubSystem[],
     current: {} as SubSystem,
     async fetch() {
-        return m.request({
+        return request({
             method: 'GET',
             url: `${process.env.API_URL}subsystems`,
             withCredentials: false
@@ -30,7 +29,7 @@ const SubsystemModel = {
         });
     },
     async fetchById(id: string | number) {
-        return m.request({
+        return request({
             method: 'GET',
             url: `${process.env.API_URL}subsystems/${id}`,
             withCredentials: false

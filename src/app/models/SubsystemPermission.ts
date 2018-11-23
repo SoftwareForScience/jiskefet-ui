@@ -6,21 +6,20 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import * as m from 'mithril';
 import State from './State';
 import SuccesModel from './Success';
 import { HttpError } from '../interfaces/HttpError';
 import { SubsystemPermissionCreate, SubsystemPermission } from '../interfaces/SubsystemPermission';
+import { request } from '../request';
 
 /**
  * Stores the state around Token entities.
- * Still need a place to save it.
  */
 const SubsystemPermissionModel = {
     createToken: {} as SubsystemPermissionCreate,
     list: [{}] as SubsystemPermission[],
     async save(id: number) {
-        return m.request({
+        return request({
             method: 'POST',
             url: `${process.env.API_URL}users/${id}/tokens/new`,
             data: SubsystemPermissionModel.createToken,
@@ -32,7 +31,7 @@ const SubsystemPermissionModel = {
         });
     },
     async fetch(id: number) {
-        return m.request<SubsystemPermission[]>({
+        return request({
             method: 'GET',
             url: `${process.env.API_URL}users/${id}/tokens`,
             withCredentials: false

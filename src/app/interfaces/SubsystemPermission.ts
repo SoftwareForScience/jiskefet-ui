@@ -20,6 +20,9 @@ export interface SubsystemPermissionCreate {
     editEorReason: boolean;
 }
 
+/**
+ * Interface with the fields to display
+ */
 export interface SubsystemPermission {
     subsystemPermissionId: number;
     subSystemTokenDescription: string;
