@@ -16,14 +16,7 @@ import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns'
 import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 
-interface Attrs {
-    userId?: number;
-    token?: string;
-}
-
-type Vnode = m.Vnode<Attrs, CreateToken>;
-
-export default class CreateToken extends MithrilTsxComponent<Attrs> {
+export default class CreateToken extends MithrilTsxComponent<{}> {
 
     oninit() {
         State.SubsystemModel.fetch();
@@ -51,15 +44,17 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
     saveTokenForUser() {
         State.SubsystemPermissionModel.createToken.isMember = true;
         State.SubsystemPermissionModel.createToken.editEorReason = true;
-        State.SubsystemPermissionModel.save(State.SubsystemPermissionModel.createToken.user.userId);
+        State.SubsystemPermissionModel.save(State.SubsystemPermissionModel.createToken.user.userId)
+            .then(() => {
+                m.route.set('/ ');
+            });
     }
 
-    view(vnode: Vnode) {
+    view() {
         return (
             <div class="container-fluid">
                 <SuccessMessage />
                 <HttpErrorAlert>
-                    <SuccessMessage />
                     <div class="row">
                         <div class="col-9 mx-auto bg-light rounded p-4 shadow-sm">
                             <div><h2>Create a new token</h2></div>
@@ -73,7 +68,10 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
                             </p>
                             </div>
                             <form
-                                onsubmit={this.saveTokenForUser}
+                                onsubmit={(event: Event) => {
+                                    event.preventDefault();
+                                    this.saveTokenForUser();
+                                }}
                             >
                                 <dl class="form-group">
                                     <dt class="input-label">

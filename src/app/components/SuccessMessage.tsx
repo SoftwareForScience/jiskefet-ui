@@ -29,7 +29,10 @@ export default class SuccessMessage extends MithrilTsxComponent<{}> {
                             <div className="text-center">
                                 {this.successMessages.map((message: string) =>
                                     // tslint:disable-next-line:jsx-key
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <div
+                                        class="alert alert-success alert-dismissible fade show jf-success-word-wrap"
+                                        role="alert"
+                                    >
                                         <strong>{message}</strong>
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>

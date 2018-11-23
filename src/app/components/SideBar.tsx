@@ -36,7 +36,7 @@ export default class SideBar extends MithrilTsxComponent<{}> {
                         </a>
                     </p>
                     <p>
-                        Jiskefet v0.2
+                        Jiskefet v0.3
                     </p>
                 </div>
             </nav>
