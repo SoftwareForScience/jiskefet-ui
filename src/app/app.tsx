@@ -16,6 +16,7 @@ import Logs from './views/Logs';
 import Log from './views/Log';
 import Run from './views/Run';
 import CreateLog from './views/CreateLog';
+import CreateToken from './views/CreateToken';
 import * as Cookie from 'js-cookie';
 import Login from './views/Login';
 import Profile from './views/Profile';
@@ -80,6 +81,13 @@ const authenticatedRoutes = {
         view: () => (
             <Layout>
                 <SubsystemsOverview />
+            </Layout>
+        ),
+    },
+    '/tokens': {
+        view: () => (
+            <Layout>
+                <CreateToken />
             </Layout>
         ),
     },

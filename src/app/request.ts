@@ -1,6 +1,6 @@
 
 import * as m from 'mithril';
-import Cookies = require('js-cookie');
+import * as Cookies from 'js-cookie';
 import State from './models/State';
 
 /**

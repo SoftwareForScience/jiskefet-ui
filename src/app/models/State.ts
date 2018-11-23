@@ -12,9 +12,12 @@ import AppState from './AppState';
 import AuthModel from './Auth';
 import HttpErrorModel from './HttpError';
 import SuccessModel from './Success';
+import SubsystemPermissionModel from './SubsystemPermission';
 import FilterModel from './Filter';
 import AttachmentModel from './Attachment';
+import SubsystemModel from './Subsystem';
 import SubsystemOverviewModel from './SubsystemOverview';
+import UserModel from './User';
 
 /**
  * The single state container for the application.
@@ -26,10 +29,14 @@ export default {
     SuccessModel,
     LogModel,
     RunModel,
-    AuthModel,
+    SubsystemPermissionModel,
     FilterModel,
     AttachmentModel,
+    SubsystemModel,
+    AuthModel,
     SubsystemOverviewModel,
+    UserModel,
+
     /**
      * Clears state of resources that require authorization.
      */
