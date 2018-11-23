@@ -17,6 +17,7 @@ import { request } from '../request';
  */
 const SubsystemPermissionModel = {
     createToken: {} as SubsystemPermissionCreate,
+    // token: {} as string,
     list: [{}] as SubsystemPermission[],
     async save(id: number) {
         return request({
@@ -24,8 +25,10 @@ const SubsystemPermissionModel = {
             url: `${process.env.API_URL}users/${id}/tokens/new`,
             data: SubsystemPermissionModel.createToken,
             withCredentials: false
-        }).then(() => {
-            SuccesModel.add('Successfully saved the token.');
+        }).then((token: string) => {
+            SuccesModel.add(`Successfully saved the token. \n Please write down this down: ${token}`);
+            console.log(`token is ${token}`);
+            // SubsystemPermissionModel.token = token;
         }).catch((error: HttpError) => {
             State.HttpErrorModel.add(error);
         });
