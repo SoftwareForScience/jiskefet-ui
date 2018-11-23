@@ -38,7 +38,6 @@ const SubsystemPermissionModel = {
             withCredentials: false
         }).then((result: SubsystemPermission[]) => {
             SubsystemPermissionModel.list = result;
-            console.log(State.SubsystemPermissionModel.list);
         }).catch((error: HttpError) => {
             State.HttpErrorModel.add(error);
         });

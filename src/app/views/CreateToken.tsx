@@ -25,7 +25,15 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
 
     oninit() {
         State.SubsystemModel.fetch();
-        State.SubsystemPermissionModel.fetch(1);
+        State.AuthModel.fetchProfile().then(() => {
+            if (State.AuthModel.profile !== null) {
+                State.UserModel.fetchById(State.AuthModel.profile.id).then(() => {
+                    State.SubsystemPermissionModel.fetch(State.UserModel.current.userId).then(() => {
+                        State.SubsystemPermissionModel.createToken.user = State.UserModel.current;
+                    });
+                });
+            }
+        });
     }
 
     addDescription = (event: Event) => {
@@ -39,10 +47,9 @@ export default class CreateToken extends MithrilTsxComponent<Attrs> {
     }
 
     saveTokenForUser() {
-        State.SubsystemPermissionModel.createToken.user = { userId: 1, externalUserId: 1, samsId: 1, token: '1' };
         State.SubsystemPermissionModel.createToken.isMember = true;
         State.SubsystemPermissionModel.createToken.editEorReason = true;
-        State.SubsystemPermissionModel.save(1);
+        State.SubsystemPermissionModel.save(State.SubsystemPermissionModel.createToken.user.userId);
     }
 
     view(vnode: Vnode) {

@@ -17,6 +17,7 @@ import FilterModel from './Filter';
 import AttachmentModel from './Attachment';
 import SubsystemModel from './Subsystem';
 import SubsystemOverviewModel from './SubsystemOverview';
+import UserModel from './User';
 
 /**
  * The single state container for the application.
@@ -34,6 +35,7 @@ export default {
     SubsystemModel,
     AuthModel,
     SubsystemOverviewModel,
+    UserModel,
 
     /**
      * Clears state of resources that require authorization.
