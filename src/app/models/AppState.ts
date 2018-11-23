@@ -11,6 +11,7 @@
  */
 const AppState = {
     showSidebar: true as boolean,
+    isCollapsed: [] as Array<{ [key: string]: boolean }>
 };
 
 type AppState = typeof AppState;

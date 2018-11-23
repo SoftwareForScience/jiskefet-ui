@@ -1,0 +1,29 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+
+ .collapse-transition {
+   -webkit-transition: all 0.1s linear;
+   -moz-transition: all 0.1s linear;
+   -o-transition: all 0.1s linear;
+   transition: all 0.1s linear;
+ }
+
+.collapsed-width {
+   max-width: 7%;
+}
+ 
+ .pagination-block {
+    display: inline-block;
+ }
+
+ @media (max-width: 768px) {
+     .small-center {
+        display: flex;
+        justify-content: center;
+     }
+ } 

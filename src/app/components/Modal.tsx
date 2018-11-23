@@ -31,7 +31,7 @@ export default class Modal extends MithrilTsxComponent<Attrs> {
         const { id, title } = vnode.attrs;
         return (
             <div>
-                <div class="modal" tabindex="-1" role="dialog" id={id}>
+                <div class="modal mt-5" tabindex="-1" role="dialog" id={id}>
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">

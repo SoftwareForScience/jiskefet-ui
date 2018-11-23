@@ -22,6 +22,7 @@ import { Event } from '../interfaces/Event';
 import PageCounter from '../components/PageCounter';
 import { createDummyTable } from '../utility/DummyService';
 import ContentBlock from '../components/ContentBlock';
+import Badges from '../components/Badges';
 
 const inputFields = [
     {
@@ -77,44 +78,14 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                 <HttpErrorAlert>
                     <SuccessMessage />
                     <div class="row">
-                        <div class="col-md-3">
-                            <ContentBlock class="mb-2">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label
-                                            for="pageSize"
-                                            class="col-form-label col-form-label-sm"
-                                        >
-                                            Page size
-                                        </label>
-                                        <select
-                                            id="pageSize"
-                                            class="form-control form-control-sm"
-                                            name="pageSize"
-                                            onchange={(event: Event) => {
-                                                State.FilterModel.setFilter('log', 'pageSize', event.target.value);
-                                                State.FilterModel.setFilter('log', 'pageNumber', 1);
-                                                this.fetchWithFilters();
-                                            }}
-                                            value={State.FilterModel.getFilters('log').pageSize}
-                                        >
-                                            {pageSizes.map((pageSize: number) =>
-                                                // tslint:disable-next-line:jsx-key
-                                                <option value={pageSize}>{pageSize}</option>
-                                            )}
-                                        </select>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="text-muted mt-2">
-                                            <PageCounter
-                                                currentPage={State.FilterModel.getFilters('log').pageNumber}
-                                                rowsInTable={State.FilterModel.getFilters('log').pageSize}
-                                                totalCount={State.LogModel.count}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </ContentBlock>
+                        <div
+                            class={
+                                // tslint:disable-next-line:no-string-literal
+                                State.AppState.isCollapsed['filters'] ?
+                                    'col-md-3 collapse-transition' :
+                                    'col-md-1 collapse-transition'
+                                }
+                        >
                             <ContentBlock>
                                 <Filter
                                     inputFields={inputFields}
@@ -127,20 +98,31 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                 />
                             </ContentBlock>
                         </div>
-                        <div class="col-md-9">
-                            <div class="mb-2">
-                                <ContentBlock padding={1} >
-                                    <Pagination
-                                        currentPage={State.FilterModel.getFilters('log').pageNumber}
-                                        numberOfPages={Math.ceil(State.LogModel.count
-                                            / State.FilterModel.getFilters('log').pageSize)}
-                                        onChange={(newPage: number) => {
-                                            State.FilterModel.setFilter('log', 'pageNumber', newPage);
-                                            this.fetchWithFilters();
-                                        }}
-                                    />
-                                </ContentBlock>
-                            </div>
+                        <div
+                            class={
+                                // tslint:disable-next-line:no-string-literal
+                                State.AppState.isCollapsed['filters'] ?
+                                    'col-md-9 mb-5 collapse-transition' :
+                                    'col-md-11 mb-5 collapse-transition'
+                                }
+                        >
+                            <Badges
+                                filters={State.FilterModel.getFilters('log')}
+                                onEvent={(key: string) => {
+                                    State.FilterModel.setFilter('log', key, null);
+                                    this.fetchWithFilters();
+                                }}
+                                onEventAll={() => {
+                                    State.FilterModel.setFiltersToDefaults('log');
+                                    this.fetchWithFilters();
+                                }}
+                                ignoredFilters={[
+                                    'orderBy',
+                                    'orderDirection',
+                                    'pageSize',
+                                    'pageNumber'
+                                ]}
+                            />
                             <Spinner
                                 isLoading={State.LogModel.isFetchingLogs}
                                 component={createDummyTable(State.FilterModel.getFilters('log').pageSize, LogColumns)}
@@ -156,10 +138,61 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                     }}
                                 />
                             </Spinner>
+                            <ContentBlock padding={1} >
+                                <div class="row">
+                                    <div class="col-md-4 m-1 small-center" >
+                                        <div class="pagination-block">
+                                            <label
+                                                for="pageSize"
+                                                class="col-form-label col-form-label-sm mr-2"
+                                            >
+                                                Page size
+                                            </label>
+                                        </div>
+                                        <div class="pagination-block">
+                                            <select
+                                                id="pageSize"
+                                                style="min-width: 75px; max-width: 75px; overflow: hidden;"
+                                                class="form-control form-control-sm"
+                                                name="pageSize"
+                                                onchange={(event: Event) => {
+                                                    State.FilterModel.setFilter('log', 'pageSize', event.target.value);
+                                                    State.FilterModel.setFilter('log', 'pageNumber', 1);
+                                                    this.fetchWithFilters();
+                                                }}
+                                                value={State.FilterModel.getFilters('log').pageSize}
+                                            >
+                                                {pageSizes.map((pageSize: number) =>
+                                                    // tslint:disable-next-line:jsx-key
+                                                    <option value={pageSize}>{pageSize}</option>
+                                                )}
+                                            </select>
+                                        </div>
+                                        <div class="text-muted mt-2 ml-2 pagination-block">
+                                            <PageCounter
+                                                currentPage={State.FilterModel.getFilters('log').pageNumber}
+                                                rowsInTable={State.FilterModel.getFilters('log').pageSize}
+                                                totalCount={State.LogModel.count}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 m-1 small-center">
+                                        <Pagination
+                                            currentPage={State.FilterModel.getFilters('log').pageNumber}
+                                            numberOfPages={Math.ceil(State.LogModel.count
+                                                / State.FilterModel.getFilters('log').pageSize)}
+                                            onChange={(newPage: number) => {
+                                                State.FilterModel.setFilter('log', 'pageNumber', newPage);
+                                                this.fetchWithFilters();
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </ContentBlock>
                         </div>
                     </div>
                 </HttpErrorAlert>
-            </div>
+            </div >
         );
     }
 }

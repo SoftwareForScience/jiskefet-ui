@@ -9,12 +9,14 @@
 import LogModel from './Log';
 import RunModel from './Run';
 import AppState from './AppState';
+import AuthModel from './Auth';
 import HttpErrorModel from './HttpError';
 import SuccessModel from './Success';
 import SubsystemPermissionModel from './SubsystemPermission';
 import FilterModel from './Filter';
 import AttachmentModel from './Attachment';
 import SubsystemModel from './Subsystem';
+import SubsystemOverviewModel from './SubsystemOverview';
 
 /**
  * The single state container for the application.
@@ -29,5 +31,15 @@ export default {
     SubsystemPermissionModel,
     FilterModel,
     AttachmentModel,
-    SubsystemModel
+    SubsystemModel,
+    AuthModel,
+    SubsystemOverviewModel,
+
+    /**
+     * Clears state of resources that require authorization.
+     */
+    clearState() {
+        delete this.LogModel;
+        delete this.RunModel;
+    }
 };

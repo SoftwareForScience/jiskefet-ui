@@ -7,12 +7,12 @@
  */
 
 /**
- * An error received from, for example, a failed API call.
- * Returned in the catch portion of the Promise request().
+ * Interface with the fields for fetching a SubsystemOverview.
  */
-export interface HttpError {
-    error: string;
-    statuscode: number;
-    message: string;
-    stack: string;
+export interface SubsystemOverview {
+    subsystemName: string;
+    logs: number;
+    userId: string;
+    lastLog: string;
+    logId: string;
 }
