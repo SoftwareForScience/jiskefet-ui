@@ -31,7 +31,7 @@ export default class SideBar extends MithrilTsxComponent<{}> {
                 </ul>
                 <div class="container">
                     <p>
-                        <a href="http://localhost:3000/doc/" rel="external noopener" target="_blank">
+                        <a href={`${process.env.API_URL}doc/`} rel="external noopener" target="_blank">
                             Link to the API doc
                         </a>
                     </p>
