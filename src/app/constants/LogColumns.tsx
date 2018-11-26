@@ -61,7 +61,7 @@ const LogColumns: any[] = [
     {
         header: 'Author',
         accessor: 'user',
-        secondAccessor: 'externalUserId'
+        cell: (row: Log): string => (row.user ? row.user.userId.toString() : 'Unknown')
     }
 ];
 

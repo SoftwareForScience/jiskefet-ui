@@ -50,6 +50,8 @@ export default class Table extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         const { columns, className, data, onHeaderClick, orderBy, orderDirection } = vnode.attrs;
+        console.log('printing data');
+        console.log(vnode.attrs.data);
         return (
             <div class="table-responsive">
                 <table class={`table table-sm table-bordered table-hover jf-table ${className || ''}`}>
@@ -73,11 +75,11 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                             <tr>
                                 {columns.map((column: Column) => (
                                     <td>
-                                        {(column.cell ?
+                                        {
+                                            (column.cell ?
                                             column.cell(row)
-                                            : column.secondAccessor !== undefined
-                                                ? row[column.accessor].secondAccessor
-                                                : row[column.accessor])}
+                                            : row[column.accessor] as string | number | boolean
+                                        )}
                                     </td>
                                 ))}
                             </tr>
