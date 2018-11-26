@@ -17,7 +17,7 @@ interface Attrs {
      * The data that the table displays. Each object in the array represents
      * a row where each field represents the column and its value.
      */
-    data: Array<{ [column: string]: any}>; // Todo: better typedef needed
+    data: Array<{ [column: string]: any }>; // Todo: better typedef needed
     /**
      * The columns (table headers) for the table.
      */
@@ -49,7 +49,7 @@ export default class Table extends MithrilTsxComponent<Attrs> {
     }
 
     view(vnode: Vnode) {
-        const { columns, className, data, onHeaderClick, orderBy, orderDirection} = vnode.attrs;
+        const { columns, className, data, onHeaderClick, orderBy, orderDirection } = vnode.attrs;
         return (
             <div class="table-responsive">
                 <table class={`table table-sm table-bordered table-hover jf-table ${className || ''}`}>
@@ -75,7 +75,9 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                                     <td>
                                         {(column.cell ?
                                             column.cell(row)
-                                            : row[column.accessor] as string | number | boolean)}
+                                            : column.secondAccessor !== undefined
+                                                ? row[column.accessor].secondAccessor
+                                                : row[column.accessor])}
                                     </td>
                                 ))}
                             </tr>

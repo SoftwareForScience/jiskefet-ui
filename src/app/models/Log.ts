@@ -30,6 +30,7 @@ const LogModel = {
             url: `${process.env.API_URL}logs${query ? `?${query}` : ''}`,
         }).then((result: { logs: Log[], count: number }) => {
             LogModel.isFetchingLogs = false;
+            console.log(result);
             LogModel.list = result.logs;
             LogModel.count = result.count;
         }).catch((error: HttpError) => {
