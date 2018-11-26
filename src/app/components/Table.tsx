@@ -50,8 +50,6 @@ export default class Table extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         const { columns, className, data, onHeaderClick, orderBy, orderDirection } = vnode.attrs;
-        console.log('printing data');
-        console.log(vnode.attrs.data);
         return (
             <div class="table-responsive">
                 <table class={`table table-sm table-bordered table-hover jf-table ${className || ''}`}>
