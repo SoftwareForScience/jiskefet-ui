@@ -19,10 +19,6 @@ export interface Column {
      */
     accessor: string;
     /**
-     * Second eccessor if needed. Same as accessor.
-     */
-    secondAccessor?: string;
-    /**
      * Optional custom rendering of each cell in the table for the column.
      */
     cell?: (row: object) => JSX.Element | string | number;
