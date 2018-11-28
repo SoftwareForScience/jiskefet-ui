@@ -69,6 +69,15 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                 </button>
                                 <div class="dropdown-divider" />
                                 <button
+                                    href="logs"
+                                    oncreate={m.route.link}
+                                    class="dropdown-item jf-dropdown-item"
+                                    type="button"
+                                >
+                                    My log entries
+                                </button>
+                                <div class="dropdown-divider" />
+                                <button
                                     type="button"
                                     class="dropdown-item jf-dropdown-item"
                                     onclick={State.AuthModel.logout}
