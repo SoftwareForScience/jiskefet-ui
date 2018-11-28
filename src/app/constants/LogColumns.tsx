@@ -52,10 +52,16 @@ const LogColumns: any[] = [
                 )
                 : row.origin
         )
-    }, {
+    },
+    {
         header: 'Creation time',
         accessor: 'creationTime',
         cell: (row: Log): string => (row.creationTime ? format(row.creationTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+    },
+    {
+        header: 'Author',
+        accessor: 'user',
+        cell: (row: Log): string => (row.user ? row.user.userId.toString() : 'Unknown')
     }
 ];
 
