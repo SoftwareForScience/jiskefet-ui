@@ -97,6 +97,11 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                             'HH:mm:ss DD/MM/YYYY'
                                                         )}
                                                     </dd>
+                                                    <dt class="col-sm-6">Author:</dt>
+                                                    <dd class="col-sm-6">
+                                                        {State.LogModel.current.user &&
+                                                            State.LogModel.current.user.userId}
+                                                    </dd>
                                                 </dl>
                                             </div>
                                         </div>

@@ -60,7 +60,7 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                 </button>
                                 <div class="dropdown-divider" />
                                 <button
-                                    href="tokens"
+                                    href="/tokens"
                                     oncreate={m.route.link}
                                     class="dropdown-item jf-dropdown-item"
                                     type="button"
