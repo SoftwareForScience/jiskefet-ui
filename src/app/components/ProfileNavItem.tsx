@@ -33,9 +33,9 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                 aria-expanded="false"
                             >
                                 <img
-                                    src={profile.avatar_url}
+                                    src={profile.githubData.avatar_url}
                                     class="rounded"
-                                    alt={`@${profile.email}`}
+                                    alt={`@${profile.githubData.email}`}
                                     height="25"
                                     width="25"
                                 />
@@ -44,14 +44,14 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                             <div class="dropdown-menu dropdown-menu-right">
                                 <div
                                     class="dropdown-item jf-dropdown-name"
-                                    href="profile"
+                                    href={`/user/${profile.userData.userId}`}
                                     oncreate={m.route.link}
                                 >
-                                    Signed in as <br /> <b>{profile.login}</b>
+                                    Signed in as <br /> <b>{profile.githubData.login}</b>
                                 </div>
                                 <div class="dropdown-divider" />
                                 <button
-                                    href="profile"
+                                    href={`/user/${profile.userData.userId}`}
                                     oncreate={m.route.link}
                                     class="dropdown-item jf-dropdown-item"
                                     type="button"
@@ -66,15 +66,6 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                     type="button"
                                 >
                                     Developer section
-                                </button>
-                                <div class="dropdown-divider" />
-                                <button
-                                    href="logs"
-                                    oncreate={m.route.link}
-                                    class="dropdown-item jf-dropdown-item"
-                                    type="button"
-                                >
-                                    My log entries
                                 </button>
                                 <div class="dropdown-divider" />
                                 <button

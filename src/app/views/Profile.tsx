@@ -19,64 +19,71 @@ import Pagination from '../components/Pagination';
 import { Event } from '../interfaces/Event';
 import { createDummyTable } from '../utility/DummyService';
 
-type Vnode = m.Vnode<{}, Profile>;
+interface Attrs {
+    userId: number;
+}
 
-export default class Profile extends MithrilTsxComponent<{}> {
+type Vnode = m.Vnode<Attrs, Profile>;
+type VnodeDOM = m.VnodeDOM<Attrs, Profile>;
 
-    async oninit() {
-        await State.AuthModel.fetchProfile();
+export default class Profile extends MithrilTsxComponent<Attrs> {
+
+    async oninit(vnode: VnodeDOM) {
+        State.AuthModel.fetchProfile();
         if (State.AuthModel.profile !== null) {
-            await State.UserModel.fetchById(State.AuthModel.profile.id);
-            await State.UserModel.fetchLogs(State.UserModel.current.userId);
-            State.FilterModel.setFiltersToDefaults('userLogs');
-            State.FilterModel.setFiltersFromUrl('userLogs');
-            this.fetch(State.FilterModel.getQueryString('userLogs'));
+            State.UserModel.fetchLogs(vnode.attrs.userId);
+            State.FilterModel.setFiltersToDefaults('userLog');
+            State.FilterModel.setFiltersFromUrl('userLog');
+            this.fetch(vnode.attrs.userId, State.FilterModel.getQueryString('userLog'));
         }
     }
 
     /**
      * Fetch logs with the query param given.
      */
-    fetch = (id: number = State.UserModel.current.userId, queryParam: string = ''): void => {
+    fetch = (id: number, queryParam: string): void => {
         State.UserModel.fetchLogs(id, queryParam);
     }
 
     /**
      * Fetch logs with the filters currently in the state (in FilterModel).
      */
-    fetchWithFilters = (): void => {
-        this.fetch(State.FilterModel.getQueryString('userLogs'));
+    fetchWithFilters = (id: number): void => {
+        this.fetch(id, State.FilterModel.getQueryString('userLog'));
     }
 
     view(vnode: Vnode) {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         const profile = State.AuthModel.profile as GithubProfileDto;
+        const { userId } = vnode.attrs;
+
         return (
             <Spinner isLoading={State.AuthModel.isFetchingProfile}>
-                <div>
-                    {profile &&
-                        <div class="card" style="width: 18rem;">
-                            <img
-                                class="card-img-top"
-                                src={profile.avatar_url}
-                                alt="Card image cap"
-                            />
-                            <div class="card-body">
-                                <h5 class="card-title m-0">{profile.name}</h5>
-                                <p class="card-text">{profile.login}</p>
-                                <a
-                                    href={profile.html_url}
-                                    target="_blank"
-                                    class="btn btn-outline-success"
-                                >
-                                    GitHub profile
-                                </a>
+                    <div>
+                        {profile &&
+                            <div class="card" style="width: 18rem;">
+                                <img
+                                    class="card-img-top"
+                                    src={profile.githubData.avatar_url}
+                                    alt="Card image cap"
+                                />
+                                <div class="card-body">
+                                    <h5 class="card-title m-0">{profile.githubData.name}</h5>
+                                    <p class="card-text">{profile.githubData.login}</p>
+                                    <a
+                                        href={profile.githubData.html_url}
+                                        target="_blank"
+                                        class="btn btn-outline-success"
+                                    >
+                                        GitHub profile
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    }
-                </div>
+                        }
+                    </div>
+                <div class="jf-top-padding"><h2>My logs</h2></div>
                 <Spinner
-                    isLoading={State.LogModel.isFetchingLogs}
+                    isLoading={State.UserModel.isFetchingLogs}
                     component={createDummyTable(State.FilterModel.getFilters('userLog').pageSize, LogColumns)}
                 >
                     <div class="jf-top-padding collapse-transition">
@@ -87,7 +94,7 @@ export default class Profile extends MithrilTsxComponent<{}> {
                             orderDirection={State.FilterModel.getFilters('userLog').orderDirection}
                             onHeaderClick={(accessor: string) => {
                                 State.FilterModel.switchOrderBy('userLog', accessor);
-                                this.fetchWithFilters();
+                                this.fetchWithFilters(userId);
                             }}
                         />
                     </div>
@@ -110,11 +117,11 @@ export default class Profile extends MithrilTsxComponent<{}> {
                                     class="form-control form-control-sm"
                                     name="pageSize"
                                     onchange={(event: Event) => {
-                                        State.FilterModel.setFilter('userLogs', 'pageSize', event.target.value);
-                                        State.FilterModel.setFilter('userLogs', 'pageNumber', 1);
-                                        this.fetchWithFilters();
+                                        State.FilterModel.setFilter('userLog', 'pageSize', event.target.value);
+                                        State.FilterModel.setFilter('userLog', 'pageNumber', 1);
+                                        this.fetchWithFilters(userId);
                                     }}
-                                    value={State.FilterModel.getFilters('userLogs').pageSize}
+                                    value={State.FilterModel.getFilters('userLog').pageSize}
                                 >
                                     {pageSizes.map((pageSize: number) =>
                                         // tslint:disable-next-line:jsx-key
@@ -124,20 +131,20 @@ export default class Profile extends MithrilTsxComponent<{}> {
                             </div>
                             <div class="text-muted mt-2 ml-2 pagination-block">
                                 <PageCounter
-                                    currentPage={State.FilterModel.getFilters('userLogs').pageNumber}
-                                    rowsInTable={State.FilterModel.getFilters('userLogs').pageSize}
+                                    currentPage={State.FilterModel.getFilters('userLog').pageNumber}
+                                    rowsInTable={State.FilterModel.getFilters('userLog').pageSize}
                                     totalCount={State.LogModel.count}
                                 />
                             </div>
                         </div>
                         <div class="col-md-4 m-1 small-center">
                             <Pagination
-                                currentPage={State.FilterModel.getFilters('userLogs').pageNumber}
+                                currentPage={State.FilterModel.getFilters('userLog').pageNumber}
                                 numberOfPages={Math.ceil(State.LogModel.count
-                                    / State.FilterModel.getFilters('userLogs').pageSize)}
+                                    / State.FilterModel.getFilters('userLog').pageSize)}
                                 onChange={(newPage: number) => {
-                                    State.FilterModel.setFilter('userLogs', 'pageNumber', newPage);
-                                    this.fetchWithFilters();
+                                    State.FilterModel.setFilter('userLog', 'pageNumber', newPage);
+                                    this.fetchWithFilters(userId);
                                 }}
                             />
                         </div>

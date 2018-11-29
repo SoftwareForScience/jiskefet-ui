@@ -38,19 +38,14 @@ const UserModel = {
     },
     async fetchLogs(id: number, query?: string) {
         UserModel.isFetchingLogs = true;
-        console.log('fetching..');
-        console.log(`${process.env.API_URL}users/${id}/logs${query ? `?${query}` : ''}`);
         return request({
             method: 'GET',
             url: `${process.env.API_URL}users/${id}/logs${query ? `?${query}` : ''}`,
         }).then((result: { logs: Log[], count: number }) => {
-            console.log(`fetching logs from id: ${id}`);
-            UserModel.isFetchingLogs = false;
-            console.log('------------ retrieved results are -------------');
             console.log(result);
+            UserModel.isFetchingLogs = false;
             UserModel.logs = result.logs;
             UserModel.count = result.count;
-            console.log(UserModel.logs);
         }).catch((error: HttpError) => {
             UserModel.isFetchingLogs = false;
             State.HttpErrorModel.add(error);

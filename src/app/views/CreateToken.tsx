@@ -22,7 +22,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
         State.SubsystemModel.fetch();
         State.AuthModel.fetchProfile().then(() => {
             if (State.AuthModel.profile !== null) {
-                State.UserModel.fetchById(State.AuthModel.profile.id).then(() => {
+                State.UserModel.fetchById(State.AuthModel.profile.githubData.id).then(() => {
                     State.SubsystemPermissionModel.fetch(State.UserModel.current.userId).then(() => {
                         State.SubsystemPermissionModel.createToken.user = State.UserModel.current;
                     });

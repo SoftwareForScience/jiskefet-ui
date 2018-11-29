@@ -91,10 +91,10 @@ const authenticatedRoutes = {
             </Layout>
         ),
     },
-    '/profile': {
-        view: () => (
+    '/user/:userId': {
+        view: (vnode: m.Vnode<{ userId: number }>) => (
             <Layout>
-                <Profile />
+                <Profile userId={vnode.attrs.userId} />
             </Layout>
         ),
     }
