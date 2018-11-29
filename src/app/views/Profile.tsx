@@ -86,7 +86,7 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                     isLoading={State.UserModel.isFetchingLogs}
                     component={createDummyTable(State.FilterModel.getFilters('userLog').pageSize, LogColumns)}
                 >
-                    <div class="jf-top-padding collapse-transition">
+                    <div class="collapse-transition">
                         <Table
                             data={State.UserModel.logs}
                             columns={LogColumns}
