@@ -23,11 +23,11 @@ const UserModel = {
     currentGitHubInfo: {} as GithubProfileDto,
     count: 0 as number, // number of total rows available.
     logs: [] as Log[],
-    async fetchById(id: number) {
+    async fetchById(userId: number) {
         UserModel.isFetchingUser = true;
         return request({
             method: 'GET',
-            url: `${process.env.API_URL}users/${id}`,
+            url: `${process.env.API_URL}users/${userId}`,
         }).then((result: User) => {
             UserModel.isFetchingUser = false;
             UserModel.current = result;
@@ -42,7 +42,6 @@ const UserModel = {
             method: 'GET',
             url: `${process.env.API_URL}users/${id}/logs${query ? `?${query}` : ''}`,
         }).then((result: { logs: Log[], count: number }) => {
-            console.log(result);
             UserModel.isFetchingLogs = false;
             UserModel.logs = result.logs;
             UserModel.count = result.count;
