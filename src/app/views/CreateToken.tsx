@@ -18,17 +18,14 @@ import HttpErrorAlert from '../components/HttpErrorAlert';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
 
-    oninit() {
+    async oninit() {
         State.SubsystemModel.fetch();
-        State.AuthModel.fetchProfile().then(() => {
-            if (State.AuthModel.profile !== null) {
-                State.UserModel.fetchById(State.AuthModel.profile.id).then(() => {
-                    State.SubsystemPermissionModel.fetch(State.UserModel.current.userId).then(() => {
-                        State.SubsystemPermissionModel.createToken.user = State.UserModel.current;
-                    });
-                });
-            }
-        });
+        await State.AuthModel.fetchProfile();
+        if (State.AuthModel.profile !== null) {
+            await State.UserModel.fetchById(State.AuthModel.profile.userData.userId);
+            await State.SubsystemPermissionModel.fetch(State.UserModel.current.userId);
+            State.SubsystemPermissionModel.createToken.user = State.UserModel.current;
+        }
     }
 
     addDescription = (event: Event) => {

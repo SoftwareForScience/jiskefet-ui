@@ -10,19 +10,24 @@ import { HttpError } from '../interfaces/HttpError';
 import State from './State';
 import { request } from '../request';
 import { User } from '../interfaces/User';
+import { Log } from '../interfaces/Log';
+import { GithubProfileDto } from '../interfaces/GitHubProfile';
 
 /**
  * Stores the state around Run entities and contains api calls to change that state.
  */
 const UserModel = {
     isFetchingUser: false as boolean,
+    isFetchingLogs: false as boolean,
     current: {} as User,
-    async fetchById(id: number) {
+    currentGitHubInfo: {} as GithubProfileDto,
+    logCount: 0 as number, // number of total rows of logs.
+    logs: [] as Log[],
+    async fetchById(userId: number) {
         UserModel.isFetchingUser = true;
         return request({
             method: 'GET',
-            url: `${process.env.API_URL}users/${id}`,
-            withCredentials: false
+            url: `${process.env.API_URL}users/${userId}`,
         }).then((result: User) => {
             UserModel.isFetchingUser = false;
             UserModel.current = result;
@@ -30,7 +35,21 @@ const UserModel = {
             UserModel.isFetchingUser = false;
             State.HttpErrorModel.add(error);
         });
-    }
+    },
+    async fetchLogs(id: number, query?: string) {
+        UserModel.isFetchingLogs = true;
+        return request({
+            method: 'GET',
+            url: `${process.env.API_URL}users/${id}/logs${query ? `?${query}` : ''}`,
+        }).then((result: { data: Log[], count: number }) => {
+            UserModel.isFetchingLogs = false;
+            UserModel.logs = result.data;
+            UserModel.logCount = result.count;
+        }).catch((error: HttpError) => {
+            UserModel.isFetchingLogs = false;
+            State.HttpErrorModel.add(error);
+        });
+    },
 };
 
 type UserModel = typeof UserModel;

@@ -45,6 +45,12 @@ const DefaultFilters = {
         orderBy: 'subsystemName' as string | null,
         orderDirection: 'ASC' as OrderDirection | null,
         timeRange: 24 as number
+    },
+    userLog: {
+        orderBy: 'creationTime' as string | null,
+        orderDirection: 'DESC' as OrderDirection | null,
+        pageSize: 16 as number,
+        pageNumber: 1 as number | null
     }
 };
 
@@ -82,6 +88,12 @@ const Filters = {
         orderBy: null as string | null,
         orderDirection: null as OrderDirection | null,
         timeRange: null as number | null
+    },
+    userLog: {
+        orderBy: null as string | null,
+        orderDirection: null as OrderDirection | null,
+        pageSize: 16 as number,
+        pageNumber: 1 as number | null
     }
 };
 

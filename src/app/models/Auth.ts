@@ -22,7 +22,7 @@ const AuthModel = {
         AuthModel.isFetchingProfile = true;
         return request({
             method: 'GET',
-            url: `${process.env.API_URL}profile`
+            url: `${process.env.API_URL}user/profile`
         }).then((result: GithubProfileDto) => {
             AuthModel.isFetchingProfile = false;
             AuthModel.profile = result;

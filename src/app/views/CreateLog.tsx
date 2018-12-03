@@ -46,7 +46,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
             State.LogModel.createLog.runs.push(State.RunModel.current);
         }
         if (State.AuthModel.profile !== null) {
-            State.UserModel.fetchById(State.AuthModel.profile.id).then(() => {
+            State.UserModel.fetchById(State.AuthModel.profile.userData.userId).then(() => {
                 State.LogModel.createLog.user = State.UserModel.current;
                 State.LogModel.save().then(() => {
                     m.route.set('/Logs');
