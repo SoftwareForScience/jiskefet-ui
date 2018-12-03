@@ -21,7 +21,6 @@ const LogModel = {
     isPatchingLinkRunToLog: false as boolean,
     count: 0 as number, // number of total rows available.
     list: [] as Log[],
-    listUserLogs: [] as Log[],
     current: {} as Log,
     createLog: {} as LogCreate, // log being created
     async fetch(query?: string) {

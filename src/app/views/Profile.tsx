@@ -18,6 +18,7 @@ import PageCounter from '../components/PageCounter';
 import Pagination from '../components/Pagination';
 import { Event } from '../interfaces/Event';
 import { createDummyTable } from '../utility/DummyService';
+import HttpErrorAlert from '../components/HttpErrorAlert';
 
 interface Attrs {
     userId: number;
@@ -30,35 +31,33 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
 
     async oninit(vnode: VnodeDOM) {
         State.AuthModel.fetchProfile();
-        if (State.AuthModel.profile !== null) {
-            State.UserModel.fetchLogs(vnode.attrs.userId);
-            State.FilterModel.setFiltersToDefaults('userLog');
-            State.FilterModel.setFiltersFromUrl('userLog');
-            this.fetch(vnode.attrs.userId, State.FilterModel.getQueryString('userLog'));
-        }
+        State.UserModel.fetchLogs(vnode.attrs.userId);
+        await State.FilterModel.setFiltersToDefaults('userLog');
+        await State.FilterModel.setFiltersFromUrl('userLog');
+        this.fetchLogsforUser(vnode.attrs.userId, State.FilterModel.getQueryString('userLog'));
     }
 
     /**
      * Fetch logs with the query param given.
      */
-    fetch = (id: number, queryParam: string): void => {
+    fetchLogsforUser = (id: number, queryParam: string): void => {
         State.UserModel.fetchLogs(id, queryParam);
     }
 
     /**
      * Fetch logs with the filters currently in the state (in FilterModel).
      */
-    fetchWithFilters = (id: number): void => {
-        this.fetch(id, State.FilterModel.getQueryString('userLog'));
+    fetchLogsWithFilterOptions = (id: number): void => {
+        this.fetchLogsforUser(id, State.FilterModel.getQueryString('userLog'));
     }
 
     view(vnode: Vnode) {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         const profile = State.AuthModel.profile as GithubProfileDto;
         const { userId } = vnode.attrs;
-
         return (
-            <Spinner isLoading={State.AuthModel.isFetchingProfile}>
+            <HttpErrorAlert>
+                <Spinner isLoading={State.AuthModel.isFetchingProfile}>
                     <div>
                         {profile &&
                             <div class="card" style="width: 18rem;">
@@ -81,76 +80,77 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                             </div>
                         }
                     </div>
-                <div class="jf-top-padding"><h2>My logs</h2></div>
-                <Spinner
-                    isLoading={State.UserModel.isFetchingLogs}
-                    component={createDummyTable(State.FilterModel.getFilters('userLog').pageSize, LogColumns)}
-                >
-                    <div class="collapse-transition">
-                        <Table
-                            data={State.UserModel.logs}
-                            columns={LogColumns}
-                            orderBy={State.FilterModel.getFilters('userLog').orderBy}
-                            orderDirection={State.FilterModel.getFilters('userLog').orderDirection}
-                            onHeaderClick={(accessor: string) => {
+                    <div class="mt-2"><h2>My logs</h2></div>
+                    <Spinner
+                        isLoading={State.UserModel.isFetchingLogs}
+                        component={createDummyTable(State.FilterModel.getFilters('userLog').pageSize, LogColumns)}
+                    >
+                        <div class="collapse-transition">
+                            <Table
+                                data={State.UserModel.logs || []}
+                                columns={LogColumns}
+                                orderBy={State.FilterModel.getFilters('userLog').orderBy}
+                                orderDirection={State.FilterModel.getFilters('userLog').orderDirection}
+                                onHeaderClick={(accessor: string) => {
                                 State.FilterModel.switchOrderBy('userLog', accessor);
-                                this.fetchWithFilters(userId);
-                            }}
-                        />
-                    </div>
-                </Spinner>
-                <ContentBlock padding={1} >
-                    <div class="row">
-                        <div class="col-md-4 m-1 small-center" >
-                            <div class="pagination-block">
-                                <label
-                                    for="pageSize"
-                                    class="col-form-label col-form-label-sm mr-2"
-                                >
-                                    Page size
-                                </label>
-                            </div>
-                            <div class="pagination-block">
-                                <select
-                                    id="pageSize"
-                                    style="min-width: 75px; max-width: 75px; overflow: hidden;"
-                                    class="form-control form-control-sm"
-                                    name="pageSize"
-                                    onchange={(event: Event) => {
-                                        State.FilterModel.setFilter('userLog', 'pageSize', event.target.value);
-                                        State.FilterModel.setFilter('userLog', 'pageNumber', 1);
-                                        this.fetchWithFilters(userId);
-                                    }}
-                                    value={State.FilterModel.getFilters('userLog').pageSize}
-                                >
-                                    {pageSizes.map((pageSize: number) =>
-                                        // tslint:disable-next-line:jsx-key
-                                        <option value={pageSize}>{pageSize}</option>
-                                    )}
-                                </select>
-                            </div>
-                            <div class="text-muted mt-2 ml-2 pagination-block">
-                                <PageCounter
-                                    currentPage={State.FilterModel.getFilters('userLog').pageNumber}
-                                    rowsInTable={State.FilterModel.getFilters('userLog').pageSize}
-                                    totalCount={State.LogModel.count}
-                                />
-                            </div>
-                        </div>
-                        <div class="col-md-4 m-1 small-center">
-                            <Pagination
-                                currentPage={State.FilterModel.getFilters('userLog').pageNumber}
-                                numberOfPages={Math.ceil(State.LogModel.count
-                                    / State.FilterModel.getFilters('userLog').pageSize)}
-                                onChange={(newPage: number) => {
-                                    State.FilterModel.setFilter('userLog', 'pageNumber', newPage);
-                                    this.fetchWithFilters(userId);
+                                this.fetchLogsWithFilterOptions(userId);
                                 }}
                             />
                         </div>
-                    </div>
-                </ContentBlock>
-            </Spinner>
+                    </Spinner>
+                    <ContentBlock padding={1} >
+                        <div class="row">
+                            <div class="col-md-4 m-1 small-center" >
+                                <div class="pagination-block">
+                                    <label
+                                        for="pageSize"
+                                        class="col-form-label col-form-label-sm mr-2"
+                                    >
+                                        Page size
+                                    </label>
+                                </div>
+                                <div class="pagination-block">
+                                    <select
+                                        id="pageSize"
+                                        style="min-width: 75px; max-width: 75px; overflow: hidden;"
+                                        class="form-control form-control-sm"
+                                        name="pageSize"
+                                        onchange={(event: Event) => {
+                                            State.FilterModel.setFilter('userLog', 'pageSize', event.target.value);
+                                            State.FilterModel.setFilter('userLog', 'pageNumber', 1);
+                                            this.fetchLogsWithFilterOptions(userId);
+                                        }}
+                                        value={State.FilterModel.getFilters('userLog').pageSize}
+                                    >
+                                        {pageSizes.map((pageSize: number) =>
+                                            // tslint:disable-next-line:jsx-key
+                                            <option value={pageSize}>{pageSize}</option>
+                                        )}
+                                    </select>
+                                </div>
+                                <div class="text-muted mt-2 ml-2 pagination-block">
+                                    <PageCounter
+                                        currentPage={State.FilterModel.getFilters('userLog').pageNumber}
+                                        rowsInTable={State.FilterModel.getFilters('userLog').pageSize}
+                                        totalCount={State.UserModel.logCount}
+                                    />
+                                </div>
+                            </div>
+                            <div class="col-md-4 m-1 small-center">
+                                <Pagination
+                                    currentPage={State.FilterModel.getFilters('userLog').pageNumber}
+                                    numberOfPages={Math.ceil(State.UserModel.logCount
+                                        / State.FilterModel.getFilters('userLog').pageSize)}
+                                    onChange={(newPage: number) => {
+                                        State.FilterModel.setFilter('userLog', 'pageNumber', newPage);
+                                        this.fetchLogsWithFilterOptions(userId);
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </ContentBlock>
+                </Spinner>
+            </HttpErrorAlert>
         );
     }
 }

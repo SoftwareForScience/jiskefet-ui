@@ -21,7 +21,7 @@ const UserModel = {
     isFetchingLogs: false as boolean,
     current: {} as User,
     currentGitHubInfo: {} as GithubProfileDto,
-    count: 0 as number, // number of total rows available.
+    logCount: 0 as number, // number of total rows of logs.
     logs: [] as Log[],
     async fetchById(userId: number) {
         UserModel.isFetchingUser = true;
@@ -41,10 +41,10 @@ const UserModel = {
         return request({
             method: 'GET',
             url: `${process.env.API_URL}users/${id}/logs${query ? `?${query}` : ''}`,
-        }).then((result: { logs: Log[], count: number }) => {
+        }).then((result: { data: Log[], count: number }) => {
             UserModel.isFetchingLogs = false;
-            UserModel.logs = result.logs;
-            UserModel.count = result.count;
+            UserModel.logs = result.data;
+            UserModel.logCount = result.count;
         }).catch((error: HttpError) => {
             UserModel.isFetchingLogs = false;
             State.HttpErrorModel.add(error);

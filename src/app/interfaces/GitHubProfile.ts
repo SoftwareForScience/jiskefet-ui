@@ -8,7 +8,6 @@
 
 /**
  * Object received from GitHub when calling resource server for user info.
- * Endpoint: https://api.github.com/user
  */
 export interface GithubProfileDto {
     userData: {
