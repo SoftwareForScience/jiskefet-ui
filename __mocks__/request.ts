@@ -92,7 +92,9 @@ const runs = [
 ];
 
 export default function request(url: string) {
-  return new Promise((resolve, reject) => {
+  return new Promise((
+    resolve: (value?: {} | PromiseLike<{}> | undefined) => void,
+    reject: (reason?: any) => void) => {
     const logId = url.substr(url.lastIndexOf('/') + 1);
     process.nextTick(
       () => (logs[logId]
