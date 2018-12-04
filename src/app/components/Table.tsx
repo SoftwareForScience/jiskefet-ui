@@ -7,61 +7,90 @@
  */
 
 import * as m from 'mithril';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { Column } from '../interfaces/Column';
+import TableHeader from './TableHeader';
+import { OrderDirection } from '../enums/OrderDirection';
 
-interface Column {
-    header: string;
-    accessor: string;
-    cell?: (row: object) => object;
+interface Attrs {
+    /**
+     * The data that the table displays. Each object in the array represents
+     * a row where each field represents the column and its value.
+     */
+    data: Array<{ [column: string]: any }>; // Todo: better typedef needed
+    /**
+     * The columns (table headers) for the table.
+     */
+    columns: Column[];
+    /**
+     * The optional css class for the table.
+     */
+    className?: string;
+    /**
+     * Function being called when a table header is clicked.
+     */
+    onHeaderClick?: (accessor: string) => void;
+    orderBy?: string;
+    orderDirection?: OrderDirection;
 }
 
-export default class Table implements m.Component {
-    data: any[];
-    columns: Column[];
-    class: string; // example: 'font-sm bg-dark'
+type Vnode = m.Vnode<Attrs, Table>;
 
-    constructor(vnode: any) {
-        this.data = vnode.attrs.data;
-        this.columns = vnode.attrs.columns;
-        this.class = vnode.attrs.class;
-    }
-
-    onupdate(vnode: any) {
-        if (this.columns !== vnode.attrs.columns) {
-            this.columns = vnode.attrs.columns;
-            // m.redraw();
-        }
-        if (this.data !== vnode.attrs.data) {
-            this.data = vnode.attrs.data;
-            m.redraw();
+export default class Table extends MithrilTsxComponent<Attrs> {
+    /**
+     * Returns the order direction for a column, based on orderBy and orderDirection.
+     */
+    getOrder = (column: Column, orderBy: string, orderDirection: OrderDirection): OrderDirection | null => {
+        if (orderBy === column.accessor) {
+            return orderDirection;
+        } else {
+            return null;
         }
     }
 
-    view() {
+    view(vnode: Vnode) {
+        const { columns, className, data, onHeaderClick, orderBy, orderDirection } = vnode.attrs;
         return (
-            <div class="table-responsive-md">
-                <table class={`table table-sm table-bordered table-hover shadow-sm ${this.class}`}>
+            <div class="table-responsive">
+                <table class={`table table-sm table-bordered table-hover jf-table ${className || ''}`}>
                     <thead class="thead-light">
                         <tr>
-                            {this.columns && this.columns.map(column =>
-                                <th scope="col" key={column.accessor}>
-                                    {column.header}
-                                </th>
+                            {columns && columns.map((column: Column) =>
+                                // tslint:disable-next-line:jsx-key
+                                <TableHeader
+                                    column={column}
+                                    // fix ternary
+                                    orderDirection={(orderBy && orderDirection) ?
+                                        this.getOrder(column, orderBy, orderDirection) : null}
+                                    onClick={() => (onHeaderClick ? onHeaderClick(column.accessor) : null)}
+                                />
                             )}
                         </tr>
                     </thead>
                     <tbody>
-                        {this.data && this.data.map(row =>
+                        {data && data.map((row: object) =>
                             // tslint:disable-next-line:jsx-key
                             <tr>
-                                {this.columns.map((column: Column) => (
+                                {columns.map((column: Column) => (
                                     <td>
-                                        {column.cell ? column.cell(row) : row[column.accessor]}
+                                        {
+                                            (column.cell ?
+                                            column.cell(row)
+                                            : row[column.accessor] as string | number | boolean
+                                        )}
                                     </td>
                                 ))}
                             </tr>
                         )}
                     </tbody>
                 </table>
+                {data.length === 0 && <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-light text-center" role="alert">
+                            No results found
+                        </div>
+                    </div>
+                </div>}
             </div>
         );
     }

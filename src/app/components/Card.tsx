@@ -7,28 +7,29 @@
  */
 
 import * as m from 'mithril';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 
-export default class Card implements m.Component {
-    data: any[];
+interface Attrs {
+    data: object[];
     title: string;
+}
 
-    constructor(vnode: any) {
-        this.data = vnode.attrs.data;
-        this.title = vnode.attrs.title;
-    }
+type Vnode = m.Vnode<Attrs, Card>;
 
-    view() {
+export default class Card extends MithrilTsxComponent<Attrs> {
+    view(vnode: Vnode) {
+        const { data, title } = vnode.attrs;
         return (
             <div className="card shadow-sm">
                 <div class="card-header">
-                    {this.title}
+                    {title}
                 </div>
                 <div className="card-body">
                     <p className="card-text">
-                        {Object.keys(this.data).map((key) =>
-                            (<dl class="row mb-1" key={this.data[key]}>
+                        {Object.keys(data).map((key: string) =>
+                            (<dl class="row mb-1">
                                 <dt class="col-sm-6 text-muted">{key}:</dt>
-                                <dd class="col-sm-6">{this.data[key]}</dd>
+                                {/* <dd class="col-sm-6">{data[key]}</dd> */}
                             </dl>)
                         )}
                     </p>

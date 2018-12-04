@@ -8,31 +8,43 @@
 
 import * as m from 'mithril';
 import * as marked from 'marked';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+
+interface Attrs {
+    /**
+     * This key sets the viewer id in html so that there will be no
+     * conflicts between multiple markdown viewers.
+     */
+    id: string;
+
+    /**
+     * This string contains the markdown text that needs to be parsed to
+     * html.
+     */
+    content: string;
+}
+
+type Vnode = m.Vnode<Attrs, MarkdownViewer>;
+type VnodeDOM = m.VnodeDOM<Attrs, MarkdownViewer>;
 
 /**
  * Displays markdown as html.
  */
-export default class MarkdownViewer implements m.Component {
-    content: string;
+export default class MarkdownViewer extends MithrilTsxComponent<Attrs> {
 
-    constructor(vnode: any) {
-        this.content = vnode.attrs.content;
+    oncreate(vnode: VnodeDOM) {
+        this.parse(vnode.attrs.id, vnode.attrs.content);
     }
 
-    oncreate() {
-        this.parse(this.content);
-    }
-
-    onupdate(vnode: any) {
-        this.content = vnode.attrs.content;
-        this.parse(this.content);
+    onupdate(vnode: VnodeDOM) {
+        this.parse(vnode.attrs.id, vnode.attrs.content);
     }
 
     /**
-     * Inserts raw markdown content into viewer as HMTL.
+     * Inserts raw markdown content into viewer as HTML.
      */
-    parse(content: string) {
-        const markdownViewer = document.getElementById('jf-markdown-viewer');
+    parse(key: string, content: string): void {
+        const markdownViewer: HTMLElement | null = document.getElementById(key);
         if (markdownViewer) {
             if (content) {
                 markdownViewer.innerHTML = marked(content);
@@ -41,10 +53,11 @@ export default class MarkdownViewer implements m.Component {
             }
         }
     }
-
-    view() {
+    view(vnode: Vnode) {
         return (
-            <div id="jf-markdown-viewer" />
+            <div class="jf-markdown-wrapper" >
+                <div id={vnode.attrs.id} class="jf-markdown-viewer" />
+            </div >
         );
     }
 }

@@ -8,26 +8,32 @@
 
 import * as m from 'mithril';
 import State from '../models/State';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 
-export default class SuccessMessage implements m.Component {
+type Vnode = m.Vnode<{}, SuccessMessage>;
+
+export default class SuccessMessage extends MithrilTsxComponent<{}> {
     successMessages: string[];
 
-    constructor() {
+    constructor(vnode: Vnode) {
+        super();
         this.successMessages = State.SuccessModel.getSuccessMessages();
     }
 
     view() {
-        const successMessages: string[] = this.successMessages;
         return (
             <div>
-                {successMessages &&
+                {this.successMessages &&
                     <div className="row">
                         <div className="col-md-12">
                             <div className="text-center">
-                                {successMessages.map(e =>
+                                {this.successMessages.map((message: string) =>
                                     // tslint:disable-next-line:jsx-key
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <strong>{e}</strong>
+                                    <div
+                                        class="alert alert-success alert-dismissible fade show jf-success-word-wrap"
+                                        role="alert"
+                                    >
+                                        <strong>{message}</strong>
                                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>

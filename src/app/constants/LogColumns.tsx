@@ -10,7 +10,10 @@ import * as m from 'mithril';
 import { Log } from '../interfaces/Log';
 import { format } from 'date-fns';
 
-const LogColumns = [
+/**
+ * The columns used by the Table that holds Log entities.
+ */
+const LogColumns: any[] = [
     {
         header: 'Log id',
         accessor: 'logId'
@@ -18,7 +21,7 @@ const LogColumns = [
     {
         header: 'Title',
         accessor: 'title',
-        cell: (row: Log) => (
+        cell: (row: Log): JSX.Element => (
             <a href={`/logs/${row.logId}`} oncreate={m.route.link}>
                 {row.title}
             </a>
@@ -27,7 +30,7 @@ const LogColumns = [
     {
         header: 'Sub-type',
         accessor: 'subtype',
-        cell: (row: Log) => (
+        cell: (row: Log): JSX.Element | string => (
             row.subtype === 'run' ?
                 (
                     <div class="text-center">
@@ -40,7 +43,7 @@ const LogColumns = [
     {
         header: 'Origin',
         accessor: 'origin',
-        cell: (row: Log) => (
+        cell: (row: Log): JSX.Element | string => (
             row.origin === 'human' ?
                 (
                     <div class="text-center">
@@ -49,10 +52,16 @@ const LogColumns = [
                 )
                 : row.origin
         )
-    }, {
+    },
+    {
         header: 'Creation time',
         accessor: 'creationTime',
-        cell: (row: Log) => (row.creationTime ? format(row.creationTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        cell: (row: Log): string => (row.creationTime ? format(row.creationTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+    },
+    {
+        header: 'Author',
+        accessor: 'user',
+        cell: (row: Log): string => (row.user ? row.user.userId.toString() : 'Unknown')
     }
 ];
 

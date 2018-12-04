@@ -8,7 +8,7 @@
 
 /**
  * An error received from, for example, a failed API call.
- * Returned in the catch portion of the Promise m.request().
+ * Returned in the catch portion of the Promise request().
  */
 export interface HttpError {
     error: string;

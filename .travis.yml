@@ -3,11 +3,4 @@ node_js:
  - 'stable'
 install:
  - npm install
-cache:
- directories:
- - node_modules
-script: 
- - tslint -c tslint.json 'src/**/*.ts'
- - npm run test
-after_success:
- - codecov -f coverage/*.json
+script: tslint -p tsconfig.json -c tslint.json

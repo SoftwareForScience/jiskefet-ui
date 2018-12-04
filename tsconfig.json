@@ -6,7 +6,7 @@
 			"es2015",
 			"dom"
 		],
-		"noImplicitAny": false,
+		"noImplicitAny": true,
 		"noImplicitReturns": true,
 		"suppressImplicitAnyIndexErrors": true,
 		"preserveConstEnums": true,

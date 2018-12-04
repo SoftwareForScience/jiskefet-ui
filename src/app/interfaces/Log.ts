@@ -6,18 +6,23 @@
  * copied verbatim in the file "LICENSE"
  */
 
+import { Attachment } from './Attachment';
+import { User } from './User';
+
 /**
  * Interface with the fields for fetching one or more Log entries.
  */
 export interface Log {
-    logId?: number;
+    logId: number;
     subtype: string;
     userId?: number;
     origin: string;
     creationTime: string;
     title: string;
     text: string;
+    user: User;
     runs?: any[];
+    attachments?: any[];
 }
 
 /**
@@ -26,9 +31,10 @@ export interface Log {
 export interface LogCreate {
     logId?: number;
     subtype: string;
-    userId?: number;
     origin: string;
     title: string;
     text: string;
+    user: User;
     runs: any[];
+    attachments?: Attachment[];
 }

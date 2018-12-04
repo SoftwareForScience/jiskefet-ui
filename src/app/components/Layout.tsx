@@ -10,9 +10,12 @@ import * as m from 'mithril';
 import NavBar from './NavBar';
 import SideBar from './SideBar';
 import Content from './Content';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
 
-export default class Layout implements m.Component {
-    view(vnode: any) {
+type Vnode = m.Vnode<{}, Layout>;
+
+export default class Layout extends MithrilTsxComponent<{}> {
+    view(vnode: Vnode) {
         return (
             <div>
                 <NavBar />

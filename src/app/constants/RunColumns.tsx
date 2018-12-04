@@ -10,11 +10,14 @@ import * as m from 'mithril';
 import { format } from 'date-fns';
 import { Run } from '../interfaces/Run';
 
+/**
+ * The columns used by the Table that holds Run entities.
+ */
 const RunColumns = [
     {
-        header: 'Run id',
+        header: 'Run number',
         accessor: 'runNumber',
-        cell: row => (
+        cell: (row: Run): JSX.Element => (
             <a href={`/runs/${row.runNumber}`} oncreate={m.route.link}>
                 {row.runNumber}
             </a>
@@ -23,22 +26,22 @@ const RunColumns = [
     {
         header: 'Time 02 start',
         accessor: 'timeO2Start',
-        cell: (row: Run) => (row.timeO2Start ? format(row.timeO2Start, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        cell: (row: Run): string => (row.timeO2Start ? format(row.timeO2Start, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Time 02 end',
         accessor: 'timeO2End',
-        cell: (row: Run) => (row.timeO2End ? format(row.timeO2End, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        cell: (row: Run): string => (row.timeO2End ? format(row.timeO2End, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Time trg start',
         accessor: 'timeTrgStart',
-        cell: (row: Run) => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        cell: (row: Run): string => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Time trg end',
         accessor: 'timeTrgEnd',
-        cell: (row: Run) => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        cell: (row: Run): string => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Activity id',

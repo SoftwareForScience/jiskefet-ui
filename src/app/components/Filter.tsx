@@ -7,99 +7,75 @@
  */
 
 import * as m from 'mithril';
+import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { Event } from '../interfaces/Event';
+import Collapse from './Collapse';
 
-interface FilterParam {
-    name: string;
+interface InputField {
+    name: string; // name should exist as a key in the filters attribute.
     type: string;
-    value: any | null;
     placeholder?: string;
     label?: string;
+    event: string;
 }
 
-export default class Filter implements m.Component {
-    // Attrs
-    private inputFields: FilterParam[];
-    private fetch;
-    private route: string;
-
-    // Class props
-    private routeFilters: object; // Filters that are in the route's query.
-    private mergedFilters: FilterParam[]; // The data from inputFields and the values from routeFilters combined.
-
-    constructor(vnode: any) {
-        this.routeFilters = m.route.param();
-        this.inputFields = vnode.attrs.inputFields;
-        this.fetch = vnode.attrs.fetch;
-        this.route = vnode.attrs.route;
-        this.mergedFilters = this.mergeFilters(this.inputFields, this.routeFilters);
-        this.fetchWithFilters(this.routeFilters);
-    }
-
+interface Attrs {
     /**
-     * Merges the filterParams with the filters in the route.
+     * The input fields used for filtering.
      */
-    mergeFilters = (inputParams: FilterParam[], routeFilters: object) => {
-        const merged = inputParams.map((filter: FilterParam) => ({
-            ...filter,
-            value: routeFilters[filter.name] || null
-        }));
-        return merged;
-    }
-
+    inputFields: InputField[];
     /**
-     * Add a filter from an input element to the filters class property.
+     * Function being called when the event happens on an input field.
      */
-    addFilter = (event) => {
-        const key = event.target.id;
-        const value = event.target.value;
-        value ? this.routeFilters[key] = value : delete this.routeFilters[key];
-        this.updateRoute(this.routeFilters, this.route);
-        this.mergedFilters = this.mergeFilters(this.inputFields, this.routeFilters);
-        this.fetchWithFilters(this.routeFilters);
-    }
-
+    onEvent: (key: string, value: string | number) => void;
     /**
-     * Update the route with query params in filters
-     * @param filters The filters.
-     * @param route e.g. 'runs', as in site.com/runs
+     * The values of the filters.
      */
-    updateRoute(filters: object, route: string) {
-        const queryString = m.buildQueryString(filters);
-        m.route.set(`/${route}?${queryString}`);
-    }
+    filters: { [key: string]: string | number | null };
+}
 
-    /**
-     * Fetch the entities that match the filters.
-     * Example: {key: 'value'} will fetch with a query param of '?key=value'.
-     * @param filters The filters.
-     */
-    fetchWithFilters(filters: object) {
-        const queryString = m.buildQueryString(filters);
-        this.fetch(queryString);
-    }
+type Vnode = m.Vnode<Attrs, Filter>;
 
-    view() {
+export default class Filter extends MithrilTsxComponent<Attrs> {
+
+    view(vnode: Vnode) {
+        const { inputFields, onEvent, filters } = vnode.attrs;
         return (
-            <div class="filters-responsive">
-                <div class="bg-light rounded p-4 shadow-sm border">
-                    {this.mergedFilters && this.mergedFilters.map(filter =>
+            <div>
+                <Collapse
+                    id={'filters'}
+                    icon={<span class="fas fa-filter" />}
+                    title={'Filters'}
+                >
+                    {inputFields && inputFields.map((inputField: InputField) =>
                         (
-                            <div class="form-group">
-                                <label key={filter.name} for={filter.name}>
-                                    {filter.label || `Filter for ${filter.name}`}
-                                </label>
-                                <input
-                                    type={filter.type}
-                                    class="form-control"
-                                    id={filter.name}
-                                    onblur={this.addFilter}
-                                    value={filter.value}
-                                    placeholder={filter.placeholder}
-                                />
-                            </div>
+                            <Collapse
+                                id={inputField.name}
+                                icon={
+                                    <i
+                                        class="fas fa-angle-down mt-2 jf-rotate-if-collapsed jf-rotate-if-not-collapsed"
+                                    />
+                                }
+                                title={inputField.label ? inputField.label : inputField.name}
+                            >
+                                <div class="form-group mt-2">
+                                    <input
+                                        type={inputField.type}
+                                        class="form-control form-control-sm"
+                                        id={inputField.name}
+                                        {...{
+                                            [inputField.event]: (event: Event) => {
+                                                onEvent(inputField.name, event.target.value);
+                                            }
+                                        }}
+                                        value={filters[inputField.name]}
+                                        placeholder={inputField.placeholder}
+                                    />
+                                </div>
+                            </Collapse>
                         )
                     )}
-                </div>
+                </Collapse>
             </div>
         );
     }

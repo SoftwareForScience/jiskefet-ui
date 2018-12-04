@@ -6,6 +6,9 @@
  * copied verbatim in the file "LICENSE"
  */
 
+/**
+ * Interface with the fields for fetching one or more Log entries.
+ */
 export interface Run {
     runNumber: number;
     timeO2Start: Date | string;
