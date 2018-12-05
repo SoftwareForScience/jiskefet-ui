@@ -1,9 +1,10 @@
+import { lorem } from 'faker';
+
 const timeout = global.TIME_OUT;
 const maxWaitTime = 2000;
 const url = global.TEST_URL;
 const currentDateTime = new Date().toLocaleString();
 const logTestTitle = `puppeteer test title ${currentDateTime}`;
-const faker = require('faker');
 
 describe(
   'Jiskefet Filters',
@@ -27,7 +28,7 @@ describe(
       await page.click('input[id=runs]');
       await page.type('input[id=runs]', '1');
       await page.click('textarea[id=markdown]');
-      await page.type('textarea[id=markdown]', faker.lorem.text());
+      await page.type('textarea[id=markdown]', lorem.text());
       await page.screenshot({ path: '__tests__/screenshots/jiskefet_log_filled_in.png' });
       await page.select('select[id=subtype]', 'run');
       await page.click('button[type=submit]');
