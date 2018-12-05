@@ -63,14 +63,14 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                             <div class="card" style="width: 18rem;">
                                 <img
                                     class="card-img-top"
-                                    src={profile.githubData.avatar_url}
+                                    src={profile.profileData.avatar_url}
                                     alt="Card image cap"
                                 />
                                 <div class="card-body">
-                                    <h5 class="card-title m-0">{profile.githubData.name}</h5>
-                                    <p class="card-text">{profile.githubData.login}</p>
+                                    <h5 class="card-title m-0">{profile.profileData.name}</h5>
+                                    <p class="card-text">{profile.profileData.login}</p>
                                     <a
-                                        href={profile.githubData.html_url}
+                                        href={profile.profileData.html_url}
                                         target="_blank"
                                         class="btn btn-outline-success"
                                     >
@@ -92,8 +92,8 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                                 orderBy={State.FilterModel.getFilters('userLog').orderBy}
                                 orderDirection={State.FilterModel.getFilters('userLog').orderDirection}
                                 onHeaderClick={(accessor: string) => {
-                                State.FilterModel.switchOrderBy('userLog', accessor);
-                                this.fetchLogsWithFilterOptions(userId);
+                                    State.FilterModel.switchOrderBy('userLog', accessor);
+                                    this.fetchLogsWithFilterOptions(userId);
                                 }}
                             />
                         </div>

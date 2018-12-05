@@ -8,12 +8,13 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { GithubProfileDto } from '../interfaces/GitHubProfile';
 import State from '../models/State';
 import Spinner from './Spinner';
+import { UserProfile } from '../interfaces/UserProfile';
+import { GithubProfileDto } from '../interfaces/GitHubProfile';
 
 interface Attrs {
-    profile: GithubProfileDto | null;
+    profile: UserProfile | null;
 }
 
 type Vnode = m.Vnode<Attrs, ProfileNavItem>;
@@ -33,9 +34,9 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                 aria-expanded="false"
                             >
                                 <img
-                                    src={profile.githubData.avatar_url}
+                                    src={(profile as GithubProfileDto).profileData.avatar_url}
                                     class="rounded"
-                                    alt={`@${profile.githubData.email}`}
+                                    alt={`@${(profile as GithubProfileDto).profileData.email}`}
                                     height="25"
                                     width="25"
                                 />
@@ -44,14 +45,14 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                             <div class="dropdown-menu dropdown-menu-right">
                                 <div
                                     class="dropdown-item jf-dropdown-name"
-                                    href={`/user/${profile.userData.userId}`}
+                                    href={`/user/${(profile as GithubProfileDto).userData.userId}`}
                                     oncreate={m.route.link}
                                 >
-                                    Signed in as <br /> <b>{profile.githubData.login}</b>
+                                    Signed in as <br /> <b>{(profile as GithubProfileDto).profileData.login}</b>
                                 </div>
                                 <div class="dropdown-divider" />
                                 <button
-                                    href={`/user/${profile.userData.userId}`}
+                                    href={`/user/${(profile as GithubProfileDto).userData.userId}`}
                                     oncreate={m.route.link}
                                     class="dropdown-item jf-dropdown-item"
                                     type="button"

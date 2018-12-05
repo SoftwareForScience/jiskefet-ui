@@ -9,13 +9,13 @@
 import * as Cookie from 'js-cookie';
 import * as m from 'mithril';
 import { initialize } from '../app';
-import { GithubProfileDto } from '../interfaces/GitHubProfile';
 import { request } from '../request';
 import { HttpError } from '../interfaces/HttpError';
 import State from './State';
+import { UserProfile } from '../interfaces/UserProfile';
 
 const AuthModel = {
-    profile: null as GithubProfileDto | null,
+    profile: null as UserProfile | null,
     isAuthorizing: false as boolean,
     isFetchingProfile: false as boolean,
     async fetchProfile() {
@@ -23,7 +23,7 @@ const AuthModel = {
         return request({
             method: 'GET',
             url: `${process.env.API_URL}user/profile`
-        }).then((result: GithubProfileDto) => {
+        }).then((result: UserProfile) => {
             AuthModel.isFetchingProfile = false;
             AuthModel.profile = result;
         }).catch((error: HttpError) => {
