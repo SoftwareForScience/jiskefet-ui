@@ -18,7 +18,11 @@ And the **Ansible playbook** to deploy the application can be found here: https:
 $ npm install
 ```
 
-Copy .env.dist as .env and set your own values.
+### Environment file
+Copy .env.dist as .env and set your own values.  
+The `API_URL` is the URL of the API endpoints for the application.  
+The `TEST_URL` is the URL for jest and puppeteer, the tests will run against the this URL.  
+The `AUTH_URL` is the URL for the external authentication provider.
 
 ## Running the app
 
