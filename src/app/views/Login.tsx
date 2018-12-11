@@ -54,7 +54,13 @@ export default class Login extends MithrilTsxComponent<{}> {
                                     Sign up
                                 </button>
                             </a>
-                            <a href={process.env.AUTH_URL}>
+                            <a
+                                href={
+                                    process.env.USE_CERN_SSS === 'true'
+                                        ? process.env.CERN_AUTH_URL
+                                        : process.env.GITHUB_AUTH_UR
+                                }
+                            >
                                 <button type="button" class="btn btn-success btn-lg">
                                     <span class="mr-2">Sign in with GitHub</span>
                                     <img src="../../assets/github_logo.svg" alt="" />
