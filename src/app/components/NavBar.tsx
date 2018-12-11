@@ -50,9 +50,9 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                             :
                             <a
                                 href={
-                                    process.env.USE_CERN_SSS === 'true'
+                                    process.env.USE_CERN_SSO === 'true'
                                         ? process.env.CERN_AUTH_URL
-                                        : process.env.GITHUB_AUTH_UR
+                                        : process.env.GITHUB_AUTH_URL
                                 }
                             >
                                 <button type="button" class="btn btn-outline-success">
