@@ -87,6 +87,10 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                             <span class="badge badge-success">
                                                                 {State.LogModel.current.origin}
                                                             </span>
+                                                            : State.LogModel.current.origin === 'process' ?
+                                                            <span class="badge badge-primary">
+                                                                {State.LogModel.current.origin}
+                                                            </span>
                                                             : State.LogModel.current.origin}
                                                     </dd>
 
