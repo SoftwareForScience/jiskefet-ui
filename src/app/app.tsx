@@ -21,9 +21,9 @@ import * as Cookie from 'js-cookie';
 import Login from './views/Login';
 import Profile from './views/Profile';
 import SubsystemsOverview from './views/SubsystemsOverview';
+import Loader from './components/Loader';
 
 m.route.prefix('');
-
 /**
  * Routes enabled when user is authenticated.
  */
@@ -32,6 +32,13 @@ const authenticatedRoutes = {
         view: () => (
             <Layout>
                 <Logs />
+            </Layout>
+        ),
+    },
+    '/callback': {
+        view: () => (
+            <Layout>
+                <Loader />
             </Layout>
         ),
     },
