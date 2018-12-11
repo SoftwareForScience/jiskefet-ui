@@ -54,6 +54,14 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                 <HttpErrorAlert>
                     <div class="row">
                         <div class="col-9 mx-auto bg-light rounded p-4 shadow-sm">
+                            <div><h2>Jiskefet v0.3</h2></div>
+                            <p>
+                                Click&nbsp;
+                                <a href={`${process.env.API_URL}doc/`} rel="external noopener" target="_blank">
+                                    here
+                                </a>
+                                &nbsp;for more information about the jiskefet api.
+                            </p>
                             <div><h2>Create a new token</h2></div>
                             <div>
                                 <p> For a machine to make use of jiskefet logging system,

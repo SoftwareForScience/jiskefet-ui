@@ -76,11 +76,11 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                     <dd class="col-sm-6">
                                                         {State.RunModel.current.runNumber}
                                                     </dd>
-                                                    <dt class="col-sm-6">Time O2 start</dt>
+                                                    <dt class="col-sm-6">Time O&sup2; start</dt>
                                                     <dd class="col-sm-6">
                                                         {formatDateField(State.RunModel.current.timeO2Start)}
                                                     </dd>
-                                                    <dt class="col-sm-6">Time O2 end</dt>
+                                                    <dt class="col-sm-6">Time O&sup2; end</dt>
                                                     <dd class="col-sm-6">
                                                         {formatDateField(State.RunModel.current.timeO2End)}
                                                     </dd>
