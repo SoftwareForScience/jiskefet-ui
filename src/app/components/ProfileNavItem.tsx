@@ -12,6 +12,7 @@ import State from '../models/State';
 import Spinner from './Spinner';
 import { UserProfile } from '../interfaces/UserProfile';
 import { GithubProfileDto } from '../interfaces/GitHubProfile';
+import { CernProfileDto } from '../interfaces/CernProfile';
 
 interface Attrs {
     profile: UserProfile | null;
@@ -22,6 +23,7 @@ type Vnode = m.Vnode<Attrs, ProfileNavItem>;
 export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
         const { profile } = vnode.attrs;
+        const isCernProfile = process.env.USE_CERN_SSO === 'true';
         return (
             <Spinner isLoading={State.AuthModel.isFetchingProfile} class="jf-loader-sm mr-3">
                 <div class="jf-profile-nav-item">
@@ -34,9 +36,11 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                 aria-expanded="false"
                             >
                                 <img
-                                    src={(profile as GithubProfileDto).profileData.avatar_url}
+                                    src={isCernProfile
+                                        ? 'https://via.placeholder.com/300'
+                                        : (profile as GithubProfileDto).profileData.avatar_url}
                                     class="rounded"
-                                    alt={`@${(profile as GithubProfileDto).profileData.email}`}
+                                    alt={`@${profile.profileData.name}`}
                                     height="25"
                                     width="25"
                                 />
@@ -45,14 +49,16 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                             <div class="dropdown-menu dropdown-menu-right">
                                 <div
                                     class="dropdown-item jf-dropdown-name"
-                                    href={`/user/${(profile as GithubProfileDto).userData.userId}`}
+                                    href={`/user/${profile.userData.userId}`}
                                     oncreate={m.route.link}
                                 >
-                                    Signed in as <br /> <b>{(profile as GithubProfileDto).profileData.login}</b>
+                                    Signed in as <br /> <b>{isCernProfile
+                                        ? (profile as CernProfileDto).profileData.username
+                                        : (profile as GithubProfileDto).profileData.login}</b>
                                 </div>
                                 <div class="dropdown-divider" />
                                 <button
-                                    href={`/user/${(profile as GithubProfileDto).userData.userId}`}
+                                    href={`/user/${profile.userData.userId}`}
                                     oncreate={m.route.link}
                                     class="dropdown-item jf-dropdown-item"
                                     type="button"

@@ -7,11 +7,14 @@
  */
 
 export abstract class UserProfile {
-    userData: {
+    public userData: {
         userId: number;
         externalUserId: number;
         samsId: number;
     };
-    profileData: {
+    public profileData: {
+        id: number;
+        name: string;
+        email: string | null;
     };
 }

@@ -11,7 +11,7 @@ import { UserProfile } from './UserProfile';
 /**
  * Object received from GitHub when calling resource server for user info.
  */
-export interface GithubProfileDto extends UserProfile {
+export class GithubProfileDto extends UserProfile {
     userData: {
         userId: number;
         externalUserId: number;
