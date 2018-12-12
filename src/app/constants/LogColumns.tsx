@@ -50,7 +50,12 @@ const LogColumns: any[] = [
                         <span class="badge badge-success">{row.origin}</span>
                     </div>
                 )
-                : row.origin
+                : row.origin === 'process' ?
+                (
+                    <div class="text-center">
+                        <span class="badge badge-primary">{row.origin}</span>
+                    </div>
+                ) : row.origin
         )
     },
     {
