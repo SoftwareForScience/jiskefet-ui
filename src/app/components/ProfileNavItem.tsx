@@ -72,8 +72,20 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                     class="dropdown-item jf-dropdown-item"
                                     type="button"
                                 >
-                                    Developer section
+                                    Tokens
                                 </button>
+                                <div class="dropdown-divider" />
+                                <a
+                                    href={`${process.env.API_URL}doc/`}
+                                    target="_blank"
+                                >
+                                    <button
+                                        class="dropdown-item jf-dropdown-item"
+                                        type="button"
+                                    >
+                                        API docs
+                                    </button>
+                                </a>
                                 <div class="dropdown-divider" />
                                 <button
                                     type="button"

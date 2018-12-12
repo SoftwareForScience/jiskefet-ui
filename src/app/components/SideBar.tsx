@@ -29,6 +29,7 @@ export default class SideBar extends MithrilTsxComponent<{}> {
                     <NavItem href="/logs/create" name="Create new log" />
                     <NavItem href="/subsystems" name="Subsystems Overview" />
                 </ul>
+                <div class="jf-footer">Jiskefet v0.1.0</div>
             </nav>
         );
     }
