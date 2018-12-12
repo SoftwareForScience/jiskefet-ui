@@ -49,11 +49,14 @@ export default class Login extends MithrilTsxComponent<{}> {
                         <h1 class="display-2">Welcome to Jiskefet</h1>
                         <p class="lead">Please sign in to use the application.</p>
                         <div class="mt-4">
-                            <a href="https://github.com/join" target="_blank">
-                                <button type="button" class="btn btn-outline-dark btn-lg mr-2">
-                                    Sign up
-                                </button>
-                            </a>
+                            { process.env.USE_CERN_SSO === 'true' ?
+                                <div /> :
+                                <a href="https://github.com/join" target="_blank">
+                                    <button type="button" class="btn btn-outline-dark btn-lg mr-2">
+                                     Sign up
+                                    </button>
+                                </a>
+                            }
                             <a
                                 href={
                                     process.env.USE_CERN_SSO === 'true'
@@ -61,12 +64,11 @@ export default class Login extends MithrilTsxComponent<{}> {
                                         : process.env.GITHUB_AUTH_URL
                                 }
                             >
-                                {process.env.USE_CERN_SSO === 'false'
-                                    ? <button type="button" class="btn btn-success btn-lg">
+                                {
+                                    <button type="button" class="btn btn-success btn-lg">
                                         <span class="mr-2">Sign in</span>
-                                        <img src="../../assets/github_logo.svg" alt="" />
                                     </button>
-                                    : <div />}
+                                }
                             </a>
                         </div>
                     </div>
