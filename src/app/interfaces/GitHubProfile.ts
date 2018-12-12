@@ -6,16 +6,18 @@
  * copied verbatim in the file "LICENSE"
  */
 
+import { UserProfile } from './UserProfile';
+
 /**
  * Object received from GitHub when calling resource server for user info.
  */
-export interface GithubProfileDto {
+export class GithubProfileDto extends UserProfile {
     userData: {
         userId: number;
         externalUserId: number;
         samsId: number;
     };
-    githubData: {
+    profileData: {
         login: string;
         id: number;
         node_id: string;

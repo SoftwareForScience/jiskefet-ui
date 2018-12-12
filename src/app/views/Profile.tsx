@@ -19,6 +19,7 @@ import Pagination from '../components/Pagination';
 import { Event } from '../interfaces/Event';
 import { createDummyTable } from '../utility/DummyService';
 import HttpErrorAlert from '../components/HttpErrorAlert';
+import { CernProfileDto } from '../interfaces/CernProfile';
 
 interface Attrs {
     userId: number;
@@ -53,7 +54,8 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
-        const profile = State.AuthModel.profile as GithubProfileDto;
+        const isCernProfile = process.env.USE_CERN_SSO === 'true';
+        const profile = State.AuthModel.profile;
         const { userId } = vnode.attrs;
         return (
             <HttpErrorAlert>
@@ -63,19 +65,25 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                             <div class="card" style="width: 18rem;">
                                 <img
                                     class="card-img-top"
-                                    src={profile.githubData.avatar_url}
+                                    src={isCernProfile
+                                        ? 'https://via.placeholder.com/300'
+                                        : (profile as GithubProfileDto).profileData.avatar_url}
                                     alt="Card image cap"
                                 />
                                 <div class="card-body">
-                                    <h5 class="card-title m-0">{profile.githubData.name}</h5>
-                                    <p class="card-text">{profile.githubData.login}</p>
-                                    <a
-                                        href={profile.githubData.html_url}
-                                        target="_blank"
-                                        class="btn btn-outline-success"
-                                    >
-                                        GitHub profile
-                                    </a>
+                                    <h5 class="card-title m-0">{profile.profileData.name}</h5>
+                                    <p class="card-text">{isCernProfile
+                                        ? (profile as CernProfileDto).profileData.username
+                                        : (profile as GithubProfileDto).profileData.login}</p>
+                                    {!isCernProfile
+                                        ? <a
+                                            href={(profile as GithubProfileDto).profileData.html_url}
+                                            target="_blank"
+                                            class="btn btn-outline-success"
+                                        >
+                                            GitHub profile
+                                        </a>
+                                        : ''}
                                 </div>
                             </div>
                         }
@@ -92,8 +100,8 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                                 orderBy={State.FilterModel.getFilters('userLog').orderBy}
                                 orderDirection={State.FilterModel.getFilters('userLog').orderDirection}
                                 onHeaderClick={(accessor: string) => {
-                                State.FilterModel.switchOrderBy('userLog', accessor);
-                                this.fetchLogsWithFilterOptions(userId);
+                                    State.FilterModel.switchOrderBy('userLog', accessor);
+                                    this.fetchLogsWithFilterOptions(userId);
                                 }}
                             />
                         </div>
