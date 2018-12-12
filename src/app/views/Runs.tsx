@@ -55,25 +55,25 @@ const inputFields = [
         name: 'startTimeO2Start',
         type: 'datetime-local',
         event: 'onblur',
-        label: 'Start range - Time O2 Start'
+        label: 'Start range - Time O\xB2 Start'
     },
     {
         name: 'endTimeO2Start',
         type: 'datetime-local',
         event: 'onblur',
-        label: 'End range - Time O2 Start'
+        label: 'End range - Time O\xB2 Start'
     },
     {
         name: 'startTimeO2End',
         type: 'datetime-local',
         event: 'onblur',
-        label: 'Start range - Time O2 End'
+        label: 'Start range - Time O\xB2 End'
     },
     {
         name: 'endTimeO2End',
         type: 'datetime-local',
         event: 'onblur',
-        label: 'End range - Time O2 End'
+        label: 'End range - Time O\xB2 End'
     },
     {
         name: 'startTimeTrgStart',

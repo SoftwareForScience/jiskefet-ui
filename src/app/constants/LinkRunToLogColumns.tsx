@@ -36,12 +36,12 @@ const LinkRunToLogColumns = (
         accessor: 'runNumber'
     },
     {
-        header: 'Time 02 start',
+        header: 'Time O\xB2 start',
         accessor: 'timeO2Start',
         cell: (row: Run): string => (row.timeO2Start ? format(row.timeO2Start, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
-        header: 'Time 02 end',
+        header: 'Time O\xB2 end',
         accessor: 'timeO2End',
         cell: (row: Run): string => (row.timeO2End ? format(row.timeO2End, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
