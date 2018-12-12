@@ -48,7 +48,13 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                         {Cookie.get('token') ?
                             <ProfileNavItem profile={State.AuthModel.profile} />
                             :
-                            <a href={process.env.AUTH_URL}>
+                            <a
+                                href={
+                                    process.env.USE_CERN_SSO === 'true'
+                                        ? process.env.CERN_AUTH_URL
+                                        : process.env.GITHUB_AUTH_URL
+                                }
+                            >
                                 <button type="button" class="btn btn-outline-success">
                                     Sign in
                                 </button>

@@ -47,18 +47,28 @@ export default class Login extends MithrilTsxComponent<{}> {
                 <HttpErrorAlert>
                     <div class="jumbotron jumbotron-fluid">
                         <h1 class="display-2">Welcome to Jiskefet</h1>
-                        <p class="lead">Please sign in with GitHub to use the application.</p>
+                        <p class="lead">Please sign in to use the application.</p>
                         <div class="mt-4">
-                            <a href="https://github.com/join" target="_blank">
-                                <button type="button" class="btn btn-outline-dark btn-lg mr-2">
-                                    Sign up
-                                </button>
-                            </a>
-                            <a href={process.env.AUTH_URL}>
-                                <button type="button" class="btn btn-success btn-lg">
-                                    <span class="mr-2">Sign in with GitHub</span>
-                                    <img src="../../assets/github_logo.svg" alt="" />
-                                </button>
+                            { process.env.USE_CERN_SSO === 'true' ?
+                                <div /> :
+                                <a href="https://github.com/join" target="_blank">
+                                    <button type="button" class="btn btn-outline-dark btn-lg mr-2">
+                                     Sign up
+                                    </button>
+                                </a>
+                            }
+                            <a
+                                href={
+                                    process.env.USE_CERN_SSO === 'true'
+                                        ? process.env.CERN_AUTH_URL
+                                        : process.env.GITHUB_AUTH_URL
+                                }
+                            >
+                                {
+                                    <button type="button" class="btn btn-success btn-lg">
+                                        <span class="mr-2">Sign in</span>
+                                    </button>
+                                }
                             </a>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ import State from './State';
 import { request } from '../request';
 import { User } from '../interfaces/User';
 import { Log } from '../interfaces/Log';
-import { GithubProfileDto } from '../interfaces/GitHubProfile';
+import { UserProfile } from '../interfaces/UserProfile';
 
 /**
  * Stores the state around Run entities and contains api calls to change that state.
@@ -20,7 +20,7 @@ const UserModel = {
     isFetchingUser: false as boolean,
     isFetchingLogs: false as boolean,
     current: {} as User,
-    currentGitHubInfo: {} as GithubProfileDto,
+    currentUserInfo: {} as UserProfile,
     logCount: 0 as number, // number of total rows of logs.
     logs: [] as Log[],
     async fetchById(userId: number) {
