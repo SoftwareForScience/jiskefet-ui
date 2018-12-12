@@ -61,10 +61,12 @@ export default class Login extends MithrilTsxComponent<{}> {
                                         : process.env.GITHUB_AUTH_URL
                                 }
                             >
-                                <button type="button" class="btn btn-success btn-lg">
-                                    <span class="mr-2">Sign in</span>
-                                    <img src="../../assets/github_logo.svg" alt="" />
-                                </button>
+                                {process.env.USE_CERN_SSO === 'false'
+                                    ? <button type="button" class="btn btn-success btn-lg">
+                                        <span class="mr-2">Sign in</span>
+                                        <img src="../../assets/github_logo.svg" alt="" />
+                                    </button>
+                                    : <div />}
                             </a>
                         </div>
                     </div>
