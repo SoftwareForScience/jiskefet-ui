@@ -36,6 +36,7 @@ const AuthModel = {
         initialize();
         m.route.set('/');
         State.clearState();
+        Cookie.set('state', 'true');
     },
 };
 
