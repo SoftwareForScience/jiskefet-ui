@@ -55,9 +55,13 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                                         : process.env.GITHUB_AUTH_URL
                                 }
                             >
-                                <button type="button" class="btn btn-outline-success">
+                            {!Cookie.get('state')
+                            ?
+                                <button type="button" class="btn btn-outline-success" >
                                     Sign in
                                 </button>
+                            : <div />
+                            }
                             </a>
                         }
                     </ul>
