@@ -12,7 +12,7 @@ import { SubSystem } from '../interfaces/SubSytem';
 import { request } from '../request';
 
 /**
- * Stores the state around Token entities.
+ * Stores the state around Subsystem entities.
  */
 const SubsystemModel = {
     list: [] as SubSystem[],

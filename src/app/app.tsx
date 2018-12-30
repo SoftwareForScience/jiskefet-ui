@@ -22,6 +22,9 @@ import Login from './views/Login';
 import Profile from './views/Profile';
 import SubsystemsOverview from './views/SubsystemsOverview';
 import Loader from './components/Loader';
+// import { configureStore } from 'redux-starter-kit';
+// import rootReducer from './reducers';
+// const store = configureStore({ reducer: rootReducer })
 
 m.route.prefix('');
 /**
