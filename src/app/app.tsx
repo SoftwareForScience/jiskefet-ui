@@ -22,6 +22,8 @@ import Login from './views/Login';
 import Profile from './views/Profile';
 import SubsystemsOverview from './views/SubsystemsOverview';
 import Loader from './components/Loader';
+import { Setting } from './interfaces/Setting';
+import { CronJob } from 'cron';
 
 m.route.prefix('');
 /**
@@ -139,4 +141,32 @@ export const initialize = () => {
     }
 };
 
+/**
+ * Creates a request to the /setting endpoint in order to retrieve settings for the authentication.
+ */
+export const getAuthSettings = () => {
+    return m.request({
+        method: 'GET',
+        url: `${process.env.API_URL}setting`
+    }).then((setting: Setting) => {
+        // setting['date'] = new Date().valueOf();
+        localStorage.setItem('USE_CERN_SSO', setting.USE_CERN_SSO);
+        if(setting.USE_CERN_SSO.valueOf() === 'false'){
+            localStorage.setItem('GITHUB_AUTH_URL', setting.GITHUB_AUTH_URL);
+        } else {
+            localStorage.setItem('CERN_AUTH_URL', setting.CERN_AUTH_URL);
+        }
+    }).catch((error: any) => {
+        console.log(error);
+    });
+}
+
+/**
+ * Schedule a daily cronjob to check if the settings are up to date.
+ */
+new CronJob('0 2 * * *', () => {
+    getAuthSettings();
+}).start();
+
+getAuthSettings();
 initialize();

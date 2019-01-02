@@ -50,9 +50,9 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                             :
                             <a
                                 href={
-                                    process.env.USE_CERN_SSO === 'true'
-                                        ? process.env.CERN_AUTH_URL
-                                        : process.env.GITHUB_AUTH_URL
+                                    localStorage.getItem('USE_CERN_SSO') === 'true'
+                                        ? localStorage.getItem('CERN_AUTH_URL')
+                                        : localStorage.getItem('GITHUB_AUTH_URL')
                                 }
                             >
                             {!Cookie.get('state')
