@@ -151,7 +151,7 @@ export const getAuthSettings = () => {
     }).then((setting: Setting) => {
         // setting['date'] = new Date().valueOf();
         localStorage.setItem('USE_CERN_SSO', setting.USE_CERN_SSO);
-        if(setting.USE_CERN_SSO.valueOf() === 'false'){
+        if (setting.USE_CERN_SSO.valueOf() === 'false') {
             localStorage.setItem('GITHUB_AUTH_URL', setting.GITHUB_AUTH_URL);
         } else {
             localStorage.setItem('CERN_AUTH_URL', setting.CERN_AUTH_URL);
@@ -159,7 +159,7 @@ export const getAuthSettings = () => {
     }).catch((error: any) => {
         console.log(error);
     });
-}
+};
 
 /**
  * Schedule a daily cronjob to check if the settings are up to date.
