@@ -22,7 +22,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
 
     async oninit() {
         // State.SubsystemModel.fetch();
-        fetchSubsystems();
+        store.dispatch(fetchSubsystems());
         await State.AuthModel.fetchProfile();
         if (State.AuthModel.profile !== null) {
             await State.UserModel.fetchById(State.AuthModel.profile.userData.userId);
@@ -52,7 +52,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
 
     view() {
         console.log(store.getState());
-        const { subsystems } = store.getState();
+        const { subsystemReducer } = store.getState();
         return (
             <div class="container-fluid">
                 <SuccessMessage />
@@ -104,7 +104,8 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                             onclick={this.addToCreateToken}
                                         >
                                             {
-                                                subsystems && subsystems.map((sub: SubSystem) => (
+                                                subsystemReducer.subsystems
+                                                && subsystemReducer.subsystems.map((sub: SubSystem) => (
                                                     <option
                                                         value={sub.subsystemId}
                                                     >
