@@ -11,7 +11,6 @@
  */
 export interface Setting {
     USE_CERN_SSO: string;
-    GITHUB_AUTH_URL: string;
-    CERN_AUTH_URL: string;
+    AUTH_URL: string;
     [index: string]: string | boolean | number;
 }

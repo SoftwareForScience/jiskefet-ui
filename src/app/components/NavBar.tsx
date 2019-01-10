@@ -50,9 +50,7 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                             :
                             <a
                                 href={
-                                    localStorage.getItem('USE_CERN_SSO') === 'true'
-                                        ? localStorage.getItem('CERN_AUTH_URL')
-                                        : localStorage.getItem('GITHUB_AUTH_URL')
+                                    localStorage.getItem('AUTH_URL')
                                 }
                             >
                             {!Cookie.get('state')
