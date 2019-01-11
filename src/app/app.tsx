@@ -148,10 +148,10 @@ export const getAuthSettings = () => {
     return m.request({
         method: 'GET',
         url: `${process.env.API_URL}setting`
-    }).then((setting: Setting) => {
+    }).then((result: { data: Setting }) => {
         // setting['date'] = new Date().valueOf();
-        localStorage.setItem('USE_CERN_SSO', setting.USE_CERN_SSO);
-        localStorage.setItem('AUTH_URL', setting.AUTH_URL);
+        localStorage.setItem('USE_CERN_SSO', result.data.USE_CERN_SSO);
+        localStorage.setItem('AUTH_URL', result.data.AUTH_URL);
     });
 };
 
