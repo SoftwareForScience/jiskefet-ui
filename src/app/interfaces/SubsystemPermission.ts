@@ -6,7 +6,7 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { SubSystem } from './SubSytem';
+import { Subsystem } from './SubSytem';
 import { User } from './User';
 
 /**
@@ -14,7 +14,7 @@ import { User } from './User';
  */
 export interface SubsystemPermissionCreate {
     user: User;
-    subsystem: SubSystem;
+    subsystem: Subsystem;
     subSystemTokenDescription: string;
     isMember: boolean;
     editEorReason: boolean;

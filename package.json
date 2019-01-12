@@ -33,7 +33,6 @@
     "@types/marked": "^0.4.2",
     "@types/mithril": "^1.1.12",
     "@types/node": "^10.9.4",
-    "@types/redux-thunk": "^2.1.0",
     "css-loader": "^1.0.0",
     "mithril-tsx-component": "^3.0.0",
     "node-sass": "^4.9.3",

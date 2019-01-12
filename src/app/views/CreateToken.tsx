@@ -10,7 +10,7 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
 import State from '../models/State';
-import { SubSystem } from '../interfaces/SubSytem';
+import { Subsystem } from '../interfaces/SubSytem';
 import Table from '../components/Table';
 import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns';
 import SuccessMessage from '../components/SuccessMessage';
@@ -22,7 +22,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
 
     async oninit() {
         // State.SubsystemModel.fetch();
-        store.dispatch(fetchSubsystems());
+        store.dispatch<any>(fetchSubsystems());
         await State.AuthModel.fetchProfile();
         if (State.AuthModel.profile !== null) {
             await State.UserModel.fetchById(State.AuthModel.profile.userData.userId);
@@ -52,7 +52,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
 
     view() {
         console.log(store.getState());
-        const { subsystemReducer } = store.getState();
+        const { subsystem } = store.getState();
         return (
             <div class="container-fluid">
                 <SuccessMessage />
@@ -104,8 +104,8 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                             onclick={this.addToCreateToken}
                                         >
                                             {
-                                                subsystemReducer.subsystems
-                                                && subsystemReducer.subsystems.map((sub: SubSystem) => (
+                                                subsystem.subsystems
+                                                && subsystem.subsystems.map((sub: Subsystem) => (
                                                     <option
                                                         value={sub.subsystemId}
                                                     >

@@ -8,21 +8,21 @@
 
 import State from './State';
 import { HttpError } from '../interfaces/HttpError';
-import { SubSystem } from '../interfaces/SubSytem';
+import { Subsystem } from '../interfaces/SubSytem';
 import { request } from '../request';
 
 /**
  * Stores the state around Subsystem entities.
  */
 const SubsystemModel = {
-    list: [] as SubSystem[],
-    current: {} as SubSystem,
+    list: [] as Subsystem[],
+    current: {} as Subsystem,
     async fetch() {
         return request({
             method: 'GET',
             url: `${process.env.API_URL}subsystems`,
             withCredentials: false
-        }).then((result: SubSystem[]) => {
+        }).then((result: Subsystem[]) => {
             SubsystemModel.list = result;
         }).catch((error: HttpError) => {
             State.HttpErrorModel.add(error);
@@ -33,7 +33,7 @@ const SubsystemModel = {
             method: 'GET',
             url: `${process.env.API_URL}subsystems/${id}`,
             withCredentials: false
-        }).then((result: SubSystem) => {
+        }).then((result: Subsystem) => {
             SubsystemModel.current = result;
         }).catch((error: HttpError) => {
             State.HttpErrorModel.add(error);
