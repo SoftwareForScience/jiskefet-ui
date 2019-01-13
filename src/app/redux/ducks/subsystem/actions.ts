@@ -6,9 +6,15 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { ActionTypes } from './types';
+import { ActionTypes, FetchSubsystemsSuccessAction, FetchSubsystemsRequestAction } from './types';
+import { Subsystem } from '../../../interfaces/SubSytem';
 
 // Action creators
-export const fetchRequest = () => ({
+export const fetchRequest = (): FetchSubsystemsRequestAction => ({
     type: ActionTypes.FETCH_SUBSYSTEMS_REQUEST
+});
+
+export const fetchSuccess = (payload: Subsystem[]): FetchSubsystemsSuccessAction => ({
+    type: ActionTypes.FETCH_SUBSYSTEMS_SUCCESS,
+    payload
 });
