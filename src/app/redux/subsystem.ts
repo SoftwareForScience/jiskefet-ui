@@ -1,8 +1,9 @@
 import { Subsystem } from '../interfaces/SubSytem';
 import { HttpError } from '../interfaces/HttpError';
 import { request } from '../request';
-import { Action, AnyAction } from 'redux';
+import { Action, Reducer } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { RootState } from './index';
 
 // State interface
 export interface SubsystemState {
@@ -11,19 +12,27 @@ export interface SubsystemState {
     current: Subsystem | null;
 }
 
+// Action types
+export enum ActionTypes {
+    SUBSYSTEM_FETCH_REQUEST = 'SUBSYSTEM_FETCH_REQUEST',
+    SUBSYSTEM_FETCH_SUCCESS = 'SUBSYSTEM_FETCH_SUCCESS'
+}
+
 // Action interfaces
 interface FetchSubsystemsRequestAction extends Action {
-    type: TypeKeys.FETCH_SUBSYSTEMS_REQUEST;
+    type: ActionTypes.SUBSYSTEM_FETCH_REQUEST;
 }
 
 interface FetchSubsystemsSuccessAction extends Action {
-    type: TypeKeys.FETCH_SUBSYSTEMS_SUCCESS;
+    type: ActionTypes.SUBSYSTEM_FETCH_SUCCESS;
     payload: Subsystem[];
 }
 
 // Combine actions into single type
 export type SubsystemAction = FetchSubsystemsSuccessAction | FetchSubsystemsRequestAction;
-type ThunkResult<R> = ThunkAction<R, SubsystemState, undefined, Action>;
+
+// Shorthand type for ThunkAction
+type ThunkResult<R> = ThunkAction<R, RootState, undefined, SubsystemAction>;
 
 // Initial state
 const initialState: SubsystemState = {
@@ -32,21 +41,16 @@ const initialState: SubsystemState = {
     current: null
 };
 
-// Action types
-enum TypeKeys {
-    FETCH_SUBSYSTEMS_REQUEST = 'FETCH_SUBSYSTEMS_REQUEST',
-    FETCH_SUBSYSTEMS_SUCCESS = 'FETCH_SUBSYSTEMS_SUCCESS'
-}
-
 // Reducer
-export const subsystemReducer = (state: SubsystemState = initialState, action: SubsystemAction): SubsystemState => {
+export const subsystemReducer: Reducer<SubsystemState>
+    = (state: SubsystemState = initialState, action: SubsystemAction): SubsystemState => {
     switch (action.type) {
-        case TypeKeys.FETCH_SUBSYSTEMS_REQUEST:
+        case ActionTypes.SUBSYSTEM_FETCH_REQUEST:
             return {
                 ...state,
                 fetchingSubsystems: true
             };
-        case TypeKeys.FETCH_SUBSYSTEMS_SUCCESS:
+        case ActionTypes.SUBSYSTEM_FETCH_SUCCESS:
             return {
                 ...state,
                 fetchingSubsystems: false,
@@ -59,15 +63,15 @@ export const subsystemReducer = (state: SubsystemState = initialState, action: S
 
 // Action creators
 export const fetchSubsystems = (): ThunkResult<void> =>
-    (dispatch: ThunkDispatch<SubsystemState, void, AnyAction>) => {
-        dispatch<FetchSubsystemsRequestAction>({ type: TypeKeys.FETCH_SUBSYSTEMS_REQUEST });
+    (dispatch: ThunkDispatch<RootState, void, SubsystemAction>): void => {
+        dispatch<FetchSubsystemsRequestAction>({ type: ActionTypes.SUBSYSTEM_FETCH_REQUEST});
         request({
             method: 'GET',
             url: `${process.env.API_URL}subsystems`,
             withCredentials: false
         }).then((result: Subsystem[]) => {
             dispatch<FetchSubsystemsSuccessAction>({
-                    type: TypeKeys.FETCH_SUBSYSTEMS_SUCCESS,
+                    type: ActionTypes.SUBSYSTEM_FETCH_SUCCESS,
                     payload: result
             });
         }).catch((error: HttpError) => {

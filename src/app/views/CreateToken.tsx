@@ -15,14 +15,13 @@ import Table from '../components/Table';
 import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns';
 import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
-import { store } from '../configureStore';
+import { store } from '../redux/configureStore';
 import { fetchSubsystems } from '../redux/subsystem';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
 
     async oninit() {
-        // State.SubsystemModel.fetch();
-        store.dispatch<any>(fetchSubsystems());
+        store.dispatch(fetchSubsystems());
         await State.AuthModel.fetchProfile();
         if (State.AuthModel.profile !== null) {
             await State.UserModel.fetchById(State.AuthModel.profile.userData.userId);

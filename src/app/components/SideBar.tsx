@@ -17,6 +17,8 @@ export default class SideBar extends MithrilTsxComponent<{}> {
     constructor() {
         super();
         this.showSidebar = State.AppState.showSidebar;
+        // this.showSidebar = store.getState().appState.showSidebar;
+        // this.showSidebar = isSidebarShown();
     }
 
     view() {

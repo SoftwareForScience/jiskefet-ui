@@ -24,7 +24,8 @@
     "mithril": "^1.1.6",
     "popper.js": "^1.14.4",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@types/jquery": "^3.3.22",
