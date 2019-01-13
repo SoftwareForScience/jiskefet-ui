@@ -9,7 +9,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { subsystemReducer } from './subsystem';
+import { subsystemReducer } from './modules/subsystem';
 import { RootState, RootActions, Store } from './types';
 
 /**

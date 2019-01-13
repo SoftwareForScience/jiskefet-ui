@@ -16,7 +16,7 @@ import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns'
 import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import { store } from '../redux/configureStore';
-import { fetchSubsystems, selectSubsystems } from '../redux/subsystem';
+import { fetchSubsystems, selectSubsystems } from '../redux/modules/subsystem';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
 

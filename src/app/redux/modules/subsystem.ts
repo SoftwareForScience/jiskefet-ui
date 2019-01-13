@@ -6,12 +6,12 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Subsystem } from '../interfaces/SubSytem';
-import { HttpError } from '../interfaces/HttpError';
-import { request } from '../request';
+import { Subsystem } from '../../interfaces/SubSytem';
+import { HttpError } from '../../interfaces/HttpError';
+import { request } from '../../request';
 import { Action, Reducer } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { RootState } from './types';
+import { RootState } from '../types';
 
 // State interface
 export interface SubsystemState {

@@ -8,7 +8,7 @@
 
 import { Store as ReduxStore } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
-import { SubsystemState, SubsystemAction } from './subsystem';
+import { SubsystemState, SubsystemAction } from './modules/subsystem';
 
 /**
  * Extend dispatch to allow thunks (functions) to be given to dispatch, instead of only objects.
