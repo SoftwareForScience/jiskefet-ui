@@ -46,7 +46,7 @@ export default class Login extends MithrilTsxComponent<{}> {
             <Spinner isLoading={State.AuthModel.isAuthorizing}>
                 <HttpErrorAlert>
                     <div class="jumbotron jumbotron-fluid">
-                        {Cookie.get('state')
+                        {Cookie.get('isLoggedOut')
                             ?
                             <div class="col-md-6 mx-auto">
                                 <div class="alert alert-warning" role="alert">

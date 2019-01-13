@@ -36,7 +36,9 @@ const AuthModel = {
         initialize();
         m.route.set('/');
         State.clearState();
-        Cookie.set('state', 'true');
+        if (process.env.USE_CERN_SSO === 'true') {
+            Cookie.set('isLoggedOut', 'true');
+        }
     },
 };
 
