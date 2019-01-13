@@ -10,21 +10,18 @@ import * as m from 'mithril';
 import NavItem from './NavItem';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { selectIsSidebarShown } from '../redux/ducks/ui/selectors';
+import { store } from '../redux/configureStore';
 
 export default class SideBar extends MithrilTsxComponent<{}> {
-    showSidebar: boolean;
-
     constructor() {
         super();
-        this.showSidebar = State.AppState.showSidebar;
-        // this.showSidebar = store.getState().appState.showSidebar;
-        // this.showSidebar = isSidebarShown();
     }
 
     view() {
         return (
             // Sidebar
-            <nav class={`jf-sidebar ${State.AppState.showSidebar ? '' : 'jf-sidebar-active'}`}>
+            <nav class={`jf-sidebar ${selectIsSidebarShown(store.getState()) ? '' : 'jf-sidebar-active'}`}>
                 <ul class="list-unstyled components">
                     <NavItem href="/logs" name="Logs" />
                     <NavItem href="/runs" name="Runs" />

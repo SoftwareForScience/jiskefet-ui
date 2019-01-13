@@ -11,10 +11,12 @@ import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import * as Cookie from 'js-cookie';
 import ProfileNavItem from './ProfileNavItem';
+import { store } from '../redux/configureStore';
+import { toggleSidebar } from '../redux/ducks/ui/actions';
 
 export default class NavBar extends MithrilTsxComponent<{}> {
     toggleSidebar = () => {
-        State.AppState.showSidebar = !State.AppState.showSidebar;
+        store.dispatch(toggleSidebar());
     }
 
     oninit() {

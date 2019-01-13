@@ -6,9 +6,18 @@
  * copied verbatim in the file "LICENSE"
  */
 
+import reducer from './reducers';
+
+import * as uiSelectors from './selectors';
+import * as uiTypes from './types';
+
 /**
- * This file exports all the reducers in the ducks directory.
+ * Exposes the public API for this duck.
  */
 
-export { default as subsystem } from './subsystem';
-export { default as ui } from './ui';
+export {
+    uiSelectors,
+    uiTypes
+};
+
+export default reducer;

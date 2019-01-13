@@ -23,6 +23,8 @@ import PageCounter from '../components/PageCounter';
 import { createDummyTable } from '../utility/DummyService';
 import ContentBlock from '../components/ContentBlock';
 import Badges from '../components/Badges';
+import { selectCollapsableItem } from '../redux/ducks/ui/selectors';
+import { store } from '../redux/configureStore';
 
 const inputFields = [
     {
@@ -73,6 +75,7 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
 
     view() {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
+        const collapsableFilterItem = selectCollapsableItem(store.getState(), 'filters');
         return (
             <div>
                 <HttpErrorAlert>
@@ -80,10 +83,9 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                     <div class="row">
                         <div
                             class={
-                                // tslint:disable-next-line:no-string-literal
-                                State.AppState.isCollapsed['filters'] ?
-                                    'col-md-3 collapse-transition' :
-                                    'col-md-1 collapse-transition'
+                                collapsableFilterItem && collapsableFilterItem.isCollapsed ?
+                                    'col-md-1 collapse-transition' :
+                                    'col-md-3 collapse-transition'
                                 }
                         >
                             <ContentBlock>
@@ -100,10 +102,9 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                         </div>
                         <div
                             class={
-                                // tslint:disable-next-line:no-string-literal
-                                State.AppState.isCollapsed['filters'] ?
-                                    'col-md-9 mb-5 collapse-transition' :
-                                    'col-md-11 mb-5 collapse-transition'
+                                collapsableFilterItem && collapsableFilterItem.isCollapsed ?
+                                    'col-md-11 mb-5 collapse-transition' :
+                                    'col-md-9 mb-5 collapse-transition'
                                 }
                         >
                             <Badges

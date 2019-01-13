@@ -7,8 +7,15 @@
  */
 
 /**
- * This file exports all the reducers in the ducks directory.
+ * An item that has a collapsable state.
  */
-
-export { default as subsystem } from './subsystem';
-export { default as ui } from './ui';
+export interface CollapsableItem {
+    /**
+     * The unique id of the item.
+     */
+    id: string;
+    /**
+     * Whether the item is currently collapsed.
+     */
+    isCollapsed: boolean;
+}

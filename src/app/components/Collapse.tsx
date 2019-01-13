@@ -8,8 +8,10 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import State from '../models/State';
 import { Event } from '../interfaces/Event';
+import { store } from '../redux/configureStore';
+import { toggleCollapse, addCollapse } from '../redux/ducks/ui/actions';
+import { selectCollapsableItem } from '../redux/ducks/ui/selectors';
 
 interface Attrs {
     /**
@@ -25,6 +27,10 @@ interface Attrs {
      * Optional title for the collapsable item.
      */
     title?: string;
+    /**
+     * Whether the component is initially collapsed.
+     */
+    isInitiallyCollapsed?: boolean;
 }
 
 type Vnode = m.Vnode<Attrs, Collapse>;
@@ -36,7 +42,7 @@ type VnodeDOM = m.VnodeDOM<Attrs, Collapse>;
 export default class Collapse extends MithrilTsxComponent<Attrs> {
     constructor(vnode: VnodeDOM) {
         super();
-        State.AppState.isCollapsed[vnode.attrs.id] = true;
+        store.dispatch(addCollapse(vnode.attrs.id, vnode.attrs.isInitiallyCollapsed || false));
     }
 
     /**
@@ -45,11 +51,12 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
      */
     toggleCollapse(event: Event) {
         const id = event.target.id;
-        State.AppState.isCollapsed[id] = !State.AppState.isCollapsed[id];
+        store.dispatch(toggleCollapse(id));
     }
 
     view(vnode: Vnode) {
         const { icon, title, id } = vnode.attrs;
+        const collapsableItem = selectCollapsableItem(store.getState(), id);
         return (
             <div>
                 <div class="row">
@@ -57,14 +64,14 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
                         <div
                             id={`${id}`}
                             class="jf-collapse-toggle"
-                            aria-expanded={State.AppState.isCollapsed[id] ? 'true' : 'false'}
+                            aria-expanded={collapsableItem && collapsableItem.isCollapsed ? 'false' : 'true'}
                             data-fa-transform="grow-10"
                             onclick={this.toggleCollapse}
                         >
                             {icon}
                             &nbsp;{title}
                         </div>
-                        <div class={State.AppState.isCollapsed[id] ? '' : 'jf-collapse-in'} id={id}>
+                        <div class={collapsableItem && collapsableItem.isCollapsed ? 'jf-collapse-in' : ''} id={id}>
                             {vnode.children}
                         </div>
                     </div>

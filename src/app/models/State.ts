@@ -8,7 +8,6 @@
 
 import LogModel from './Log';
 import RunModel from './Run';
-import AppState from './AppState';
 import AuthModel from './Auth';
 import HttpErrorModel from './HttpError';
 import SuccessModel from './Success';
@@ -24,7 +23,6 @@ import UserModel from './User';
  * See the README in this directory (./models) for more info.
  */
 export default {
-    AppState,
     HttpErrorModel,
     SuccessModel,
     LogModel,

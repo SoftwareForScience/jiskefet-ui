@@ -7,8 +7,9 @@
  */
 
 import * as m from 'mithril';
-import AppState from '../models/AppState';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { selectIsSidebarShown } from '../redux/ducks/ui/selectors';
+import { store } from '../redux/configureStore';
 
 type Vnode = m.Vnode<{}, Content>;
 
@@ -18,7 +19,7 @@ type Vnode = m.Vnode<{}, Content>;
 export default class Content extends MithrilTsxComponent<{}> {
     view(vnode: Vnode) {
         return (
-            <div class={`jf-content ${AppState.showSidebar ? '' : 'jf-content-active'}`}>
+            <div class={`jf-content ${selectIsSidebarShown(store.getState()) ? '' : 'jf-content-active'}`}>
                 <div class="container-fluid">
                     {vnode.children}
                 </div>

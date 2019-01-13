@@ -10,7 +10,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { RootState, RootActions, Store } from './types';
-import { subsystem } from './ducks';
+import { subsystem, ui } from './ducks';
 
 /**
  * This file creates the store based on rootReducer.ts and the applied middleware.
@@ -20,7 +20,8 @@ import { subsystem } from './ducks';
  * Combines all reducers into a single reducer to create the store with.
  */
 const rootReducer = combineReducers<RootState>({
-    subsystem
+    subsystem,
+    ui
 });
 
 /**

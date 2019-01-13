@@ -9,6 +9,7 @@
 import { Store as ReduxStore } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { SubsystemState, SubsystemAction } from './ducks/subsystem/types';
+import { UIState, UIAction } from './ducks/ui/types';
 
 /**
  * Extend dispatch to allow thunks (functions) to be given to dispatch, instead of only objects.
@@ -22,9 +23,12 @@ export interface Store<S> extends ReduxStore<S> {
  */
 export interface RootState {
     subsystem: SubsystemState;
+    ui: UIState;
 }
 
 /**
  * All possible actions in the app.
  */
-export type RootActions = SubsystemAction;
+export type RootActions =
+    | SubsystemAction
+    | UIAction;
