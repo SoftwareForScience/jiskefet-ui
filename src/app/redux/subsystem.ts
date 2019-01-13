@@ -1,9 +1,17 @@
+/*
+ * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
+ *
+ * This software is distributed under the terms of the
+ * GNU General Public Licence version 3 (GPL) version 3,
+ * copied verbatim in the file "LICENSE"
+ */
+
 import { Subsystem } from '../interfaces/SubSytem';
 import { HttpError } from '../interfaces/HttpError';
 import { request } from '../request';
 import { Action, Reducer } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { RootState } from './index';
+import { RootState } from './types';
 
 // State interface
 export interface SubsystemState {
@@ -78,3 +86,6 @@ export const fetchSubsystems = (): ThunkResult<void> =>
             // State.HttpErrorModel.add(error);
         });
     };
+
+// Selectors
+export const selectSubsystems = (state: RootState): Subsystem[] => state.subsystem.subsystems;

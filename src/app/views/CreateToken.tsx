@@ -16,7 +16,7 @@ import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns'
 import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import { store } from '../redux/configureStore';
-import { fetchSubsystems } from '../redux/subsystem';
+import { fetchSubsystems, selectSubsystems } from '../redux/subsystem';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
 
@@ -51,7 +51,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
 
     view() {
         console.log(store.getState());
-        const { subsystem } = store.getState();
+        const subsystems = selectSubsystems(store.getState());
         return (
             <div class="container-fluid">
                 <SuccessMessage />
@@ -103,8 +103,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                             onclick={this.addToCreateToken}
                                         >
                                             {
-                                                subsystem.subsystems
-                                                && subsystem.subsystems.map((sub: Subsystem) => (
+                                                subsystems && subsystems.map((sub: Subsystem) => (
                                                     <option
                                                         value={sub.subsystemId}
                                                     >

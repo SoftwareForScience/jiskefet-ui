@@ -6,22 +6,22 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { createStore, applyMiddleware, Store as ReduxStore } from 'redux';
-import rootReducer, { RootState, RootActions } from './index';
-import thunk, { ThunkMiddleware, ThunkDispatch } from 'redux-thunk';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { subsystemReducer } from './subsystem';
+import { RootState, RootActions, Store } from './types';
 
 /**
- * This file creates the store based on the root types/objects from rootReducer.ts
- * and the applied middleware.
+ * This file creates the store based on rootReducer.ts and the applied middleware.
  */
 
 /**
- * Extend dispatch to allow thunks (functions) to be given to dispatch, instead of only objects.
+ * Combines all reducers into a single reducer to create the store with.
  */
-interface Store<S> extends ReduxStore<S> {
-    dispatch: ThunkDispatch<S, undefined, RootActions>;
-}
+const rootReducer = combineReducers<RootState>({
+    subsystem: subsystemReducer
+});
 
 /**
  * The single redux store with middleware.

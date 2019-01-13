@@ -6,12 +6,16 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { combineReducers } from 'redux';
-import { subsystemReducer, SubsystemState, SubsystemAction } from './subsystem';
+import { Store as ReduxStore } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { SubsystemState, SubsystemAction } from './subsystem';
 
 /**
- * This file combines redux state, actions and reducers into a root type/object.
+ * Extend dispatch to allow thunks (functions) to be given to dispatch, instead of only objects.
  */
+export interface Store<S> extends ReduxStore<S> {
+    dispatch: ThunkDispatch<S, undefined, RootActions>;
+}
 
 /**
  * The definition of the Redux state/store of the entire Jiskefet app.
@@ -24,13 +28,3 @@ export interface RootState {
  * All possible actions in the app.
  */
 export type RootActions = SubsystemAction;
-
-/**
- * Combines all reducers into a single reducer to create the store with.
- * Store creation happens in configureStore.ts
- */
-const rootReducer = combineReducers<RootState>({
-    subsystem: subsystemReducer
-});
-
-export default rootReducer;
