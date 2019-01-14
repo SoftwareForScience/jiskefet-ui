@@ -8,7 +8,6 @@
 
 import * as m from 'mithril';
 import NavItem from './NavItem';
-import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { selectIsSidebarShown } from '../redux/ducks/ui/selectors';
 import { store } from '../redux/configureStore';

@@ -27,3 +27,10 @@ export interface SubsystemPermission {
     subsystemPermissionId: number;
     subSystemTokenDescription: string;
 }
+
+/**
+ * Response object when a token is successfully created.
+ */
+export interface SubsystemToken extends SubsystemPermissionCreate {
+    subSystemHash: string;
+}

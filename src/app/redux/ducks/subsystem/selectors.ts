@@ -1,5 +1,7 @@
 import { RootState } from '../../types';
 import { Subsystem } from '../../../interfaces/SubSytem';
+import { SubsystemOverview } from '../../../interfaces/SubsystemOverview';
+import { SubsystemPermission } from '../../../interfaces/SubsystemPermission';
 
 /*
  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
@@ -10,4 +12,16 @@ import { Subsystem } from '../../../interfaces/SubSytem';
  */
 
 // Selectors
+export const selectFetchingSubsystems = (state: RootState): boolean => state.subsystem.fetchingSubsystems;
 export const selectSubsystems = (state: RootState): Subsystem[] => state.subsystem.subsystems;
+export const selectSubsystem = (state: RootState): Subsystem | null => state.subsystem.current;
+export const selectSubsystemOverviews = (state: RootState): SubsystemOverview[] => state.subsystem.subsystemOverviews;
+export const selectFetchingSubsystemOverviews = (state: RootState): boolean => (
+    state.subsystem.fetchingSubsystemOverviews
+);
+export const selectFetchingSubsystemPermissions = (state: RootState): boolean => (
+    state.subsystem.fetchingSubsystemPermissions
+);
+export const selectSubsystemPermissions = (state: RootState): SubsystemPermission[] => (
+    state.subsystem.subsystemPermissions
+);

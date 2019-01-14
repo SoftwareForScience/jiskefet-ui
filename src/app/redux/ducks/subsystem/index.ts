@@ -6,7 +6,7 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import reducer from './reducers';
+import subsystemReducer from './reducers';
 
 import * as subsystemSelectors from './selectors';
 import * as subsystemOperations from './operations';
@@ -22,4 +22,4 @@ export {
     subsystemTypes
 };
 
-export default reducer;
+export default subsystemReducer;

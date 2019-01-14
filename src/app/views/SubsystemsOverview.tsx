@@ -18,6 +18,9 @@ import Spinner from '../components/Spinner';
 import { createDummyTable } from '../utility/DummyService';
 import Fetchable from '../interfaces/Fetchable';
 import { Event } from '../interfaces/Event';
+import { fetchSubsystemOverviews } from '../redux/ducks/subsystem/operations';
+import { store } from '../redux/configureStore';
+import { selectFetchingSubsystemOverviews, selectSubsystemOverviews } from '../redux/ducks/subsystem/selectors';
 
 export default class SubsystemsOverview extends MithrilTsxComponent<{}> implements Fetchable<SubsystemsOverview> {
 
@@ -31,7 +34,7 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> implemen
      * Fetch logs with the query param given.
      */
     fetch = (queryParam: string = ''): void => {
-        State.SubsystemOverviewModel.fetch(queryParam);
+        store.dispatch(fetchSubsystemOverviews(queryParam));
     }
 
     /**
@@ -75,14 +78,14 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> implemen
 
                             </ContentBlock>
                             <Spinner
-                                isLoading={State.SubsystemOverviewModel.isFetchingSubsystemOverviews}
+                                isLoading={selectFetchingSubsystemOverviews(store.getState())}
                                 component={
                                     createDummyTable(
                                         State.FilterModel.getFilters('subsystem').pageSize, SubsystemOverviewColumns)
                                 }
                             >
                                 <Table
-                                    data={State.SubsystemOverviewModel.list}
+                                    data={selectSubsystemOverviews(store.getState())}
                                     columns={SubsystemOverviewColumns}
                                 />
                             </Spinner>
