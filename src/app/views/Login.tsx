@@ -33,13 +33,25 @@ export default class Login extends MithrilTsxComponent<{}> {
                             <h1 class="display-2">Welcome to Jiskefet</h1>
                             <p class="lead">Please sign in to use the application.</p>
                             <div class="mt-4">
-                                {process.env.USE_CERN_SSO === 'true' ?
+                                {localStorage.getItem('USE_CERN_SSO') === 'true' ?
                                     <div /> :
                                     <a href="https://github.com/join" target="_blank">
                                         <button type="button" class="btn btn-outline-dark btn-lg mr-2">
                                             Sign up
                                     </button>
                                     </a>
+                                }
+                                <a
+                                    href={
+                                        localStorage.getItem('AUTH_URL')
+                                    }
+                                >
+                                    {
+                                        <button type="button" class="btn btn-success btn-lg">
+                                            <span class="mr-2">Sign in</span>
+                                        </button>
+                                    }
+                                </a>
                                 }
                                 <a
                                     href={
