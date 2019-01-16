@@ -7,22 +7,22 @@
  */
 
 import * as m from 'mithril';
-import Spinner from '../components/Spinner';
-import Table from '../components/Table';
-import SuccessMessage from '../components/SuccessMessage';
-import HttpErrorAlert from '../components/HttpErrorAlert';
+import Spinner from '../atoms/Spinner';
+import Table from '../molecules/Table';
+import SuccessMessage from '../atoms/SuccessMessage';
+import HttpErrorAlert from '../atoms/HttpErrorAlert';
 import State from '../models/State';
 import LogColumns from '../constants/LogColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import Fetchable from '../interfaces/Fetchable';
 import { Log } from '../interfaces/Log';
-import Filter from '../components/Filter';
-import Pagination from '../components/Pagination';
+import Filter from '../molecules/Filter';
+import Pagination from '../atoms/Pagination';
 import { Event } from '../interfaces/Event';
-import PageCounter from '../components/PageCounter';
+import PageCounter from '../atoms/PageCounter';
 import { createDummyTable } from '../utility/DummyService';
-import ContentBlock from '../components/ContentBlock';
-import Badges from '../components/Badges';
+import ContentBlock from '../molecules/ContentBlock';
+import Badges from '../atoms/Badges';
 
 const inputFields = [
     {

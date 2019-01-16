@@ -10,12 +10,12 @@ import * as m from 'mithril';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
-import Tabs from '../components/Tab';
+import Tabs from '../molecules/Tab';
 import CreateLogTabs from '../constants/CreateLogTabs';
-import Modal from '../components/Modal';
-import MarkdownViewer from '../components/MarkdownViewer';
+import Modal from '../atoms/Modal';
+import MarkdownViewer from '../atoms/MarkdownViewer';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
-import AttachmentComponent from '../components/Attachment';
+import AttachmentComponent from '../atoms/Attachment';
 
 interface Attrs {
     runNumber?: number;

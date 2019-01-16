@@ -9,7 +9,7 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Column } from '../interfaces/Column';
-import TableHeader from './TableHeader';
+import TableHeader from '../atoms/TableHeader';
 import { OrderDirection } from '../enums/OrderDirection';
 
 interface Attrs {

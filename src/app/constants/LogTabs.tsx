@@ -10,14 +10,14 @@
 
 import * as m from 'mithril';
 import { Tabs } from '../interfaces/Tabs';
-import MarkdownViewer from '../components/MarkdownViewer';
+import MarkdownViewer from '../atoms/MarkdownViewer';
 import RunColumns from './RunColumns';
-import Table from '../components/Table';
+import Table from '../molecules/Table';
 import { Log } from '../interfaces/Log';
 import State from '../models/State';
-import Modal from '../components/Modal';
+import Modal from '../atoms/Modal';
 import { Attachment } from '../interfaces/Attachment';
-import AttachmentComponent from '../components/Attachment';
+import AttachmentComponent from '../atoms/Attachment';
 
 const ATTACHMENT_MODAL_ID = 'attachment-modal-id';
 

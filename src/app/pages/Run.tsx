@@ -7,15 +7,15 @@
  */
 
 import * as m from 'mithril';
-import Spinner from '../components/Spinner';
-import HttpErrorAlert from '../components/HttpErrorAlert';
+import Spinner from '../atoms/Spinner';
+import HttpErrorAlert from '../atoms/HttpErrorAlert';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import RunTabs from '../constants/RunTabs';
-import Tabs from '../components/Tab';
-import Modal from '../components/Modal';
-import LinkLogToRun from '../components/LinkLogToRun';
-import SuccessMessage from '../components/SuccessMessage';
+import Tabs from '../molecules/Tab';
+import Modal from '../atoms/Modal';
+import LinkLogToRun from '../atoms/LinkLogToRun';
+import SuccessMessage from '../atoms/SuccessMessage';
 import { formatDateField } from '../utility/DateUtil';
 
 interface Attrs {

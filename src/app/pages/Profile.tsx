@@ -10,15 +10,15 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { GithubProfileDto } from '../interfaces/GitHubProfile';
 import State from '../models/State';
-import Spinner from '../components/Spinner';
+import Spinner from '../atoms/Spinner';
 import LogColumns from '../constants/LogColumns';
-import Table from '../components/Table';
-import ContentBlock from '../components/ContentBlock';
-import PageCounter from '../components/PageCounter';
-import Pagination from '../components/Pagination';
+import Table from '../molecules/Table';
+import ContentBlock from '../molecules/ContentBlock';
+import PageCounter from '../atoms/PageCounter';
+import Pagination from '../atoms/Pagination';
 import { Event } from '../interfaces/Event';
 import { createDummyTable } from '../utility/DummyService';
-import HttpErrorAlert from '../components/HttpErrorAlert';
+import HttpErrorAlert from '../atoms/HttpErrorAlert';
 import { CernProfileDto } from '../interfaces/CernProfile';
 
 interface Attrs {

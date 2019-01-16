@@ -9,7 +9,7 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import State from '../models/State';
-import Spinner from './Spinner';
+import Spinner from '../atoms/Spinner';
 import { UserProfile } from '../interfaces/UserProfile';
 import { GithubProfileDto } from '../interfaces/GitHubProfile';
 import { CernProfileDto } from '../interfaces/CernProfile';

@@ -8,10 +8,10 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import HttpErrorAlert from '../components/HttpErrorAlert';
+import HttpErrorAlert from '../atoms/HttpErrorAlert';
 import * as Cookie from 'js-cookie';
 import { initialize } from '../app';
-import Spinner from '../components/Spinner';
+import Spinner from '../atoms/Spinner';
 import State from '../models/State';
 import { HttpError } from '../interfaces/HttpError';
 

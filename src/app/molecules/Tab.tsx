@@ -9,7 +9,7 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Tabs } from '../interfaces/Tabs';
-import TabHeader from './TabHeader';
+import TabHeader from '../atoms/TabHeader';
 
 interface Attrs {
     /**

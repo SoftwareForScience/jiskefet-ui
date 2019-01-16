@@ -7,16 +7,16 @@
  */
 
 import * as m from 'mithril';
-import Spinner from '../components/Spinner';
+import Spinner from '../atoms/Spinner';
 import { format } from 'date-fns';
-import HttpErrorAlert from '../components/HttpErrorAlert';
+import HttpErrorAlert from '../atoms/HttpErrorAlert';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import LogTabs from '../constants/LogTabs';
-import Tabs from '../components/Tab';
-import Modal from '../components/Modal';
-import LinkRunToLog from '../components/LinkRunToLog';
-import SuccessMessage from '../components/SuccessMessage';
+import Tabs from '../molecules/Tab';
+import Modal from '../atoms/Modal';
+import LinkRunToLog from '../atoms/LinkRunToLog';
+import SuccessMessage from '../atoms/SuccessMessage';
 
 interface Attrs {
     logId: number;

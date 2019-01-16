@@ -11,7 +11,7 @@
 import * as m from 'mithril';
 import { Tabs } from '../interfaces/Tabs';
 import { Run } from '../interfaces/Run';
-import Table from '../components/Table';
+import Table from '../molecules/Table';
 import LogColumns from './LogColumns';
 
 /**

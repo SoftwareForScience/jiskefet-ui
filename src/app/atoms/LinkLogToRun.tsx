@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import Table from './Table';
+import Table from '../molecules/Table';
 import State from '../models/State';
 import * as _ from 'lodash';
 import LinkLogToRunColumns from '../constants/LinkLogToRunColumns';

@@ -7,7 +7,7 @@
  */
 
 import * as m from 'mithril';
-import NavItem from './NavItem';
+import NavItem from '../atoms/NavItem';
 import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 

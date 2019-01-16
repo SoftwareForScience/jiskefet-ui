@@ -11,10 +11,10 @@ import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
 import State from '../models/State';
 import { SubSystem } from '../interfaces/SubSytem';
-import Table from '../components/Table';
+import Table from '../molecules/Table';
 import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns';
-import SuccessMessage from '../components/SuccessMessage';
-import HttpErrorAlert from '../components/HttpErrorAlert';
+import SuccessMessage from '../atoms/SuccessMessage';
+import HttpErrorAlert from '../atoms/HttpErrorAlert';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
 

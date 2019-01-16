@@ -7,7 +7,7 @@
  */
 
 import * as m from 'mithril';
-import NavBar from './NavBar';
+import NavBar from '../molecules/NavBar';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 
 type Vnode = m.Vnode<{}, UnauthorizedLayout>;

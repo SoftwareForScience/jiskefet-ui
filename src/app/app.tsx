@@ -9,19 +9,19 @@
 import * as m from 'mithril';
 import '../scss/main.scss';
 import 'bootstrap';
-import Layout from './components/Layout';
-import UnauthorizedLayout from './components/UnauthorizedLayout';
-import Runs from './views/Runs';
-import Logs from './views/Logs';
-import Log from './views/Log';
-import Run from './views/Run';
-import CreateLog from './views/CreateLog';
-import CreateToken from './views/CreateToken';
+import Layout from './organisms/Layout';
+import UnauthorizedLayout from './organisms/UnauthorizedLayout';
+import Runs from './pages/Runs';
+import Logs from './pages/Logs';
+import Log from './pages/Log';
+import Run from './pages/Run';
+import CreateLog from './pages/CreateLog';
+import CreateToken from './pages/CreateToken';
 import * as Cookie from 'js-cookie';
-import Login from './views/Login';
-import Profile from './views/Profile';
-import SubsystemsOverview from './views/SubsystemsOverview';
-import Loader from './components/Loader';
+import Login from './pages/Login';
+import Profile from './pages/Profile';
+import SubsystemsOverview from './pages/SubsystemsOverview';
+import Loader from './atoms/Loader';
 
 m.route.prefix('');
 /**
