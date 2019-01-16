@@ -100,7 +100,7 @@ export const createToken = (payload: SubsystemPermissionCreate): ThunkResult<Pro
         return request({
             method: 'POST',
             data: payload,
-            url: postToken(payload)
+            url: postToken(payload.user.userId)
         }).then((result: SubsystemToken) => {
             dispatch(createTokenSuccess());
             console.log(`Temporary way of displaying token... Token: ${result.subSystemHash}`);

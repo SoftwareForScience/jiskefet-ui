@@ -17,6 +17,8 @@ import Tabs from '../components/Tab';
 import Modal from '../components/Modal';
 import LinkRunToLog from '../components/LinkRunToLog';
 import SuccessMessage from '../components/SuccessMessage';
+import { store } from '../redux/configureStore';
+import { fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 
 interface Attrs {
     logId: number;
@@ -29,7 +31,8 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     constructor(vnode: Vnode) {
         super();
         State.LogModel.fetchOne(vnode.attrs.logId);
-        State.AttachmentModel.fetchForLog(vnode.attrs.logId);
+        store.dispatch(fetchAttachmentsByLog(vnode.attrs.logId));
+        // State.AttachmentModel.fetchForLog(vnode.attrs.logId);
     }
 
     view(vnode: Vnode) {

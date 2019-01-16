@@ -15,11 +15,11 @@ import { SubsystemPermission } from '../../../interfaces/SubsystemPermission';
 
 // State interface
 export interface SubsystemState {
-    fetchingSubsystems: boolean;
-    fetchingSubsystem: boolean;
-    fetchingSubsystemOverviews: boolean;
-    fetchingSubsystemPermissions: boolean;
-    creatingToken: boolean;
+    isFetchingSubsystems: boolean;
+    isFetchingSubsystem: boolean;
+    isFetchingSubsystemOverviews: boolean;
+    isFetchingSubsystemPermissions: boolean;
+    isCreatingToken: boolean;
     subsystems: Subsystem[];
     current: Subsystem | null;
     subsystemOverviews: SubsystemOverview[];

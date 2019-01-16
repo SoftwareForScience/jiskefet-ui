@@ -11,11 +11,11 @@ import { SubsystemState, SubsystemAction, ActionTypes } from './types';
 
 // Initial state
 const initialState: SubsystemState = {
-    fetchingSubsystems: false,
-    fetchingSubsystem: false,
-    fetchingSubsystemOverviews: false,
-    fetchingSubsystemPermissions: false,
-    creatingToken: false,
+    isFetchingSubsystems: false,
+    isFetchingSubsystem: false,
+    isFetchingSubsystemOverviews: false,
+    isFetchingSubsystemPermissions: false,
+    isCreatingToken: false,
     subsystems: [],
     current: null,
     subsystemOverviews: [],
@@ -29,55 +29,55 @@ const subsystemReducer: Reducer<SubsystemState>
             case ActionTypes.FETCH_SUBSYSTEMS_REQUEST:
                 return {
                     ...state,
-                    fetchingSubsystems: true
+                    isFetchingSubsystems: true
                 };
             case ActionTypes.FETCH_SUBSYSTEMS_SUCCESS:
                 return {
                     ...state,
-                    fetchingSubsystems: false,
+                    isFetchingSubsystems: false,
                     subsystems: action.payload
                 };
             case ActionTypes.FETCH_SUBSYSTEM_REQUEST:
                 return {
                     ...state,
-                    fetchingSubsystem: true
+                    isFetchingSubsystem: true
                 };
             case ActionTypes.FETCH_SUBSYSTEM_SUCCESS:
                 return {
                     ...state,
-                    fetchingSubsystem: false,
+                    isFetchingSubsystem: false,
                     current: action.payload
                 };
             case ActionTypes.FETCH_SUBSYSTEM_OVERVIEWS_REQUEST:
                 return {
                     ...state,
-                    fetchingSubsystemOverviews: true
+                    isFetchingSubsystemOverviews: true
                 };
             case ActionTypes.FETCH_SUBSYSTEM_OVERVIEWS_SUCCESS:
                 return {
                     ...state,
-                    fetchingSubsystemOverviews: false,
+                    isFetchingSubsystemOverviews: false,
                     subsystemOverviews: action.payload
                 };
             case ActionTypes.CREATE_TOKEN_REQUEST:
                 return {
                     ...state,
-                    creatingToken: true
+                    isCreatingToken: true
                 };
             case ActionTypes.CREATE_TOKEN_SUCCESS:
                 return {
                     ...state,
-                    creatingToken: false
+                    isCreatingToken: false
                 };
             case ActionTypes.FETCH_SUBSYSTEM_PERMISSIONS_REQUEST:
                 return {
                     ...state,
-                    fetchingSubsystemPermissions: true
+                    isFetchingSubsystemPermissions: true
                 };
             case ActionTypes.FETCH_SUBSYSTEM_PERMISSIONS_SUCCESS:
                 return {
                     ...state,
-                    fetchingSubsystemPermissions: false,
+                    isFetchingSubsystemPermissions: false,
                     subsystemPermissions: action.payload
                 };
             default:

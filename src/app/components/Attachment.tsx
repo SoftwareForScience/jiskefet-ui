@@ -9,8 +9,10 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import State from '../models/State';
-import { HttpError } from '../interfaces/HttpError';
-import { AttachmentCreate } from '../interfaces/Attachment';
+import { store } from '../redux/configureStore';
+import { setAttachmentToBeCreated, clearAtachmentToBeCreated } from '../redux/ducks/attachment/actions';
+import { selectAttachmentToBeCreated } from '../redux/ducks/attachment/selectors';
+import { saveAttachment, fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 
 interface Attrs {
     /**
@@ -30,7 +32,6 @@ interface Attrs {
 type Vnode = m.Vnode<Attrs, AttachmentComponent>;
 
 export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
-
     private isExistingItem: boolean;
     private hasChosenAttachment: boolean;
     private maxFileSize: number;
@@ -58,7 +59,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
     }
 
     /**
-     *  Read the files with the reader object into a Base64 encoded string.
+     * Read the files with the reader object into a Base64 encoded string.
      * @param file The file that the user has chosen (event.target.files).
      * @param isExistingItem Whether the attachment is added to an existing Item.
      */
@@ -88,14 +89,13 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
      * @param isExistingItem Whether the attachment is added to an existing Item.
      */
     saveAttachmentState = (base64String: string, name: string, isExistingItem: boolean) => {
-
-        State.AttachmentModel.createAttachment.title = name;
-        State.AttachmentModel.createAttachment.fileMime = base64String.
-            substring('data:'.length, base64String.indexOf(';base64,'));
-        State.AttachmentModel.createAttachment.fileData = base64String.split(';base64,')[1];
-
+        const fileMime = base64String.substring(
+            'data:'.length, base64String.indexOf(';base64,')
+        );
+        const fileData = base64String.split(';base64,')[1];
+        let log = null;
         if (isExistingItem) {
-            State.AttachmentModel.createAttachment.log = State.LogModel.current;
+            log = State.LogModel.current;
         } else {
             // Check if attachment was not already added (needs to be adjusted for multiple file upload)
             if (State.LogModel.createLog.attachments === undefined
@@ -103,19 +103,23 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
 
                 State.LogModel.createLog.attachments = new Array();
             }
-            State.LogModel.createLog.attachments.push(State.AttachmentModel.createAttachment);
         }
+        const attachmentToBeCreated = {
+            title: name,
+            fileMime,
+            fileData,
+            ...(log && { log })
+        };
+        store.dispatch(setAttachmentToBeCreated(attachmentToBeCreated));
     }
 
     /**
      * This function will post the saved Attachment to the Api and reset the view to show its been added
      */
     postAttachments = async () => {
-        if (State.AttachmentModel.createAttachment && this.hasChosenAttachment) {
-            await State.AttachmentModel.save()
-                .catch((e: HttpError) => {
-                    State.HttpErrorModel.add(e);
-                })
+        const attachment = selectAttachmentToBeCreated(store.getState());
+        if (attachment && this.hasChosenAttachment) {
+            await store.dispatch(saveAttachment(attachment))
                 .then(async () => {
                     // Reset the input form
                     const fileInput = document.getElementById('addAttachment') as HTMLFormElement;
@@ -125,8 +129,9 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                         imagePreview.src = '';
                     }
                     // Redraw the current view
-                    await State.AttachmentModel.fetchForLog(State.LogModel.current.logId).then(() => {
-                        State.AttachmentModel.createAttachment = {} as AttachmentCreate;
+                    const logId = State.LogModel.current.logId;
+                    await store.dispatch(fetchAttachmentsByLog(logId)).then(() => {
+                        store.dispatch(clearAtachmentToBeCreated());
                         this.hasChosenAttachment = false;
                     });
                 });
