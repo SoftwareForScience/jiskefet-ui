@@ -21,6 +21,7 @@ import * as Cookie from 'js-cookie';
 import Login from './views/Login';
 import Profile from './views/Profile';
 import SubsystemsOverview from './views/SubsystemsOverview';
+import Loading from './components/Loading';
 
 m.route.prefix('');
 /**
@@ -112,9 +113,7 @@ const lockedOutRoutes = {
     },
     '/callback': {
         view: () => (
-            <UnauthorizedLayout>
-                <Login />
-            </UnauthorizedLayout>
+            <Loading />
         ),
     }
 };
