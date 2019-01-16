@@ -23,3 +23,7 @@ export const postToken = (userId: number): string => (`${baseUrl}users/${userId}
 // Attachment
 export const getAttachmentsByLog = (logId: number): string => `${baseUrl}attachments/${logId}/logs`;
 export const postAttachment = (): string => `${baseUrl}attachments`;
+
+// Auth
+export const getProfile = (): string => `${baseUrl}user/profile`;
+export const getAuthorize = (authGrant: string): string => `${process.env.API_URL}auth?grant=${authGrant}`;

@@ -20,6 +20,9 @@ import { Event } from '../interfaces/Event';
 import { createDummyTable } from '../utility/DummyService';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import { CernProfileDto } from '../interfaces/CernProfile';
+import { fetchProfile } from '../redux/ducks/auth/operations';
+import { store } from '../redux/configureStore';
+import { selectProfile, selectIsFetchingProfile } from '../redux/ducks/auth/selectors';
 
 interface Attrs {
     userId: number;
@@ -31,7 +34,7 @@ type VnodeDOM = m.VnodeDOM<Attrs, Profile>;
 export default class Profile extends MithrilTsxComponent<Attrs> {
 
     async oninit(vnode: VnodeDOM) {
-        State.AuthModel.fetchProfile();
+        store.dispatch(fetchProfile());
         State.UserModel.fetchLogs(vnode.attrs.userId);
         await State.FilterModel.setFiltersToDefaults('userLog');
         await State.FilterModel.setFiltersFromUrl('userLog');
@@ -55,11 +58,11 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         const isCernProfile = process.env.USE_CERN_SSO === 'true';
-        const profile = State.AuthModel.profile;
+        const profile = selectProfile(store.getState());
         const { userId } = vnode.attrs;
         return (
             <HttpErrorAlert>
-                <Spinner isLoading={State.AuthModel.isFetchingProfile}>
+                <Spinner isLoading={selectIsFetchingProfile(store.getState())}>
                     <div>
                         {profile &&
                             <div class="card" style="width: 18rem;">

@@ -8,11 +8,13 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import State from '../models/State';
 import Spinner from './Spinner';
 import { UserProfile } from '../interfaces/UserProfile';
 import { GithubProfileDto } from '../interfaces/GitHubProfile';
 import { CernProfileDto } from '../interfaces/CernProfile';
+import { store } from '../redux/configureStore';
+import { selectIsFetchingProfile } from '../redux/ducks/auth/selectors';
+import { logout } from '../redux/ducks/auth/operations';
 
 interface Attrs {
     profile: UserProfile | null;
@@ -25,7 +27,7 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
         const { profile } = vnode.attrs;
         const isCernProfile = process.env.USE_CERN_SSO === 'true';
         return (
-            <Spinner isLoading={State.AuthModel.isFetchingProfile} class="jf-loader-sm mr-3">
+            <Spinner isLoading={selectIsFetchingProfile(store.getState())} class="jf-loader-sm mr-3">
                 <div class="jf-profile-nav-item">
                     {profile ?
                         <div class="btn-group">
@@ -90,7 +92,7 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                 <button
                                     type="button"
                                     class="dropdown-item jf-dropdown-item"
-                                    onclick={State.AuthModel.logout}
+                                    onclick={() => store.dispatch(logout())}
                                 >
                                     Sign out
                                 </button>
@@ -99,7 +101,7 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                         : <button
                             class="btn btn-outline-danger"
                             type="button"
-                            onclick={State.AuthModel.logout}
+                            onclick={() => store.dispatch(logout())}
                         >
                             Sign out
                         </button>

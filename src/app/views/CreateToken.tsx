@@ -31,25 +31,29 @@ import {
 } from '../redux/ducks/subsystem/selectors';
 import { SubsystemPermissionCreate } from '../interfaces/SubsystemPermission';
 import Spinner from '../components/Spinner';
+import { fetchProfile } from '../redux/ducks/auth/operations';
+import { selectProfile } from '../redux/ducks/auth/selectors';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
     async oninit() {
         store.dispatch(fetchSubsystems());
-        await State.AuthModel.fetchProfile();
-        if (State.AuthModel.profile !== null) {
-            await State.UserModel.fetchById(State.AuthModel.profile.userData.userId);
-            const loggedInUserId = State.AuthModel.profile.userData.userId;
+        await store.dispatch(fetchProfile());
+        const profile = selectProfile(store.getState());
+        if (profile) {
+            await State.UserModel.fetchById(profile.userData.userId);
+            const loggedInUserId = profile.userData.userId;
             store.dispatch(fetchSubsystemPermissions(loggedInUserId));
         }
     }
 
     async handleSubmit(event: any): Promise<void> {
         let user = null;
-        await State.AuthModel.fetchProfile();
-        if (State.AuthModel.profile !== null) {
-            await State.UserModel.fetchById(State.AuthModel.profile.userData.userId);
+        store.dispatch(fetchProfile());
+        const profile = selectProfile(store.getState());
+        if (profile) {
+            await State.UserModel.fetchById(profile.userData.userId);
             user = State.UserModel.current;
-            const loggedInUserId = State.AuthModel.profile.userData.userId;
+            const loggedInUserId = profile.userData.userId;
             await store.dispatch(fetchSubsystemPermissions(loggedInUserId));
         }
 

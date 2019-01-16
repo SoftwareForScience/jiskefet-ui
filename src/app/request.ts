@@ -1,7 +1,8 @@
 
 import * as m from 'mithril';
 import * as Cookies from 'js-cookie';
-import State from './models/State';
+import { store } from './redux/configureStore';
+import { logout } from './redux/ducks/auth/operations';
 
 /**
  * Wrapper for m.request to add authorization headers to requests when a token exists.
@@ -22,7 +23,7 @@ export const request = (options: m.RequestOptions<{}> & { url: string }): Promis
             resolve(response);
         }).catch((response: any) => {
             if (response.statusCode === 401) {
-                State.AuthModel.logout();
+                store.dispatch(logout());
             }
         });
     });

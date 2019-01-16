@@ -16,6 +16,8 @@ import Modal from '../components/Modal';
 import MarkdownViewer from '../components/MarkdownViewer';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
 import AttachmentComponent from '../components/Attachment';
+import { selectProfile } from '../redux/ducks/auth/selectors';
+import { store } from '../redux/configureStore';
 
 interface Attrs {
     runNumber?: number;
@@ -45,8 +47,9 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
             State.LogModel.createLog.runs = new Array();
             State.LogModel.createLog.runs.push(State.RunModel.current);
         }
-        if (State.AuthModel.profile !== null) {
-            State.UserModel.fetchById(State.AuthModel.profile.userData.userId).then(() => {
+        const profile = selectProfile(store.getState());
+        if (profile) {
+            State.UserModel.fetchById(profile.userData.userId).then(() => {
                 State.LogModel.createLog.user = State.UserModel.current;
                 State.LogModel.save().then(() => {
                     m.route.set('/Logs');

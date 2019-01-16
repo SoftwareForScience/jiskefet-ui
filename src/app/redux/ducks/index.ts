@@ -13,3 +13,4 @@
 export { default as subsystem } from './subsystem';
 export { default as ui } from './ui';
 export { default as attachment } from './attachment';
+export { default as auth } from './auth';

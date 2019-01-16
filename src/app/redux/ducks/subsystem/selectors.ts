@@ -1,8 +1,3 @@
-import { RootState } from '../../types';
-import { Subsystem } from '../../../interfaces/SubSytem';
-import { SubsystemOverview } from '../../../interfaces/SubsystemOverview';
-import { SubsystemPermission } from '../../../interfaces/SubsystemPermission';
-
 /*
  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
  *
@@ -10,6 +5,11 @@ import { SubsystemPermission } from '../../../interfaces/SubsystemPermission';
  * GNU General Public Licence version 3 (GPL) version 3,
  * copied verbatim in the file "LICENSE"
  */
+
+import { RootState } from '../../types';
+import { Subsystem } from '../../../interfaces/SubSytem';
+import { SubsystemOverview } from '../../../interfaces/SubsystemOverview';
+import { SubsystemPermission } from '../../../interfaces/SubsystemPermission';
 
 // Selectors
 export const selectFetchingSubsystems = (state: RootState): boolean => state.subsystem.isFetchingSubsystems;
