@@ -52,20 +52,6 @@ export default class Login extends MithrilTsxComponent<{}> {
                                         </button>
                                     }
                                 </a>
-                                }
-                                <a
-                                    href={
-                                        process.env.USE_CERN_SSO === 'true'
-                                            ? process.env.CERN_AUTH_URL
-                                            : process.env.GITHUB_AUTH_URL
-                                    }
-                                >
-                                    {
-                                        <button type="button" class="btn btn-success btn-lg">
-                                            <span class="mr-2">Sign in</span>
-                                        </button>
-                                    }
-                                </a>
                             </div>
                         </div>
                     }
