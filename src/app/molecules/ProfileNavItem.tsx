@@ -23,7 +23,7 @@ type Vnode = m.Vnode<Attrs, ProfileNavItem>;
 export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
         const { profile } = vnode.attrs;
-        const isCernProfile = process.env.USE_CERN_SSO === 'true';
+        const isCernProfile = localStorage.getItem('USE_CERN_SSO') === 'true';
         return (
             <Spinner isLoading={State.AuthModel.isFetchingProfile} class="jf-loader-sm mr-3">
                 <div class="jf-profile-nav-item">

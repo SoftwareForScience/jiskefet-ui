@@ -44,7 +44,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                         <div class="row">
                             <div class="col-md-12 mx-auto">
                                 <Card
-                                    className={['shadow-sm', 'bg-light']}
+                                    className={'shadow-sm bg-light'}
                                     headerTitle={'Log'}
                                     headerContent={(
                                         <div class="row justify-content-end">
@@ -58,60 +58,58 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                             </button>
                                         </div>
                                     )}
-                                >
-                                    <div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <h5 class="card-title">{State.LogModel.current.title}</h5>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <dl class="row">
-                                                        <dt class="col-sm-6">Log id</dt>
-                                                        <dd class="col-sm-6">{State.LogModel.current.logId}</dd>
-
-                                                        <dt class="col-sm-6">Subtype:</dt>
-                                                        <dd class="col-sm-6">
-                                                            {State.LogModel.current.subtype === 'run' ?
-                                                                <span class="badge badge-warning">
-                                                                    {State.LogModel.current.subtype}
-                                                                </span>
-                                                                : State.LogModel.current.subtype}
-                                                        </dd>
-
-                                                        <dt class="col-sm-6">Origin:</dt>
-                                                        <dd class="col-sm-6">
-                                                            {State.LogModel.current.origin === 'human' ?
-                                                                <span class="badge badge-success">
-                                                                    {State.LogModel.current.origin}
-                                                                </span>
-                                                                : State.LogModel.current.origin === 'process' ?
-                                                                    <span class="badge badge-primary">
-                                                                        {State.LogModel.current.origin}
-                                                                    </span>
-                                                                    : State.LogModel.current.origin}
-                                                        </dd>
-
-                                                        <dt class="col-sm-6">Creation time:</dt>
-                                                        <dd class="col-sm-6">
-                                                            {format(
-                                                                State.LogModel.current.creationTime,
-                                                                'HH:mm:ss DD/MM/YYYY'
-                                                            )}
-                                                        </dd>
-                                                        <dt class="col-sm-6">Author:</dt>
-                                                        <dd class="col-sm-6">
-                                                            {State.LogModel.current.user &&
-                                                                State.LogModel.current.user.userId}
-                                                        </dd>
-                                                    </dl>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    footerContent={(
                                         <Tabs
                                             tabs={LogTabs}
                                             entity={State.LogModel.current}
                                         />
+                                    )}
+                                >
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5 class="card-title">{State.LogModel.current.title}</h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <dl class="row">
+                                                <dt class="col-sm-6">Log id</dt>
+                                                <dd class="col-sm-6">{State.LogModel.current.logId}</dd>
+
+                                                <dt class="col-sm-6">Subtype:</dt>
+                                                <dd class="col-sm-6">
+                                                    {State.LogModel.current.subtype === 'run' ?
+                                                        <span class="badge badge-warning">
+                                                            {State.LogModel.current.subtype}
+                                                        </span>
+                                                        : State.LogModel.current.subtype}
+                                                </dd>
+
+                                                <dt class="col-sm-6">Origin:</dt>
+                                                <dd class="col-sm-6">
+                                                    {State.LogModel.current.origin === 'human' ?
+                                                        <span class="badge badge-success">
+                                                            {State.LogModel.current.origin}
+                                                        </span>
+                                                        : State.LogModel.current.origin === 'process' ?
+                                                            <span class="badge badge-primary">
+                                                                {State.LogModel.current.origin}
+                                                            </span>
+                                                            : State.LogModel.current.origin}
+                                                </dd>
+
+                                                <dt class="col-sm-6">Creation time:</dt>
+                                                <dd class="col-sm-6">
+                                                    {format(
+                                                        State.LogModel.current.creationTime,
+                                                        'HH:mm:ss DD/MM/YYYY'
+                                                    )}
+                                                </dd>
+                                                <dt class="col-sm-6">Author:</dt>
+                                                <dd class="col-sm-6">
+                                                    {State.LogModel.current.user &&
+                                                        State.LogModel.current.user.userId}
+                                                </dd>
+                                            </dl>
+                                        </div>
                                     </div>
                                 </Card>
                             </div>

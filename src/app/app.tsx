@@ -22,6 +22,8 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import SubsystemsOverview from './pages/SubsystemsOverview';
 import Loader from './atoms/Loader';
+import { Setting } from './interfaces/Setting';
+import { CronJob } from 'cron';
 
 m.route.prefix('');
 /**
@@ -139,4 +141,26 @@ export const initialize = () => {
     }
 };
 
+/**
+ * Creates a request to the /setting endpoint in order to retrieve settings for the authentication.
+ */
+export const getAuthSettings = () => {
+    return m.request({
+        method: 'GET',
+        url: `${process.env.API_URL}setting`
+    }).then((result: { data: Setting }) => {
+        // setting['date'] = new Date().valueOf();
+        localStorage.setItem('USE_CERN_SSO', result.data.USE_CERN_SSO);
+        localStorage.setItem('AUTH_URL', result.data.AUTH_URL);
+    });
+};
+
+/**
+ * Schedule a daily cronjob to check if the settings are up to date.
+ */
+new CronJob('0 2 * * *', () => {
+    getAuthSettings();
+}).start();
+
+getAuthSettings();
 initialize();

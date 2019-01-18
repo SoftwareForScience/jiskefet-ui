@@ -54,7 +54,7 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
-        const isCernProfile = process.env.USE_CERN_SSO === 'true';
+        const isCernProfile = localStorage.getItem('USE_CERN_SSO') === 'true';
         const profile = State.AuthModel.profile;
         const { userId } = vnode.attrs;
         return (

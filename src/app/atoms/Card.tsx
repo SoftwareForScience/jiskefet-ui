@@ -10,18 +10,19 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 
 interface Attrs {
-    className?: string[];
+    className?: string;
     headerTitle: string;
     headerContent?: JSX.Element;
+    footerContent?: JSX.Element;
 }
 
 type Vnode = m.Vnode<Attrs, Card>;
 
 export default class Card extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { className, headerTitle, headerContent } = vnode.attrs;
+        const { className, headerTitle, headerContent, footerContent } = vnode.attrs;
         return (
-            <div className={`card ${className ? className.map((s: string) => s) : ''}`}>
+            <div className={`card ${className ? className : ''}`}>
                 <div class="card-header">
                     {headerContent ?
                         (
@@ -39,6 +40,7 @@ export default class Card extends MithrilTsxComponent<Attrs> {
                 <div className="card-body">
                     {vnode.children}
                 </div>
+                {footerContent && footerContent}
             </div>
         );
     }
