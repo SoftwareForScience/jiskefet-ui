@@ -74,7 +74,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                 <dt class="col-sm-6">Log id</dt>
                                                 <dd class="col-sm-6">{State.LogModel.current.logId}</dd>
 
-                                                <dt class="col-sm-6">Subtype:</dt>
+                                                <dt class="col-sm-6">Subtype</dt>
                                                 <dd class="col-sm-6">
                                                     {State.LogModel.current.subtype === 'run' ?
                                                         <span class="badge badge-warning">
@@ -83,7 +83,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                         : State.LogModel.current.subtype}
                                                 </dd>
 
-                                                <dt class="col-sm-6">Origin:</dt>
+                                                <dt class="col-sm-6">Origin</dt>
                                                 <dd class="col-sm-6">
                                                     {State.LogModel.current.origin === 'human' ?
                                                         <span class="badge badge-success">
@@ -96,14 +96,14 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                             : State.LogModel.current.origin}
                                                 </dd>
 
-                                                <dt class="col-sm-6">Creation time:</dt>
+                                                <dt class="col-sm-6">Creation time</dt>
                                                 <dd class="col-sm-6">
                                                     {format(
                                                         State.LogModel.current.creationTime,
                                                         'HH:mm:ss DD/MM/YYYY'
                                                     )}
                                                 </dd>
-                                                <dt class="col-sm-6">Author:</dt>
+                                                <dt class="col-sm-6">Author</dt>
                                                 <dd class="col-sm-6">
                                                     {State.LogModel.current.user &&
                                                         State.LogModel.current.user.userId}
