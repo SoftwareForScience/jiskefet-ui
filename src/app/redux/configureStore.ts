@@ -10,7 +10,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { RootState, RootActions, Store } from './types';
-import { subsystem, ui, attachment, auth } from './ducks';
+import { subsystem, ui, attachment, auth, filter } from './ducks';
 import { ActionTypes as AuthActionTypes } from './ducks/auth/types';
 
 /**
@@ -24,7 +24,8 @@ const appReducer = combineReducers<RootState>({
     subsystem,
     ui,
     attachment,
-    auth
+    auth,
+    filter
 });
 
 const rootReducer = (state: RootState | undefined, action: RootActions) => {

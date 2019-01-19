@@ -12,6 +12,7 @@ import { SubsystemState, SubsystemAction } from './ducks/subsystem/types';
 import { UIState, UIAction } from './ducks/ui/types';
 import { AttachmentState, AttachmentAction } from './ducks/attachment/types';
 import { AuthState, AuthAction } from './ducks/auth/types';
+import { FilterState, FilterAction } from './ducks/filter/types';
 
 /**
  * Extend dispatch to allow thunks (functions) to be given to dispatch, instead of only objects.
@@ -28,6 +29,7 @@ export interface RootState {
     ui: UIState;
     attachment: AttachmentState;
     auth: AuthState;
+    filter: FilterState;
 }
 
 /**
@@ -37,4 +39,5 @@ export type RootActions =
     | SubsystemAction
     | UIAction
     | AttachmentAction
-    | AuthAction;
+    | AuthAction
+    | FilterAction;

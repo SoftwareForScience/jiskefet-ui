@@ -14,8 +14,6 @@ import HttpErrorAlert from '../components/HttpErrorAlert';
 import State from '../models/State';
 import LogColumns from '../constants/LogColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import Fetchable from '../interfaces/Fetchable';
-import { Log } from '../interfaces/Log';
 import Filter from '../components/Filter';
 import Pagination from '../components/Pagination';
 import { Event } from '../interfaces/Event';
@@ -25,6 +23,12 @@ import ContentBlock from '../components/ContentBlock';
 import Badges from '../components/Badges';
 import { selectCollapsableItem } from '../redux/ducks/ui/selectors';
 import { store } from '../redux/configureStore';
+import { selectLogFilters, selectLogQueryString } from '../redux/ducks/filter/selectors';
+import { switchLogOrderBy, setLogFiltersFromUrl } from '../redux/ducks/filter/operations';
+import { setLogFilter } from '../redux/ducks/filter/actions';
+import { OrderDirection } from '../enums/OrderDirection';
+import { resetLogFilters } from '../redux/ducks/filter/actions';
+import { setQueryParams } from '../utility/UrlUtil';
 
 const inputFields = [
     {
@@ -53,24 +57,25 @@ const inputFields = [
     },
 ];
 
-export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<Log> {
+export default class Logs extends MithrilTsxComponent<{}> {
     oninit() {
-        State.FilterModel.setFiltersToDefaults('log');
-        State.FilterModel.setFiltersFromUrl('log');
-        this.fetch(State.FilterModel.getQueryString('log'));
-    }
-    /**
-     * Fetch logs with the query param given.
-     */
-    fetch = (queryParam: string = ''): void => {
-        State.LogModel.fetch(queryParam);
+        store.dispatch(setLogFiltersFromUrl());
+        this.setQueryAndFetch();
     }
 
     /**
-     * Fetch logs with the filters currently in the state (in FilterModel).
+     * Fetch logs with the filters currently in the state.
      */
     fetchWithFilters = (): void => {
-        this.fetch(State.FilterModel.getQueryString('log'));
+        State.LogModel.fetch(selectLogQueryString(store.getState()));
+    }
+
+    /**
+     * Set the query parameters in the url and fetch with the filters in the current state.
+     */
+    setQueryAndFetch = (): void => {
+        setQueryParams(selectLogFilters(store.getState()));
+        this.fetchWithFilters();
     }
 
     view() {
@@ -92,11 +97,11 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                 <Filter
                                     inputFields={inputFields}
                                     onEvent={(key: string, value: string | number | null) => {
-                                        State.FilterModel.setFilter('log', key, value);
-                                        State.FilterModel.setFilter('log', 'pageNumber', 1);
-                                        this.fetch(State.FilterModel.getQueryString('log'));
+                                        store.dispatch(setLogFilter(key, value));
+                                        store.dispatch(setLogFilter('pageNumber', 1));
+                                        this.setQueryAndFetch();
                                     }}
-                                    filters={State.FilterModel.getFilters('log')}
+                                    filters={selectLogFilters(store.getState())}
                                 />
                             </ContentBlock>
                         </div>
@@ -108,14 +113,14 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                 }
                         >
                             <Badges
-                                filters={State.FilterModel.getFilters('log')}
+                                filters={selectLogFilters(store.getState())}
                                 onEvent={(key: string) => {
-                                    State.FilterModel.setFilter('log', key, null);
-                                    this.fetchWithFilters();
+                                    store.dispatch(setLogFilter(key, null));
+                                    this.setQueryAndFetch();
                                 }}
                                 onEventAll={() => {
-                                    State.FilterModel.setFiltersToDefaults('log');
-                                    this.fetchWithFilters();
+                                    store.dispatch(resetLogFilters());
+                                    this.setQueryAndFetch();
                                 }}
                                 ignoredFilters={[
                                     'orderBy',
@@ -126,16 +131,18 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                             />
                             <Spinner
                                 isLoading={State.LogModel.isFetchingLogs}
-                                component={createDummyTable(State.FilterModel.getFilters('log').pageSize, LogColumns)}
+                                component={createDummyTable(selectLogFilters(store.getState()).pageSize, LogColumns)}
                             >
                                 <Table
                                     data={State.LogModel.list}
                                     columns={LogColumns}
-                                    orderBy={State.FilterModel.getFilters('log').orderBy}
-                                    orderDirection={State.FilterModel.getFilters('log').orderDirection}
+                                    orderBy={selectLogFilters(store.getState()).orderBy || undefined}
+                                    orderDirection={
+                                        selectLogFilters(store.getState()).orderDirection || OrderDirection.Descending
+                                    }
                                     onHeaderClick={(accessor: string) => {
-                                        State.FilterModel.switchOrderBy('log', accessor);
-                                        this.fetchWithFilters();
+                                        store.dispatch(switchLogOrderBy(accessor));
+                                        this.setQueryAndFetch();
                                     }}
                                 />
                             </Spinner>
@@ -157,11 +164,11 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                                 class="form-control form-control-sm"
                                                 name="pageSize"
                                                 onchange={(event: Event) => {
-                                                    State.FilterModel.setFilter('log', 'pageSize', event.target.value);
-                                                    State.FilterModel.setFilter('log', 'pageNumber', 1);
-                                                    this.fetchWithFilters();
+                                                    store.dispatch(setLogFilter('pageSize', event.target.value));
+                                                    store.dispatch(setLogFilter('pageNumber', 1));
+                                                    this.setQueryAndFetch();
                                                 }}
-                                                value={State.FilterModel.getFilters('log').pageSize}
+                                                value={selectLogFilters(store.getState()).pageSize}
                                             >
                                                 {pageSizes.map((pageSize: number) =>
                                                     // tslint:disable-next-line:jsx-key
@@ -171,20 +178,20 @@ export default class Logs extends MithrilTsxComponent<{}> implements Fetchable<L
                                         </div>
                                         <div class="text-muted mt-2 ml-2 pagination-block">
                                             <PageCounter
-                                                currentPage={State.FilterModel.getFilters('log').pageNumber}
-                                                rowsInTable={State.FilterModel.getFilters('log').pageSize}
+                                                currentPage={selectLogFilters(store.getState()).pageNumber}
+                                                rowsInTable={selectLogFilters(store.getState()).pageSize}
                                                 totalCount={State.LogModel.count}
                                             />
                                         </div>
                                     </div>
                                     <div class="col-md-4 m-1 small-center">
                                         <Pagination
-                                            currentPage={State.FilterModel.getFilters('log').pageNumber}
+                                            currentPage={selectLogFilters(store.getState()).pageNumber}
                                             numberOfPages={Math.ceil(State.LogModel.count
-                                                / State.FilterModel.getFilters('log').pageSize)}
+                                                / selectLogFilters(store.getState()).pageSize)}
                                             onChange={(newPage: number) => {
-                                                State.FilterModel.setFilter('log', 'pageNumber', newPage);
-                                                this.fetchWithFilters();
+                                                store.dispatch(setLogFilter('pageNumber', newPage));
+                                                this.setQueryAndFetch();
                                             }}
                                         />
                                     </div>
