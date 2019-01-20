@@ -23,13 +23,13 @@ import ContentBlock from '../components/ContentBlock';
 import Badges from '../components/Badges';
 import { selectCollapsableItem } from '../redux/ducks/ui/selectors';
 import { store } from '../redux/configureStore';
-import { selectLogFilters, selectLogQueryString } from '../redux/ducks/filter/selectors';
-import { switchOrderBy, setLogFiltersFromUrl } from '../redux/ducks/filter/operations';
+import { selectFilters, selectQueryString } from '../redux/ducks/filter/selectors';
+import { switchOrderBy, setFiltersFromUrl } from '../redux/ducks/filter/operations';
 import { setFilter } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
 import { resetFilters } from '../redux/ducks/filter/actions';
 import { setQueryParams } from '../utility/UrlUtil';
-import { FilterName } from '../redux/ducks/filter/types';
+import { FilterName } from '../interfaces/Filter';
 
 const inputFields = [
     {
@@ -60,7 +60,7 @@ const inputFields = [
 
 export default class Logs extends MithrilTsxComponent<{}> {
     oninit() {
-        store.dispatch(setLogFiltersFromUrl(FilterName.LOG));
+        store.dispatch(setFiltersFromUrl(FilterName.Log));
         this.setQueryAndFetch();
     }
 
@@ -68,20 +68,23 @@ export default class Logs extends MithrilTsxComponent<{}> {
      * Fetch logs with the filters currently in the state.
      */
     fetchWithFilters = (): void => {
-        State.LogModel.fetch(selectLogQueryString(store.getState()));
+        const queryString = selectQueryString(store.getState())(FilterName.Log);
+        State.LogModel.fetch(queryString);
     }
 
     /**
      * Set the query parameters in the url and fetch with the filters in the current state.
      */
     setQueryAndFetch = (): void => {
-        setQueryParams(selectLogFilters(store.getState()));
+        const logFilters = selectFilters(store.getState())[FilterName.Log];
+        setQueryParams(logFilters);
         this.fetchWithFilters();
     }
 
     view() {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         const collapsableFilterItem = selectCollapsableItem(store.getState(), 'filters');
+        const logFilters = selectFilters(store.getState())[FilterName.Log];
         return (
             <div>
                 <HttpErrorAlert>
@@ -98,11 +101,11 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                 <Filter
                                     inputFields={inputFields}
                                     onEvent={(key: string, value: string | number | null) => {
-                                        store.dispatch(setFilter(FilterName.LOG, key, value));
-                                        store.dispatch(setFilter(FilterName.LOG, 'pageNumber', 1));
+                                        store.dispatch(setFilter(FilterName.Log, key, value));
+                                        store.dispatch(setFilter(FilterName.Log, 'pageNumber', 1));
                                         this.setQueryAndFetch();
                                     }}
-                                    filters={selectLogFilters(store.getState())}
+                                    filters={logFilters}
                                 />
                             </ContentBlock>
                         </div>
@@ -114,13 +117,13 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                 }
                         >
                             <Badges
-                                filters={selectLogFilters(store.getState())}
+                                filters={logFilters}
                                 onEvent={(key: string) => {
-                                    store.dispatch(setFilter(FilterName.LOG, key, null));
+                                    store.dispatch(setFilter(FilterName.Log, key, null));
                                     this.setQueryAndFetch();
                                 }}
                                 onEventAll={() => {
-                                    store.dispatch(resetFilters(FilterName.LOG));
+                                    store.dispatch(resetFilters(FilterName.Log));
                                     this.setQueryAndFetch();
                                 }}
                                 ignoredFilters={[
@@ -132,17 +135,17 @@ export default class Logs extends MithrilTsxComponent<{}> {
                             />
                             <Spinner
                                 isLoading={State.LogModel.isFetchingLogs}
-                                component={createDummyTable(selectLogFilters(store.getState()).pageSize, LogColumns)}
+                                component={createDummyTable(logFilters.pageSize, LogColumns)}
                             >
                                 <Table
                                     data={State.LogModel.list}
                                     columns={LogColumns}
-                                    orderBy={selectLogFilters(store.getState()).orderBy || undefined}
+                                    orderBy={logFilters.orderBy || undefined}
                                     orderDirection={
-                                        selectLogFilters(store.getState()).orderDirection || OrderDirection.Descending
+                                        logFilters.orderDirection || OrderDirection.Descending
                                     }
                                     onHeaderClick={(accessor: string) => {
-                                        store.dispatch(switchOrderBy(FilterName.LOG, accessor));
+                                        store.dispatch(switchOrderBy(FilterName.Log, accessor));
                                         this.setQueryAndFetch();
                                     }}
                                 />
@@ -166,12 +169,12 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                                 name="pageSize"
                                                 onchange={(event: Event) => {
                                                     store.dispatch(
-                                                        setFilter(FilterName.LOG, 'pageSize', event.target.value)
+                                                        setFilter(FilterName.Log, 'pageSize', event.target.value)
                                                     );
-                                                    store.dispatch(setFilter(FilterName.LOG, 'pageNumber', 1));
+                                                    store.dispatch(setFilter(FilterName.Log, 'pageNumber', 1));
                                                     this.setQueryAndFetch();
                                                 }}
-                                                value={selectLogFilters(store.getState()).pageSize}
+                                                value={logFilters.pageSize}
                                             >
                                                 {pageSizes.map((pageSize: number) =>
                                                     // tslint:disable-next-line:jsx-key
@@ -181,19 +184,19 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                         </div>
                                         <div class="text-muted mt-2 ml-2 pagination-block">
                                             <PageCounter
-                                                currentPage={selectLogFilters(store.getState()).pageNumber}
-                                                rowsInTable={selectLogFilters(store.getState()).pageSize}
+                                                currentPage={logFilters.pageNumber}
+                                                rowsInTable={logFilters.pageSize}
                                                 totalCount={State.LogModel.count}
                                             />
                                         </div>
                                     </div>
                                     <div class="col-md-4 m-1 small-center">
                                         <Pagination
-                                            currentPage={selectLogFilters(store.getState()).pageNumber}
+                                            currentPage={logFilters.pageNumber}
                                             numberOfPages={Math.ceil(State.LogModel.count
-                                                / selectLogFilters(store.getState()).pageSize)}
+                                                / logFilters.pageSize)}
                                             onChange={(newPage: number) => {
-                                                store.dispatch(setFilter(FilterName.LOG, 'pageNumber', newPage));
+                                                store.dispatch(setFilter(FilterName.Log, 'pageNumber', newPage));
                                                 this.setQueryAndFetch();
                                             }}
                                         />

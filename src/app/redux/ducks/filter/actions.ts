@@ -6,10 +6,17 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { ActionTypes, SetFilterAction, ResetFiltersAction, SetFiltersAction, FilterName } from './types';
-import { FilterState } from '../../../interfaces/Filter';
+import { ActionTypes, SetFilterAction, ResetFiltersAction, SetFiltersAction } from './types';
+import { FilterState, FilterName } from '../../../interfaces/Filter';
 
 // Action creators
+
+/**
+ * Set the filter for the name given.
+ * @param name The name of the filter reducer.
+ * @param key The key to set.
+ * @param value The value for the key.
+ */
 export const setFilter = (name: FilterName, key: string, value: any): SetFilterAction => ({
     type: ActionTypes.SET_FILTER,
     name,
@@ -19,12 +26,23 @@ export const setFilter = (name: FilterName, key: string, value: any): SetFilterA
     }
 });
 
+/**
+ * Replaces the current filter state for the name given to the filters given as an argument.
+ * When the current filter state has properties that are missing in the filters argument given, these
+ * properties are kept the same.
+ * @param name The name of the filter reducer.
+ * @param filters The filters used to replace the filter values.
+ */
 export const setFilters = (name: FilterName, filters: FilterState): SetFiltersAction => ({
     type: ActionTypes.SET_FILTERS,
     name,
     payload: filters
 });
 
+/**
+ * Resets the filters for the name given to their initial values.
+ * @param name The name of the filter reducer.
+ */
 export const resetFilters = (name: FilterName): ResetFiltersAction => ({
     type: ActionTypes.RESET_FILTERS,
     name

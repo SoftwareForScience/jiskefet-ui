@@ -10,14 +10,14 @@ import { Action } from 'redux';
 import { RootState } from '../../types';
 import { ThunkAction } from 'redux-thunk';
 import { OrderDirection } from '../../../enums/OrderDirection';
-import { FilterState } from '../../../interfaces/Filter';
+import { FilterState, FilterValue, FilterName } from '../../../interfaces/Filter';
 
 // State interface
 export interface RootFilterState {
-    logFilters: LogFilters;
-    runFilters: RunFilters;
-    subsystemFilters: SubsystemFilters;
-    userLogFilters: UserLogFilters;
+    [FilterName.Log]: LogFilters;
+    [FilterName.Run]: RunFilters;
+    [FilterName.Subsystem]: SubsystemFilters;
+    [FilterName.UserLog]: UserLogFilters;
 }
 
 export interface LogFilters extends FilterState {
@@ -72,17 +72,7 @@ export enum ActionTypes {
 }
 
 /**
- * Identifier used to determine which reducer to execute the action in.
- */
-export enum FilterName {
-    LOG = 'LOG',
-    RUN = 'RUN',
-    SUBSYSTEM = 'SUBSYSTEM',
-    USER_LOG = 'USER_LOG'
-}
-
-/**
- * An action that has a name field to identify which reducer to execute the action in.
+ * An action that has a name field to identify which reducer should process the action.
  */
 export interface NamedAction extends Action {
     name: FilterName;
@@ -93,7 +83,7 @@ export interface SetFilterAction extends NamedAction {
     type: ActionTypes.SET_FILTER;
     payload: {
         key: string;
-        value: any;
+        value: FilterValue;
     };
 }
 

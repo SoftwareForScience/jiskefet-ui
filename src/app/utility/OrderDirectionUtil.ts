@@ -9,8 +9,8 @@
 import { OrderDirection } from '../enums/OrderDirection';
 
 /**
- * Returns the next OrderDirection or null based on the argument given.
- * @param direction
+ * Returns the next OrderDirection or null, based on the argument given.
+ * @param direction The order direction to cycle (can also be null, i.e. no direction).
  */
 export const cycleOrderDirection = (direction: OrderDirection | null): OrderDirection | null => {
     switch (direction) {

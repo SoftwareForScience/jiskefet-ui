@@ -7,15 +7,15 @@
  */
 
 import { Reducer, combineReducers } from 'redux';
-import { FilterAction, ActionTypes, NamedAction, FilterName } from './types';
+import { FilterAction, ActionTypes, NamedAction } from './types';
 import { OrderDirection } from '../../../enums/OrderDirection';
 import * as _ from 'lodash';
-import { FilterState, FilterValue } from '../../../interfaces/Filter';
+import { FilterState, FilterValue, FilterName } from '../../../interfaces/Filter';
 
 // Initial state
 const getInitialState = (name: FilterName): FilterState | {} => {
     switch (name) {
-        case FilterName.LOG: {
+        case FilterName.Log: {
             return {
                 logId: null,
                 searchterm: null,
@@ -28,7 +28,7 @@ const getInitialState = (name: FilterName): FilterState | {} => {
                 pageNumber: 1,
             };
         }
-        case FilterName.RUN:
+        case FilterName.Run:
             return {
                 runId: null,
                 activityId: null,
@@ -47,13 +47,13 @@ const getInitialState = (name: FilterName): FilterState | {} => {
                 pageSize: 16,
                 pageNumber: 1,
             };
-        case FilterName.SUBSYSTEM:
+        case FilterName.Subsystem:
             return {
                 orderBy: null,
                 orderDirection: null,
                 timeRange: null,
             };
-        case FilterName.USER_LOG:
+        case FilterName.UserLog:
             return {
                 orderBy: null,
                 orderDirection: null,
@@ -77,6 +77,11 @@ const mergeOverlappingKeys = (source: FilterState, mergeObj: FilterState): Filte
     });
     return result;
 };
+
+/**
+ * To Do:
+ * SET_FILTER can set any value on a prop that does not necessarily accept the type of value given.
+ */
 
 // Reducer
 const filterReducer: Reducer<FilterState>
@@ -104,6 +109,14 @@ const filterReducer: Reducer<FilterState>
         }
     };
 
+/**
+ * A wrapper function for a reducer, enabling the reducer to only process actions
+ * that have the same name as the reducer.
+ * Example: An action { type: 'SOME_TYPE', name: 'foo', payload: 'some payload' } will only be processed by the reducer
+ * with the same name ('foo').
+ * @param reducerFunction The reducer to wrap.
+ * @param reducerName The name for the reducer.
+ */
 const createNamedWrapperReducer = (reducerFunction: Reducer<FilterState>, reducerName: FilterName) => {
     return (state: FilterState, action: NamedAction) => {
         const { name } = action;
@@ -116,10 +129,10 @@ const createNamedWrapperReducer = (reducerFunction: Reducer<FilterState>, reduce
 };
 
 const rootReducer = combineReducers({
-    logFilters: createNamedWrapperReducer(filterReducer, FilterName.LOG),
-    runFilters: createNamedWrapperReducer(filterReducer, FilterName.RUN),
-    subsystemFilters: createNamedWrapperReducer(filterReducer, FilterName.SUBSYSTEM),
-    userLogFilters: createNamedWrapperReducer(filterReducer, FilterName.USER_LOG),
+    [FilterName.Log]: createNamedWrapperReducer(filterReducer, FilterName.Log),
+    [FilterName.Run]: createNamedWrapperReducer(filterReducer, FilterName.Run),
+    [FilterName.Subsystem]: createNamedWrapperReducer(filterReducer, FilterName.Subsystem),
+    [FilterName.UserLog]: createNamedWrapperReducer(filterReducer, FilterName.UserLog),
 });
 
 export default rootReducer;

@@ -6,14 +6,15 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { ThunkResult, FilterAction, FilterName } from './types';
+import { ThunkResult, FilterAction } from './types';
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../types';
 import { setFilter, setFilters } from './actions';
-import { selectLogFilters } from './selectors';
 import * as _ from 'lodash';
 import * as m from 'mithril';
 import { cycleOrderDirection } from '../../../utility/OrderDirectionUtil';
+import { selectFilters } from './selectors';
+import { FilterName } from '../../../interfaces/Filter';
 
 // Thunks
 
@@ -24,10 +25,10 @@ import { cycleOrderDirection } from '../../../utility/OrderDirectionUtil';
  */
 export const switchOrderBy = (name: FilterName, columnName: string): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, FilterAction>, getState: () => RootState): Promise<void> => {
-        if (selectLogFilters(getState()).orderBy !== columnName) {
+        if (selectFilters(getState())[name].orderBy !== columnName) {
             dispatch(setFilter(name, 'orderDirection', null));
         }
-        const direction = cycleOrderDirection(selectLogFilters(getState()).orderDirection);
+        const direction = cycleOrderDirection(selectFilters(getState())[name].orderDirection);
         dispatch(setFilter(name, 'orderDirection', direction));
         if (direction === null) {
             dispatch(setFilter(name, 'orderBy', null));
@@ -37,9 +38,9 @@ export const switchOrderBy = (name: FilterName, columnName: string): ThunkResult
     };
 
 /**
- * Set the log filters based on the query parameters in the url.
+ * Set the filters based on the query parameters in the url.
  */
-export const setLogFiltersFromUrl = (name: FilterName): ThunkResult<Promise<void>> =>
+export const setFiltersFromUrl = (name: FilterName): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, FilterAction>): Promise<void> => {
         const filtersFromUrl = m.route.param();
         dispatch(setFilters(name, filtersFromUrl));

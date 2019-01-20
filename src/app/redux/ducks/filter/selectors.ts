@@ -7,14 +7,25 @@
  */
 
 import { RootState } from '../../types';
-import { LogFilters } from './types';
+import { RootFilterState } from './types';
 import { createSelector } from 'reselect';
 import * as m from 'mithril';
 import * as _ from 'lodash';
+import { FilterState, FilterName } from '../../../interfaces/Filter';
 
 // Selectors
-export const selectLogFilters = (state: RootState): LogFilters => state.filter.logFilters;
-export const selectLogQueryString = createSelector(
-    selectLogFilters,
-    (logFilters: LogFilters) => m.buildQueryString(_.pickBy(logFilters))
+export const selectFilters = (state: RootState): RootFilterState => state.filter;
+
+/**
+ * Returns a function that returns a query string (for in the URL) based on the filterName given.
+ * Can be called as follows: selectQueryString(store.getState())(FilterName.Log);
+ */
+export const selectQueryString = createSelector(
+    selectFilters,
+    (filters: RootFilterState) => _.memoize(
+        (filterName: FilterName): string => {
+            const childFilters: FilterState = filters[filterName];
+            return m.buildQueryString(_.pickBy(childFilters));
+        }
+    )
 );
