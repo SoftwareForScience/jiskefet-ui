@@ -16,6 +16,9 @@ import Modal from '../atoms/Modal';
 import MarkdownViewer from '../atoms/MarkdownViewer';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
 import AttachmentComponent from '../atoms/Attachment';
+import Input from '../atoms/Input';
+import Select from '../atoms/Select';
+import Label from '../atoms/Label';
 
 interface Attrs {
     runNumber?: number;
@@ -74,43 +77,42 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 </h3>
                             </div>
                             <div class="form-group">
-                                <label for="title">Add a Title:</label>
+                                <Label id="title" text="Add a title:" />
                                 <div class="field">
-                                    <input
+                                    <Input
                                         id="title"
-                                        type="text"
-                                        class="form-control"
+                                        formType="text"
+                                        className="form-control col-md-4"
                                         placeholder="Title"
-                                        required
+                                        required={true}
                                         oninput={this.addToCreateLog}
                                     />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="subtype">Select Subtype:</label>
+                                <Label id="subtype" text="Select a subtype:" />
                                 <div class="field">
-                                    <select
+                                    <Select
                                         id="subtype"
-                                        class="form-control"
+                                        className="form-control col-md-2"
                                         name="subtype"
-                                        required
-                                        onclick={this.addToCreateLog}
-                                    >
-                                        <option value="run">run</option>
-                                    </select>
+                                        required={true}
+                                        oninput={this.addToCreateLog}
+                                        options={['run']}
+                                    />
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="subtype">Run number:</label>
+                                <Label id="subtype" text="Run number:" />
                                 <div class="field">
-                                    <input
+                                    <Input
                                         id="runs"
-                                        type="number"
-                                        class="form-control"
+                                        formType="number"
+                                        className="form-control col-md-2"
                                         placeholder="Run number"
-                                        value={vnode.attrs.runNumber && vnode.attrs.runNumber}
-                                        required
+                                        required={true}
                                         oninput={this.addRunsToCreateLog}
+                                        value={vnode.attrs.runNumber && vnode.attrs.runNumber}
                                     />
                                 </div>
                             </div>

@@ -10,7 +10,7 @@ Atomic design is methodology for creating design systems. There are five distinc
 - Pages
 
 ### Atoms
-Atoms are the basic building blocks of matter. Applied to web interfaces, atoms are our HTML tags, such as a form label, an input or a button. Atoms can also include more abstract elements like color palettes, fonts and even more invisible aspects of an interface like animations.
+Atoms are the basic building blocks of matter, and they can’t be broken down further without losing their meaning and functionality. Applied to web interfaces, atoms are our HTML tags, such as a form label, an input or a button. Atoms can also include more abstract elements like color palettes, fonts and even more invisible aspects of an interface like animations.
 
 ### Molecules
 Molecules are groups of atoms bonded together and are the smallest fundamental units of a compound. These molecules take on their own properties and serve as the backbone of our design systems. For example, a form label, input or button aren’t too useful by themselves, but combine them together as a form and now they can actually do something together.
@@ -33,9 +33,9 @@ The page stage is essential as it’s where we test the effectiveness of the des
 └─── src
 │ └─── app
 │ │ └─── atoms
-│ │ │ └─── attachment
-│ │ │ │    index.tsx
-│ │ │ │    stories.js
+│ │ │ │  Attachment.tsx
+│ │ │ │  Badges.tsx
+│ │ │ │  *.tsx
 │ │ └─── molecules
 │ │ │ └─── *
 │ │ └─── organisms

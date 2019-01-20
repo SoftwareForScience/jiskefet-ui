@@ -13,7 +13,6 @@ import Layout from './organisms/Layout';
 import UnauthorizedLayout from './organisms/UnauthorizedLayout';
 import Runs from './pages/Runs';
 import Logs from './pages/Logs';
-import Log from './pages/Log';
 import Run from './pages/Run';
 import CreateLog from './pages/CreateLog';
 import CreateToken from './pages/CreateToken';
@@ -24,6 +23,7 @@ import SubsystemsOverview from './pages/SubsystemsOverview';
 import Loader from './atoms/Loader';
 import { Setting } from './interfaces/Setting';
 import { CronJob } from 'cron';
+import LogPage from './pages/LogPage';
 
 m.route.prefix('');
 /**
@@ -67,9 +67,7 @@ const authenticatedRoutes = {
     },
     '/logs/:id': {
         view: (vnode: m.Vnode<{ id: number }>) => (
-            <Layout>
-                <Log logId={vnode.attrs.id} />
-            </Layout>
+            <LogPage logId={vnode.attrs.id} />
         ),
     },
     '/runs': {
