@@ -6,7 +6,7 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Store as ReduxStore } from 'redux';
+import { Store as ReduxStore, Action } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { SubsystemState, SubsystemAction } from './ducks/subsystem/types';
 import { UIState, UIAction } from './ducks/ui/types';
@@ -15,7 +15,8 @@ import { AuthState, AuthAction } from './ducks/auth/types';
 import { FilterAction, RootFilterState } from './ducks/filter/types';
 
 /**
- * Extend dispatch to allow thunks (functions) to be given to dispatch, instead of only objects.
+ * Interface for the Redux store.
+ * It extends dispatch to allow thunks (functions) to be given to dispatch, instead of only objects.
  */
 export interface Store<S> extends ReduxStore<S> {
     dispatch: ThunkDispatch<S, undefined, RootActions>;
@@ -41,3 +42,10 @@ export type RootActions =
     | AttachmentAction
     | AuthAction
     | FilterAction;
+
+/**
+ * An action that has a name field to identify which reducer should process the action.
+ */
+export interface NamedAction extends Action {
+    name: string;
+}

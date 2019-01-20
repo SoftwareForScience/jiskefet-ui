@@ -15,7 +15,7 @@ import { ActionTypes as AuthActionTypes } from './ducks/auth/types';
 import { RootFilterState } from './ducks/filter/types';
 
 /**
- * This file creates the store based on rootReducer.ts and the applied middleware.
+ * This file creates the store based by combining all reducers into a single reducer and applying middleware.
  */
 
 /**

@@ -12,7 +12,7 @@ import RunModel from './Run';
 import HttpErrorModel from './HttpError';
 import SuccessModel from './Success';
 // import SubsystemPermissionModel from './SubsystemPermission';
-import FilterModel from './Filter';
+// import FilterModel from './Filter';
 // import AttachmentModel from './Attachment';
 // import SubsystemModel from './Subsystem';
 // import SubsystemOverviewModel from './SubsystemOverview';
@@ -28,7 +28,7 @@ export default {
     LogModel,
     RunModel,
     // SubsystemPermissionModel,
-    FilterModel,
+    // FilterModel,
     // AttachmentModel,
     // SubsystemModel,
     // AuthModel,

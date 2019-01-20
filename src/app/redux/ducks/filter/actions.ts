@@ -13,6 +13,7 @@ import { FilterState, FilterName } from '../../../interfaces/Filter';
 
 /**
  * Set the filter for the name given.
+ *
  * @param name The name of the filter reducer.
  * @param key The key to set.
  * @param value The value for the key.
@@ -30,6 +31,7 @@ export const setFilter = (name: FilterName, key: string, value: any): SetFilterA
  * Replaces the current filter state for the name given to the filters given as an argument.
  * When the current filter state has properties that are missing in the filters argument given, these
  * properties are kept the same.
+ *
  * @param name The name of the filter reducer.
  * @param filters The filters used to replace the filter values.
  */
@@ -41,6 +43,7 @@ export const setFilters = (name: FilterName, filters: FilterState): SetFiltersAc
 
 /**
  * Resets the filters for the name given to their initial values.
+ *
  * @param name The name of the filter reducer.
  */
 export const resetFilters = (name: FilterName): ResetFiltersAction => ({

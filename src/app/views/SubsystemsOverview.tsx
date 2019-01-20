@@ -7,7 +7,6 @@
  */
 
 import * as m from 'mithril';
-import State from '../models/State';
 import SubsystemOverviewColumns from '../constants/SubsystemOverviewColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import HttpErrorAlert from '../components/HttpErrorAlert';
@@ -15,37 +14,44 @@ import SuccessMessage from '../components/SuccessMessage';
 import Table from '../components/Table';
 import ContentBlock from '../components/ContentBlock';
 import Spinner from '../components/Spinner';
-import { createDummyTable } from '../utility/DummyService';
-import Fetchable from '../interfaces/Fetchable';
 import { Event } from '../interfaces/Event';
 import { fetchSubsystemOverviews } from '../redux/ducks/subsystem/operations';
 import { store } from '../redux/configureStore';
 import { selectFetchingSubsystemOverviews, selectSubsystemOverviews } from '../redux/ducks/subsystem/selectors';
+import { setFiltersFromUrl, switchOrderBy } from '../redux/ducks/filter/operations';
+import { FilterName } from '../interfaces/Filter';
+import { selectQueryString, selectFilters } from '../redux/ducks/filter/selectors';
+import { setQueryParams } from '../utility/UrlUtil';
+import { setFilter } from '../redux/ducks/filter/actions';
+import { OrderDirection } from '../enums/OrderDirection';
 
-export default class SubsystemsOverview extends MithrilTsxComponent<{}> implements Fetchable<SubsystemsOverview> {
+export default class SubsystemsOverview extends MithrilTsxComponent<{}> {
 
     oninit() {
-        State.FilterModel.setFiltersToDefaults('subsystem');
-        State.FilterModel.setFiltersFromUrl('subsystem');
-        this.fetch(State.FilterModel.getQueryString('subsystem'));
+        store.dispatch(setFiltersFromUrl(FilterName.Subsystem));
+        this.setQueryAndFetch();
     }
 
     /**
-     * Fetch logs with the query param given.
-     */
-    fetch = (queryParam: string = ''): void => {
-        store.dispatch(fetchSubsystemOverviews(queryParam));
-    }
-
-    /**
-     * Fetch logs with the filters currently in the state (in FilterModel).
+     * Fetch subsystems with the filters currently in the state.
      */
     fetchWithFilters = (): void => {
-        this.fetch(State.FilterModel.getQueryString('subsystem'));
+        const queryString = selectQueryString(store.getState())(FilterName.Subsystem);
+        store.dispatch(fetchSubsystemOverviews(queryString));
+    }
+
+    /**
+     * Set the query parameters in the url and fetch with the filters in the current state.
+     */
+    setQueryAndFetch = (): void => {
+        const subsystemFilters = selectFilters(store.getState())[FilterName.Subsystem];
+        setQueryParams(subsystemFilters);
+        this.fetchWithFilters();
     }
 
     view() {
         const timeRanges = [24, 48, 72, 96];
+        const subsystemFilters = selectFilters(store.getState())[FilterName.Subsystem];
         return (
             <div>
                 <HttpErrorAlert>
@@ -65,11 +71,14 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> implemen
                                     class="form-control form-control-sm"
                                     name="timeRange"
                                     onchange={(event: Event) => {
-                                        State.FilterModel
-                                            .setFilter('subsystem', 'timeRange', event.target.value);
-                                        this.fetchWithFilters();
+                                        store.dispatch(setFilter(
+                                            FilterName.Subsystem,
+                                            'timeRange',
+                                            event.target.value
+                                        ));
+                                        this.setQueryAndFetch();
                                     }}
-                                    value={State.FilterModel.getFilters('subsystem').timeRange}
+                                    value={subsystemFilters.timeRange}
                                 >
                                     {timeRanges.map((timeRange: number) =>
                                         <option key={timeRange} value={timeRange}>{timeRange}</option>
@@ -79,14 +88,16 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> implemen
                             </ContentBlock>
                             <Spinner
                                 isLoading={selectFetchingSubsystemOverviews(store.getState())}
-                                component={
-                                    createDummyTable(
-                                        State.FilterModel.getFilters('subsystem').pageSize, SubsystemOverviewColumns)
-                                }
                             >
                                 <Table
                                     data={selectSubsystemOverviews(store.getState())}
                                     columns={SubsystemOverviewColumns}
+                                    orderBy={subsystemFilters.orderBy || undefined}
+                                    orderDirection={subsystemFilters.orderDirection || OrderDirection.Descending}
+                                    onHeaderClick={(accessor: string) => {
+                                        store.dispatch(switchOrderBy(FilterName.Subsystem, accessor));
+                                        this.setQueryAndFetch();
+                                    }}
                                 />
                             </Spinner>
                         </div>

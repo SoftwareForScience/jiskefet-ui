@@ -21,6 +21,7 @@ import { FilterName } from '../../../interfaces/Filter';
 /**
  * Switches the orderDirection field to a different OrderDirection enum in a standard order, for the orderBy given
  * as the 'columnName' argument.
+ *
  * @param columnName e.g. title, creation_date.
  */
 export const switchOrderBy = (name: FilterName, columnName: string): ThunkResult<Promise<void>> =>

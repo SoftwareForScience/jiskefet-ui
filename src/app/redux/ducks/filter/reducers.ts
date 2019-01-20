@@ -7,12 +7,18 @@
  */
 
 import { Reducer, combineReducers } from 'redux';
-import { FilterAction, ActionTypes, NamedAction } from './types';
+import { FilterAction, ActionTypes } from './types';
 import { OrderDirection } from '../../../enums/OrderDirection';
 import * as _ from 'lodash';
 import { FilterState, FilterValue, FilterName } from '../../../interfaces/Filter';
+import { createNamedWrapperReducer } from '../../utils/reducerWrappers';
 
 // Initial state
+
+/**
+ * Returns the initial state for the name given.
+ * @param name The name identifier for the state.
+ */
 const getInitialState = (name: FilterName): FilterState | {} => {
     switch (name) {
         case FilterName.Log: {
@@ -30,7 +36,7 @@ const getInitialState = (name: FilterName): FilterState | {} => {
         }
         case FilterName.Run:
             return {
-                runId: null,
+                runNumber: null,
                 activityId: null,
                 runType: null,
                 runQuality: null,
@@ -49,9 +55,9 @@ const getInitialState = (name: FilterName): FilterState | {} => {
             };
         case FilterName.Subsystem:
             return {
-                orderBy: null,
-                orderDirection: null,
-                timeRange: null,
+                orderBy: 'subsystemName',
+                orderDirection: 'ASC',
+                timeRange: 24,
             };
         case FilterName.UserLog:
             return {
@@ -66,6 +72,7 @@ const getInitialState = (name: FilterName): FilterState | {} => {
 };
 
 // Merge tools
+
 /**
  * Puts the value of a mergeObj key into the source, for each key that they have in common.
  * @param source
@@ -77,11 +84,6 @@ const mergeOverlappingKeys = (source: FilterState, mergeObj: FilterState): Filte
     });
     return result;
 };
-
-/**
- * To Do:
- * SET_FILTER can set any value on a prop that does not necessarily accept the type of value given.
- */
 
 // Reducer
 const filterReducer: Reducer<FilterState>
@@ -109,30 +111,11 @@ const filterReducer: Reducer<FilterState>
         }
     };
 
-/**
- * A wrapper function for a reducer, enabling the reducer to only process actions
- * that have the same name as the reducer.
- * Example: An action { type: 'SOME_TYPE', name: 'foo', payload: 'some payload' } will only be processed by the reducer
- * with the same name ('foo').
- * @param reducerFunction The reducer to wrap.
- * @param reducerName The name for the reducer.
- */
-const createNamedWrapperReducer = (reducerFunction: Reducer<FilterState>, reducerName: FilterName) => {
-    return (state: FilterState, action: NamedAction) => {
-        const { name } = action;
-        const isInitializationCall = state === undefined;
-        if (name !== reducerName && !isInitializationCall) {
-            return state;
-        }
-        return reducerFunction(state, action);
-    };
-};
-
 const rootReducer = combineReducers({
-    [FilterName.Log]: createNamedWrapperReducer(filterReducer, FilterName.Log),
-    [FilterName.Run]: createNamedWrapperReducer(filterReducer, FilterName.Run),
-    [FilterName.Subsystem]: createNamedWrapperReducer(filterReducer, FilterName.Subsystem),
-    [FilterName.UserLog]: createNamedWrapperReducer(filterReducer, FilterName.UserLog),
+    [FilterName.Log]: createNamedWrapperReducer<FilterState, FilterName>(filterReducer, FilterName.Log),
+    [FilterName.Run]: createNamedWrapperReducer<FilterState, FilterName>(filterReducer, FilterName.Run),
+    [FilterName.Subsystem]: createNamedWrapperReducer<FilterState, FilterName>(filterReducer, FilterName.Subsystem),
+    [FilterName.UserLog]: createNamedWrapperReducer<FilterState, FilterName>(filterReducer, FilterName.UserLog),
 });
 
 export default rootReducer;

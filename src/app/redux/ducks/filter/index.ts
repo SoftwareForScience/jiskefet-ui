@@ -9,6 +9,8 @@
 import reducer from './reducers';
 
 import * as filterSelectors from './selectors';
+import * as filterActions from './actions';
+import * as filterOperations from './operations';
 import * as filterTypes from './types';
 
 /**
@@ -17,6 +19,8 @@ import * as filterTypes from './types';
 
 export {
     filterSelectors,
+    filterActions,
+    filterOperations,
     filterTypes
 };
 

@@ -6,8 +6,7 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Action } from 'redux';
-import { RootState } from '../../types';
+import { RootState, NamedAction } from '../../types';
 import { ThunkAction } from 'redux-thunk';
 import { OrderDirection } from '../../../enums/OrderDirection';
 import { FilterState, FilterValue, FilterName } from '../../../interfaces/Filter';
@@ -33,7 +32,7 @@ export interface LogFilters extends FilterState {
 }
 
 export interface RunFilters extends FilterState {
-    runId: string | null;
+    runNumber: string | null;
     activityId: string | null;
     runType: string | null;
     runQuality: string | null;
@@ -48,7 +47,7 @@ export interface RunFilters extends FilterState {
     orderBy: string | null;
     orderDirection: OrderDirection | null;
     pageSize: number;
-    pageNumber: number | null;
+    pageNumber: number;
 }
 
 export interface SubsystemFilters extends FilterState {
@@ -61,7 +60,11 @@ export interface UserLogFilters extends FilterState {
     orderBy: string | null;
     orderDirection: OrderDirection | null;
     pageSize: number;
-    pageNumber: number | null;
+    pageNumber: number;
+}
+
+export interface NamedFilterAction extends NamedAction {
+    name: FilterName;
 }
 
 // Action types
@@ -71,15 +74,8 @@ export enum ActionTypes {
     RESET_FILTERS = 'jiskefet/filter/RESET_FILTERS',
 }
 
-/**
- * An action that has a name field to identify which reducer should process the action.
- */
-export interface NamedAction extends Action {
-    name: FilterName;
-}
-
 // Action interfaces
-export interface SetFilterAction extends NamedAction {
+export interface SetFilterAction extends NamedFilterAction {
     type: ActionTypes.SET_FILTER;
     payload: {
         key: string;
@@ -87,12 +83,12 @@ export interface SetFilterAction extends NamedAction {
     };
 }
 
-export interface SetFiltersAction extends NamedAction {
+export interface SetFiltersAction extends NamedFilterAction {
     type: ActionTypes.SET_FILTERS;
     payload: FilterState;
 }
 
-export interface ResetFiltersAction extends NamedAction {
+export interface ResetFiltersAction extends NamedFilterAction {
     type: ActionTypes.RESET_FILTERS;
 }
 

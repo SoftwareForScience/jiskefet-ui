@@ -23,13 +23,12 @@ import ContentBlock from '../components/ContentBlock';
 import Badges from '../components/Badges';
 import { selectCollapsableItem } from '../redux/ducks/ui/selectors';
 import { store } from '../redux/configureStore';
-import { selectFilters, selectQueryString } from '../redux/ducks/filter/selectors';
-import { switchOrderBy, setFiltersFromUrl } from '../redux/ducks/filter/operations';
-import { setFilter } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
-import { resetFilters } from '../redux/ducks/filter/actions';
 import { setQueryParams } from '../utility/UrlUtil';
 import { FilterName } from '../interfaces/Filter';
+import { setFiltersFromUrl, switchOrderBy } from '../redux/ducks/filter/operations';
+import { selectQueryString, selectFilters } from '../redux/ducks/filter/selectors';
+import { setFilter, resetFilters } from '../redux/ducks/filter/actions';
 
 const inputFields = [
     {
@@ -141,9 +140,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                     data={State.LogModel.list}
                                     columns={LogColumns}
                                     orderBy={logFilters.orderBy || undefined}
-                                    orderDirection={
-                                        logFilters.orderDirection || OrderDirection.Descending
-                                    }
+                                    orderDirection={logFilters.orderDirection || OrderDirection.Descending}
                                     onHeaderClick={(accessor: string) => {
                                         store.dispatch(switchOrderBy(FilterName.Log, accessor));
                                         this.setQueryAndFetch();
