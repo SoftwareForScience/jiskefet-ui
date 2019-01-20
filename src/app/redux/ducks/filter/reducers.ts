@@ -6,29 +6,73 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Reducer } from 'redux';
-import { FilterState, FilterAction, ActionTypes } from './types';
+import { Reducer, combineReducers } from 'redux';
+import { FilterAction, ActionTypes, NamedAction, FilterName } from './types';
 import { OrderDirection } from '../../../enums/OrderDirection';
 import * as _ from 'lodash';
+import { FilterState, FilterValue } from '../../../interfaces/Filter';
 
 // Initial state
-const initialState: FilterState = {
-    logFilters: {
-        logId: null,
-        searchterm: null,
-        creationTime: null,
-        origin: null,
-        subType: null,
-        orderBy: 'creationTime',
-        orderDirection: OrderDirection.Descending,
-        pageSize: 16,
-        pageNumber: 1
+const getInitialState = (name: FilterName): FilterState | {} => {
+    switch (name) {
+        case FilterName.LOG: {
+            return {
+                logId: null,
+                searchterm: null,
+                creationTime: null,
+                origin: null,
+                subType: null,
+                orderBy: 'creationTime',
+                orderDirection: OrderDirection.Descending,
+                pageSize: 16,
+                pageNumber: 1,
+            };
+        }
+        case FilterName.RUN:
+            return {
+                runId: null,
+                activityId: null,
+                runType: null,
+                runQuality: null,
+                startTimeO2Start: null,
+                endTimeO2Start: null,
+                startTimeO2End: null,
+                endTimeO2End: null,
+                startTimeTrgStart: null,
+                endTimeTrgStart: null,
+                startTimeTrgEnd: null,
+                endTimeTrgEnd: null,
+                orderBy: null,
+                orderDirection: null,
+                pageSize: 16,
+                pageNumber: 1,
+            };
+        case FilterName.SUBSYSTEM:
+            return {
+                orderBy: null,
+                orderDirection: null,
+                timeRange: null,
+            };
+        case FilterName.USER_LOG:
+            return {
+                orderBy: null,
+                orderDirection: null,
+                pageSize: 16,
+                pageNumber: 1,
+            };
+        default:
+            return {};
     }
 };
 
 // Merge tools
-const mergeOnOverlappingKeys = <T extends object, K extends object>(source: T, mergeObj: K): any => {
-    const result = _.mapValues(source, (value: any, key: string) => {
+/**
+ * Puts the value of a mergeObj key into the source, for each key that they have in common.
+ * @param source
+ * @param mergeObj
+ */
+const mergeOverlappingKeys = (source: FilterState, mergeObj: FilterState): FilterState => {
+    const result = _.mapValues(source, (value: FilterValue, key: string) => {
         return mergeObj[key] || value;
     });
     return result;
@@ -36,34 +80,46 @@ const mergeOnOverlappingKeys = <T extends object, K extends object>(source: T, m
 
 // Reducer
 const filterReducer: Reducer<FilterState>
-    = (state: FilterState = initialState, action: FilterAction): FilterState => {
+    = (state: FilterState, action: FilterAction): FilterState => {
+        if (!state || _.isEmpty(state)) {
+            state = getInitialState(action.name);
+        }
         switch (action.type) {
-            case ActionTypes.SET_LOG_FILTER:
+            case ActionTypes.SET_FILTER:
                 return {
                     ...state,
-                    logFilters: {
-                        ...state.logFilters,
-                        [action.payload.key]: action.payload.value || null
-                    }
+                    [action.payload.key]: action.payload.value || null
                 };
-            case ActionTypes.SET_LOG_FILTERS:
+            case ActionTypes.SET_FILTERS:
                 return {
-                    ...state,
-                    logFilters: {
-                        ...mergeOnOverlappingKeys(state.logFilters, action.payload)
-                    }
+                    ...mergeOverlappingKeys(state, action.payload)
                 };
-            case ActionTypes.RESET_LOG_FILTERS:
+            case ActionTypes.RESET_FILTERS:
                 return {
-                    ...state,
-                    logFilters: {
-                        ...initialState.logFilters,
-                        pageSize: state.logFilters.pageSize
-                    }
+                    ...getInitialState(action.name),
+                    pageSize: state.pageSize
                 };
             default:
                 return state;
         }
     };
 
-export default filterReducer;
+const createNamedWrapperReducer = (reducerFunction: Reducer<FilterState>, reducerName: FilterName) => {
+    return (state: FilterState, action: NamedAction) => {
+        const { name } = action;
+        const isInitializationCall = state === undefined;
+        if (name !== reducerName && !isInitializationCall) {
+            return state;
+        }
+        return reducerFunction(state, action);
+    };
+};
+
+const rootReducer = combineReducers({
+    logFilters: createNamedWrapperReducer(filterReducer, FilterName.LOG),
+    runFilters: createNamedWrapperReducer(filterReducer, FilterName.RUN),
+    subsystemFilters: createNamedWrapperReducer(filterReducer, FilterName.SUBSYSTEM),
+    userLogFilters: createNamedWrapperReducer(filterReducer, FilterName.USER_LOG),
+});
+
+export default rootReducer;

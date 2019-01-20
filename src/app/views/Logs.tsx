@@ -24,11 +24,12 @@ import Badges from '../components/Badges';
 import { selectCollapsableItem } from '../redux/ducks/ui/selectors';
 import { store } from '../redux/configureStore';
 import { selectLogFilters, selectLogQueryString } from '../redux/ducks/filter/selectors';
-import { switchLogOrderBy, setLogFiltersFromUrl } from '../redux/ducks/filter/operations';
-import { setLogFilter } from '../redux/ducks/filter/actions';
+import { switchOrderBy, setLogFiltersFromUrl } from '../redux/ducks/filter/operations';
+import { setFilter } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
-import { resetLogFilters } from '../redux/ducks/filter/actions';
+import { resetFilters } from '../redux/ducks/filter/actions';
 import { setQueryParams } from '../utility/UrlUtil';
+import { FilterName } from '../redux/ducks/filter/types';
 
 const inputFields = [
     {
@@ -59,7 +60,7 @@ const inputFields = [
 
 export default class Logs extends MithrilTsxComponent<{}> {
     oninit() {
-        store.dispatch(setLogFiltersFromUrl());
+        store.dispatch(setLogFiltersFromUrl(FilterName.LOG));
         this.setQueryAndFetch();
     }
 
@@ -97,8 +98,8 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                 <Filter
                                     inputFields={inputFields}
                                     onEvent={(key: string, value: string | number | null) => {
-                                        store.dispatch(setLogFilter(key, value));
-                                        store.dispatch(setLogFilter('pageNumber', 1));
+                                        store.dispatch(setFilter(FilterName.LOG, key, value));
+                                        store.dispatch(setFilter(FilterName.LOG, 'pageNumber', 1));
                                         this.setQueryAndFetch();
                                     }}
                                     filters={selectLogFilters(store.getState())}
@@ -115,11 +116,11 @@ export default class Logs extends MithrilTsxComponent<{}> {
                             <Badges
                                 filters={selectLogFilters(store.getState())}
                                 onEvent={(key: string) => {
-                                    store.dispatch(setLogFilter(key, null));
+                                    store.dispatch(setFilter(FilterName.LOG, key, null));
                                     this.setQueryAndFetch();
                                 }}
                                 onEventAll={() => {
-                                    store.dispatch(resetLogFilters());
+                                    store.dispatch(resetFilters(FilterName.LOG));
                                     this.setQueryAndFetch();
                                 }}
                                 ignoredFilters={[
@@ -141,7 +142,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                         selectLogFilters(store.getState()).orderDirection || OrderDirection.Descending
                                     }
                                     onHeaderClick={(accessor: string) => {
-                                        store.dispatch(switchLogOrderBy(accessor));
+                                        store.dispatch(switchOrderBy(FilterName.LOG, accessor));
                                         this.setQueryAndFetch();
                                     }}
                                 />
@@ -164,8 +165,10 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                                 class="form-control form-control-sm"
                                                 name="pageSize"
                                                 onchange={(event: Event) => {
-                                                    store.dispatch(setLogFilter('pageSize', event.target.value));
-                                                    store.dispatch(setLogFilter('pageNumber', 1));
+                                                    store.dispatch(
+                                                        setFilter(FilterName.LOG, 'pageSize', event.target.value)
+                                                    );
+                                                    store.dispatch(setFilter(FilterName.LOG, 'pageNumber', 1));
                                                     this.setQueryAndFetch();
                                                 }}
                                                 value={selectLogFilters(store.getState()).pageSize}
@@ -190,7 +193,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                             numberOfPages={Math.ceil(State.LogModel.count
                                                 / selectLogFilters(store.getState()).pageSize)}
                                             onChange={(newPage: number) => {
-                                                store.dispatch(setLogFilter('pageNumber', newPage));
+                                                store.dispatch(setFilter(FilterName.LOG, 'pageNumber', newPage));
                                                 this.setQueryAndFetch();
                                             }}
                                         />

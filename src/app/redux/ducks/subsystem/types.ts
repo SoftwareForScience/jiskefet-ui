@@ -96,8 +96,7 @@ export type SubsystemAction =
     | FetchSubsystemPermissionsRequestAction
     | FetchSubsystemPermissionsSuccessAction
     | CreateTokenRequestAction
-    | CreateTokenSuccessAction
-    ;
+    | CreateTokenSuccessAction;
 
 // Shorthand type for ThunkAction
 export type ThunkResult<R> = ThunkAction<R, RootState, undefined, SubsystemAction>;

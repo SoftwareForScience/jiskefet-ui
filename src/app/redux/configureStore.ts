@@ -6,12 +6,13 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware, combineReducers, AnyAction, Reducer } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { RootState, RootActions, Store } from './types';
 import { subsystem, ui, attachment, auth, filter } from './ducks';
 import { ActionTypes as AuthActionTypes } from './ducks/auth/types';
+import { RootFilterState } from './ducks/filter/types';
 
 /**
  * This file creates the store based on rootReducer.ts and the applied middleware.
@@ -25,7 +26,7 @@ const appReducer = combineReducers<RootState>({
     ui,
     attachment,
     auth,
-    filter
+    filter: filter as Reducer<RootFilterState, AnyAction>
 });
 
 const rootReducer = (state: RootState | undefined, action: RootActions) => {

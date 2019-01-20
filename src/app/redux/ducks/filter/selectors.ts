@@ -13,7 +13,6 @@ import * as m from 'mithril';
 import * as _ from 'lodash';
 
 // Selectors
-
 export const selectLogFilters = (state: RootState): LogFilters => state.filter.logFilters;
 export const selectLogQueryString = createSelector(
     selectLogFilters,

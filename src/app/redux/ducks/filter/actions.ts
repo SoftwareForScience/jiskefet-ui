@@ -6,23 +6,26 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { ActionTypes, SetLogFilterAction, ResetLogFiltersAction, SetLogFiltersAction } from './types';
-import { Filters } from '../../../interfaces/Filter';
+import { ActionTypes, SetFilterAction, ResetFiltersAction, SetFiltersAction, FilterName } from './types';
+import { FilterState } from '../../../interfaces/Filter';
 
 // Action creators
-export const setLogFilter = (key: string, value: any): SetLogFilterAction => ({
-    type: ActionTypes.SET_LOG_FILTER,
+export const setFilter = (name: FilterName, key: string, value: any): SetFilterAction => ({
+    type: ActionTypes.SET_FILTER,
+    name,
     payload: {
         key,
         value
     }
 });
 
-export const setLogFilters = (filters: Filters): SetLogFiltersAction => ({
-    type: ActionTypes.SET_LOG_FILTERS,
+export const setFilters = (name: FilterName, filters: FilterState): SetFiltersAction => ({
+    type: ActionTypes.SET_FILTERS,
+    name,
     payload: filters
 });
 
-export const resetLogFilters = (): ResetLogFiltersAction => ({
-    type: ActionTypes.RESET_LOG_FILTERS
+export const resetFilters = (name: FilterName): ResetFiltersAction => ({
+    type: ActionTypes.RESET_FILTERS,
+    name
 });

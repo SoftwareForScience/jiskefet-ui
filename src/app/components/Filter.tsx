@@ -10,7 +10,7 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
 import Collapse from './Collapse';
-import { Filters } from '../interfaces/Filter';
+import { FilterState } from '../interfaces/Filter';
 
 interface InputField {
     name: string; // name should exist as a key in the filters attribute.
@@ -32,7 +32,7 @@ interface Attrs {
     /**
      * The values of the filters.
      */
-    filters: Filters;
+    filters: FilterState;
 }
 
 type Vnode = m.Vnode<Attrs, Filter>;

@@ -8,20 +8,20 @@
 
 import { OrderDirection } from '../enums/OrderDirection';
 
-/**
- * Object containing (possibly) multiple keys that contain Filters that relate to the same
- * entity, e.g. filters that relate to the Log entity could go under the key 'logFilters'.
- * Example: { logFilters: { searchterm: 'foo', pageNumber: 1 } }
- */
-export interface IFilterState {
-    [key: string]: Filters;
-}
+// /**
+//  * Object containing (possibly) multiple keys that contain Filters that relate to the same
+//  * entity, e.g. filters that relate to the Log entity could go under the key 'logFilters'.
+//  * Example: { logFilters: { searchterm: 'foo', pageNumber: 1 } }
+//  */
+// export interface IFilterState {
+//     [key: string]: FilterState;
+// }
 
 /**
  * Object containing (possibly) multiple filters by key - value pair.
  * Example: { searchterm: 'foo', pageNumber: 1 }
  */
-export interface Filters {
+export interface FilterState {
     [key: string]: FilterValue;
 }
 
