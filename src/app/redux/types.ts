@@ -13,6 +13,7 @@ import { UIState, UIAction } from './ducks/ui/types';
 import { AttachmentState, AttachmentAction } from './ducks/attachment/types';
 import { AuthState, AuthAction } from './ducks/auth/types';
 import { FilterAction, RootFilterState } from './ducks/filter/types';
+import { ErrorState, ErrorAction } from './ducks/error/types';
 
 /**
  * Interface for the Redux store.
@@ -31,6 +32,7 @@ export interface RootState {
     attachment: AttachmentState;
     auth: AuthState;
     filter: RootFilterState;
+    error: ErrorState;
 }
 
 /**
@@ -41,7 +43,8 @@ export type RootActions =
     | UIAction
     | AttachmentAction
     | AuthAction
-    | FilterAction;
+    | FilterAction
+    | ErrorAction;
 
 /**
  * An action that has a name field to identify which reducer should process the action.

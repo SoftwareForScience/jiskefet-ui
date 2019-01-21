@@ -77,7 +77,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
         return (
             <div class="container-fluid">
                 <SuccessMessage />
-                <HttpErrorAlert>
+                <HttpErrorAlert hideChildren>
                     <div class="row">
                         <div class="col-9 mx-auto bg-light rounded p-4 shadow-sm">
                             <div><h2>Create a new token</h2></div>

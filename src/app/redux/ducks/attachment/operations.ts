@@ -19,10 +19,12 @@ import {
     createAttachmentSuccess
 } from './actions';
 import { getAttachmentsByLog, postAttachment } from '../../../constants/apiUrls';
+import { addHttpError } from '../error/actions';
+import { ErrorAction } from '../error/types';
 
 // Thunks
 export const fetchAttachmentsByLog = (logId: number): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, AttachmentAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, AttachmentAction | ErrorAction>): Promise<void> => {
         dispatch(fetchAttachmentsByLogRequest());
         return request({
             method: 'GET',
@@ -30,12 +32,12 @@ export const fetchAttachmentsByLog = (logId: number): ThunkResult<Promise<void>>
         }).then((result: Attachment[]) => {
             dispatch(fetchAttachmentsByLogSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const saveAttachment = (attachment: Attachment): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, AttachmentAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, AttachmentAction | ErrorAction>): Promise<void> => {
         dispatch(createAttachmentRequest());
         return request({
             method: 'POST',
@@ -45,6 +47,6 @@ export const saveAttachment = (attachment: Attachment): ThunkResult<Promise<void
             // SuccesModel.add('Successfully saved attachment.');
             dispatch(createAttachmentSuccess());
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };

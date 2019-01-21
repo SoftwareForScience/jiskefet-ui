@@ -40,10 +40,12 @@ import {
     SubsystemPermissionCreate,
     SubsystemToken
 } from '../../../interfaces/SubsystemPermission';
+import { addHttpError } from '../error/actions';
+import { ErrorAction } from '../error/types';
 
 // Thunks
 export const fetchSubsystems = (): ThunkResult<void> =>
-    (dispatch: ThunkDispatch<RootState, void, SubsystemAction>): void => {
+    (dispatch: ThunkDispatch<RootState, void, SubsystemAction | ErrorAction>): void => {
         dispatch(fetchSubsystemsRequest());
         request({
             method: 'GET',
@@ -51,12 +53,12 @@ export const fetchSubsystems = (): ThunkResult<void> =>
         }).then((result: Subsystem[]) => {
             dispatch(fetchSubsystemsSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const fetchSubsystem = (id: string | number): ThunkResult<Promise<void>> =>
-    (dispatch: ThunkDispatch<RootState, void, SubsystemAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, SubsystemAction | ErrorAction>): Promise<void> => {
         dispatch(fetchSubsystemRequest());
         return request({
             method: 'GET',
@@ -64,12 +66,12 @@ export const fetchSubsystem = (id: string | number): ThunkResult<Promise<void>> 
         }).then((result: Subsystem) => {
             dispatch(fetchSubsystemSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const fetchSubsystemOverviews = (query?: string): ThunkResult<void> =>
-    (dispatch: ThunkDispatch<RootState, void, SubsystemAction>): void => {
+    (dispatch: ThunkDispatch<RootState, void, SubsystemAction | ErrorAction>): void => {
         dispatch(fetchSubsystemOverviewsRequest());
         request({
             method: 'GET',
@@ -77,12 +79,12 @@ export const fetchSubsystemOverviews = (query?: string): ThunkResult<void> =>
         }).then((result: SubsystemOverview[]) => {
             dispatch(fetchSubsystemOverviewsSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const fetchSubsystemPermissions = (userId: number): ThunkResult<void> =>
-    (dispatch: ThunkDispatch<RootState, void, SubsystemAction>): void => {
+    (dispatch: ThunkDispatch<RootState, void, SubsystemAction | ErrorAction>): void => {
         dispatch(fetchSubsystemPermissionsRequest());
         request({
             method: 'GET',
@@ -90,12 +92,12 @@ export const fetchSubsystemPermissions = (userId: number): ThunkResult<void> =>
         }).then((result: SubsystemPermission[]) => {
             dispatch(fetchSubsystemPermissionsSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const createToken = (payload: SubsystemPermissionCreate): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, SubsystemAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, SubsystemAction | ErrorAction>): Promise<void> => {
         dispatch(createTokenRequest());
         return request({
             method: 'POST',
@@ -106,6 +108,6 @@ export const createToken = (payload: SubsystemPermissionCreate): ThunkResult<Pro
             console.log(`Temporary way of displaying token... Token: ${result.subSystemHash}`);
             // SuccesModel.add(`Successfully saved the token. Please write it down: \n${result.subSystemHash}`);
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };

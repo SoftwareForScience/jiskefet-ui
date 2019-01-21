@@ -12,7 +12,7 @@
  */
 export interface HttpError {
     error: string;
-    statuscode: number;
+    statusCode: number;
     message: string;
     stack: string;
 }

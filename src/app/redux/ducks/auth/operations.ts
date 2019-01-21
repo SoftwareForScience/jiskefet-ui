@@ -14,13 +14,15 @@ import { request } from '../../../request';
 import { fetchProfileSuccess, fetchProfileRequest, authorizeRequest, authorizeSuccess, userLogout } from './actions';
 import { HttpError } from '../../../interfaces/HttpError';
 import { UserProfile } from '../../../interfaces/UserProfile';
-import { getProfile, getAuthorize } from '../../../constants/apiUrls';
+import { getAuthorize, getProfile } from '../../../constants/apiUrls';
 import { AuthorizeResponse } from '../../../interfaces/Auth';
 import { initialize } from '../../../app';
+import { ErrorAction } from '../error/types';
+import { addHttpError } from '../error/actions';
 
 // Thunks
 export const fetchProfile = (): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, AuthAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, AuthAction | ErrorAction>): Promise<void> => {
         dispatch(fetchProfileRequest());
         return request({
             method: 'GET',
@@ -28,12 +30,12 @@ export const fetchProfile = (): ThunkResult<Promise<void>> =>
         }).then((result: UserProfile) => {
             dispatch(fetchProfileSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const authorize = (authGrant: string): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, AuthAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, AuthAction | ErrorAction>): Promise<void> => {
         dispatch(authorizeRequest());
         return request({
             method: 'GET',
@@ -41,7 +43,7 @@ export const authorize = (authGrant: string): ThunkResult<Promise<void>> =>
         }).then((result: AuthorizeResponse) => {
             dispatch(authorizeSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
