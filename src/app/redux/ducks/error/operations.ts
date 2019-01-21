@@ -21,6 +21,8 @@ import { HttpError } from '../../../interfaces/HttpError';
 export const extractErrors = (): ThunkResult<Promise<HttpError[]>> =>
     async (dispatch: ThunkDispatch<RootState, void, ErrorAction>, getState: () => RootState): Promise<HttpError[]> => {
         const errors = await selectErrors(getState());
-        await dispatch(clearHttpErrors());
+        if (errors.length > 0) {
+            await dispatch(clearHttpErrors());
+        }
         return errors;
     };
