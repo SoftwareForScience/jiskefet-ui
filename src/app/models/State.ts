@@ -9,7 +9,7 @@
 import LogModel from './Log';
 import RunModel from './Run';
 // import AuthModel from './Auth';
-import HttpErrorModel from './HttpError';
+// import HttpErrorModel from './HttpError';
 import SuccessModel from './Success';
 // import SubsystemPermissionModel from './SubsystemPermission';
 // import FilterModel from './Filter';
@@ -23,7 +23,7 @@ import UserModel from './User';
  * See the README in this directory (./models) for more info.
  */
 export default {
-    HttpErrorModel,
+    // HttpErrorModel,
     SuccessModel,
     LogModel,
     RunModel,
