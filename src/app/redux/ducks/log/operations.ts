@@ -21,10 +21,12 @@ import {
     createLogSuccess
 } from './actions';
 import { getLogs, getLog, linkRunToLogUrl, postLog } from '../../../constants/apiUrls';
+import { ErrorAction } from '../error/types';
+import { addHttpError } from '../error/actions';
 
 // Thunks
 export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, LogAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, LogAction | ErrorAction>): Promise<void> => {
         dispatch(fetchLogsRequest());
         return request({
             method: 'GET',
@@ -32,12 +34,12 @@ export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
         }).then((result: { logs: Log[], count: number }) => {
             dispatch(fetchLogsSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const fetchLog = (id: number): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, LogAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, LogAction | ErrorAction>): Promise<void> => {
         dispatch(fetchLogRequest());
         return request({
             method: 'GET',
@@ -45,12 +47,12 @@ export const fetchLog = (id: number): ThunkResult<Promise<void>> =>
         }).then((result: Log) => {
             dispatch(fetchLogSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const linkRunToLog = (logId: number, logNumber: number): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, LogAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, LogAction | ErrorAction>): Promise<void> => {
         dispatch(fetchLogRequest());
         return request({
             method: 'PATCH',
@@ -59,12 +61,12 @@ export const linkRunToLog = (logId: number, logNumber: number): ThunkResult<Prom
         }).then((result: Log) => {
             dispatch(fetchLogSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const createLog = (logToBeCreated: LogCreate): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, LogAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, LogAction | ErrorAction>): Promise<void> => {
         dispatch(createLogRequest());
         return request({
             method: 'POST',
@@ -73,6 +75,6 @@ export const createLog = (logToBeCreated: LogCreate): ThunkResult<Promise<void>>
         }).then((result: any) => {
             dispatch(createLogSuccess());
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };

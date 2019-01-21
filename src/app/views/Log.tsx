@@ -31,10 +31,8 @@ export default class Log extends MithrilTsxComponent<Attrs> {
 
     constructor(vnode: Vnode) {
         super();
-        // State.LogModel.fetchOne(vnode.attrs.logId);
         store.dispatch(fetchLog(vnode.attrs.logId));
         store.dispatch(fetchAttachmentsByLog(vnode.attrs.logId));
-        // State.AttachmentModel.fetchForLog(vnode.attrs.logId);
     }
 
     view(vnode: Vnode) {

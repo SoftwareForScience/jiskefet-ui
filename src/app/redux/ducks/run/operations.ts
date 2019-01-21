@@ -19,10 +19,12 @@ import {
     fetchRunSuccess
 } from './actions';
 import { getRuns, getRun, linkLogToRunUrl } from '../../../constants/apiUrls';
+import { ErrorAction } from '../error/types';
+import { addHttpError } from '../error/actions';
 
 // Thunks
 export const fetchRuns = (query?: string): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, RunAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, RunAction | ErrorAction>): Promise<void> => {
         dispatch(fetchRunsRequest());
         return request({
             method: 'GET',
@@ -30,12 +32,12 @@ export const fetchRuns = (query?: string): ThunkResult<Promise<void>> =>
         }).then((result: { runs: Run[], count: number }) => {
             dispatch(fetchRunsSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const fetchRun = (id: number | string): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, RunAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, RunAction | ErrorAction>): Promise<void> => {
         dispatch(fetchRunRequest());
         return request({
             method: 'GET',
@@ -43,12 +45,12 @@ export const fetchRun = (id: number | string): ThunkResult<Promise<void>> =>
         }).then((result: Run) => {
             dispatch(fetchRunSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const linkLogToRun = (logId: number, runNumber: number): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, RunAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, RunAction | ErrorAction>): Promise<void> => {
         dispatch(fetchRunRequest());
         return request({
             method: 'PATCH',
@@ -57,6 +59,6 @@ export const linkLogToRun = (logId: number, runNumber: number): ThunkResult<Prom
         }).then((result: Run) => {
             dispatch(fetchRunSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };

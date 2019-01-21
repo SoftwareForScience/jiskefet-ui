@@ -18,10 +18,12 @@ import { HttpError } from '../../../interfaces/HttpError';
 import { request } from '../../../request';
 import { fetchUserRequest, fetchUserSuccess, fetchLogsForUserRequest, fetchLogsForUserSuccess } from './actions';
 import { Log } from '../../../interfaces/Log';
+import { ErrorAction } from '../error/types';
+import { addHttpError } from '../error/actions';
 
 // Thunks
 export const fetchUser = (id: number | string): ThunkResult<Promise<void>> =>
-    (dispatch: ThunkDispatch<RootState, void, UserAction>): Promise<void> => {
+    (dispatch: ThunkDispatch<RootState, void, UserAction | ErrorAction>): Promise<void> => {
         dispatch(fetchUserRequest());
         return request({
             method: 'GET',
@@ -30,12 +32,12 @@ export const fetchUser = (id: number | string): ThunkResult<Promise<void>> =>
         }).then((result: User) => {
             dispatch(fetchUserSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
 
 export const fetchLogsForUser = (id: number | string, query?: string): ThunkResult<void> =>
-    (dispatch: ThunkDispatch<RootState, void, UserAction>): void => {
+    (dispatch: ThunkDispatch<RootState, void, UserAction | ErrorAction>): void => {
         dispatch(fetchLogsForUserRequest());
         request({
             method: 'GET',
@@ -44,6 +46,6 @@ export const fetchLogsForUser = (id: number | string, query?: string): ThunkResu
         }).then((result: { data: Log[], count: number }) => {
             dispatch(fetchLogsForUserSuccess(result));
         }).catch((error: HttpError) => {
-            // State.HttpErrorModel.add(error);
+            dispatch(addHttpError(error));
         });
     };
