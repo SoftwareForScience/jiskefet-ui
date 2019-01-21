@@ -6,10 +6,14 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { ActionTypes, AddSuccessMessageAction } from './types';
+import { ActionTypes, AddSuccessMessageAction, ClearSuccessMessagesAction } from './types';
 
 // Action creators
 export const addSuccessMessage = (succesMessage: string): AddSuccessMessageAction => ({
     type: ActionTypes.ADD_SUCCESS_MESSAGE,
     payload: succesMessage,
+});
+
+export const clearSuccessMessages = (): ClearSuccessMessagesAction => ({
+    type: ActionTypes.CLEAR_SUCCESS_MESSAGES
 });

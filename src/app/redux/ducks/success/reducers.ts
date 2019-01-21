@@ -26,6 +26,11 @@ const errorReducer: Reducer<SuccessState>
                         action.payload
                     ]
                 };
+            case ActionTypes.CLEAR_SUCCESS_MESSAGES:
+                return {
+                    ...state,
+                    successList: []
+                };
             default:
                 return state;
         }

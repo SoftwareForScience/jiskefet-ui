@@ -18,6 +18,7 @@ export interface SuccessState {
 // Action types
 export enum ActionTypes {
     ADD_SUCCESS_MESSAGE = 'jiskefet/succes/ADD_SUCCESS_MESSAGE',
+    CLEAR_SUCCESS_MESSAGES = 'jiskefet/succes/CLEAR_SUCCESS_MESSAGES',
 }
 
 // Action interfaces
@@ -26,8 +27,14 @@ export interface AddSuccessMessageAction extends Action {
     payload: string;
 }
 
+export interface ClearSuccessMessagesAction extends Action {
+    type: ActionTypes.CLEAR_SUCCESS_MESSAGES;
+}
+
 // Combine actions into single type
-export type SuccessAction = AddSuccessMessageAction;
+export type SuccessAction =
+    | AddSuccessMessageAction
+    | ClearSuccessMessagesAction;
 
 // Shorthand type for ThunkAction
 export type ThunkResult<R> = ThunkAction<R, RootState, undefined, SuccessAction>;

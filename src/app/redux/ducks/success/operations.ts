@@ -6,19 +6,20 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { ThunkResult } from './types';
+import { ThunkResult, SuccessAction } from './types';
 import { RootState } from '../../types';
 import { selectSuccesMessages } from './selectors';
+import { ThunkDispatch } from 'redux-thunk';
+import { clearSuccessMessages } from './actions';
 
 // Thunks
 
 /**
- * returns the success messages and removes them from the list.
+ * Returns the success messages and removes them from the list.
  */
 export const getSuccessMessages = (): ThunkResult<Promise<string[]>> =>
-    async (getState: () => RootState): Promise<string[]> => {
-        const state = getState();
-        const successMessages = await selectSuccesMessages(state);
-        state.success.successList = []; // dispatch clear succesList action here
+    async (dispatch: ThunkDispatch<RootState, void, SuccessAction>, getState: () => RootState): Promise<string[]> => {
+        const successMessages = await selectSuccesMessages(getState());
+        dispatch(clearSuccessMessages());
         return successMessages;
     };
