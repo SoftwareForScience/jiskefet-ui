@@ -10,9 +10,16 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
 
+export enum InputSize {
+    SMALL = 'col-md-2',
+    MEDIUM = 'col-md-4',
+    LARGE = 'col-md-6',
+}
+
 interface Attrs {
     id: string;
     className: string;
+    inputSize: InputSize;
     name?: string;
     placeholder?: string;
     required?: boolean;
@@ -24,12 +31,12 @@ type Vnode = m.Vnode<Attrs, Select>;
 
 export default class Select extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { id, name, className, placeholder, required, oninput, options } = vnode.attrs;
+        const { id, name, className, inputSize, placeholder, required, oninput, options } = vnode.attrs;
         return (
             <select
                 id={id}
                 name={name}
-                class={className}
+                class={`${className} ${inputSize}`}
                 placeholder={placeholder}
                 required={required}
                 oninput={oninput}

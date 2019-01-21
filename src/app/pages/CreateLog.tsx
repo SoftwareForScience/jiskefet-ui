@@ -16,7 +16,7 @@ import Modal from '../atoms/Modal';
 import MarkdownViewer from '../atoms/MarkdownViewer';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
 import AttachmentComponent from '../atoms/Attachment';
-import Input from '../atoms/Input';
+import Input, { InputSize } from '../atoms/Input';
 import Select from '../atoms/Select';
 import Label from '../atoms/Label';
 
@@ -82,7 +82,8 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                     <Input
                                         id="title"
                                         formType="text"
-                                        className="form-control col-md-4"
+                                        className="form-control"
+                                        inputSize={InputSize.MEDIUM}
                                         placeholder="Title"
                                         required={true}
                                         oninput={this.addToCreateLog}
@@ -94,7 +95,8 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 <div class="field">
                                     <Select
                                         id="subtype"
-                                        className="form-control col-md-2"
+                                        className="form-control"
+                                        inputSize={InputSize.SMALL}
                                         name="subtype"
                                         required={true}
                                         oninput={this.addToCreateLog}
@@ -108,7 +110,8 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                     <Input
                                         id="runs"
                                         formType="number"
-                                        className="form-control col-md-2"
+                                        className="form-control"
+                                        inputSize={InputSize.SMALL}
                                         placeholder="Run number"
                                         required={true}
                                         oninput={this.addRunsToCreateLog}

@@ -19,7 +19,7 @@ import SuccessMessage from '../atoms/SuccessMessage';
 import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import LogDescription from '../constants/LogDescription';
-import Button from '../atoms/Button';
+import Button, { ButtonType, ButtonClass, ButtonSize } from '../atoms/Button';
 
 interface Attrs {
     logId: number;
@@ -39,9 +39,11 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         return (
             <div class="row justify-content-end">
                 <Button
-                    type="button"
+                    type={ButtonType.BUTTON}
                     text="Link existing run"
-                    className="btn btn-primary btn-sm mr-1"
+                    buttonClass={ButtonClass.DEFAULT}
+                    buttonSize={ButtonSize.SMALL}
+                    margin={'mr-1'}
                     dataToggle="modal"
                     dataTarget={`#${addExistingRunId}`}
                 />
