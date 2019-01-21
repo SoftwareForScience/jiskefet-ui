@@ -7,14 +7,17 @@
  */
 
 import { RootState } from '../../types';
-import { Log } from '../../../interfaces/Log';
+import { Log, LogCreate } from '../../../interfaces/Log';
 
 // Selectors
 export const selectIsFetchingLogs = (state: RootState): boolean => state.log.isFetchingLogs;
 export const selectIsFetchingLog = (state: RootState): boolean => state.log.isFetchingLog;
 export const selectIsPatchingLinkRunToLog = (state: RootState): boolean => state.log.isPatchingLinkRunToLog;
 export const selectLogs = (state: RootState): Log[] => state.log.logs;
-export const selectCount = (state: RootState): number => state.log.count;
+export const selectLogCount = (state: RootState): number => state.log.count;
 export const selectCurrentLog = (state: RootState): Log | null => (
     state.log.current
+);
+export const selectLogToBeCreated = (state: RootState): LogCreate | null => (
+    state.log.logToBeCreated
 );

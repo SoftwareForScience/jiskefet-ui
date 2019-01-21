@@ -9,7 +9,6 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
-import State from '../models/State';
 import { Subsystem } from '../interfaces/SubSytem';
 import Table from '../components/Table';
 import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns';
@@ -33,6 +32,8 @@ import { SubsystemPermissionCreate } from '../interfaces/SubsystemPermission';
 import Spinner from '../components/Spinner';
 import { fetchProfile } from '../redux/ducks/auth/operations';
 import { selectProfile } from '../redux/ducks/auth/selectors';
+import { fetchUser } from '../redux/ducks/user/operations';
+import { selectCurrentUser } from '../redux/ducks/user/selectors';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
     async oninit() {
@@ -40,7 +41,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
         await store.dispatch(fetchProfile());
         const profile = selectProfile(store.getState());
         if (profile) {
-            await State.UserModel.fetchById(profile.userData.userId);
+            await store.dispatch(fetchUser(profile.userData.userId));
             const loggedInUserId = profile.userData.userId;
             store.dispatch(fetchSubsystemPermissions(loggedInUserId));
         }
@@ -51,8 +52,8 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
         store.dispatch(fetchProfile());
         const profile = selectProfile(store.getState());
         if (profile) {
-            await State.UserModel.fetchById(profile.userData.userId);
-            user = State.UserModel.current;
+            await store.dispatch(fetchUser(profile.userData.userId));
+            user = selectCurrentUser(store.getState());
             const loggedInUserId = profile.userData.userId;
             await store.dispatch(fetchSubsystemPermissions(loggedInUserId));
         }
@@ -127,7 +128,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                                 class="form-control"
                                                 name="subsystem"
                                                 required
-                                                // onclick={this.addToCreateToken}
+                                            // onclick={this.addToCreateToken}
                                             >
                                                 {
                                                     subsystems && subsystems.map((subsystem: Subsystem) => (

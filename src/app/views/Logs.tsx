@@ -11,7 +11,6 @@ import Spinner from '../components/Spinner';
 import Table from '../components/Table';
 import SuccessMessage from '../components/SuccessMessage';
 import HttpErrorAlert from '../components/HttpErrorAlert';
-import State from '../models/State';
 import LogColumns from '../constants/LogColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import Filter from '../components/Filter';
@@ -29,6 +28,11 @@ import { FilterName } from '../interfaces/Filter';
 import { setFiltersFromUrl, switchOrderBy } from '../redux/ducks/filter/operations';
 import { selectQueryString, selectFilters } from '../redux/ducks/filter/selectors';
 import { setFilter, resetFilters } from '../redux/ducks/filter/actions';
+import { getLogs } from '../constants/apiUrls';
+import { fetchLogs } from '../redux/ducks/log/operations';
+import { selectIsFetchingLogs, selectLogCount } from '../redux/ducks/log/selectors';
+import { selectUserLogs } from '../redux/ducks/user/selectors';
+import { selectRunCount } from '../redux/ducks/run/selectors';
 
 const inputFields = [
     {
@@ -68,7 +72,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
      */
     fetchWithFilters = (): void => {
         const queryString = selectQueryString(store.getState())(FilterName.Log);
-        State.LogModel.fetch(queryString);
+        store.dispatch(fetchLogs(queryString));
     }
 
     /**
@@ -94,7 +98,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                 collapsableFilterItem && collapsableFilterItem.isCollapsed ?
                                     'col-md-1 collapse-transition' :
                                     'col-md-3 collapse-transition'
-                                }
+                            }
                         >
                             <ContentBlock>
                                 <Filter
@@ -113,7 +117,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                 collapsableFilterItem && collapsableFilterItem.isCollapsed ?
                                     'col-md-11 mb-5 collapse-transition' :
                                     'col-md-9 mb-5 collapse-transition'
-                                }
+                            }
                         >
                             <Badges
                                 filters={logFilters}
@@ -133,11 +137,11 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                 ]}
                             />
                             <Spinner
-                                isLoading={State.LogModel.isFetchingLogs}
+                                isLoading={selectIsFetchingLogs(store.getState())}
                                 component={createDummyTable(logFilters.pageSize, LogColumns)}
                             >
                                 <Table
-                                    data={State.LogModel.list}
+                                    data={selectUserLogs(store.getState())}
                                     columns={LogColumns}
                                     orderBy={logFilters.orderBy || undefined}
                                     orderDirection={logFilters.orderDirection || OrderDirection.Descending}
@@ -183,14 +187,14 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                             <PageCounter
                                                 currentPage={logFilters.pageNumber}
                                                 rowsInTable={logFilters.pageSize}
-                                                totalCount={State.LogModel.count}
+                                                totalCount={selectLogCount(store.getState())}
                                             />
                                         </div>
                                     </div>
                                     <div class="col-md-4 m-1 small-center">
                                         <Pagination
                                             currentPage={logFilters.pageNumber}
-                                            numberOfPages={Math.ceil(State.LogModel.count
+                                            numberOfPages={Math.ceil(selectLogCount(store.getState())
                                                 / logFilters.pageSize)}
                                             onChange={(newPage: number) => {
                                                 store.dispatch(setFilter(FilterName.Log, 'pageNumber', newPage));

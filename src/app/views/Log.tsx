@@ -21,7 +21,6 @@ import { fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { fetchLog } from '../redux/ducks/log/operations';
 import { selectCurrentLog, selectIsFetchingLog, selectIsPatchingLinkRunToLog } from '../redux/ducks/log/selectors';
 
-
 interface Attrs {
     logId: number;
 }
@@ -131,7 +130,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                     </div>
                                     <Tabs
                                         tabs={LogTabs}
-                                        entity={currentLog}
+                                        entity={currentLog || undefined}
                                     />
                                 </div>
                             </div>

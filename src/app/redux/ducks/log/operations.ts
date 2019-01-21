@@ -9,24 +9,26 @@
 import { ThunkResult, LogAction } from './types';
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../types';
-import { Log } from '../../../interfaces/Log';
+import { Log, LogCreate } from '../../../interfaces/Log';
 import { HttpError } from '../../../interfaces/HttpError';
 import { request } from '../../../request';
 import {
     fetchLogsRequest,
     fetchLogsSuccess,
     fetchLogRequest,
-    fetchLogSuccess
+    fetchLogSuccess,
+    createLogRequest,
+    createLogSuccess
 } from './actions';
-import { getLogs, getLog, linkRunToLogUrl } from '../../../constants/apiUrls';
+import { getLogs, getLog, linkRunToLogUrl, postLog } from '../../../constants/apiUrls';
 
 // Thunks
-export const fetchLogs = (): ThunkResult<Promise<void>> =>
+export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, LogAction>): Promise<void> => {
         dispatch(fetchLogsRequest());
         return request({
             method: 'GET',
-            url: getLogs()
+            url: getLogs(query)
         }).then((result: { data: Log[], count: number }) => {
             dispatch(fetchLogsSuccess(result));
         }).catch((error: HttpError) => {
@@ -47,7 +49,7 @@ export const fetchLog = (id: number): ThunkResult<Promise<void>> =>
         });
     };
 
-export const linkLogToLog = (logId: number, logNumber: number): ThunkResult<Promise<void>> =>
+export const linkRunToLog = (logId: number, logNumber: number): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, LogAction>): Promise<void> => {
         dispatch(fetchLogRequest());
         return request({
@@ -56,6 +58,20 @@ export const linkLogToLog = (logId: number, logNumber: number): ThunkResult<Prom
             data: { logId: logId as number }
         }).then((result: Log) => {
             dispatch(fetchLogSuccess(result));
+        }).catch((error: HttpError) => {
+            // State.HttpErrorModel.add(error);
+        });
+    };
+
+export const createLog = (logToBeCreated: LogCreate): ThunkResult<Promise<void>> =>
+    async (dispatch: ThunkDispatch<RootState, void, LogAction>): Promise<void> => {
+        dispatch(createLogRequest());
+        return request({
+            method: 'POST',
+            url: postLog(),
+            data: logToBeCreated
+        }).then((result: any) => {
+            dispatch(createLogSuccess());
         }).catch((error: HttpError) => {
             // State.HttpErrorModel.add(error);
         });

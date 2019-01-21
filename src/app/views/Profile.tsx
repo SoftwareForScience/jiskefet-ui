@@ -9,7 +9,6 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { GithubProfileDto } from '../interfaces/GitHubProfile';
-import State from '../models/State';
 import Spinner from '../components/Spinner';
 import LogColumns from '../constants/LogColumns';
 import Table from '../components/Table';
@@ -29,6 +28,10 @@ import { selectQueryString, selectFilters } from '../redux/ducks/filter/selector
 import { setQueryParams } from '../utility/UrlUtil';
 import { setFilter } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
+import { fetchLogs } from '../redux/ducks/log/operations';
+import { fetchLogsForUser } from '../redux/ducks/user/operations';
+import { selectIsFetchingLogs } from '../redux/ducks/log/selectors';
+import { selectIsFetchingUserLogs, selectUserLogs, selectUserLogCount } from '../redux/ducks/user/selectors';
 
 interface Attrs {
     userId: number;
@@ -50,7 +53,7 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
      */
     fetchLogsWithFilters = (id: number): void => {
         const queryString = selectQueryString(store.getState())(FilterName.UserLog);
-        State.UserModel.fetchLogs(id, queryString);
+        store.dispatch(fetchLogsForUser(id, queryString));
     }
 
     /**
@@ -101,12 +104,12 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                     </div>
                     <div class="mt-2"><h2>My logs</h2></div>
                     <Spinner
-                        isLoading={State.UserModel.isFetchingLogs}
+                        isLoading={selectIsFetchingUserLogs(store.getState())}
                         component={createDummyTable(userLogFilters.pageSize, LogColumns)}
                     >
                         <div class="collapse-transition">
                             <Table
-                                data={State.UserModel.logs || []}
+                                data={selectUserLogs(store.getState()) || []}
                                 columns={LogColumns}
                                 orderBy={userLogFilters.orderBy || undefined}
                                 orderDirection={userLogFilters.orderDirection || OrderDirection.Descending}
@@ -153,14 +156,14 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                                     <PageCounter
                                         currentPage={userLogFilters.pageNumber}
                                         rowsInTable={userLogFilters.pageSize}
-                                        totalCount={State.UserModel.logCount}
+                                        totalCount={selectUserLogCount(store.getState())}
                                     />
                                 </div>
                             </div>
                             <div class="col-md-4 m-1 small-center">
                                 <Pagination
                                     currentPage={userLogFilters.pageNumber}
-                                    numberOfPages={Math.ceil(State.UserModel.logCount
+                                    numberOfPages={Math.ceil(selectUserLogCount(store.getState())
                                         / userLogFilters.pageSize)}
                                     onChange={(newPage: number) => {
                                         store.dispatch(setFilter(FilterName.UserLog, 'pageNumber', newPage));
@@ -171,7 +174,7 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                         </div>
                     </ContentBlock>
                 </Spinner>
-            </HttpErrorAlert>
+            </HttpErrorAlert >
         );
     }
 }

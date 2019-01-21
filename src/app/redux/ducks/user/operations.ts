@@ -20,10 +20,10 @@ import { fetchUserRequest, fetchUserSuccess, fetchLogsForUserRequest, fetchLogsF
 import { Log } from '../../../interfaces/Log';
 
 // Thunks
-export const fetchUser = (id: number | string): ThunkResult<void> =>
-    (dispatch: ThunkDispatch<RootState, void, UserAction>): void => {
+export const fetchUser = (id: number | string): ThunkResult<Promise<void>> =>
+    (dispatch: ThunkDispatch<RootState, void, UserAction>): Promise<void> => {
         dispatch(fetchUserRequest());
-        request({
+        return request({
             method: 'GET',
             url: getUser(id),
             withCredentials: false

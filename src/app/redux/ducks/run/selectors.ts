@@ -14,7 +14,7 @@ export const selectIsFetchingRuns = (state: RootState): boolean => state.run.isF
 export const selectIsFetchingRun = (state: RootState): boolean => state.run.isFetchingRun;
 export const selectIsPatchingLinkLogToRun = (state: RootState): boolean => state.run.isPatchingLinkLogToRun;
 export const selectRuns = (state: RootState): Run[] => state.run.runs;
-export const selectCount = (state: RootState): number => state.run.count;
+export const selectRunCount = (state: RootState): number => state.run.count;
 export const selectCurrentRun = (state: RootState): Run | null => (
     state.run.current
 );

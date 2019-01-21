@@ -21,12 +21,12 @@ import {
 import { getRuns, getRun, linkLogToRunUrl } from '../../../constants/apiUrls';
 
 // Thunks
-export const fetchRuns = (): ThunkResult<Promise<void>> =>
+export const fetchRuns = (query?: string): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, RunAction>): Promise<void> => {
         dispatch(fetchRunsRequest());
         return request({
             method: 'GET',
-            url: getRuns()
+            url: getRuns(query)
         }).then((result: { data: Run[], count: number }) => {
             dispatch(fetchRunsSuccess(result));
         }).catch((error: HttpError) => {
@@ -34,7 +34,7 @@ export const fetchRuns = (): ThunkResult<Promise<void>> =>
         });
     };
 
-export const fetchRun = (id: number): ThunkResult<Promise<void>> =>
+export const fetchRun = (id: number | string): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, RunAction>): Promise<void> => {
         dispatch(fetchRunRequest());
         return request({

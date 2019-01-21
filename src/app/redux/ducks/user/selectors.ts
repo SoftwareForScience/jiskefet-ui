@@ -12,8 +12,8 @@ import { Log } from '../../../interfaces/Log';
 
 // Selectors
 export const selectUser = (state: RootState): User | null => state.user.user;
-export const selectFetchingUser = (state: RootState): boolean => state.user.IsFetchingUser;
-export const selectFetchingLogs = (state: RootState): boolean => state.user.IsFetchingLogs;
-export const selectLogs = (state: RootState): Log[] => state.user.logs;
-export const selectLogCount = (state: RootState): number => state.user.logCount;
-export const selectCurrent = (state: RootState): User | null => state.user.current;
+export const selectIsFetchingUser = (state: RootState): boolean => state.user.IsFetchingUser;
+export const selectIsFetchingUserLogs = (state: RootState): boolean => state.user.IsFetchingLogs;
+export const selectUserLogs = (state: RootState): Log[] => state.user.logs;
+export const selectUserLogCount = (state: RootState): number => state.user.logCount;
+export const selectCurrentUser = (state: RootState): User | null => state.user.current;

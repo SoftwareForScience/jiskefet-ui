@@ -35,9 +35,9 @@ export const fetchLogRequest = (): FetchLogRequestAction => ({
     type: ActionTypes.FETCH_LOG_REQUEST
 });
 
-export const fetchLogSuccess = (run: Log): FetchLogSuccessAction => ({
+export const fetchLogSuccess = (log: Log): FetchLogSuccessAction => ({
     type: ActionTypes.FETCH_LOG_SUCCESS,
-    payload: run
+    payload: log
 });
 
 export const createLogRequest = (): CreateLogRequestAction => ({

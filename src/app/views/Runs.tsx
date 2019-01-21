@@ -10,7 +10,6 @@ import * as m from 'mithril';
 import Spinner from '../components/Spinner';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import Table from '../components/Table';
-import State from '../models/State';
 import RunColumns from '../constants/RunColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import Filter from '../components/Filter';
@@ -29,6 +28,8 @@ import { selectQueryString, selectFilters } from '../redux/ducks/filter/selector
 import { setQueryParams } from '../utility/UrlUtil';
 import { setFilter, resetFilters } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
+import { fetchRuns } from '../redux/ducks/run/operations';
+import { selectIsFetchingRuns, selectRuns, selectRunCount } from '../redux/ducks/run/selectors';
 
 const inputFields = [
     {
@@ -118,7 +119,7 @@ export default class Runs extends MithrilTsxComponent<{}> {
      */
     fetchWithFilters = (): void => {
         const queryString = selectQueryString(store.getState())(FilterName.Run);
-        State.RunModel.fetch(queryString);
+        store.dispatch(fetchRuns(queryString));
     }
 
     /**
@@ -185,7 +186,7 @@ export default class Runs extends MithrilTsxComponent<{}> {
                                 />
                             </div>
                             <Spinner
-                                isLoading={State.RunModel.isFetchingRuns}
+                                isLoading={selectIsFetchingRuns(store.getState())}
                                 component={
                                     createDummyTable(
                                         runFilters.pageSize,
@@ -195,7 +196,7 @@ export default class Runs extends MithrilTsxComponent<{}> {
                                 }
                             >
                                 <Table
-                                    data={State.RunModel.list}
+                                    data={selectRuns(store.getState())}
                                     columns={RunColumns}
                                     className={'jf-font-sm'}
                                     orderBy={runFilters.orderBy || undefined}
@@ -241,14 +242,14 @@ export default class Runs extends MithrilTsxComponent<{}> {
                                             <PageCounter
                                                 currentPage={runFilters.pageNumber}
                                                 rowsInTable={runFilters.pageSize}
-                                                totalCount={State.RunModel.count}
+                                                totalCount={selectRunCount(store.getState())}
                                             />
                                         </div>
                                     </div>
                                     <div class="col-md-4 m-1 small-center">
                                         <Pagination
                                             currentPage={runFilters.pageNumber}
-                                            numberOfPages={Math.ceil(State.RunModel.count
+                                            numberOfPages={Math.ceil(selectRunCount(store.getState())
                                                 / runFilters.pageSize)}
                                             onChange={(newPage: number) => {
                                                 store.dispatch(setFilter(FilterName.Run, 'pageNumber', newPage));

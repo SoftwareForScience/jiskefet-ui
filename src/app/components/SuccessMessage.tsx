@@ -7,8 +7,9 @@
  */
 
 import * as m from 'mithril';
-import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { store } from '../redux/configureStore';
+import { getSuccessMessages } from '../redux/ducks/success/operations';
 
 type Vnode = m.Vnode<{}, SuccessMessage>;
 
@@ -17,7 +18,7 @@ export default class SuccessMessage extends MithrilTsxComponent<{}> {
 
     constructor(vnode: Vnode) {
         super();
-        this.successMessages = State.SuccessModel.getSuccessMessages();
+        this.successMessages = store.dispatch(getSuccessMessages());
     }
 
     view() {
