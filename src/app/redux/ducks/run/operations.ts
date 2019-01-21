@@ -27,7 +27,7 @@ export const fetchRuns = (query?: string): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getRuns(query)
-        }).then((result: { data: Run[], count: number }) => {
+        }).then((result: { runs: Run[], count: number }) => {
             dispatch(fetchRunsSuccess(result));
         }).catch((error: HttpError) => {
             // State.HttpErrorModel.add(error);

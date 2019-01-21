@@ -32,7 +32,7 @@ const runReducer: Reducer<RunState>
                 return {
                     ...state,
                     isFetchingRuns: false,
-                    runs: action.payload.data,
+                    runs: [...action.payload.runs],
                     count: action.payload.count
                 };
             case ActionTypes.FETCH_RUN_REQUEST:
