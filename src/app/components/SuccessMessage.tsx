@@ -18,7 +18,7 @@ export default class SuccessMessage extends MithrilTsxComponent<{}> {
 
     constructor(vnode: Vnode) {
         super();
-        this.successMessages = store.dispatch(getSuccessMessages());
+        store.dispatch(getSuccessMessages()).then((x: string[]) => this.successMessages = x);
     }
 
     view() {

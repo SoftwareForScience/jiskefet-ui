@@ -44,7 +44,7 @@ export interface FetchLogsByLogRequestAction extends Action {
 
 export interface FetchLogsByLogSuccessAction extends Action {
     type: ActionTypes.FETCH_LOGS_SUCCESS;
-    payload: { data: Log[], count: number };
+    payload: { logs: Log[], count: number };
 }
 
 export interface FetchLogRequestAction extends Action {

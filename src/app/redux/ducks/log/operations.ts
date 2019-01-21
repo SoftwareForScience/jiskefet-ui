@@ -29,7 +29,7 @@ export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getLogs(query)
-        }).then((result: { data: Log[], count: number }) => {
+        }).then((result: { logs: Log[], count: number }) => {
             dispatch(fetchLogsSuccess(result));
         }).catch((error: HttpError) => {
             // State.HttpErrorModel.add(error);

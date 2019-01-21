@@ -34,7 +34,7 @@ const runReducer: Reducer<LogState>
                 return {
                     ...state,
                     isFetchingLogs: false,
-                    logs: action.payload.data,
+                    logs: action.payload.logs,
                     count: action.payload.count
                 };
             case ActionTypes.CREATE_LOG_REQUEST:

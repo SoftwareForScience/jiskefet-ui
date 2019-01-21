@@ -19,6 +19,6 @@ export const getSuccessMessages = (): ThunkResult<Promise<string[]>> =>
     async (getState: () => RootState): Promise<string[]> => {
         const state = getState();
         const successMessages = await selectSuccesMessages(state);
-        state.success.successList = [];
+        state.success.successList = []; // dispatch clear succesList action here
         return successMessages;
     };

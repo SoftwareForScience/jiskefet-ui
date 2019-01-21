@@ -26,7 +26,7 @@ export const fetchLogsRequest = (): FetchLogsByLogRequestAction => ({
     type: ActionTypes.FETCH_LOGS_REQUEST
 });
 
-export const fetchLogsSuccess = (payload: { data: Log[], count: number }): FetchLogsByLogSuccessAction => ({
+export const fetchLogsSuccess = (payload: { logs: Log[], count: number }): FetchLogsByLogSuccessAction => ({
     type: ActionTypes.FETCH_LOGS_SUCCESS,
     payload
 });

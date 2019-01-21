@@ -28,11 +28,8 @@ import { FilterName } from '../interfaces/Filter';
 import { setFiltersFromUrl, switchOrderBy } from '../redux/ducks/filter/operations';
 import { selectQueryString, selectFilters } from '../redux/ducks/filter/selectors';
 import { setFilter, resetFilters } from '../redux/ducks/filter/actions';
-import { getLogs } from '../constants/apiUrls';
 import { fetchLogs } from '../redux/ducks/log/operations';
-import { selectIsFetchingLogs, selectLogCount } from '../redux/ducks/log/selectors';
-import { selectUserLogs } from '../redux/ducks/user/selectors';
-import { selectRunCount } from '../redux/ducks/run/selectors';
+import { selectIsFetchingLogs, selectLogCount, selectLogs } from '../redux/ducks/log/selectors';
 
 const inputFields = [
     {
@@ -141,7 +138,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                 component={createDummyTable(logFilters.pageSize, LogColumns)}
                             >
                                 <Table
-                                    data={selectUserLogs(store.getState())}
+                                    data={selectLogs(store.getState())}
                                     columns={LogColumns}
                                     orderBy={logFilters.orderBy || undefined}
                                     orderDirection={logFilters.orderDirection || OrderDirection.Descending}

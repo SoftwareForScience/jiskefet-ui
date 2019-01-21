@@ -28,9 +28,7 @@ import { selectQueryString, selectFilters } from '../redux/ducks/filter/selector
 import { setQueryParams } from '../utility/UrlUtil';
 import { setFilter } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
-import { fetchLogs } from '../redux/ducks/log/operations';
 import { fetchLogsForUser } from '../redux/ducks/user/operations';
-import { selectIsFetchingLogs } from '../redux/ducks/log/selectors';
 import { selectIsFetchingUserLogs, selectUserLogs, selectUserLogCount } from '../redux/ducks/user/selectors';
 
 interface Attrs {
