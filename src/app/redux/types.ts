@@ -14,6 +14,10 @@ import { AttachmentState, AttachmentAction } from './ducks/attachment/types';
 import { AuthState, AuthAction } from './ducks/auth/types';
 import { FilterAction, RootFilterState } from './ducks/filter/types';
 import { ErrorState, ErrorAction } from './ducks/error/types';
+import { UserState, UserAction } from './ducks/user/types';
+import { RunState, RunAction } from './ducks/run/types';
+import { LogState, LogAction } from './ducks/log/types';
+import { SuccessState, SuccessAction } from './ducks/success/types';
 
 /**
  * Interface for the Redux store.
@@ -27,12 +31,16 @@ export interface Store<S> extends ReduxStore<S> {
  * The definition of the Redux state/store of the entire Jiskefet app.
  */
 export interface RootState {
+    log: LogState;
+    run: RunState;
     subsystem: SubsystemState;
+    success: SuccessState;
     ui: UIState;
     attachment: AttachmentState;
     auth: AuthState;
     filter: RootFilterState;
     error: ErrorState;
+    user: UserState;
 }
 
 /**
@@ -40,11 +48,15 @@ export interface RootState {
  */
 export type RootActions =
     | SubsystemAction
+    | SuccessAction
     | UIAction
     | AttachmentAction
     | AuthAction
     | FilterAction
-    | ErrorAction;
+    | ErrorAction
+    | UserAction
+    | RunAction
+    | LogAction;
 
 /**
  * An action that has a name field to identify which reducer should process the action.

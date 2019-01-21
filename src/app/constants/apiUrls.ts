@@ -27,3 +27,18 @@ export const postAttachment = (): string => `${baseUrl}attachments`;
 // Auth
 export const getProfile = (): string => `${baseUrl}user/profile`;
 export const getAuthorize = (authGrant: string): string => `${process.env.API_URL}auth?grant=${authGrant}`;
+
+// User
+export const getUser = (id: string | number): string => `${baseUrl}users/${id}`;
+export const getLogsForUser = (id: string | number, query?: string): string =>
+    `${baseUrl}users/${id}/logs${query ? `?${query}` : ''}`;
+
+// Run
+export const getRuns = (query?: string): string => `${baseUrl}runs${query ? `?${query}` : ''}`;
+export const getRun = (id: string | number): string => `${baseUrl}runs/${id}`;
+export const linkLogToRunUrl = (runNumber: number): string => `${baseUrl}runs/${runNumber}/logs`;
+
+// Run
+export const getLogs = (query?: string): string => `${baseUrl}logs${query ? `?${query}` : ''}`;
+export const getLog = (id: string | number): string => `${baseUrl}logs/${id}`;
+export const linkRunToLogUrl = (runNumber: number): string => `${baseUrl}logs/${runNumber}/runs`;

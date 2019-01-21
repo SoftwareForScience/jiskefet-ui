@@ -8,7 +8,6 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import State from '../models/State';
 import { store } from '../redux/configureStore';
 import { setAttachmentToBeCreated, clearAtachmentToBeCreated } from '../redux/ducks/attachment/actions';
 import { selectAttachmentToBeCreated } from '../redux/ducks/attachment/selectors';
