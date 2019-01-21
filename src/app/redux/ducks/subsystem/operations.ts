@@ -42,6 +42,8 @@ import {
 } from '../../../interfaces/SubsystemPermission';
 import { addHttpError } from '../error/actions';
 import { ErrorAction } from '../error/types';
+import { addSuccessMessage } from '../success/actions';
+import { SuccessAction } from '../success/types';
 
 // Thunks
 export const fetchSubsystems = (): ThunkResult<void> =>
@@ -97,16 +99,16 @@ export const fetchSubsystemPermissions = (userId: number): ThunkResult<void> =>
     };
 
 export const createToken = (payload: SubsystemPermissionCreate): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, SubsystemAction | ErrorAction>): Promise<void> => {
+    async (dispatch: ThunkDispatch<RootState, void, SubsystemAction | ErrorAction | SuccessAction>): Promise<void> => {
         dispatch(createTokenRequest());
         return request({
             method: 'POST',
             data: payload,
-            url: postToken(payload.user.userId)
+            url: postToken(payload.user)
         }).then((result: SubsystemToken) => {
             dispatch(createTokenSuccess());
-            console.log(`Temporary way of displaying token... Token: ${result.subSystemHash}`);
-            // SuccesModel.add(`Successfully saved the token. Please write it down: \n${result.subSystemHash}`);
+            const tokenString = `Successfully saved the token. Please write it down: \n${result.subSystemHash}`;
+            dispatch(addSuccessMessage(tokenString));
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));
         });

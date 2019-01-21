@@ -61,6 +61,6 @@ export const setLogToBeCreated = (logToBeCreated: LogCreate): SetLogToBeCreatedA
     payload: logToBeCreated
 });
 
-export const clearAtachmentToBeCreated = (): ClearLogToBeCreatedAction => ({
+export const clearLogToBeCreated = (): ClearLogToBeCreatedAction => ({
     type: ActionTypes.CLEAR_LOG_TO_BE_CREATED
 });

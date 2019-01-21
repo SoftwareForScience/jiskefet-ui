@@ -40,6 +40,6 @@ export const setAttachmentToBeCreated = (attachment: Attachment): SetAttachmentT
     payload: attachment
 });
 
-export const clearAtachmentToBeCreated = (): ClearAttachmentToBeCreatedAction => ({
+export const clearAttachmentToBeCreated = (): ClearAttachmentToBeCreatedAction => ({
     type: ActionTypes.CLEAR_ATTACHMENT_TO_BE_CREATED
 });

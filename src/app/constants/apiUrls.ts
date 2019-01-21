@@ -42,4 +42,4 @@ export const linkLogToRunUrl = (runNumber: number): string => `${baseUrl}runs/${
 export const getLogs = (query?: string): string => `${baseUrl}logs${query ? `?${query}` : ''}`;
 export const getLog = (id: string | number): string => `${baseUrl}logs/${id}`;
 export const linkRunToLogUrl = (runNumber: number): string => `${baseUrl}logs/${runNumber}/runs`;
-export const postLog = (): string => `${baseUrl}users`;
+export const postLog = (): string => `${baseUrl}logs`;

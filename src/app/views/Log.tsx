@@ -12,7 +12,7 @@ import { format } from 'date-fns';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import LogTabs from '../constants/LogTabs';
-import Tabs from '../components/Tab';
+import Tabs from '../components/TabContainer';
 import Modal from '../components/Modal';
 import LinkRunToLog from '../components/LinkRunToLog';
 import SuccessMessage from '../components/SuccessMessage';

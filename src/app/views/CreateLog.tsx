@@ -9,22 +9,18 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
-import Tabs from '../components/Tab';
-import CreateLogTabs from '../constants/CreateLogTabs';
 import Modal from '../components/Modal';
 import MarkdownViewer from '../components/MarkdownViewer';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
 import AttachmentComponent from '../components/Attachment';
 import { selectProfile } from '../redux/ducks/auth/selectors';
 import { store } from '../redux/configureStore';
-import { selectLogToBeCreated } from '../redux/ducks/log/selectors';
 import { LogCreate } from '../interfaces/Log';
-import { fetchRun } from '../redux/ducks/run/operations';
-import { selectCurrentRun } from '../redux/ducks/run/selectors';
-import { fetchUser } from '../redux/ducks/user/operations';
-import { selectCurrentUser } from '../redux/ducks/user/selectors';
-import { User } from '../interfaces/User';
 import { createLog } from '../redux/ducks/log/operations';
+import { selectLogToBeCreated } from '../redux/ducks/log/selectors';
+import { clearLogToBeCreated, setLogToBeCreated } from '../redux/ducks/log/actions';
+import MarkdownEditor from '../components/MarkdownEditor';
+import NewTabContainer from '../components/NewTabContainer';
 
 interface Attrs {
     runNumber?: number;
@@ -34,45 +30,48 @@ type Vnode = m.Vnode<Attrs, CreateLog>;
 
 export default class CreateLog extends MithrilTsxComponent<Attrs> {
 
-    private logToBeCreated: LogCreate;
+    oninit() {
+        store.dispatch(clearLogToBeCreated());
+    }
 
-    constructor() {
-        super();
-        this.logToBeCreated = selectLogToBeCreated(store.getState()) as LogCreate;
+    setValueForLogToBeCreated = (key: string, value: any) => {
+        let logToBeCreated = selectLogToBeCreated(store.getState()) as LogCreate | {};
+        if (!logToBeCreated) {
+            logToBeCreated = {};
+        }
+        logToBeCreated = { ...logToBeCreated, [key]: value };
+        if (logToBeCreated) {
+            store.dispatch(setLogToBeCreated(logToBeCreated as LogCreate));
+        }
     }
 
     addToCreateLog = (event: Event) => {
-        this.logToBeCreated[event.target.id] = event.target.value;
-    }
-
-    addRunsToCreateLog = (event: Event) => {
-        store.dispatch(fetchRun(event.target.value)).then(() => {
-            this.logToBeCreated.runs = new Array();
-            this.logToBeCreated.runs.push(selectCurrentRun(store.getState()));
-        });
+        this.setValueForLogToBeCreated(event.target.id, event.target.value);
     }
 
     addDescription = (content: string) => {
-        this.logToBeCreated.text = content;
+        this.setValueForLogToBeCreated('text', content);
     }
 
-    saveLog(runNumber: number | undefined) {
+    async saveLog(runNumber: number | undefined) {
         if (runNumber) {
-            this.logToBeCreated.runs = new Array();
-            this.logToBeCreated.runs.push(selectCurrentRun(store.getState()));
+            this.setValueForLogToBeCreated('runs', runNumber);
         }
         const profile = selectProfile(store.getState());
         if (profile) {
-            store.dispatch(fetchUser(profile.userData.userId)).then(() => {
-                this.logToBeCreated.user = selectCurrentUser(store.getState()) as User;
-                store.dispatch(createLog(this.logToBeCreated)).then(() => {
-                    m.route.set('/Logs');
-                });
-            });
+            this.setValueForLogToBeCreated('user', profile.userData.userId);
+
+            const logToBeCreated = selectLogToBeCreated(store.getState());
+            if (logToBeCreated) {
+                await store.dispatch(createLog(logToBeCreated));
+                store.dispatch(clearLogToBeCreated());
+            }
+            m.route.set('/Logs');
         }
     }
 
     view(vnode: Vnode) {
+        const logToBeCreated = selectLogToBeCreated(store.getState());
         return (
             <form
                 onsubmit={(event: Event) => {
@@ -127,18 +126,21 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                         placeholder="Run number"
                                         value={vnode.attrs.runNumber && vnode.attrs.runNumber}
                                         required
-                                        oninput={this.addRunsToCreateLog}
+                                        oninput={this.addToCreateLog}
                                     />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="card shadow-sm bg-light">
-                                    <Tabs
-                                        tabs={CreateLogTabs}
-                                        entity={this.logToBeCreated}
-                                        func={(content: string) => this.addDescription(content)}
-                                        caller={'description'}
-                                    />
+                                    <NewTabContainer titles={['Editor', 'Preview']} >
+                                        <MarkdownEditor
+                                            postContent={(content: string) => this.addDescription(content)}
+                                        />
+                                        <MarkdownViewer
+                                            id={'MarkdownPreview'}
+                                            content={logToBeCreated && logToBeCreated.text || ''}
+                                        />
+                                    </NewTabContainer>
                                 </div>
                             </div>
                             <AttachmentComponent
@@ -162,7 +164,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                         </div>
                     </div>
                 </div>
-            </form >
+            </form>
         );
     }
 }

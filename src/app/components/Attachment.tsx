@@ -9,7 +9,7 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { store } from '../redux/configureStore';
-import { setAttachmentToBeCreated, clearAtachmentToBeCreated } from '../redux/ducks/attachment/actions';
+import { setAttachmentToBeCreated, clearAttachmentToBeCreated } from '../redux/ducks/attachment/actions';
 import { selectAttachmentToBeCreated } from '../redux/ducks/attachment/selectors';
 import { saveAttachment, fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { selectCurrentLog, selectLogToBeCreated } from '../redux/ducks/log/selectors';
@@ -136,7 +136,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                     // Redraw the current view
                     const logId = currentLog.logId;
                     await store.dispatch(fetchAttachmentsByLog(logId)).then(() => {
-                        store.dispatch(clearAtachmentToBeCreated());
+                        store.dispatch(clearAttachmentToBeCreated());
                         this.hasChosenAttachment = false;
                     });
                 });

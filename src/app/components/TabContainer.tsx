@@ -38,12 +38,12 @@ interface Attrs {
     func?: (param: string | number) => void;
 }
 
-type Vnode = m.Vnode<Attrs, Tab>;
+type Vnode = m.Vnode<Attrs, TabContainer>;
 
 /**
  * This component creates the tabs and adds content to its body.
  */
-export default class Tab extends MithrilTsxComponent<Attrs> {
+export default class TabContainer extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         const { tabs, entity, caller } = vnode.attrs;

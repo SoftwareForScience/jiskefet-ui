@@ -10,15 +10,22 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { store } from '../redux/configureStore';
 import { getSuccessMessages } from '../redux/ducks/success/operations';
-
-type Vnode = m.Vnode<{}, SuccessMessage>;
+import { selectSuccesMessages } from '../redux/ducks/success/selectors';
 
 export default class SuccessMessage extends MithrilTsxComponent<{}> {
     successMessages: string[];
 
-    constructor(vnode: Vnode) {
-        super();
-        store.dispatch(getSuccessMessages()).then((x: string[]) => this.successMessages = x);
+    async oninit() {
+        const fetchedSuccessMessages = await store.dispatch(getSuccessMessages());
+        this.successMessages = fetchedSuccessMessages;
+    }
+
+    async onupdate() {
+        const successMessages = await selectSuccesMessages(store.getState());
+        if (successMessages !== this.successMessages) {
+            this.successMessages = successMessages;
+            m.redraw();
+        }
     }
 
     view() {

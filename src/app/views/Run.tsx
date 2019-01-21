@@ -11,7 +11,7 @@ import Spinner from '../components/Spinner';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import RunTabs from '../constants/RunTabs';
-import Tabs from '../components/Tab';
+import Tabs from '../components/TabContainer';
 import Modal from '../components/Modal';
 import LinkLogToRun from '../components/LinkLogToRun';
 import SuccessMessage from '../components/SuccessMessage';

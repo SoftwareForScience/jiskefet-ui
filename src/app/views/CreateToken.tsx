@@ -18,12 +18,10 @@ import { store } from '../redux/configureStore';
 import {
     fetchSubsystems,
     fetchSubsystemPermissions,
-    fetchSubsystem,
     createToken
 } from '../redux/ducks/subsystem/operations';
 import {
     selectSubsystems,
-    selectSubsystem,
     selectSubsystemPermissions,
     selectFetchingSubsystemPermissions,
     selectFetchingSubsystems
@@ -33,9 +31,10 @@ import Spinner from '../components/Spinner';
 import { fetchProfile } from '../redux/ducks/auth/operations';
 import { selectProfile } from '../redux/ducks/auth/selectors';
 import { fetchUser } from '../redux/ducks/user/operations';
-import { selectCurrentUser } from '../redux/ducks/user/selectors';
+import { UserProfile } from '../interfaces/UserProfile';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
+
     async oninit() {
         store.dispatch(fetchSubsystems());
         await store.dispatch(fetchProfile());
@@ -48,29 +47,20 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
     }
 
     async handleSubmit(event: any): Promise<void> {
-        let user = null;
-        store.dispatch(fetchProfile());
-        const profile = selectProfile(store.getState());
-        if (profile) {
-            await store.dispatch(fetchUser(profile.userData.userId));
-            user = selectCurrentUser(store.getState());
-            const loggedInUserId = profile.userData.userId;
-            await store.dispatch(fetchSubsystemPermissions(loggedInUserId));
+        const profile = await selectProfile(store.getState()) as UserProfile;
+        if (!profile) {
+            store.dispatch(fetchProfile());
         }
-
         const subsystemId = event.target.subsystem.value;
-        await store.dispatch(fetchSubsystem(subsystemId));
-
         const tokenToCreate = {
-            user,
-            subsystem: selectSubsystem(store.getState()),
+            user: profile.userData.userId,
+            subsystem: subsystemId,
             subSystemTokenDescription: event.target.description.value,
             isMember: true,
             editEorReason: true
         };
-
-        store.dispatch(createToken(tokenToCreate as SubsystemPermissionCreate))
-            .then(() => m.route.set('/ '));
+        store.dispatch(createToken(tokenToCreate as SubsystemPermissionCreate));
+        event.target.reset(); // Clear the form.
     }
 
     view() {
@@ -108,7 +98,6 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                             type="text"
                                             autofocus="autofocus"
                                             class="form-control"
-                                            // oninput={this.addDescription}
                                             required
                                         />
                                         <p class="note">What's the token for?</p>
@@ -128,7 +117,6 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                                 class="form-control"
                                                 name="subsystem"
                                                 required
-                                            // onclick={this.addToCreateToken}
                                             >
                                                 {
                                                     subsystems && subsystems.map((subsystem: Subsystem) => (
@@ -143,14 +131,6 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                         </Spinner>
                                     </div>
                                 </div>
-                                {/* <dl class="form-group">
-                                <dt class="input-label">
-                                    <label autofocus="autofocus">Select role</label>
-                                </dt>
-                                <dd>
-                                    <p>What the subsystem is allowed to do.</p>
-                                </dd>
-                            </dl> */}
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary">Generate Token</button>
                                 </div>
