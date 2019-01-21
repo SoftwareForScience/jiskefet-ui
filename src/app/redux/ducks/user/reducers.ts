@@ -43,7 +43,7 @@ const userReducer: Reducer<UserState>
                 return {
                     ...state,
                     IsFetchingLogs: false,
-                    logs: action.payload.data,
+                    logs: [...action.payload.data],
                     logCount: action.payload.count
                 };
             default:

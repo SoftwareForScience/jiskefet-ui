@@ -35,7 +35,7 @@ const subsystemReducer: Reducer<SubsystemState>
                 return {
                     ...state,
                     isFetchingSubsystems: false,
-                    subsystems: action.payload
+                    subsystems: [...action.payload]
                 };
             case ActionTypes.FETCH_SUBSYSTEM_REQUEST:
                 return {
