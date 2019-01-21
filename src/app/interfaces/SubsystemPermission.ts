@@ -6,15 +6,12 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { SubSystem } from './SubSytem';
-import { User } from './User';
-
 /**
  * Interface with the fields for creating a Token entry.
  */
 export interface SubsystemPermissionCreate {
-    user: User;
-    subsystem: SubSystem;
+    user: number; // userId
+    subsystem: number; // subsystemId
     subSystemTokenDescription: string;
     isMember: boolean;
     editEorReason: boolean;
@@ -26,4 +23,11 @@ export interface SubsystemPermissionCreate {
 export interface SubsystemPermission {
     subsystemPermissionId: number;
     subSystemTokenDescription: string;
+}
+
+/**
+ * Response object when a token is successfully created.
+ */
+export interface SubsystemToken extends SubsystemPermissionCreate {
+    subSystemHash: string;
 }

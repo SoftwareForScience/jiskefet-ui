@@ -9,7 +9,6 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { GithubProfileDto } from '../interfaces/GitHubProfile';
-import State from '../models/State';
 import Spinner from '../components/Spinner';
 import LogColumns from '../constants/LogColumns';
 import Table from '../components/Table';
@@ -20,6 +19,17 @@ import { Event } from '../interfaces/Event';
 import { createDummyTable } from '../utility/DummyService';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import { CernProfileDto } from '../interfaces/CernProfile';
+import { fetchProfile } from '../redux/ducks/auth/operations';
+import { store } from '../redux/configureStore';
+import { selectProfile, selectIsFetchingProfile } from '../redux/ducks/auth/selectors';
+import { setFiltersFromUrl, switchOrderBy } from '../redux/ducks/filter/operations';
+import { FilterName } from '../interfaces/Filter';
+import { selectQueryString, selectFilters } from '../redux/ducks/filter/selectors';
+import { setQueryParams } from '../utility/UrlUtil';
+import { setFilter } from '../redux/ducks/filter/actions';
+import { OrderDirection } from '../enums/OrderDirection';
+import { fetchLogsForUser } from '../redux/ducks/user/operations';
+import { selectIsFetchingUserLogs, selectUserLogs, selectUserLogCount } from '../redux/ducks/user/selectors';
 
 interface Attrs {
     userId: number;
@@ -30,36 +40,38 @@ type VnodeDOM = m.VnodeDOM<Attrs, Profile>;
 
 export default class Profile extends MithrilTsxComponent<Attrs> {
 
-    async oninit(vnode: VnodeDOM) {
-        State.AuthModel.fetchProfile();
-        State.UserModel.fetchLogs(vnode.attrs.userId);
-        await State.FilterModel.setFiltersToDefaults('userLog');
-        await State.FilterModel.setFiltersFromUrl('userLog');
-        this.fetchLogsforUser(vnode.attrs.userId, State.FilterModel.getQueryString('userLog'));
+    oninit(vnode: VnodeDOM) {
+        store.dispatch(fetchProfile());
+        store.dispatch(setFiltersFromUrl(FilterName.UserLog));
+        this.setQueryAndFetch(vnode.attrs.userId);
     }
 
     /**
-     * Fetch logs with the query param given.
+     * Fetch logs made by the user, with the filters currently in the state.
      */
-    fetchLogsforUser = (id: number, queryParam: string): void => {
-        State.UserModel.fetchLogs(id, queryParam);
+    fetchLogsWithFilters = (id: number): void => {
+        const queryString = selectQueryString(store.getState())(FilterName.UserLog);
+        store.dispatch(fetchLogsForUser(id, queryString));
     }
 
     /**
-     * Fetch logs with the filters currently in the state (in FilterModel).
+     * Set the query parameters in the url and fetch with the filters in the current state.
      */
-    fetchLogsWithFilterOptions = (id: number): void => {
-        this.fetchLogsforUser(id, State.FilterModel.getQueryString('userLog'));
+    setQueryAndFetch = (id: number): void => {
+        const userLogFilters = selectFilters(store.getState())[FilterName.UserLog];
+        setQueryParams(userLogFilters);
+        this.fetchLogsWithFilters(id);
     }
 
     view(vnode: Vnode) {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         const isCernProfile = localStorage.getItem('USE_CERN_SSO') === 'true';
-        const profile = State.AuthModel.profile;
+        const profile = selectProfile(store.getState());
         const { userId } = vnode.attrs;
+        const userLogFilters = selectFilters(store.getState())[FilterName.UserLog];
         return (
             <HttpErrorAlert>
-                <Spinner isLoading={State.AuthModel.isFetchingProfile}>
+                <Spinner isLoading={selectIsFetchingProfile(store.getState())}>
                     <div>
                         {profile &&
                             <div class="card" style="width: 18rem;">
@@ -90,18 +102,18 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                     </div>
                     <div class="mt-2"><h2>My logs</h2></div>
                     <Spinner
-                        isLoading={State.UserModel.isFetchingLogs}
-                        component={createDummyTable(State.FilterModel.getFilters('userLog').pageSize, LogColumns)}
+                        isLoading={selectIsFetchingUserLogs(store.getState())}
+                        component={createDummyTable(userLogFilters.pageSize, LogColumns)}
                     >
                         <div class="collapse-transition">
                             <Table
-                                data={State.UserModel.logs || []}
+                                data={selectUserLogs(store.getState()) || []}
                                 columns={LogColumns}
-                                orderBy={State.FilterModel.getFilters('userLog').orderBy}
-                                orderDirection={State.FilterModel.getFilters('userLog').orderDirection}
+                                orderBy={userLogFilters.orderBy || undefined}
+                                orderDirection={userLogFilters.orderDirection || OrderDirection.Descending}
                                 onHeaderClick={(accessor: string) => {
-                                    State.FilterModel.switchOrderBy('userLog', accessor);
-                                    this.fetchLogsWithFilterOptions(userId);
+                                    store.dispatch(switchOrderBy(FilterName.UserLog, accessor));
+                                    this.setQueryAndFetch(userId);
                                 }}
                             />
                         </div>
@@ -124,11 +136,13 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                                         class="form-control form-control-sm"
                                         name="pageSize"
                                         onchange={(event: Event) => {
-                                            State.FilterModel.setFilter('userLog', 'pageSize', event.target.value);
-                                            State.FilterModel.setFilter('userLog', 'pageNumber', 1);
-                                            this.fetchLogsWithFilterOptions(userId);
+                                            store.dispatch(
+                                                setFilter(FilterName.UserLog, 'pageSize', event.target.value)
+                                            );
+                                            store.dispatch(setFilter(FilterName.UserLog, 'pageNumber', 1));
+                                            this.setQueryAndFetch(userId);
                                         }}
-                                        value={State.FilterModel.getFilters('userLog').pageSize}
+                                        value={userLogFilters.pageSize}
                                     >
                                         {pageSizes.map((pageSize: number) =>
                                             // tslint:disable-next-line:jsx-key
@@ -138,27 +152,27 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                                 </div>
                                 <div class="text-muted mt-2 ml-2 pagination-block">
                                     <PageCounter
-                                        currentPage={State.FilterModel.getFilters('userLog').pageNumber}
-                                        rowsInTable={State.FilterModel.getFilters('userLog').pageSize}
-                                        totalCount={State.UserModel.logCount}
+                                        currentPage={userLogFilters.pageNumber}
+                                        rowsInTable={userLogFilters.pageSize}
+                                        totalCount={selectUserLogCount(store.getState())}
                                     />
                                 </div>
                             </div>
                             <div class="col-md-4 m-1 small-center">
                                 <Pagination
-                                    currentPage={State.FilterModel.getFilters('userLog').pageNumber}
-                                    numberOfPages={Math.ceil(State.UserModel.logCount
-                                        / State.FilterModel.getFilters('userLog').pageSize)}
+                                    currentPage={userLogFilters.pageNumber}
+                                    numberOfPages={Math.ceil(selectUserLogCount(store.getState())
+                                        / userLogFilters.pageSize)}
                                     onChange={(newPage: number) => {
-                                        State.FilterModel.setFilter('userLog', 'pageNumber', newPage);
-                                        this.fetchLogsWithFilterOptions(userId);
+                                        store.dispatch(setFilter(FilterName.UserLog, 'pageNumber', newPage));
+                                        this.setQueryAndFetch(userId);
                                     }}
                                 />
                             </div>
                         </div>
                     </ContentBlock>
                 </Spinner>
-            </HttpErrorAlert>
+            </HttpErrorAlert >
         );
     }
 }

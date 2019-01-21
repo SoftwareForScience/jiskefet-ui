@@ -12,8 +12,9 @@ import HttpErrorAlert from '../components/HttpErrorAlert';
 import * as Cookie from 'js-cookie';
 import { initialize } from '../app';
 import Spinner from '../components/Spinner';
-import State from '../models/State';
-import { HttpError } from '../interfaces/HttpError';
+import { store } from '../redux/configureStore';
+import { selectToken, selectIsAuthorizing } from '../redux/ducks/auth/selectors';
+import { authorize } from '../redux/ducks/auth/operations';
 
 /**
  * Landing page for unauthorized users.
@@ -24,29 +25,22 @@ export default class Login extends MithrilTsxComponent<{}> {
         // Retrieve Authorization Grant code from route's query parameters when this component is used as a callback.
         const { code } = m.route.param();
         if (code) {
-            State.AuthModel.isAuthorizing = true;
-            m.request({
-                method: 'GET',
-                url: `${process.env.API_URL}auth?grant=${code}`
-            }).then((result: { token: string }) => {
-                // Auth succeeded
-                State.AuthModel.isAuthorizing = false;
-                Cookie.set('token', result.token);
+            store.dispatch(authorize(code)).then(() => {
+                const token = selectToken(store.getState());
+                if (token) {
+                    Cookie.set('token', token);
+                }
                 initialize();
-            }).catch((err: HttpError) => {
-                // Auth failed
-                State.AuthModel.isAuthorizing = false;
-                State.HttpErrorModel.add(err);
             });
         }
     }
 
     view() {
         return (
-            <Spinner isLoading={State.AuthModel.isAuthorizing}>
+            <Spinner isLoading={selectIsAuthorizing(store.getState())}>
                 <HttpErrorAlert>
                     <div class="jumbotron jumbotron-fluid">
-                        {Cookie.get('state')
+                        {Cookie.get('isLoggedOut')
                             ?
                             <div class="col-md-6 mx-auto">
                                 <div class="alert alert-warning" role="alert">

@@ -7,18 +7,42 @@
  */
 
 import * as m from 'mithril';
-import State from '../models/State';
 import { HttpError } from '../interfaces/HttpError';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
+import { extractErrors } from '../redux/ducks/error/operations';
+import { store } from '../redux/configureStore';
+import { selectErrors } from '../redux/ducks/error/selectors';
 
-type Vnode = m.Vnode<{}, HttpErrorAlert>;
+interface Attrs {
+    /**
+     * Whether to hide the children when errors exist.
+     */
+    hideChildren?: boolean;
+}
 
-export default class HttpErrorAlert extends MithrilTsxComponent<{}> {
+type Vnode = m.Vnode<Attrs, HttpErrorAlert>;
+
+export default class HttpErrorAlert extends MithrilTsxComponent<Attrs> {
+    errors: HttpError[] = [];
+
+    async oninit() {
+        const fetchedErrors = await store.dispatch(extractErrors());
+        this.errors = fetchedErrors;
+    }
+
+    async onupdate() {
+        const fetchedErrors = await selectErrors(store.getState());
+        if (fetchedErrors !== this.errors) {
+            this.errors = await fetchedErrors;
+            m.redraw();
+        }
+    }
+
     view(vnode: Vnode) {
-        const errors: HttpError[] = State.HttpErrorModel.getErrors();
+        const { errors } = this;
         return (
             <div>
-                {(errors && errors.length > 0) ?
+                {(errors && errors.length > 0) &&
                     <div className="row">
                         <div className="col-md-12">
                             <div className="text-center">
@@ -26,7 +50,7 @@ export default class HttpErrorAlert extends MithrilTsxComponent<{}> {
                                     return (
                                         // tslint:disable-next-line:jsx-key
                                         <div class="alert alert-danger">
-                                            <h4 class="alert-heading">{error.statuscode} {error.error}</h4>
+                                            <h4 class="alert-heading">{error.statusCode} {error.error}</h4>
                                             <p>{error.message}</p>
                                         </div>
                                     );
@@ -34,7 +58,10 @@ export default class HttpErrorAlert extends MithrilTsxComponent<{}> {
                             </div>
                         </div>
                     </div>
-                 : vnode.children}
+                }
+                {(!vnode.attrs.hideChildren || errors.length === 0) &&
+                    vnode.children
+                }
             </div>
         );
     }

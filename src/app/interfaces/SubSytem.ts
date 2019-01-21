@@ -6,7 +6,7 @@
  * copied verbatim in the file "LICENSE"
  */
 
-export class SubSystem {
+export class Subsystem {
     subsystemId: number;
     subsystemName: string;
 }

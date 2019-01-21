@@ -9,12 +9,13 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import * as _ from 'lodash';
+import { FilterState, FilterValue } from '../interfaces/Filter';
 
 interface Attrs {
     /**
      * The values of the filters.
      */
-    filters: { [key: string]: string | number | null };
+    filters: FilterState;
 
     /**
      * Function being called when the event happens on a button click.
@@ -36,11 +37,11 @@ type Vnode = m.Vnode<Attrs, Badges>;
 
 export default class Badges extends MithrilTsxComponent<Attrs> {
 
-    filteredFilters(filters: { [key: string]: string | number | null }, ignoredFilters: string[]) {
+    filteredFilters(filters: FilterState, ignoredFilters: string[]) {
         return _.omit(filters, ignoredFilters);
     }
 
-    assertActiveFilters(filters: { [key: string]: string | number | null }) {
+    assertActiveFilters(filters: FilterState) {
         let assertActiveFilters: boolean = false;
         Object.keys(filters).map((key: string) => {
             if (filters[key] !== null) {
@@ -50,7 +51,7 @@ export default class Badges extends MithrilTsxComponent<Attrs> {
         return assertActiveFilters;
     }
 
-    sliceValue(value: string | number | null) {
+    sliceValue(value: FilterValue) {
         if ((value !== null) && (value.toString().length > 5)) {
             return `${value.toString().slice(0, 5)}...`;
         } else if (value !== null) {

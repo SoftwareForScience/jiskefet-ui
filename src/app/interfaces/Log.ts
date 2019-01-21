@@ -29,12 +29,11 @@ export interface Log {
  * Interface with the fields for creating a Log entry.
  */
 export interface LogCreate {
-    logId?: number;
     subtype: string;
     origin: string;
     title: string;
     text: string;
-    user: User;
-    runs: any[];
+    user: number;
+    runs: number[];
     attachments?: Attachment[];
 }

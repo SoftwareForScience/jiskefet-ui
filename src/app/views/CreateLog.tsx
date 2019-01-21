@@ -7,15 +7,20 @@
  */
 
 import * as m from 'mithril';
-import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
-import Tabs from '../components/Tab';
-import CreateLogTabs from '../constants/CreateLogTabs';
 import Modal from '../components/Modal';
 import MarkdownViewer from '../components/MarkdownViewer';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
 import AttachmentComponent from '../components/Attachment';
+import { selectProfile } from '../redux/ducks/auth/selectors';
+import { store } from '../redux/configureStore';
+import { LogCreate } from '../interfaces/Log';
+import { createLog } from '../redux/ducks/log/operations';
+import { selectLogToBeCreated } from '../redux/ducks/log/selectors';
+import { clearLogToBeCreated, setLogToBeCreated } from '../redux/ducks/log/actions';
+import MarkdownEditor from '../components/MarkdownEditor';
+import NewTabContainer from '../components/NewTabContainer';
 
 interface Attrs {
     runNumber?: number;
@@ -25,37 +30,48 @@ type Vnode = m.Vnode<Attrs, CreateLog>;
 
 export default class CreateLog extends MithrilTsxComponent<Attrs> {
 
-    addToCreateLog = (event: Event) => {
-        State.LogModel.createLog[event.target.id] = event.target.value;
+    oninit() {
+        store.dispatch(clearLogToBeCreated());
     }
 
-    addRunsToCreateLog = (event: Event) => {
-        State.RunModel.fetchById(event.target.value).then(() => {
-            State.LogModel.createLog.runs = new Array();
-            State.LogModel.createLog.runs.push(State.RunModel.current);
-        });
+    setValueForLogToBeCreated = (key: string, value: any) => {
+        let logToBeCreated = selectLogToBeCreated(store.getState()) as LogCreate | {};
+        if (!logToBeCreated) {
+            logToBeCreated = {};
+        }
+        logToBeCreated = { ...logToBeCreated, [key]: value };
+        if (logToBeCreated) {
+            store.dispatch(setLogToBeCreated(logToBeCreated as LogCreate));
+        }
+    }
+
+    addToCreateLog = (event: Event) => {
+        this.setValueForLogToBeCreated(event.target.id, event.target.value);
     }
 
     addDescription = (content: string) => {
-        State.LogModel.createLog.text = content;
+        this.setValueForLogToBeCreated('text', content);
     }
 
-    saveLog(runNumber: number | undefined) {
+    async saveLog(runNumber: number | undefined) {
         if (runNumber) {
-            State.LogModel.createLog.runs = new Array();
-            State.LogModel.createLog.runs.push(State.RunModel.current);
+            this.setValueForLogToBeCreated('runs', runNumber);
         }
-        if (State.AuthModel.profile !== null) {
-            State.UserModel.fetchById(State.AuthModel.profile.userData.userId).then(() => {
-                State.LogModel.createLog.user = State.UserModel.current;
-                State.LogModel.save().then(() => {
-                    m.route.set('/Logs');
-                });
-            });
+        const profile = selectProfile(store.getState());
+        if (profile) {
+            this.setValueForLogToBeCreated('user', profile.userData.userId);
+
+            const logToBeCreated = selectLogToBeCreated(store.getState());
+            if (logToBeCreated) {
+                await store.dispatch(createLog(logToBeCreated));
+                store.dispatch(clearLogToBeCreated());
+            }
+            m.route.set('/Logs');
         }
     }
 
     view(vnode: Vnode) {
+        const logToBeCreated = selectLogToBeCreated(store.getState());
         return (
             <form
                 onsubmit={(event: Event) => {
@@ -110,18 +126,21 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                         placeholder="Run number"
                                         value={vnode.attrs.runNumber && vnode.attrs.runNumber}
                                         required
-                                        oninput={this.addRunsToCreateLog}
+                                        oninput={this.addToCreateLog}
                                     />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="card shadow-sm bg-light">
-                                    <Tabs
-                                        tabs={CreateLogTabs}
-                                        entity={State.LogModel.createLog}
-                                        func={(content: string) => this.addDescription(content)}
-                                        caller={'description'}
-                                    />
+                                    <NewTabContainer titles={['Editor', 'Preview']} >
+                                        <MarkdownEditor
+                                            postContent={(content: string) => this.addDescription(content)}
+                                        />
+                                        <MarkdownViewer
+                                            id={'MarkdownPreview'}
+                                            content={logToBeCreated && logToBeCreated.text || ''}
+                                        />
+                                    </NewTabContainer>
                                 </div>
                             </div>
                             <AttachmentComponent
@@ -145,7 +164,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                         </div>
                     </div>
                 </div>
-            </form >
+            </form>
         );
     }
 }

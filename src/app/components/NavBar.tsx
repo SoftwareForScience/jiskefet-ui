@@ -7,19 +7,22 @@
  */
 
 import * as m from 'mithril';
-import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import * as Cookie from 'js-cookie';
 import ProfileNavItem from './ProfileNavItem';
+import { store } from '../redux/configureStore';
+import { toggleSidebar } from '../redux/ducks/ui/actions';
+import { fetchProfile } from '../redux/ducks/auth/operations';
+import { selectProfile } from '../redux/ducks/auth/selectors';
 
 export default class NavBar extends MithrilTsxComponent<{}> {
     toggleSidebar = () => {
-        State.AppState.showSidebar = !State.AppState.showSidebar;
+        store.dispatch(toggleSidebar());
     }
 
     oninit() {
-        if (Cookie.get('token') && !State.AuthModel.profile) {
-            State.AuthModel.fetchProfile();
+        if (Cookie.get('token') && !selectProfile(store.getState())) {
+            store.dispatch(fetchProfile());
         }
     }
 
@@ -46,7 +49,7 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                     </a>
                     <ul class="jf-align-right mr-2">
                         {Cookie.get('token') ?
-                            <ProfileNavItem profile={State.AuthModel.profile} />
+                            <ProfileNavItem profile={selectProfile(store.getState())} />
                             :
                             <a
                                 href={
