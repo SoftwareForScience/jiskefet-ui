@@ -6,6 +6,8 @@
  * copied verbatim in the file "LICENSE"
  */
 
+import { Log } from './Log';
+
 /**
  * Interface with the fields for fetching one or more Log entries.
  */
@@ -25,5 +27,5 @@ export interface Run {
     nSubtimeframes: number;
     bytesReadOut: number;
     bytesTimeframeBuilder: number;
-    logs: any[];
+    logs: Log[];
 }
