@@ -21,6 +21,7 @@ import { selectIsFetchingRun, selectIsPatchingLinkLogToRun, selectCurrentRun } f
 import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import RunDescription from '../constants/RunDescription';
+import Button, { ButtonType, ButtonClass, ButtonSize } from '../atoms/Button';
 
 interface Attrs {
     runNumber: number;
@@ -37,23 +38,25 @@ export default class Run extends MithrilTsxComponent<Attrs> {
     linkingButton(addExistingRunId: string, runNumber: number) {
         return (
             <div class="row justify-content-end">
-                <button
-                    type="button"
-                    class="btn btn-success btn-sm mr-1"
-                    onclick={() => m.route.set(
+                <Button
+                    type={ButtonType.BUTTON}
+                    buttonClass={ButtonClass.SUCCESS}
+                    buttonSize={ButtonSize.SMALL}
+                    margin="mr-1"
+                    onClick={() => m.route.set(
                         `/logs/create/runs/${runNumber}`
                     )}
-                >
-                    Add new log to run
-                </button>
-                <button
-                    type="button"
-                    class="btn btn-primary btn-sm mr-1"
+                    text={'Add new log to run'}
+                />
+                <Button
+                    type={ButtonType.BUTTON}
+                    buttonClass={ButtonClass.DEFAULT}
+                    buttonSize={ButtonSize.SMALL}
+                    margin="mr-1"
                     data-toggle="modal"
                     data-target={`#${addExistingRunId}`}
-                >
-                    Link existing log
-                </button>
+                    text={'Link existing log'}
+                />
             </div>
         );
     }

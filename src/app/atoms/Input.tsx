@@ -18,11 +18,13 @@ export enum InputSize {
 
 interface Attrs {
     id: string;
-    formType: string;
+    name?: string;
+    inputType: string;
     className: string;
-    inputSize: InputSize;
+    inputSize?: InputSize;
     placeholder?: string;
     required?: boolean;
+    dataShowCaption?: string;
     value?: string | number;
     oninput?: (event: Event) => void;
 }
@@ -31,15 +33,28 @@ type Vnode = m.Vnode<Attrs, Input>;
 
 export default class Input extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { id, formType, className, inputSize, placeholder, required, value, oninput } = vnode.attrs;
+        const {
+            id,
+            name,
+            inputType,
+            className,
+            inputSize,
+            placeholder,
+            required,
+            dataShowCaption,
+            value,
+            oninput
+        } = vnode.attrs;
         return (
             <input
                 id={id}
-                type={formType}
+                name={name}
+                type={inputType}
                 class={`${className} ${inputSize}`}
                 placeholder={placeholder}
                 required={required}
                 value={value}
+                data-show-caption={dataShowCaption}
                 oninput={oninput}
             />
         );

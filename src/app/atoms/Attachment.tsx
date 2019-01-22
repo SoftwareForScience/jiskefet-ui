@@ -13,6 +13,9 @@ import { setAttachmentToBeCreated, clearAttachmentToBeCreated } from '../redux/d
 import { selectAttachmentToBeCreated } from '../redux/ducks/attachment/selectors';
 import { saveAttachment, fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { selectCurrentLog, selectLogToBeCreated } from '../redux/ducks/log/selectors';
+import { Event } from '../interfaces/Event';
+import Label from './Label';
+import Input from './Input';
 
 interface Attrs {
     /**
@@ -48,6 +51,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
      * @param event The event of having selected a file.
      */
     getSelectedFiles = (event: Event) => {
+        console.log(event.target.value);
         const files = (event.target as HTMLInputElement).files as FileList;
         const maxSizeLabel = document.getElementById('maximum-size-label') as HTMLElement;
         if (files[0].size > this.maxFileSize) {
@@ -150,14 +154,17 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                 <div class="alert alert-danger" role="alert" id="maximum-size-label" for="save" hidden>
                     Maximum file size is 5MB! Please select a smaller file.
                 </div>
-                <label for="fileUpload">Attach file to {attachTo}:</label>
-                <input
-                    type="file"
-                    class="form-control-file"
+                <Label
+                    id="fileUpload"
+                    text={`Attach file to ${attachTo}:`}
+                />
+                <Input
+                    inputType="file"
+                    className="form-control-file"
                     id="fileUpload"
                     name="fileUpload"
-                    data-show-caption="true"
-                    onchange={this.getSelectedFiles}
+                    dataShowCaption="true"
+                    oninput={this.getSelectedFiles}
                 />
                 <img
                     id="preview-image"

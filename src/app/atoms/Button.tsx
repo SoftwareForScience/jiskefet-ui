@@ -40,10 +40,11 @@ export enum ButtonType {
 }
 
 interface Attrs {
-    type: ButtonType;
+    type?: ButtonType;
     text: string;
     buttonClass: ButtonClass;
     buttonSize: ButtonSize;
+    id?: string | number;
     margin?: string;
     href?: string;
     onClick?: (event: Event) => void;
@@ -51,6 +52,7 @@ interface Attrs {
     value?: string | number;
     dataToggle?: string;
     dataTarget?: string;
+    dataDismiss?: string;
     disabled?: boolean;
 }
 
@@ -63,6 +65,7 @@ export default class Button extends MithrilTsxComponent<Attrs> {
             text,
             name,
             value,
+            id,
             buttonClass,
             buttonSize,
             margin,
@@ -70,17 +73,20 @@ export default class Button extends MithrilTsxComponent<Attrs> {
             onClick,
             dataToggle,
             dataTarget,
+            dataDismiss,
             disabled
         } = vnode.attrs;
         return (
             <button
                 type={type}
                 class={`${buttonClass} ${buttonSize} ${margin}`}
+                id={id}
                 name={name}
                 value={value}
                 href={href}
                 data-toggle={dataToggle}
                 data-target={dataTarget}
+                data-dismiss={dataDismiss}
                 onClick={onClick}
                 disabled={disabled}
             >

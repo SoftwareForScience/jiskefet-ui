@@ -102,7 +102,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 <div class="field">
                                     <Input
                                         id="title"
-                                        formType="text"
+                                        inputType="text"
                                         className="form-control"
                                         inputSize={InputSize.MEDIUM}
                                         placeholder="Title"
@@ -130,7 +130,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 <div class="field">
                                     <Input
                                         id="runs"
-                                        formType="number"
+                                        inputType="number"
                                         className="form-control"
                                         inputSize={InputSize.SMALL}
                                         placeholder="Run number"
