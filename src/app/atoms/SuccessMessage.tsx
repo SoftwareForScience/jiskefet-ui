@@ -11,7 +11,7 @@ import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { store } from '../redux/configureStore';
 import { getSuccessMessages } from '../redux/ducks/success/operations';
 import { selectSuccesMessages } from '../redux/ducks/success/selectors';
-import Button, { ButtonType, ButtonClass, ButtonSize } from './Button';
+import Button, { ButtonType, ButtonClass } from './Button';
 
 export default class SuccessMessage extends MithrilTsxComponent<{}> {
     successMessages: string[];

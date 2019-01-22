@@ -10,8 +10,6 @@ import * as m from 'mithril';
 import Spinner from '../atoms/Spinner';
 import HttpErrorAlert from '../atoms/HttpErrorAlert';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import RunTabs from '../constants/RunTabs';
-import Tabs from '../atoms/TabContainer';
 import Modal from '../atoms/Modal';
 import LinkLogToRun from '../atoms/LinkLogToRun';
 import SuccessMessage from '../atoms/SuccessMessage';
@@ -22,6 +20,9 @@ import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import RunDescription from '../constants/RunDescription';
 import Button, { ButtonType, ButtonClass, ButtonSize } from '../atoms/Button';
+import NewTabContainer from '../atoms/NewTabContainer';
+import Table from '../molecules/Table';
+import LogColumns from '../constants/LogColumns';
 
 interface Attrs {
     runNumber: number;
@@ -83,10 +84,19 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                         this.linkingButton(addExistingRunId, vnode.attrs.runNumber)
                                     }
                                     footerContent={(
-                                        <Tabs
-                                            tabs={RunTabs}
-                                            entity={currentRun || undefined}
-                                        />
+                                        <NewTabContainer titles={['Logs', 'Detectors', 'Others...']} >
+                                            {
+                                                currentRun && currentRun.logs.length > 0
+                                                ? <Table data={currentRun.logs} columns={LogColumns} />
+                                                : 'This run has no logs'
+                                            }
+                                            {
+                                                'Not yet implemented'
+                                            }
+                                            {
+                                                'Not yet implemented'
+                                            }
+                                        </NewTabContainer>
                                     )}
                                 >
                                     <DescriptionList
