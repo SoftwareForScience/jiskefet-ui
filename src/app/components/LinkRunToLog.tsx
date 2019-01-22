@@ -19,7 +19,7 @@ import Filter from './Filter';
 import { setFilter } from '../redux/ducks/filter/actions';
 import { FilterName } from '../interfaces/Filter';
 import { selectFilters } from '../redux/ducks/filter/selectors';
-import { setQueryParams } from '../utility/UrlUtil';
+import { returnQueryParams } from '../utility/UrlUtil';
 
 const inputFields = [
     {
@@ -65,7 +65,7 @@ export default class LinkRunToLog extends MithrilTsxComponent<Attrs> {
      */
     setQueryAndFetch = (): void => {
         const runFilters = selectFilters(store.getState())[FilterName.Run];
-        const queryString = setQueryParams(runFilters, true);
+        const queryString = returnQueryParams(runFilters);
         store.dispatch(fetchRuns(queryString as string));
     }
 

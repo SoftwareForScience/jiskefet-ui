@@ -10,7 +10,9 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
 import Collapse from './Collapse';
-import { FilterState } from '../interfaces/Filter';
+import { FilterState, FilterName } from '../interfaces/Filter';
+import { store } from '../redux/configureStore';
+import { resetFilters } from '../redux/ducks/filter/actions';
 
 interface InputField {
     name: string; // name should exist as a key in the filters attribute.
@@ -39,6 +41,9 @@ type Vnode = m.Vnode<Attrs, Filter>;
 
 export default class Filter extends MithrilTsxComponent<Attrs> {
 
+    async oninit() {
+        await store.dispatch(resetFilters(FilterName.Log));
+    }
     view(vnode: Vnode) {
         const { inputFields, onEvent, filters } = vnode.attrs;
         return (

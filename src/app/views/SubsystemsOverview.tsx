@@ -45,7 +45,7 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> {
      */
     setQueryAndFetch = (): void => {
         const subsystemFilters = selectFilters(store.getState())[FilterName.Subsystem];
-        setQueryParams(subsystemFilters, false);
+        setQueryParams(subsystemFilters);
         this.fetchWithFilters();
     }
 

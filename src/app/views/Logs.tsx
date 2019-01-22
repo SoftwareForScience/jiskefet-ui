@@ -77,7 +77,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
      */
     setQueryAndFetch = (): void => {
         const logFilters = selectFilters(store.getState())[FilterName.Log];
-        setQueryParams(logFilters, false);
+        setQueryParams(logFilters);
         this.fetchWithFilters();
     }
 

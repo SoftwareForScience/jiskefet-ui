@@ -17,7 +17,7 @@ import { linkLogToRun, fetchRun } from '../redux/ducks/run/operations';
 import { selectLogs } from '../redux/ducks/log/selectors';
 import { selectFilters } from '../redux/ducks/filter/selectors';
 import { FilterName } from '../interfaces/Filter';
-import { setQueryParams } from '../utility/UrlUtil';
+import { returnQueryParams } from '../utility/UrlUtil';
 import Filter from './Filter';
 import { setFilter } from '../redux/ducks/filter/actions';
 
@@ -71,7 +71,7 @@ export default class LinkLogToRun extends MithrilTsxComponent<Attrs> {
      */
     setQueryAndFetch = (): void => {
         const logFilters = selectFilters(store.getState())[FilterName.Log];
-        const queryString = setQueryParams(logFilters, true);
+        const queryString = returnQueryParams(logFilters);
         store.dispatch(fetchLogs(queryString as string));
     }
 
