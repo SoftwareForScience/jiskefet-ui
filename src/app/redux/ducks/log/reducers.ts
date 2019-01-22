@@ -76,7 +76,7 @@ const runReducer: Reducer<LogState>
             case ActionTypes.LINK_RUN_TO_LOG_SUCCESS:
                 return {
                     ...state,
-                    isPatchingLinkRunToLog: true
+                    isPatchingLinkRunToLog: false
                 };
             default:
                 return state;
