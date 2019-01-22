@@ -16,7 +16,9 @@ import {
     fetchRunsRequest,
     fetchRunsSuccess,
     fetchRunRequest,
-    fetchRunSuccess
+    fetchRunSuccess,
+    linkLogToRunSucces,
+    linkLogToRunRequest
 } from './actions';
 import { getRuns, getRun, linkLogToRunUrl } from '../../../constants/apiUrls';
 import { ErrorAction } from '../error/types';
@@ -51,13 +53,13 @@ export const fetchRun = (id: number | string): ThunkResult<Promise<void>> =>
 
 export const linkLogToRun = (logId: number, runNumber: number): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, RunAction | ErrorAction>): Promise<void> => {
-        dispatch(fetchRunRequest());
+        dispatch(linkLogToRunRequest());
         return request({
             method: 'PATCH',
             url: linkLogToRunUrl(runNumber),
             data: { logId: logId as number }
-        }).then((result: Run) => {
-            dispatch(fetchRunSuccess(result));
+        }).then(() => {
+            dispatch(linkLogToRunSucces());
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));
         });
