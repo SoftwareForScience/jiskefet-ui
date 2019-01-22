@@ -10,24 +10,27 @@ import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import * as Cookie from 'js-cookie';
+import { store } from '../redux/configureStore';
+import { selectIsAuthorizing } from '../redux/ducks/auth/selectors';
+import Spinner from '../components/Spinner';
 
 /**
  * Landing page for unauthorized users.
- * Also used as a callback for GitHub to provide the Authorization Grant as a query parameter.
  */
 export default class Login extends MithrilTsxComponent<{}> {
 
     view() {
         return (
-            <HttpErrorAlert>
-                <div class="jumbotron jumbotron-fluid">
-                    {Cookie.get('state')
-                        ?
-                        <div class="col-md-6 mx-auto">
-                            <div class="alert alert-warning" role="alert">
-                                <strong>Please close the browser to end the user session.</strong>
+            <Spinner isLoading={selectIsAuthorizing(store.getState())}>
+                <HttpErrorAlert>
+                    <div class="jumbotron jumbotron-fluid">
+                        {Cookie.get('isLoggedOut')
+                            ?
+                            <div class="col-md-6 mx-auto">
+                                <div class="alert alert-warning" role="alert">
+                                    <strong>Please close the browser to end the user session.</strong>
+                                </div>
                             </div>
-                        </div>
                         :
                         <div>
                             <h1 class="display-2">Welcome to Jiskefet</h1>
@@ -56,7 +59,8 @@ export default class Login extends MithrilTsxComponent<{}> {
                         </div>
                     }
                 </div>
-            </HttpErrorAlert>
+                </HttpErrorAlert>
+            </Spinner>
         );
     }
 }

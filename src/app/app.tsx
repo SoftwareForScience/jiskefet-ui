@@ -21,7 +21,7 @@ import * as Cookie from 'js-cookie';
 import Login from './views/Login';
 import Profile from './views/Profile';
 import SubsystemsOverview from './views/SubsystemsOverview';
-import Loading from './components/Loading';
+import AuthHandler from './components/AuthHandler';
 import { Setting } from './interfaces/Setting';
 import { CronJob } from 'cron';
 
@@ -115,7 +115,7 @@ const lockedOutRoutes = {
     },
     '/callback': {
         view: () => (
-            <Loading />
+            <AuthHandler />
         ),
     }
 };

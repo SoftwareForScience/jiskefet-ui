@@ -14,10 +14,12 @@ import MarkdownViewer from '../components/MarkdownViewer';
 import RunColumns from './RunColumns';
 import Table from '../components/Table';
 import { Log } from '../interfaces/Log';
-import State from '../models/State';
 import Modal from '../components/Modal';
 import { Attachment } from '../interfaces/Attachment';
 import AttachmentComponent from '../components/Attachment';
+import { store } from '../redux/configureStore';
+import { selectAttachments } from '../redux/ducks/attachment/selectors';
+import { download } from '../utility/FileUtil';
 
 const ATTACHMENT_MODAL_ID = 'attachment-modal-id';
 
@@ -47,7 +49,7 @@ const LogTabs: Tabs[] = [
                         className="font-sm"
                     />
                 )
-            : 'This log has no runs'
+                : 'This log has no runs'
         )
     },
     {
@@ -67,16 +69,17 @@ const LogTabs: Tabs[] = [
     {
         name: 'Files',
         id: 'files',
-        content: (log: Log): JSX.Element | string => (
-            (
+        content: (): JSX.Element | string => {
+            const attachments = selectAttachments(store.getState());
+            return (
                 <div>
                     <ul>
-                        {State.AttachmentModel.list.map((attachment: Attachment) =>
+                        {attachments && attachments.map((attachment: Attachment) =>
                             <li key={attachment.fileId}>
                                 <a
                                     id={attachment.fileId}
                                     download={attachment.title}
-                                    href={State.AttachmentModel.download(attachment)}
+                                    href={download(attachment)}
                                 >
                                     {attachment.title}
                                 </a>
@@ -103,8 +106,8 @@ const LogTabs: Tabs[] = [
                         </div>
                     </Modal>
                 </div>
-            )
-        )
+            );
+        }
     }
 ];
 

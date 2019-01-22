@@ -10,11 +10,8 @@ import * as m from 'mithril';
 import Spinner from '../components/Spinner';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import Table from '../components/Table';
-import State from '../models/State';
 import RunColumns from '../constants/RunColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import Fetchable from '../interfaces/Fetchable';
-import { Run } from '../interfaces/Run';
 import Filter from '../components/Filter';
 import { createDummyTable } from '../utility/DummyService';
 import PageCounter from '../components/PageCounter';
@@ -23,6 +20,16 @@ import { Event } from '../interfaces/Event';
 import ContentBlock from '../components/ContentBlock';
 import SuccessMessage from '../components/SuccessMessage';
 import Badges from '../components/Badges';
+import { selectCollapsableItem } from '../redux/ducks/ui/selectors';
+import { store } from '../redux/configureStore';
+import { setFiltersFromUrl, switchOrderBy } from '../redux/ducks/filter/operations';
+import { FilterName } from '../interfaces/Filter';
+import { selectQueryString, selectFilters } from '../redux/ducks/filter/selectors';
+import { setQueryParams } from '../utility/UrlUtil';
+import { setFilter, resetFilters } from '../redux/ducks/filter/actions';
+import { OrderDirection } from '../enums/OrderDirection';
+import { fetchRuns } from '../redux/ducks/run/operations';
+import { selectIsFetchingRuns, selectRuns, selectRunCount } from '../redux/ducks/run/selectors';
 
 const inputFields = [
     {
@@ -101,29 +108,33 @@ const inputFields = [
     },
 ];
 
-export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<Run> {
+export default class Runs extends MithrilTsxComponent<{}> {
     oninit() {
-        State.FilterModel.setFiltersToDefaults('run');
-        State.FilterModel.setFiltersFromUrl('run');
-        this.fetch(State.FilterModel.getQueryString('run'));
+        store.dispatch(setFiltersFromUrl(FilterName.Run));
+        this.setQueryAndFetch();
     }
 
     /**
-     * Fetch runs with the query param given.
-     */
-    fetch = (queryParam?: string) => {
-        State.RunModel.fetch(queryParam);
-    }
-
-    /**
-     * Fetch runs with the filters currently in the state (in FilterModel).
+     * Fetch runs with the filters currently in the state.
      */
     fetchWithFilters = (): void => {
-        this.fetch(State.FilterModel.getQueryString('run'));
+        const queryString = selectQueryString(store.getState())(FilterName.Run);
+        store.dispatch(fetchRuns(queryString));
+    }
+
+    /**
+     * Set the query parameters in the url and fetch with the filters in the current state.
+     */
+    setQueryAndFetch = (): void => {
+        const runFilters = selectFilters(store.getState())[FilterName.Run];
+        setQueryParams(runFilters);
+        this.fetchWithFilters();
     }
 
     view() {
         const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
+        const collapsableFilterItem = selectCollapsableItem(store.getState(), 'filters');
+        const runFilters = selectFilters(store.getState())[FilterName.Run];
         return (
             <div>
                 <HttpErrorAlert>
@@ -131,42 +142,40 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                     <div class="row">
                         <div
                             class={
-                                // tslint:disable-next-line:no-string-literal
-                                State.AppState.isCollapsed['filters'] ?
-                                    'col-md-3 collapse-transition' :
-                                    'col-md-1 collapse-transition'
+                                collapsableFilterItem && collapsableFilterItem.isCollapsed ?
+                                    'col-md-1 collapse-transition' :
+                                    'col-md-3 collapse-transition'
                             }
                         >
                             <ContentBlock>
                                 <Filter
                                     inputFields={inputFields}
                                     onEvent={(key: string, value: string | number | null) => {
-                                        State.FilterModel.setFilter('run', key, value);
-                                        State.FilterModel.setFilter('run', 'pageNumber', 1);
-                                        this.fetch(State.FilterModel.getQueryString('run'));
+                                        store.dispatch(setFilter(FilterName.Run, key, value));
+                                        store.dispatch(setFilter(FilterName.Run, 'pageNumber', 1));
+                                        this.setQueryAndFetch();
                                     }}
-                                    filters={State.FilterModel.getFilters('run')}
+                                    filters={runFilters}
                                 />
                             </ContentBlock>
                         </div>
                         <div
                             class={
-                                // tslint:disable-next-line:no-string-literal
-                                State.AppState.isCollapsed['filters'] ?
-                                    'col-md-9 mb-5 collapse-transition' :
-                                    'col-md-11 mb-5 collapse-transition'
+                                collapsableFilterItem && collapsableFilterItem.isCollapsed ?
+                                    'col-md-11 mb-5 collapse-transition' :
+                                    'col-md-9 mb-5 collapse-transition'
                             }
                         >
                             <div class="mb-2">
                                 <Badges
-                                    filters={State.FilterModel.getFilters('run')}
+                                    filters={runFilters}
                                     onEvent={(key: string) => {
-                                        State.FilterModel.setFilter('run', key, null);
-                                        this.fetchWithFilters();
+                                        store.dispatch(setFilter(FilterName.Run, key, null));
+                                        this.setQueryAndFetch();
                                     }}
                                     onEventAll={() => {
-                                        State.FilterModel.setFiltersToDefaults('run');
-                                        this.fetchWithFilters();
+                                        store.dispatch(resetFilters(FilterName.Run));
+                                        this.setQueryAndFetch();
                                     }}
                                     ignoredFilters={[
                                         'orderBy',
@@ -177,24 +186,24 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                                 />
                             </div>
                             <Spinner
-                                isLoading={State.RunModel.isFetchingRuns}
+                                isLoading={selectIsFetchingRuns(store.getState())}
                                 component={
                                     createDummyTable(
-                                        State.FilterModel.getFilters('run').pageSize,
+                                        runFilters.pageSize,
                                         RunColumns,
                                         'jf-font-sm'
                                     )
                                 }
                             >
                                 <Table
-                                    data={State.RunModel.list}
+                                    data={selectRuns(store.getState())}
                                     columns={RunColumns}
                                     className={'jf-font-sm'}
-                                    orderBy={State.FilterModel.getFilters('run').orderBy}
-                                    orderDirection={State.FilterModel.getFilters('run').orderDirection}
+                                    orderBy={runFilters.orderBy || undefined}
+                                    orderDirection={runFilters.orderDirection || OrderDirection.Descending}
                                     onHeaderClick={(accessor: string) => {
-                                        State.FilterModel.switchOrderBy('run', accessor);
-                                        this.fetchWithFilters();
+                                        store.dispatch(switchOrderBy(FilterName.Run, accessor));
+                                        this.setQueryAndFetch();
                                     }}
                                 />
                             </Spinner>
@@ -215,11 +224,13 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                                                 class="form-control form-control-sm"
                                                 name="pageSize"
                                                 onchange={(event: Event) => {
-                                                    State.FilterModel.setFilter('run', 'pageSize', event.target.value);
-                                                    State.FilterModel.setFilter('run', 'pageNumber', 1);
-                                                    this.fetchWithFilters();
+                                                    store.dispatch(
+                                                        setFilter(FilterName.Run, 'pageSize', event.target.value)
+                                                    );
+                                                    store.dispatch(setFilter(FilterName.Run, 'pageNumber', 1));
+                                                    this.setQueryAndFetch();
                                                 }}
-                                                value={State.FilterModel.getFilters('run').pageSize}
+                                                value={runFilters.pageSize}
                                             >
                                                 {pageSizes.map((pageSize: number) =>
                                                     // tslint:disable-next-line:jsx-key
@@ -229,20 +240,20 @@ export default class Runs extends MithrilTsxComponent<{}> implements Fetchable<R
                                         </div>
                                         <div class="text-muted mt-2 ml-2 pagination-block">
                                             <PageCounter
-                                                currentPage={State.FilterModel.getFilters('run').pageNumber}
-                                                rowsInTable={State.FilterModel.getFilters('run').pageSize}
-                                                totalCount={State.RunModel.count}
+                                                currentPage={runFilters.pageNumber}
+                                                rowsInTable={runFilters.pageSize}
+                                                totalCount={selectRunCount(store.getState())}
                                             />
                                         </div>
                                     </div>
                                     <div class="col-md-4 m-1 small-center">
                                         <Pagination
-                                            currentPage={State.FilterModel.getFilters('run').pageNumber}
-                                            numberOfPages={Math.ceil(State.RunModel.count
-                                                / State.FilterModel.getFilters('run').pageSize)}
+                                            currentPage={runFilters.pageNumber}
+                                            numberOfPages={Math.ceil(selectRunCount(store.getState())
+                                                / runFilters.pageSize)}
                                             onChange={(newPage: number) => {
-                                                State.FilterModel.setFilter('run', 'pageNumber', newPage);
-                                                this.fetchWithFilters();
+                                                store.dispatch(setFilter(FilterName.Run, 'pageNumber', newPage));
+                                                this.setQueryAndFetch();
                                             }}
                                         />
                                     </div>
