@@ -21,7 +21,7 @@ import * as Cookie from 'js-cookie';
 import Login from './views/Login';
 import Profile from './views/Profile';
 import SubsystemsOverview from './views/SubsystemsOverview';
-import Loader from './components/Loader';
+import AuthHandler from './components/AuthHandler';
 import { Setting } from './interfaces/Setting';
 import { CronJob } from 'cron';
 import { ResponseObject } from './interfaces/ResponseObject';
@@ -35,13 +35,6 @@ const authenticatedRoutes = {
         view: () => (
             <Layout>
                 <Logs />
-            </Layout>
-        ),
-    },
-    '/callback': {
-        view: () => (
-            <Layout>
-                <Loader />
             </Layout>
         ),
     },
@@ -123,12 +116,13 @@ const lockedOutRoutes = {
     },
     '/callback': {
         view: () => (
-            <UnauthorizedLayout>
-                <Login />
-            </UnauthorizedLayout>
+            <UnauthorizedLayout >
+                <AuthHandler />
+            </UnauthorizedLayout >
         ),
     }
 };
+
 /**
  * Determine the routing table for the app, based on if the user is logged in or not.
  * (logged in is in essence: does the user have a cookie with a JWT)

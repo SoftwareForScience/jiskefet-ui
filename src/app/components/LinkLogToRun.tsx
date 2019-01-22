@@ -14,7 +14,7 @@ import LinkLogToRunColumns from '../constants/LinkLogToRunColumns';
 import { store } from '../redux/configureStore';
 import { fetchLogs } from '../redux/ducks/log/operations';
 import { linkLogToRun, fetchRun } from '../redux/ducks/run/operations';
-import { selectUserLogs } from '../redux/ducks/user/selectors';
+import { selectLogs } from '../redux/ducks/log/selectors';
 
 interface Attrs {
     /**
@@ -47,7 +47,7 @@ export default class LinkLogToRun extends MithrilTsxComponent<Attrs> {
         return (
             <div>
                 <Table
-                    data={selectUserLogs(store.getState())}
+                    data={selectLogs(store.getState())}
                     columns={LinkLogToRunColumns(vnode.attrs.runNumber, this.linkLogToRun)}
                 />
             </div>
