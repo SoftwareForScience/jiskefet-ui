@@ -20,7 +20,7 @@ import { fetchUserRequest, fetchUserSuccess, fetchLogsForUserRequest, fetchLogsF
 import { Log } from '../../../interfaces/Log';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
-import { ResponseObject, ResponseObjectCollection } from '../../../interfaces/ResponseObject';
+import { ResponseObject, CollectionResponseObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchUser = (id: number | string): ThunkResult<Promise<void>> =>
@@ -44,7 +44,7 @@ export const fetchLogsForUser = (id: number | string, query?: string): ThunkResu
             method: 'GET',
             url: getLogsForUser(id, query),
             withCredentials: false
-        }).then((result: ResponseObjectCollection<Log>) => {
+        }).then((result: CollectionResponseObject<Log>) => {
             dispatch(fetchLogsForUserSuccess(result));
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));

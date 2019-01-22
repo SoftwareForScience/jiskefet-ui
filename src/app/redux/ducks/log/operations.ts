@@ -25,7 +25,7 @@ import {
 import { getLogs, getLog, linkRunToLogUrl, postLog } from '../../../constants/apiUrls';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
-import { ResponseObject, ResponseObjectCollection } from '../../../interfaces/ResponseObject';
+import { ResponseObject, CollectionResponseObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
@@ -34,7 +34,7 @@ export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getLogs(query)
-        }).then((result: ResponseObjectCollection<Log>) => {
+        }).then((result: CollectionResponseObject<Log>) => {
             dispatch(fetchLogsSuccess(result));
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));

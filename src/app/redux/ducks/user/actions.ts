@@ -15,7 +15,7 @@ import {
 } from './types';
 import { User } from '../../../interfaces/User';
 import { Log } from '../../../interfaces/Log';
-import { ResponseObject, ResponseObjectCollection } from '../../../interfaces/ResponseObject';
+import { ResponseObject, CollectionResponseObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchUserRequest = (): FetchUserRequestAction => ({
@@ -31,7 +31,7 @@ export const fetchLogsForUserRequest = (): FetchLogsForUserRequestAction => ({
     type: ActionTypes.FETCH_LOGS_FOR_USER_REQUEST
 });
 
-export const fetchLogsForUserSuccess = (payload: ResponseObjectCollection<Log>): FetchLogsForUserSuccessAction => ({
+export const fetchLogsForUserSuccess = (payload: CollectionResponseObject<Log>): FetchLogsForUserSuccessAction => ({
     type: ActionTypes.FETCH_LOGS_FOR_USER_SUCCES,
     payload
 });

@@ -22,14 +22,14 @@ import {
 } from './types';
 import { SubsystemOverview } from '../../../interfaces/SubsystemOverview';
 import { SubsystemPermission } from '../../../interfaces/SubsystemPermission';
-import { ResponseObjectCollection, ResponseObject } from '../../../interfaces/ResponseObject';
+import { CollectionResponseObject, ResponseObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchSubsystemsRequest = (): FetchSubsystemsRequestAction => ({
     type: ActionTypes.FETCH_SUBSYSTEMS_REQUEST
 });
 
-export const fetchSubsystemsSuccess = (payload: ResponseObjectCollection<Subsystem>): FetchSubsystemsSuccessAction => ({
+export const fetchSubsystemsSuccess = (payload: CollectionResponseObject<Subsystem>): FetchSubsystemsSuccessAction => ({
     type: ActionTypes.FETCH_SUBSYSTEMS_SUCCESS,
     payload
 });
@@ -48,7 +48,7 @@ export const fetchSubsystemOverviewsRequest = (): FetchSubsystemOverviewsRequest
 });
 
 export const fetchSubsystemOverviewsSuccess = (
-    payload: ResponseObjectCollection<SubsystemOverview>): FetchSubsystemOverviewsSuccessAction => ({
+    payload: CollectionResponseObject<SubsystemOverview>): FetchSubsystemOverviewsSuccessAction => ({
         type: ActionTypes.FETCH_SUBSYSTEM_OVERVIEWS_SUCCESS,
         payload
     });
@@ -58,7 +58,7 @@ export const fetchSubsystemPermissionsRequest = (): FetchSubsystemPermissionsReq
 });
 
 export const fetchSubsystemPermissionsSuccess
-    = (payload: ResponseObjectCollection<SubsystemPermission>): FetchSubsystemPermissionsSuccessAction => ({
+    = (payload: CollectionResponseObject<SubsystemPermission>): FetchSubsystemPermissionsSuccessAction => ({
         type: ActionTypes.FETCH_SUBSYSTEM_PERMISSIONS_SUCCESS,
         payload
     });
