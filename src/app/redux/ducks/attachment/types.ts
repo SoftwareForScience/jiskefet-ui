@@ -10,6 +10,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
 import { Attachment, AttachmentCreate } from '../../../interfaces/Attachment';
+import { ResponseObjectCollection } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface AttachmentState {
@@ -37,7 +38,7 @@ export interface FetchAttachmentsByLogRequestAction extends Action {
 
 export interface FetchAttachmentsByLogSuccessAction extends Action {
     type: ActionTypes.FETCH_ATTACHMENTS_BY_LOG_SUCCESS;
-    payload: Attachment[];
+    payload: ResponseObjectCollection<Attachment>;
 }
 
 export interface CreateAttachmentRequestAction extends Action {

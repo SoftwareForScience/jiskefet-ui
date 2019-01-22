@@ -32,8 +32,8 @@ const runReducer: Reducer<RunState>
                 return {
                     ...state,
                     isFetchingRuns: false,
-                    runs: [...action.payload.runs],
-                    count: action.payload.count
+                    runs: [...action.payload.data.items],
+                    count: action.payload.data.count
                 };
             case ActionTypes.FETCH_RUN_REQUEST:
                 return {
@@ -44,7 +44,7 @@ const runReducer: Reducer<RunState>
                 return {
                     ...state,
                     isFetchingRun: false,
-                    current: action.payload
+                    current: action.payload.data.item
                 };
             case ActionTypes.LINK_LOG_TO_RUN_REQUEST:
                 return {

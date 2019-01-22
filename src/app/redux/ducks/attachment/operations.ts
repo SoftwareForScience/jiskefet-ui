@@ -21,6 +21,7 @@ import {
 import { getAttachmentsByLog, postAttachment } from '../../../constants/apiUrls';
 import { addHttpError } from '../error/actions';
 import { ErrorAction } from '../error/types';
+import { ResponseObjectCollection } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchAttachmentsByLog = (logId: number): ThunkResult<Promise<void>> =>
@@ -29,7 +30,7 @@ export const fetchAttachmentsByLog = (logId: number): ThunkResult<Promise<void>>
         return request({
             method: 'GET',
             url: getAttachmentsByLog(logId)
-        }).then((result: Attachment[]) => {
+        }).then((result: ResponseObjectCollection<Attachment>) => {
             dispatch(fetchAttachmentsByLogSuccess(result));
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));

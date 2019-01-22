@@ -12,6 +12,7 @@ import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
 import { SubsystemOverview } from '../../../interfaces/SubsystemOverview';
 import { SubsystemPermission } from '../../../interfaces/SubsystemPermission';
+import { ResponseObjectCollection, ResponseObject } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface SubsystemState {
@@ -47,7 +48,7 @@ export interface FetchSubsystemsRequestAction extends Action {
 
 export interface FetchSubsystemsSuccessAction extends Action {
     type: ActionTypes.FETCH_SUBSYSTEMS_SUCCESS;
-    payload: Subsystem[];
+    payload: ResponseObjectCollection<Subsystem>;
 }
 
 export interface FetchSubsystemRequestAction extends Action {
@@ -56,7 +57,7 @@ export interface FetchSubsystemRequestAction extends Action {
 
 export interface FetchSubsystemSuccessAction extends Action {
     type: ActionTypes.FETCH_SUBSYSTEM_SUCCESS;
-    payload: Subsystem;
+    payload: ResponseObject<Subsystem>;
 }
 
 export interface FetchSubsystemOverviewsRequestAction extends Action {
@@ -65,7 +66,7 @@ export interface FetchSubsystemOverviewsRequestAction extends Action {
 
 export interface FetchSubsystemOverviewsSuccessAction extends Action {
     type: ActionTypes.FETCH_SUBSYSTEM_OVERVIEWS_SUCCESS;
-    payload: SubsystemOverview[];
+    payload: ResponseObjectCollection<SubsystemOverview>;
 }
 
 export interface FetchSubsystemPermissionsRequestAction extends Action {
@@ -74,7 +75,7 @@ export interface FetchSubsystemPermissionsRequestAction extends Action {
 
 export interface FetchSubsystemPermissionsSuccessAction extends Action {
     type: ActionTypes.FETCH_SUBSYSTEM_PERMISSIONS_SUCCESS;
-    payload: SubsystemPermission[];
+    payload: ResponseObjectCollection<SubsystemPermission>;
 }
 
 export interface CreateTokenRequestAction extends Action {

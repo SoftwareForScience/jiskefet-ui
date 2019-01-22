@@ -18,7 +18,7 @@ export const getSubsystems = (): string => `${baseUrl}subsystems`;
 export const getSubsystem = (id: string | number): string => `${baseUrl}subsystems/${id}`;
 export const getSubsystemOverviews = (query?: string): string => `${baseUrl}overview${query ? `?${query}` : ''}`;
 export const getSubsystemPermissions = (userId: number): string => `${baseUrl}users/${userId}/tokens`;
-export const postToken = (userId: number): string => (`${baseUrl}users/${userId}/tokens/new`);
+export const postToken = (userId: number): string => (`${baseUrl}users/${userId}/tokens`);
 
 // Attachment
 export const getAttachmentsByLog = (logId: number): string => `${baseUrl}attachments/${logId}/logs`;
@@ -38,7 +38,7 @@ export const getRuns = (query?: string): string => `${baseUrl}runs${query ? `?${
 export const getRun = (id: string | number): string => `${baseUrl}runs/${id}`;
 export const linkLogToRunUrl = (runNumber: number): string => `${baseUrl}runs/${runNumber}/logs`;
 
-// Run
+// Log
 export const getLogs = (query?: string): string => `${baseUrl}logs${query ? `?${query}` : ''}`;
 export const getLog = (id: string | number): string => `${baseUrl}logs/${id}`;
 export const linkRunToLogUrl = (runNumber: number): string => `${baseUrl}logs/${runNumber}/runs`;

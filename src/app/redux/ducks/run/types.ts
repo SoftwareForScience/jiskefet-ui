@@ -10,6 +10,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
 import { Run } from '../../../interfaces/Run';
+import { ResponseObjectCollection, ResponseObject } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface RunState {
@@ -38,7 +39,7 @@ export interface FetchRunsByLogRequestAction extends Action {
 
 export interface FetchRunsByLogSuccessAction extends Action {
     type: ActionTypes.FETCH_RUNS_SUCCESS;
-    payload: { runs: Run[], count: number };
+    payload: ResponseObjectCollection<Run>;
 }
 
 export interface FetchRunRequestAction extends Action {
@@ -47,7 +48,7 @@ export interface FetchRunRequestAction extends Action {
 
 export interface FetchRunSuccessAction extends Action {
     type: ActionTypes.FETCH_RUN_SUCCESS;
-    payload: Run;
+    payload: ResponseObject<Run>;
 }
 
 export interface LinkLogToRunRequestAction extends Action {

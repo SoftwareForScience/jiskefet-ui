@@ -10,6 +10,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
 import { Log, LogCreate } from '../../../interfaces/Log';
+import { ResponseObject, ResponseObjectCollection } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface LogState {
@@ -44,7 +45,7 @@ export interface FetchLogsByLogRequestAction extends Action {
 
 export interface FetchLogsByLogSuccessAction extends Action {
     type: ActionTypes.FETCH_LOGS_SUCCESS;
-    payload: { logs: Log[], count: number };
+    payload: ResponseObjectCollection<Log>;
 }
 
 export interface FetchLogRequestAction extends Action {
@@ -53,7 +54,7 @@ export interface FetchLogRequestAction extends Action {
 
 export interface FetchLogSuccessAction extends Action {
     type: ActionTypes.FETCH_LOG_SUCCESS;
-    payload: Log;
+    payload: ResponseObject<Log>;
 }
 
 export interface LinkLogToLogRequestAction extends Action {
