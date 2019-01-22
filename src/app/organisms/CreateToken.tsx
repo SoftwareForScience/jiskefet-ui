@@ -32,6 +32,7 @@ import { fetchProfile } from '../redux/ducks/auth/operations';
 import { selectProfile } from '../redux/ducks/auth/selectors';
 import { fetchUser } from '../redux/ducks/user/operations';
 import { UserProfile } from '../interfaces/UserProfile';
+import Input from '../atoms/Input';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
 
@@ -93,12 +94,12 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                         <label autofocus="autofocus">Token description</label>
                                     </dt>
                                     <dd>
-                                        <input
+                                        <Input
                                             id="description"
-                                            type="text"
+                                            inputType="text"
                                             autofocus="autofocus"
-                                            class="form-control"
-                                            required
+                                            className="form-control"
+                                            required={true}
                                         />
                                         <p class="note">What's the token for?</p>
                                     </dd>

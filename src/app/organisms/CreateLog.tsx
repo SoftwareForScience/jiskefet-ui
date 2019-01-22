@@ -20,12 +20,14 @@ import { createLog } from '../redux/ducks/log/operations';
 import { selectLogToBeCreated } from '../redux/ducks/log/selectors';
 import { clearLogToBeCreated, setLogToBeCreated } from '../redux/ducks/log/actions';
 import MarkdownEditor from '../atoms/MarkdownEditor';
-import TabContainer from '../atoms/TabContainer';
+import TabContainer from '../molecules/TabContainer';
 import Input, { InputSize } from '../atoms/Input';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
 import { selectCurrentRun } from '../redux/ducks/run/selectors';
 import { fetchRun } from '../redux/ducks/run/operations';
+import FormGroup from '../atoms/FormGroup';
+import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 
 interface Attrs {
     runNumber?: number | undefined;
@@ -97,9 +99,11 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                         ''}`}
                                 </h3>
                             </div>
-                            <div class="form-group">
-                                <Label id="title" text="Add a title:" />
-                                <div class="field">
+                            <FormGroup
+                                label={(
+                                    <Label id="title" text="Add a title:" />
+                                )}
+                                field={(
                                     <Input
                                         id="title"
                                         inputType="text"
@@ -109,68 +113,76 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                         required={true}
                                         oninput={this.addToCreateLog}
                                     />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <Label id="subtype" text="Select a subtype:" />
-                                <div class="field">
+                                )}
+                            />
+                            <FormGroup
+                                label={(
+                                    <Label id="subtype" text="Select a subtype:" />
+                                )}
+                                field={(
                                     <Select
                                         id="subtype"
                                         className="form-control"
-                                        inputSize={InputSize.SMALL}
+                                        inputSize={InputSize.MEDIUM}
                                         name="subtype"
                                         required={true}
                                         oninput={this.addToCreateLog}
                                         options={['run']}
                                     />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <Label id="subtype" text="Run number:" />
-                                <div class="field">
+                                )}
+                            />
+                            <FormGroup
+                                label={(
+                                    <Label id="runs" text="Run number:" />
+                                )}
+                                field={(
                                     <Input
                                         id="runs"
                                         inputType="number"
                                         className="form-control"
-                                        inputSize={InputSize.SMALL}
+                                        inputSize={InputSize.MEDIUM}
                                         placeholder="Run number"
                                         required={true}
                                         oninput={this.addToCreateLog}
                                         value={vnode.attrs.runNumber && vnode.attrs.runNumber}
                                     />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="card shadow-sm bg-light">
-                                    <TabContainer titles={['Editor', 'Preview']} >
-                                        <MarkdownEditor
-                                            postContent={(content: string) => this.addDescription(content)}
-                                        />
-                                        <MarkdownViewer
-                                            id={'MarkdownPreview'}
-                                            content={logToBeCreated && logToBeCreated.text || ''}
-                                        />
-                                    </TabContainer>
-                                </div>
-                            </div>
+                                )}
+                            />
+                            <FormGroup
+                                field={(
+                                    <div class="card shadow-sm bg-light">
+                                        <TabContainer titles={['Editor', 'Preview']} >
+                                            <MarkdownEditor
+                                                postContent={(content: string) => this.addDescription(content)}
+                                            />
+                                            <MarkdownViewer
+                                                id={'MarkdownPreview'}
+                                                content={logToBeCreated && logToBeCreated.text || ''}
+                                            />
+                                        </TabContainer>
+                                    </div>
+                                )}
+                            />
                             <AttachmentComponent
                                 attachTo="Log"
                                 hideImagePreview={true}
                                 isExistingItem={false}
                             />
                             <br />
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <button
-                                type="button"
-                                class="btn btn-info float-right"
-                                data-toggle="modal"
-                                data-target="#MarkdownHelpText"
-                            >
-                                Formatting help
-                            </button>
-                            <Modal id="MarkdownHelpText" title="Markdown help">
-                                <MarkdownViewer id={'MarkdownHelpTextViewer'} content={MarkdownHelpText} />
-                            </Modal>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <Button
+                                        buttonType={ButtonType.SUBMIT}
+                                        buttonClass={ButtonClass.DEFAULT}
+                                        text="Submit"
+                                    />
+                                </div>
+                                <div class="col-md-6">
+                                    <Modal id="MarkdownHelpText" title="Markdown help" buttonClass="btn btn-info mb-">
+                                        <MarkdownViewer id={'MarkdownHelpTextViewer'} content={MarkdownHelpText} />
+                                    </Modal>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

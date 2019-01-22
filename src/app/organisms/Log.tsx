@@ -20,8 +20,7 @@ import { selectCurrentLog, selectIsFetchingLog, selectIsPatchingLinkRunToLog } f
 import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import LogDescription from '../constants/LogDescription';
-import Button, { ButtonType, ButtonClass, ButtonSize } from '../atoms/Button';
-import TabContainer from '../atoms/TabContainer';
+import TabContainer from '../molecules/TabContainer';
 import MarkdownViewer from '../atoms/MarkdownViewer';
 import Table from '../molecules/Table';
 import RunColumns from '../constants/RunColumns';
@@ -42,22 +41,6 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         super();
         store.dispatch(fetchLog(vnode.attrs.logId));
         store.dispatch(fetchAttachmentsByLog(vnode.attrs.logId));
-    }
-
-    linkingButton(addExistingRunId: string) {
-        return (
-            <div class="row justify-content-end">
-                <Button
-                    buttonType={ButtonType.BUTTON}
-                    text="Link existing run"
-                    buttonClass={ButtonClass.DEFAULT}
-                    buttonSize={ButtonSize.SMALL}
-                    margin={'mr-1'}
-                    dataToggle="modal"
-                    dataTarget={`#${addExistingRunId}`}
-                />
-            </div>
-        );
     }
 
     view(vnode: Vnode) {
@@ -81,8 +64,13 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                     className={'shadow-sm bg-light'}
                                     headerTitle={'Log'}
                                     headerContent={
-                                        this.linkingButton(addExistingRunId)
-                                    }
+                                        <Modal
+                                            id={addExistingRunId}
+                                            title="Link to run"
+                                            buttonClass="btn btn-primary"
+                                        >
+                                            <LinkRunToLog logId={vnode.attrs.logId} />
+                                        </Modal>}
                                     footerContent={(
                                         <TabContainer titles={['Content', 'Runs', 'Files', 'Others...']} >
                                             {
@@ -106,39 +94,35 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                             }
                                             {
                                                 <div>
-                                                <ul>
-                                                    {attachments && attachments.map((attachment: Attachment) =>
-                                                        <li key={attachment.fileId}>
-                                                            <a
-                                                                id={attachment.fileId}
-                                                                download={attachment.title}
-                                                                href={download(attachment)}
-                                                            >
-                                                                {attachment.title}
-                                                            </a>
-                                                        </li>
-                                                    )}
-                                                </ul>
-                                                <hr />
-                                                <button
-                                                    type="button"
-                                                    class="btn btn-primary btn-lg"
-                                                    style="margin-bottom:1rem;"
-                                                    data-toggle="modal"
-                                                    data-target={`#${ATTACHMENT_MODAL_ID}`}
-                                                >Add new file
-                                                </button>
-                                                <Modal id={ATTACHMENT_MODAL_ID} title="Add attachment">
-                                                    <div>
-                                                        <form id="addAttachment">
-                                                            <AttachmentComponent
-                                                                attachTo="Log"
-                                                                isExistingItem={true}
-                                                            />
-                                                        </form>
-                                                    </div>
-                                                </Modal>
-                                            </div>
+                                                    <ul>
+                                                        {attachments && attachments.map((attachment: Attachment) =>
+                                                            <li key={attachment.fileId}>
+                                                                <a
+                                                                    id={attachment.fileId}
+                                                                    download={attachment.title}
+                                                                    href={download(attachment)}
+                                                                >
+                                                                    {attachment.title}
+                                                                </a>
+                                                            </li>
+                                                        )}
+                                                    </ul>
+                                                    <hr />
+                                                    <Modal
+                                                        id={ATTACHMENT_MODAL_ID}
+                                                        title="Add attachment"
+                                                        buttonClass="btn btn-primary btn-lg"
+                                                    >
+                                                        <div>
+                                                            <form id="addAttachment">
+                                                                <AttachmentComponent
+                                                                    attachTo="Log"
+                                                                    isExistingItem={true}
+                                                                />
+                                                            </form>
+                                                        </div>
+                                                    </Modal>
+                                                </div>
                                             }
                                             {
                                                 'Not yet implemented'
@@ -156,9 +140,6 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                         </div>
                     </HttpErrorAlert>
                 </Spinner>
-                <Modal id={addExistingRunId} title="Link existing log">
-                    <LinkRunToLog logId={vnode.attrs.logId} />
-                </Modal>
             </div >
         );
     }

@@ -25,10 +25,9 @@ export enum ButtonSize {
 export enum ButtonClass {
     DEFAULT = 'btn btn-primary',
     SUCCESS = 'btn btn-success',
-    LIGHT = 'btn btn-light',
-    DARK = 'btn btn-dark',
     NAV = 'dropdown-item jf-dropdown-item',
-    CLOSE = 'close'
+    CLOSE = 'close',
+    INFO = 'btn btn-info'
 }
 
 /**
@@ -48,7 +47,7 @@ interface Attrs {
     id?: string | number;
     margin?: string;
     href?: string;
-    onClick?: (event: Event) => void;
+    onClick?: (event?: Event) => void;
     name?: string;
     value?: string | number;
     dataToggle?: string;
@@ -63,7 +62,7 @@ type Vnode = m.Vnode<Attrs, Button>;
 export default class Button extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
         const {
-            buttonType: type,
+            buttonType,
             text,
             name,
             value,
@@ -79,9 +78,10 @@ export default class Button extends MithrilTsxComponent<Attrs> {
             ariaLabel,
             disabled
         } = vnode.attrs;
+        console.log(onClick);
         return (
             <button
-                type={type}
+                type={buttonType}
                 class={`${buttonClass} ${buttonSize} ${margin}`}
                 id={id}
                 name={name}
@@ -91,7 +91,7 @@ export default class Button extends MithrilTsxComponent<Attrs> {
                 data-target={dataTarget}
                 data-dismiss={dataDismiss}
                 aria-label={ariaLabel}
-                onClick={onClick}
+                onclick={onClick}
                 disabled={disabled}
             >
                 {text}

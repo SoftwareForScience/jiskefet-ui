@@ -23,6 +23,7 @@ interface Attrs {
     className: string;
     inputSize?: InputSize;
     placeholder?: string;
+    autofocus?: string;
     required?: boolean;
     dataShowCaption?: string;
     value?: string | number;
@@ -40,6 +41,7 @@ export default class Input extends MithrilTsxComponent<Attrs> {
             className,
             inputSize,
             placeholder,
+            autofocus,
             required,
             dataShowCaption,
             value,
@@ -53,6 +55,7 @@ export default class Input extends MithrilTsxComponent<Attrs> {
                 class={`${className} ${inputSize}`}
                 placeholder={placeholder}
                 required={required}
+                autofocus={autofocus}
                 value={value}
                 data-show-caption={dataShowCaption}
                 oninput={oninput}

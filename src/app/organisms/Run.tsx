@@ -19,8 +19,8 @@ import { selectIsFetchingRun, selectIsPatchingLinkLogToRun, selectCurrentRun } f
 import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import RunDescription from '../constants/RunDescription';
-import Button, { ButtonType, ButtonClass, ButtonSize } from '../atoms/Button';
-import TabContainer from '../atoms/TabContainer';
+import Button, { ButtonClass, ButtonSize } from '../atoms/Button';
+import TabContainer from '../molecules/TabContainer';
 import Table from '../molecules/Table';
 import LogColumns from '../constants/LogColumns';
 
@@ -40,7 +40,6 @@ export default class Run extends MithrilTsxComponent<Attrs> {
         return (
             <div class="row justify-content-end">
                 <Button
-                    buttonType={ButtonType.BUTTON}
                     buttonClass={ButtonClass.SUCCESS}
                     buttonSize={ButtonSize.SMALL}
                     margin="mr-1"
@@ -49,15 +48,9 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                     )}
                     text={'Add new log to run'}
                 />
-                <Button
-                    buttonType={ButtonType.BUTTON}
-                    buttonClass={ButtonClass.DEFAULT}
-                    buttonSize={ButtonSize.SMALL}
-                    margin="mr-1"
-                    data-toggle="modal"
-                    data-target={`#${addExistingRunId}`}
-                    text={'Link existing log'}
-                />
+                <Modal id={addExistingRunId} title="Link existing log" buttonClass="btn btn-primary">
+                    <LinkLogToRun runNumber={runNumber} />
+                </Modal>
             </div>
         );
     }
@@ -109,9 +102,6 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                         </div>
                     </HttpErrorAlert >
                 </Spinner >
-                <Modal id={addExistingRunId} title="Link existing log">
-                    <LinkLogToRun runNumber={vnode.attrs.runNumber} />
-                </Modal>
             </div >
         );
     }

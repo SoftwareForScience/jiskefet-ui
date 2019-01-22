@@ -9,7 +9,7 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
-import Collapse from './Collapse';
+import Collapse from '../atoms/Collapse';
 import { FilterState } from '../interfaces/Filter';
 
 interface InputField {

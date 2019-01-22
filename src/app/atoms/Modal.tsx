@@ -19,6 +19,8 @@ interface Attrs {
      * Title of the modal self
      */
     title: string;
+
+    buttonClass: string;
 }
 
 type Vnode = m.Vnode<Attrs, Modal>;
@@ -28,9 +30,17 @@ type Vnode = m.Vnode<Attrs, Modal>;
  */
 export default class Modal extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { id, title } = vnode.attrs;
+        const { id, title, buttonClass } = vnode.attrs;
         return (
             <div>
+                <button
+                    type="button"
+                    class={`${buttonClass} float-right`}
+                    data-toggle="modal"
+                    data-target={`#${id}`}
+                >
+                    {title}
+                </button>
                 <div class="modal mt-5" tabindex="-1" role="dialog" id={id}>
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
