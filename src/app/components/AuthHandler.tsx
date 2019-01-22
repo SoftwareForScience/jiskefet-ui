@@ -12,33 +12,33 @@ import { initialize } from '../app';
 import * as Cookie from 'js-cookie';
 import { store } from '../redux/configureStore';
 import { authorize } from '../redux/ducks/auth/operations';
-import { selectToken, selectIsAuthorizing } from '../redux/ducks/auth/selectors';
-import Spinner from './Spinner';
+import { selectToken } from '../redux/ducks/auth/selectors';
 
 /**
  * Handles the redirected OAuth callback by extracting the code query parameter and using it to request a token.
  */
 export default class AuthHandler extends MithrilTsxComponent<{}> {
-
-    oninit() {
+    async oninit() {
         // Retrieve Authorization Grant code from route's query parameters (?code=abcdefg).
         const { code } = m.route.param();
         if (code) {
-            store.dispatch(authorize(code)).then(() => {
-                const token = selectToken(store.getState());
-                if (token) {
-                    Cookie.set('token', token);
-                }
-                initialize();
-            });
+            await store.dispatch(authorize(code));
+            const token = selectToken(store.getState());
+            if (token) {
+                Cookie.set('token', token);
+            }
+            initialize();
         }
     }
 
     view() {
         return (
-            <div>
-                <Spinner isLoading={selectIsAuthorizing(store.getState())} />
-                Authorizing..
+            <div class="row">
+                <div class="col-md-6 mt-3 offset-md-3">
+                    <div class="alert alert-light text-center" role="alert">
+                        <h3>Authenticating...</h3>
+                    </div>
+                </div>
             </div>
         );
     }

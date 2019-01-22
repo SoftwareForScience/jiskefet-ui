@@ -115,7 +115,9 @@ const lockedOutRoutes = {
     },
     '/callback': {
         view: () => (
-            <AuthHandler />
+            <UnauthorizedLayout >
+                <AuthHandler />
+            </UnauthorizedLayout >
         ),
     }
 };
