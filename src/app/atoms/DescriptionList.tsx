@@ -25,9 +25,9 @@ interface Attrs {
     descriptions: Description[];
 
     /**
-     * Optional array of 2 positive numbers that determine the length of each list.
+     * Optional number that determine the length of the first list.
      */
-    listLength?: number[];
+    listLength?: number;
 
     /**
      * The entity to display the details of.
@@ -66,7 +66,7 @@ export default class DescriptionList extends MithrilTsxComponent<Attrs> {
                             <div class="col-md-6">
                                 {
                                     listLength &&
-                                    descriptions.slice(0, listLength[0]).map((description: Description) => (
+                                    descriptions.slice(0, listLength).map((description: Description) => (
                                         <dl class="row" style="margin-block-end: 0;">
                                             <dt class="col-sm-6">{description.label}</dt>
                                             <dd class="col-sm-6">{description.value(entity)}</dd>
@@ -77,7 +77,7 @@ export default class DescriptionList extends MithrilTsxComponent<Attrs> {
                             <div class="col-md-6">
                                 {
                                     listLength &&
-                                    descriptions.slice(listLength[1]).map((description: Description) => (
+                                    descriptions.slice(listLength).map((description: Description) => (
                                         <dl class="row" style="margin-block-end: 0;">
                                             <dt class="col-sm-6">{description.label}</dt>
                                             <dd class="col-sm-6">{description.value(entity)}</dd>

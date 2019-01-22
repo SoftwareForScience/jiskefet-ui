@@ -15,12 +15,12 @@ import Tabs from '../atoms/TabContainer';
 import Modal from '../atoms/Modal';
 import LinkLogToRun from '../atoms/LinkLogToRun';
 import SuccessMessage from '../atoms/SuccessMessage';
-import { formatDateField } from '../utility/DateUtil';
 import { store } from '../redux/configureStore';
 import { fetchRun } from '../redux/ducks/run/operations';
 import { selectIsFetchingRun, selectIsPatchingLinkLogToRun, selectCurrentRun } from '../redux/ducks/run/selectors';
-
 import Card from '../atoms/Card';
+import DescriptionList from '../atoms/DescriptionList';
+import RunDescription from '../constants/RunDescription';
 
 interface Attrs {
     runNumber: number;
@@ -86,74 +86,11 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                         />
                                     )}
                                 >
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <dl class="row">
-                                                <dt class="col-sm-6">Run id</dt>
-                                                <dd class="col-sm-6">
-                                                    {currentRun ? currentRun.runNumber : ''}
-                                                </dd>
-                                                <dt class="col-sm-6">Time O&sup2; start</dt>
-                                                <dd class="col-sm-6">
-                                                    {formatDateField(currentRun ? currentRun.timeO2Start : '')}
-                                                </dd>
-                                                <dt class="col-sm-6">Time O&sup2; end</dt>
-                                                <dd class="col-sm-6">
-                                                    {formatDateField(currentRun ? currentRun.timeO2End : '')}
-                                                </dd>
-                                                <dt class="col-sm-6">Time TRG start</dt>
-                                                <dd class="col-sm-6">
-                                                    {formatDateField(currentRun ? currentRun.timeTrgStart : '')}
-                                                </dd>
-                                                <dt class="col-sm-6">Time TRG end</dt>
-                                                <dd class="col-sm-6">
-                                                    {formatDateField(currentRun ? currentRun.timeTrgEnd : '')}
-                                                </dd>
-                                                <dt class="col-sm-6">Run type</dt>
-                                                <dd class="col-sm-6">
-                                                    {currentRun ? currentRun.runType : ''}
-                                                </dd>
-                                                <dt class="col-sm-6">Run quality</dt>
-                                                <dd class="col-sm-6">
-                                                    <span class="badge badge-warning">
-                                                        {currentRun ? currentRun.runQuality : ''}
-                                                    </span>
-                                                </dd>
-                                            </dl>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <dl class="row">
-                                                <dt class="col-sm-6">Number of detectors</dt>
-                                                <dd class="col-sm-6">
-                                                    {currentRun ? currentRun.nDetectors : ''}
-                                                </dd>
-                                                <dt class="col-sm-6">Number of FLP's</dt>
-                                                <dd class="col-sm-6">
-                                                    {currentRun ? currentRun.nFlps : ''}
-                                                </dd>
-                                                <dt class="col-sm-6">Number of EPN's</dt>
-                                                <dd class="col-sm-6">
-                                                    {currentRun ? currentRun.nEpns : ''}
-                                                </dd>
-                                                <dt class="col-sm-6">Number of timeframes</dt>
-                                                <dd class="col-sm-6">
-                                                    {currentRun ? currentRun.nTimeframes : ''}
-                                                </dd>
-                                                <dt class="col-sm-6">Number of sub-timeframes</dt>
-                                                <dd class="col-sm-6">
-                                                    {currentRun ? currentRun.nSubtimeframes : ''}
-                                                </dd>
-                                                <dt class="col-sm-6">Bytes read out</dt>
-                                                <dd class="col-sm-6">
-                                                    {currentRun ? currentRun.bytesReadOut : ''}
-                                                </dd>
-                                                <dt class="col-sm-6">Bytes timeframe builder</dt>
-                                                <dd class="col-sm-6">
-                                                    {currentRun ? currentRun.bytesTimeframeBuilder : ''}
-                                                </dd>
-                                            </dl>
-                                        </div>
-                                    </div>
+                                    <DescriptionList
+                                        descriptions={RunDescription}
+                                        entity={currentRun}
+                                        listLength={7}
+                                    />
                                 </Card>
                             </div>
                         </div>
