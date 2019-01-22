@@ -16,7 +16,6 @@ import ContentBlock from '../components/ContentBlock';
 import PageCounter from '../components/PageCounter';
 import Pagination from '../components/Pagination';
 import { Event } from '../interfaces/Event';
-import { createDummyTable } from '../utility/DummyService';
 import HttpErrorAlert from '../components/HttpErrorAlert';
 import { CernProfileDto } from '../interfaces/CernProfile';
 import { fetchProfile } from '../redux/ducks/auth/operations';
@@ -103,7 +102,6 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                     <div class="mt-2"><h2>My logs</h2></div>
                     <Spinner
                         isLoading={selectIsFetchingUserLogs(store.getState())}
-                        component={createDummyTable(userLogFilters.pageSize, LogColumns)}
                     >
                         <div class="collapse-transition">
                             <Table
