@@ -135,7 +135,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                         </div>
                     </HttpErrorAlert>
                 </Spinner>
-                <Modal id={addExistingRunId} title="Link existing log">
+                <Modal id={addExistingRunId} title="Link an existing Run to this Log">
                     <LinkRunToLog logId={vnode.attrs.logId} />
                 </Modal>
             </div >

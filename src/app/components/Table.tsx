@@ -75,9 +75,9 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                                     <td>
                                         {
                                             (column.cell ?
-                                            column.cell(row)
-                                            : row[column.accessor] as string | number | boolean
-                                        )}
+                                                column.cell(row)
+                                                : row[column.accessor] as string | number | boolean
+                                            )}
                                     </td>
                                 ))}
                             </tr>
@@ -87,7 +87,7 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                 {data.length === 0 && <div class="row">
                     <div class="col-md-12">
                         <div class="alert alert-light text-center" role="alert">
-                            No results found
+                            No results found.
                         </div>
                     </div>
                 </div>}
