@@ -20,7 +20,7 @@ import { createLog } from '../redux/ducks/log/operations';
 import { selectLogToBeCreated } from '../redux/ducks/log/selectors';
 import { clearLogToBeCreated, setLogToBeCreated } from '../redux/ducks/log/actions';
 import MarkdownEditor from '../atoms/MarkdownEditor';
-import NewTabContainer from '../atoms/NewTabContainer';
+import TabContainer from '../atoms/TabContainer';
 import Input, { InputSize } from '../atoms/Input';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
@@ -142,7 +142,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                             </div>
                             <div class="form-group">
                                 <div class="card shadow-sm bg-light">
-                                    <NewTabContainer titles={['Editor', 'Preview']} >
+                                    <TabContainer titles={['Editor', 'Preview']} >
                                         <MarkdownEditor
                                             postContent={(content: string) => this.addDescription(content)}
                                         />
@@ -150,7 +150,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                             id={'MarkdownPreview'}
                                             content={logToBeCreated && logToBeCreated.text || ''}
                                         />
-                                    </NewTabContainer>
+                                    </TabContainer>
                                 </div>
                             </div>
                             <AttachmentComponent

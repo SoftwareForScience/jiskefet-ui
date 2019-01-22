@@ -21,7 +21,7 @@ import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import LogDescription from '../constants/LogDescription';
 import Button, { ButtonType, ButtonClass, ButtonSize } from '../atoms/Button';
-import NewTabContainer from '../atoms/NewTabContainer';
+import TabContainer from '../atoms/TabContainer';
 import MarkdownViewer from '../atoms/MarkdownViewer';
 import Table from '../molecules/Table';
 import RunColumns from '../constants/RunColumns';
@@ -84,7 +84,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                         this.linkingButton(addExistingRunId)
                                     }
                                     footerContent={(
-                                        <NewTabContainer titles={['Content', 'Runs', 'Files', 'Others...']} >
+                                        <TabContainer titles={['Content', 'Runs', 'Files', 'Others...']} >
                                             {
                                                 currentLog && currentLog.text
                                                     ? <MarkdownViewer
@@ -143,7 +143,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                             {
                                                 'Not yet implemented'
                                             }
-                                        </NewTabContainer>
+                                        </TabContainer>
                                     )}
                                 >
                                     <DescriptionList

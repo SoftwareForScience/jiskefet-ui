@@ -8,70 +8,51 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Tabs } from '../interfaces/Tabs';
-import TabHeader from './TabHeader';
 
 interface Attrs {
-    /**
-     * The information of a tab. Each object in the array
-     * represents a tab. It is used to set the id and content
-     * of the tabs.
-     */
-    tabs: Tabs[];
-
-    /**
-     * The object that is shown in the details page. It is used
-     * to fill the content for example a table.
-     */
-    entity?: object;
-
-    /**
-     * This string is an indicator for which tab needs to use the given
-     * function from it's parent.
-     */
-    caller?: string;
-
-    /**
-     * Function that can be given on to the content of the tab.
-     * It can be used to pass through values to the parent.
-     */
-    func?: (param: string | number) => void;
+    titles: string[];
 }
 
 type Vnode = m.Vnode<Attrs, TabContainer>;
 
-/**
- * This component creates the tabs and adds content to its body.
- */
 export default class TabContainer extends MithrilTsxComponent<Attrs> {
+    activeTab: string;
+
+    oninit(vnode: Vnode) {
+        this.activeTab = vnode.attrs.titles[0];
+    }
+
+    handleOnTabClick = (event: any) => {
+        const tabTitle = event.target.text;
+        this.activeTab = tabTitle;
+    }
 
     view(vnode: Vnode) {
-        const { tabs, entity, caller } = vnode.attrs;
+        const { titles } = vnode.attrs;
+        const children = vnode.children as any[];
         return (
-            <div>
+            <div class="card">
                 <div class="card-header">
-                    <TabHeader
-                        tabs={tabs}
-                    />
+                    <ul class="nav nav-tabs card-header-tabs">
+                        {titles.length > 0 && titles.map((title: string) => (
+                            <li class="nav-item">
+                                <a
+                                    class={`nav-link ${this.activeTab === title && 'active'}`}
+                                    onclick={(e: any) => this.handleOnTabClick(e)}
+                                    href="javascript:void(0);"
+                                >
+                                    {title}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
                 <div class="card-body">
-                    <div class="tab-content">
-                        {tabs && tabs.map((tab: Tabs) =>
-                            // tslint:disable-next-line:jsx-key
-                            <div
-                                role="tabpanel"
-                                class={`tab-pane ${tab.active && 'active'}`}
-                                id={tab.id}
-                                aria-labelledby={`${tab.id}-tab`}
-                            >
-                                {
-                                    tab.id === caller ?
-                                        tab.content(vnode.attrs.func) :
-                                        tab.content(entity)
-                                }
-                            </div>
-                        )}
-                    </div>
+                    {children.map((child: any, index: number) => (
+                        <div class={`tab-content ${titles[index] !== this.activeTab && 'd-none' }`}>
+                            {child}
+                        </div>
+                    ))}
                 </div>
             </div>
         );

@@ -20,7 +20,7 @@ import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import RunDescription from '../constants/RunDescription';
 import Button, { ButtonType, ButtonClass, ButtonSize } from '../atoms/Button';
-import NewTabContainer from '../atoms/NewTabContainer';
+import TabContainer from '../atoms/TabContainer';
 import Table from '../molecules/Table';
 import LogColumns from '../constants/LogColumns';
 
@@ -84,7 +84,7 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                         this.linkingButton(addExistingRunId, vnode.attrs.runNumber)
                                     }
                                     footerContent={(
-                                        <NewTabContainer titles={['Logs', 'Detectors', 'Others...']} >
+                                        <TabContainer titles={['Logs', 'Detectors', 'Others...']} >
                                             {
                                                 currentRun && currentRun.logs.length > 0
                                                 ? <Table data={currentRun.logs} columns={LogColumns} />
@@ -96,7 +96,7 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                             {
                                                 'Not yet implemented'
                                             }
-                                        </NewTabContainer>
+                                        </TabContainer>
                                     )}
                                 >
                                     <DescriptionList
