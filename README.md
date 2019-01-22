@@ -1,72 +1,81 @@
-# Jiskefet UI
+# Jiskefet UI <!-- omit in toc -->
+
 [![Build Status](https://travis-ci.com/SoftwareForScience/jiskefet-ui.svg?branch=develop)](https://travis-ci.com/SoftwareForScience/jiskefet-ui)
 
-## Description
+## Description <!-- omit in toc -->
+
 This bookkeeping system is a system for A Large Ion Collider Experiment
 (ALICE) to keep track of what is happening to the data produced by the detectors. The electric signals produced by the various detectors which
 together are the ALICE detector are being reconstructed, calibrated, compressed and used in numerous but specific ways. It is important to register  
 how this is done to make a reproduction of data possible and thereby a validation of the information produced. The project is also known as the
 Jiskefet project.  
 
-This is the **front-end UI** for the Jiskefet project.   
+This is the **front-end UI** for the Jiskefet project.  
 The **back-end API** can be found here: https://github.com/SoftwareForScience/jiskefet-api  
 And the **Ansible playbook** to deploy the application can be found here: https://github.com/SoftwareForScience/sfs-ansible
 
-## Installation
+## Table of Contents <!-- omit in toc -->
+
+- [Running the app for **dev**](#running-the-app-for-dev)
+- [Running the app for **prod**](#running-the-app-for-prod)
+- [Documentation](#documentation)
+  - [Mithril (SPA Framework)](#mithril-spa-framework)
+  - [Sass/SCSS (Styling)](#sassscss-styling)
+  - [Bootstrap](#bootstrap)
+  - [Redux (State management)](#redux-state-management)
+
+## Running the app for **dev**
 
 ```bash
 $ npm install
-```
 
-Copy .env.dist as .env and set your own values.
+# Copy .env.dist as .env and set your own values.
+$ cp .env .env.dist
 
-## Running the app
-
-```bash
-# watch mode
+# Running in watch mode (webpack-dev-server)
 $ npm run dev
-
-# build minified
-$ npm run build
 ```
 
 Then go to http://localhost:8080/ in your browser.
 
-## Dependencies
+## Running the app for **prod**
 
-The project depends on the following packages in order to run properly.
+```bash
+$ npm install
 
-Mithril is a modern client-side Javascript framework for building Single Page Applications.
-It's small (< 8kb gzip), fast and provides routing and XHR utilities out of the box.
-For the mitrhil docs click [here](https://mithril.js.org/api.html)
-```
-"mithril": "^1.1.6"
-```
+# Copy .env.dist as .env and set your own values.
+$ cp .env .env.dist
 
-Bootstrap is a sleek, intuitive, and powerful front-end framework for faster and easier web development. 
-For the bootstrap docs click [here](https://getbootstrap.com/)
-```
-"bootstrap": "^4.1.3"
+# The bundle is located at `dist/app.bundle.js`
+$ npm run build
 ```
 
-Date-fns is a zero-dependency module that is able to manipulate JavaScript dates.
-```
-"date-fns": "^1.29.0"
-```
+The bundle can then be served via a webserver, e.g. nginx.
 
-JavaScript library for DOM operations.
-```
-"jquery": "^3.3.1"
-```
+## Documentation
 
-A popper is an element on the screen which "pops out" from the natural flow of your application.
-Common examples of poppers are tooltips, popovers and drop-downs.
-```
-"popper.js": "^1.14.4"
-```
+The following section explains the stack of the project and links to docs.
 
-MarkedJs is a low-level markdown compiler for parsing markdown without caching or blocking
-for long periods of time.
-```
-"marked": "^0.5.1"
-```
+### Mithril (SPA Framework)
+
+We use Mithril as a SPA framework.  
+
+- [Mithril official docs](https://mithril.js.org/)
+
+### Sass/SCSS (Styling)
+
+We use SCSS as an extension to vanilla css.
+
+- [Sass readme in project](src/scss/README.md)
+- [Sass official docs](https://sass-lang.com/documentation/file.SASS_REFERENCE.html)
+
+### Bootstrap
+
+Bootstrap is used as a style/component library.
+
+- [Bootstrap 4.2 official docs](https://getbootstrap.com/docs/4.2/getting-started/introduction/)
+
+### Redux (State management)
+
+- [Redux readme in project](src/app/redux/README.md)
+- [Redux official docs](https://redux.js.org/introduction/getting-started)
