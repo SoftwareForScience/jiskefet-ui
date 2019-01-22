@@ -9,21 +9,18 @@
 import * as m from 'mithril';
 import '../scss/main.scss';
 import 'bootstrap';
-import Layout from './organisms/Layout';
-import UnauthorizedLayout from './organisms/UnauthorizedLayout';
-import Runs from './pages/Runs';
-import Logs from './pages/Logs';
-import Run from './pages/Run';
-import CreateLog from './pages/CreateLog';
-import CreateToken from './pages/CreateToken';
 import * as Cookie from 'js-cookie';
-import Login from './pages/Login';
-import Profile from './pages/Profile';
-import SubsystemsOverview from './pages/SubsystemsOverview';
-import Loader from './atoms/Loader';
 import { Setting } from './interfaces/Setting';
 import { CronJob } from 'cron';
 import LogPage from './pages/LogPage';
+import LogsPage from './pages/LogsPage';
+import RunsPage from './pages/RunsPage';
+import RunPage from './pages/RunPage';
+import CreateLogPage from './pages/CreateLogPage';
+import CreateTokenPage from './pages/CreateTokenPage';
+import SubsystemsOverviewPage from './pages/SubsystemsOverviewPage';
+import ProfilePage from './pages/ProfilePage';
+import LoginPage from './pages/LoginPage';
 
 m.route.prefix('');
 /**
@@ -32,37 +29,22 @@ m.route.prefix('');
 const authenticatedRoutes = {
     '/': {
         view: () => (
-            <Layout>
-                <Logs />
-            </Layout>
-        ),
-    },
-    '/callback': {
-        view: () => (
-            <Layout>
-                <Loader />
-            </Layout>
+            <LogsPage />
         ),
     },
     '/logs': {
         view: () => (
-            <Layout>
-                <Logs />
-            </Layout>
+            <LogsPage />
         ),
     },
     '/logs/create': {
         view: () => (
-            <Layout>
-                <CreateLog />
-            </Layout>
+            <CreateLogPage />
         ),
     },
     '/logs/create/runs/:id': {
         view: (vnode: m.Vnode<{ id: number }>) => (
-            <Layout>
-                <CreateLog runNumber={vnode.attrs.id} />
-            </Layout>
+            <CreateLogPage runNumber={vnode.attrs.id} />
         ),
     },
     '/logs/:id': {
@@ -72,37 +54,27 @@ const authenticatedRoutes = {
     },
     '/runs': {
         view: () => (
-            <Layout>
-                <Runs />
-            </Layout>
+            <RunsPage />
         ),
     },
     '/runs/:id': {
         view: (vnode: m.Vnode<{ id: number }>) => (
-            <Layout>
-                <Run runNumber={vnode.attrs.id} />
-            </Layout>
+            <RunPage runNumber={vnode.attrs.id} />
         ),
     },
     '/subsystems': {
         view: () => (
-            <Layout>
-                <SubsystemsOverview />
-            </Layout>
+            <SubsystemsOverviewPage />
         ),
     },
     '/tokens': {
         view: () => (
-            <Layout>
-                <CreateToken />
-            </Layout>
+            <CreateTokenPage />
         ),
     },
     '/user/:userId': {
         view: (vnode: m.Vnode<{ userId: number }>) => (
-            <Layout>
-                <Profile userId={vnode.attrs.userId} />
-            </Layout>
+            <ProfilePage userId={vnode.attrs.userId} />
         ),
     }
 };
@@ -113,16 +85,12 @@ const authenticatedRoutes = {
 const lockedOutRoutes = {
     '/': {
         view: () => (
-            <UnauthorizedLayout>
-                <Login />
-            </UnauthorizedLayout>
+            <LoginPage />
         ),
     },
     '/callback': {
         view: () => (
-            <UnauthorizedLayout>
-                <Login />
-            </UnauthorizedLayout>
+            <LoginPage />
         ),
     }
 };
