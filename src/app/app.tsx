@@ -21,6 +21,7 @@ import CreateTokenPage from './pages/CreateTokenPage';
 import SubsystemsOverviewPage from './pages/SubsystemsOverviewPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
+import AuthorizingPage from './pages/AuthorizingPage';
 
 m.route.prefix('');
 /**
@@ -90,10 +91,11 @@ const lockedOutRoutes = {
     },
     '/callback': {
         view: () => (
-            <LoginPage />
+            <AuthorizingPage />
         ),
     }
 };
+
 /**
  * Determine the routing table for the app, based on if the user is logged in or not.
  * (logged in is in essence: does the user have a cookie with a JWT)

@@ -28,7 +28,7 @@ export default class Spinner extends MithrilTsxComponent<Attrs> {
                         className={
                             `jf-loader
                             text-center
-                            ${vnode.attrs.small ? 'jf-loader-sm' : ''}
+                            ${vnode.attrs.small ? 'jf-loader-sm' : 'mt-3'}
                             ${vnode.attrs.class}`}
                     />
                 </div>

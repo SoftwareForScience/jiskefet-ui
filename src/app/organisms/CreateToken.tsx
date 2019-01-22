@@ -118,7 +118,15 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                                 class="form-control"
                                                 name="subsystem"
                                                 required
+                                                hidden={subsystems.length === 0}
                                             >
+                                                <option
+                                                    value=""
+                                                    selected
+                                                    disabled
+                                                    hidden
+                                                >Please select a subsystem.
+                                                </option>
                                                 {
                                                     subsystems && subsystems.map((subsystem: Subsystem) => (
                                                         <option
@@ -129,11 +137,23 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                                     ))
                                                 }
                                             </select>
+                                            <div
+                                                class="alert alert-warning"
+                                                role="alert"
+                                                hidden={subsystems.length > 0}
+                                            >No subsystems found,
+                                                    please add subsystems directly via SQL queries in the database.
+                                            </div>
                                         </Spinner>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-primary">Generate Token</button>
+                                    <button
+                                        type="submit"
+                                        class="btn btn-primary"
+                                        disabled={subsystems.length === 0}
+                                    >Generate Token
+                                    </button>
                                 </div>
                             </form>
                             <hr />

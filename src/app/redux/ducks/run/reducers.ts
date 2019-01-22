@@ -54,7 +54,7 @@ const runReducer: Reducer<RunState>
             case ActionTypes.LINK_LOG_TO_RUN_SUCCESS:
                 return {
                     ...state,
-                    isPatchingLinkLogToRun: true
+                    isPatchingLinkLogToRun: false
                 };
             default:
                 return state;
