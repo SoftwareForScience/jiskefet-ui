@@ -9,17 +9,20 @@
 import * as m from 'mithril';
 import Spinner from '../atoms/Spinner';
 import HttpErrorAlert from '../atoms/HttpErrorAlert';
-import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import LogTabs from '../constants/LogTabs';
-import Tab from '../molecules/Tab';
 import Modal from '../atoms/Modal';
 import LinkRunToLog from '../atoms/LinkRunToLog';
 import SuccessMessage from '../atoms/SuccessMessage';
+import { store } from '../redux/configureStore';
+import { fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
+import { fetchLog } from '../redux/ducks/log/operations';
+import { selectCurrentLog, selectIsFetchingLog, selectIsPatchingLinkRunToLog } from '../redux/ducks/log/selectors';
 import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import LogDescription from '../constants/LogDescription';
 import Button, { ButtonType, ButtonClass, ButtonSize } from '../atoms/Button';
+import Tab from '../molecules/Tab';
 
 interface Attrs {
     logId: number;
@@ -31,8 +34,8 @@ export default class Log extends MithrilTsxComponent<Attrs> {
 
     constructor(vnode: Vnode) {
         super();
-        State.LogModel.fetchOne(vnode.attrs.logId);
-        State.AttachmentModel.fetchForLog(vnode.attrs.logId);
+        store.dispatch(fetchLog(vnode.attrs.logId));
+        store.dispatch(fetchAttachmentsByLog(vnode.attrs.logId));
     }
 
     linkingButton(addExistingRunId: string) {
@@ -53,9 +56,13 @@ export default class Log extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         const addExistingRunId = 'add-existing-run';
+        const state = store.getState();
+        const currentLog = selectCurrentLog(state);
+        const isFetchingLog = selectIsFetchingLog(state);
+        const isPatchingLinkRunToLog = selectIsPatchingLinkRunToLog(state);
         return (
             <div class="container-fluid">
-                <Spinner isLoading={State.LogModel.isFetchingLog || State.LogModel.isPatchingLinkRunToLog}>
+                <Spinner isLoading={isFetchingLog || isPatchingLinkRunToLog}>
                     <SuccessMessage />
                     <HttpErrorAlert>
                         <SuccessMessage />
@@ -64,20 +71,20 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                 <Card
                                     className={'shadow-sm bg-light'}
                                     headerTitle={'Log'}
-                                    headerContent={(
+                                    headerContent={
                                         this.linkingButton(addExistingRunId)
-                                    )}
+                                    }
                                     footerContent={(
                                         <Tab
                                             tabs={LogTabs}
-                                            entity={State.LogModel.current}
+                                            entity={currentLog || undefined}
                                         />
                                     )}
                                 >
                                     <DescriptionList
-                                        title={State.LogModel.current.title}
+                                        title={currentLog && currentLog.title}
                                         descriptions={LogDescription}
-                                        entity={State.LogModel.current}
+                                        entity={currentLog}
                                     />
                                 </Card>
                             </div>

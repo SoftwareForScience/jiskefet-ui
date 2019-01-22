@@ -1,6 +1,8 @@
 language: node_js
 node_js:
- - 'stable'
+  - 'stable'
 install:
- - npm install
+  - npm install
 script: tslint -p tsconfig.json -c tslint.json
+notifications:   
+  slack: jiskefet:cGYsslE19X0IqoUwQXwAR9tT

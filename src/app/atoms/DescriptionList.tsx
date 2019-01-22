@@ -17,7 +17,7 @@ interface Attrs {
      * Optional string with title. This determens if the list is devided in 2 lists or 1 because
      * the title will take up the left list
      */
-    title?: string;
+    title?: string | null;
 
     /**
      * List of descriptions (label, value)
@@ -32,7 +32,7 @@ interface Attrs {
     /**
      * The entity to display the details of.
      */
-    entity: Log | Run;
+    entity: Log | Run | null;
 }
 
 type Vnode = m.Vnode<Attrs, DescriptionList>;

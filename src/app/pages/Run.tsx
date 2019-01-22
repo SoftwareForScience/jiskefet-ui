@@ -9,14 +9,17 @@
 import * as m from 'mithril';
 import Spinner from '../atoms/Spinner';
 import HttpErrorAlert from '../atoms/HttpErrorAlert';
-import State from '../models/State';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import RunTabs from '../constants/RunTabs';
-import Tabs from '../molecules/Tab';
+import Tabs from '../atoms/TabContainer';
 import Modal from '../atoms/Modal';
 import LinkLogToRun from '../atoms/LinkLogToRun';
 import SuccessMessage from '../atoms/SuccessMessage';
 import { formatDateField } from '../utility/DateUtil';
+import { store } from '../redux/configureStore';
+import { fetchRun } from '../redux/ducks/run/operations';
+import { selectIsFetchingRun, selectIsPatchingLinkLogToRun, selectCurrentRun } from '../redux/ducks/run/selectors';
+
 import Card from '../atoms/Card';
 
 interface Attrs {
@@ -28,14 +31,44 @@ type VnodeDOM = m.VnodeDOM<Attrs, Run>;
 
 export default class Run extends MithrilTsxComponent<Attrs> {
     oninit(vnode: VnodeDOM) {
-        State.RunModel.fetchById(vnode.attrs.runNumber);
+        store.dispatch(fetchRun(vnode.attrs.runNumber));
+    }
+
+    linkingButton(addExistingRunId: string, runNumber: number) {
+        return (
+            <div class="row justify-content-end">
+                <button
+                    type="button"
+                    class="btn btn-success btn-sm mr-1"
+                    onclick={() => m.route.set(
+                        `/logs/create/runs/${runNumber}`
+                    )}
+                >
+                    Add new log to run
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary btn-sm mr-1"
+                    data-toggle="modal"
+                    data-target={`#${addExistingRunId}`}
+                >
+                    Link existing log
+                </button>
+            </div>
+        );
     }
 
     view(vnode: Vnode) {
         const addExistingRunId = 'add-existing-run';
+        const state = store.getState();
+        const currentRun = selectCurrentRun(state);
+        const isFetchingRun = selectIsFetchingRun(state);
+        const isPatchingLinkLogToRun = selectIsPatchingLinkLogToRun(state);
         return (
             <div class="container-fluid">
-                <Spinner isLoading={State.RunModel.isFetchingRun || State.RunModel.isPatchingLinkLogToRun}>
+                <Spinner
+                    isLoading={isFetchingRun || isPatchingLinkLogToRun}
+                >
                     <SuccessMessage />
                     <HttpErrorAlert>
                         <div class="row">
@@ -43,31 +76,13 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                 <Card
                                     className={'shadow-sm bg-light'}
                                     headerTitle={'Run'}
-                                    headerContent={(
-                                        <div class="row justify-content-end">
-                                            <button
-                                                type="button"
-                                                class="btn btn-success btn-sm mr-1"
-                                                onclick={() => m.route.set(
-                                                    `/logs/create/runs/${vnode.attrs.runNumber}`
-                                                )}
-                                            >
-                                                Add new log to run
-                                            </button>
-                                            <button
-                                                type="button"
-                                                class="btn btn-primary btn-sm mr-1"
-                                                data-toggle="modal"
-                                                data-target={`#${addExistingRunId}`}
-                                            >
-                                                Link existing log
-                                            </button>
-                                        </div>
-                                    )}
+                                    headerContent={
+                                        this.linkingButton(addExistingRunId, vnode.attrs.runNumber)
+                                    }
                                     footerContent={(
                                         <Tabs
                                             tabs={RunTabs}
-                                            entity={State.RunModel.current}
+                                            entity={currentRun || undefined}
                                         />
                                     )}
                                 >
@@ -76,32 +91,32 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                             <dl class="row">
                                                 <dt class="col-sm-6">Run id</dt>
                                                 <dd class="col-sm-6">
-                                                    {State.RunModel.current.runNumber}
+                                                    {currentRun ? currentRun.runNumber : ''}
                                                 </dd>
                                                 <dt class="col-sm-6">Time O&sup2; start</dt>
                                                 <dd class="col-sm-6">
-                                                    {formatDateField(State.RunModel.current.timeO2Start)}
+                                                    {formatDateField(currentRun ? currentRun.timeO2Start : '')}
                                                 </dd>
                                                 <dt class="col-sm-6">Time O&sup2; end</dt>
                                                 <dd class="col-sm-6">
-                                                    {formatDateField(State.RunModel.current.timeO2End)}
+                                                    {formatDateField(currentRun ? currentRun.timeO2End : '')}
                                                 </dd>
                                                 <dt class="col-sm-6">Time TRG start</dt>
                                                 <dd class="col-sm-6">
-                                                    {formatDateField(State.RunModel.current.timeTrgStart)}
+                                                    {formatDateField(currentRun ? currentRun.timeTrgStart : '')}
                                                 </dd>
                                                 <dt class="col-sm-6">Time TRG end</dt>
                                                 <dd class="col-sm-6">
-                                                    {formatDateField(State.RunModel.current.timeTrgEnd)}
+                                                    {formatDateField(currentRun ? currentRun.timeTrgEnd : '')}
                                                 </dd>
                                                 <dt class="col-sm-6">Run type</dt>
                                                 <dd class="col-sm-6">
-                                                    {State.RunModel.current.runType}
+                                                    {currentRun ? currentRun.runType : ''}
                                                 </dd>
                                                 <dt class="col-sm-6">Run quality</dt>
                                                 <dd class="col-sm-6">
                                                     <span class="badge badge-warning">
-                                                        {State.RunModel.current.runQuality}
+                                                        {currentRun ? currentRun.runQuality : ''}
                                                     </span>
                                                 </dd>
                                             </dl>
@@ -110,31 +125,31 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                             <dl class="row">
                                                 <dt class="col-sm-6">Number of detectors</dt>
                                                 <dd class="col-sm-6">
-                                                    {State.RunModel.current.nDetectors}
+                                                    {currentRun ? currentRun.nDetectors : ''}
                                                 </dd>
                                                 <dt class="col-sm-6">Number of FLP's</dt>
                                                 <dd class="col-sm-6">
-                                                    {State.RunModel.current.nFlps}
+                                                    {currentRun ? currentRun.nFlps : ''}
                                                 </dd>
                                                 <dt class="col-sm-6">Number of EPN's</dt>
                                                 <dd class="col-sm-6">
-                                                    {State.RunModel.current.nEpns}
+                                                    {currentRun ? currentRun.nEpns : ''}
                                                 </dd>
                                                 <dt class="col-sm-6">Number of timeframes</dt>
                                                 <dd class="col-sm-6">
-                                                    {State.RunModel.current.nTimeframes}
+                                                    {currentRun ? currentRun.nTimeframes : ''}
                                                 </dd>
                                                 <dt class="col-sm-6">Number of sub-timeframes</dt>
                                                 <dd class="col-sm-6">
-                                                    {State.RunModel.current.nSubtimeframes}
+                                                    {currentRun ? currentRun.nSubtimeframes : ''}
                                                 </dd>
                                                 <dt class="col-sm-6">Bytes read out</dt>
                                                 <dd class="col-sm-6">
-                                                    {State.RunModel.current.bytesReadOut}
+                                                    {currentRun ? currentRun.bytesReadOut : ''}
                                                 </dd>
                                                 <dt class="col-sm-6">Bytes timeframe builder</dt>
                                                 <dd class="col-sm-6">
-                                                    {State.RunModel.current.bytesTimeframeBuilder}
+                                                    {currentRun ? currentRun.bytesTimeframeBuilder : ''}
                                                 </dd>
                                             </dl>
                                         </div>

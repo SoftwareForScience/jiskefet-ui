@@ -13,6 +13,7 @@ interface Attrs {
     isLoading: boolean;
     class?: string;
     component?: JSX.Element;
+    small?: boolean;
 }
 
 type Vnode = m.Vnode<Attrs, Spinner>;
@@ -23,7 +24,13 @@ export default class Spinner extends MithrilTsxComponent<Attrs> {
         return (
             <div className="row">
                 <div className="col-md-12">
-                    <div cclassName={`jf-loader text-center ${vnode.attrs.class}`} />
+                    <div
+                        className={
+                            `jf-loader
+                            text-center
+                            ${vnode.attrs.small ? 'jf-loader-sm' : ''}
+                            ${vnode.attrs.class}`}
+                    />
                 </div>
             </div>
         );

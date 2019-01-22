@@ -8,10 +8,13 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import Table from '../molecules/Table';
-import State from '../models/State';
 import * as _ from 'lodash';
 import LinkRunToLogColumns from '../constants/LinkRunToLogColumns';
+import { fetchRuns } from '../redux/ducks/run/operations';
+import { linkRunToLog, fetchLog } from '../redux/ducks/log/operations';
+import { store } from '../redux/configureStore';
+import { selectRuns } from '../redux/ducks/run/selectors';
+import Table from '../molecules/Table';
 
 interface Attrs {
     /**
@@ -27,16 +30,16 @@ type Vnode = m.Vnode<Attrs, LinkRunToLog>;
  */
 export default class LinkRunToLog extends MithrilTsxComponent<Attrs> {
     oninit() {
-        State.RunModel.fetch();
+        store.dispatch(fetchRuns());
     }
 
-     /*
-     * Link a run to a log by calling a PATCH api call.
-     * Fetch the updated log afterwards.
-     */
+    /*
+    * Link a run to a log by calling a PATCH api call.
+    * Fetch the updated log afterwards.
+    */
     linkRunToLog = (runNumber: number, logId: number) => {
-        State.LogModel.linkRunToLog(runNumber, logId).then(() =>
-            State.LogModel.fetchOne(logId).then(() =>
+        store.dispatch(linkRunToLog(logId, runNumber)).then(() =>
+            store.dispatch(fetchLog(logId)).then(() =>
                 m.redraw()
             )
         );
@@ -46,7 +49,7 @@ export default class LinkRunToLog extends MithrilTsxComponent<Attrs> {
         return (
             <div>
                 <Table
-                    data={State.RunModel.list}
+                    data={selectRuns(store.getState())}
                     columns={LinkRunToLogColumns(vnode.attrs.logId, this.linkRunToLog)}
                     className="font-sm"
                 />

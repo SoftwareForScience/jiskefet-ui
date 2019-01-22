@@ -8,10 +8,13 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import Table from '../molecules/Table';
-import State from '../models/State';
 import * as _ from 'lodash';
 import LinkLogToRunColumns from '../constants/LinkLogToRunColumns';
+import { store } from '../redux/configureStore';
+import { fetchLogs } from '../redux/ducks/log/operations';
+import { linkLogToRun, fetchRun } from '../redux/ducks/run/operations';
+import { selectUserLogs } from '../redux/ducks/user/selectors';
+import Table from '../molecules/Table';
 
 interface Attrs {
     /**
@@ -27,7 +30,7 @@ type Vnode = m.Vnode<Attrs, LinkLogToRun>;
  */
 export default class LinkLogToRun extends MithrilTsxComponent<Attrs> {
     oninit() {
-        State.LogModel.fetch();
+        store.dispatch(fetchLogs());
     }
 
     /**
@@ -35,8 +38,8 @@ export default class LinkLogToRun extends MithrilTsxComponent<Attrs> {
      * Fetch the updated run afterwards.
      */
     linkLogToRun = (logId: number, runNumber: number) => {
-        State.RunModel.linkLogToRun(logId, runNumber).then(() =>
-            State.RunModel.fetchById(runNumber).then(() =>
+        store.dispatch(linkLogToRun(logId, runNumber)).then(() =>
+            store.dispatch(fetchRun(runNumber)).then(() =>
                 m.redraw()
             )
         );
@@ -46,7 +49,7 @@ export default class LinkLogToRun extends MithrilTsxComponent<Attrs> {
         return (
             <div>
                 <Table
-                    data={State.LogModel.list}
+                    data={selectUserLogs(store.getState())}
                     columns={LinkLogToRunColumns(vnode.attrs.runNumber, this.linkLogToRun)}
                 />
             </div>
