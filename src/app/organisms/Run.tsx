@@ -39,7 +39,7 @@ export default class Run extends MithrilTsxComponent<Attrs> {
         return (
             <div class="row justify-content-end">
                 <Button
-                    type={ButtonType.BUTTON}
+                    buttonType={ButtonType.BUTTON}
                     buttonClass={ButtonClass.SUCCESS}
                     buttonSize={ButtonSize.SMALL}
                     margin="mr-1"
@@ -49,7 +49,7 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                     text={'Add new log to run'}
                 />
                 <Button
-                    type={ButtonType.BUTTON}
+                    buttonType={ButtonType.BUTTON}
                     buttonClass={ButtonClass.DEFAULT}
                     buttonSize={ButtonSize.SMALL}
                     margin="mr-1"

@@ -11,6 +11,7 @@ import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { store } from '../redux/configureStore';
 import { getSuccessMessages } from '../redux/ducks/success/operations';
 import { selectSuccesMessages } from '../redux/ducks/success/selectors';
+import Button, { ButtonType, ButtonClass, ButtonSize } from './Button';
 
 export default class SuccessMessage extends MithrilTsxComponent<{}> {
     successMessages: string[];
@@ -42,9 +43,13 @@ export default class SuccessMessage extends MithrilTsxComponent<{}> {
                                         role="alert"
                                     >
                                         <strong>{message}</strong>
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                        <Button
+                                            buttonType={ButtonType.BUTTON}
+                                            buttonClass={ButtonClass.CLOSE}
+                                            dataDismiss="alert"
+                                            ariaLabel="Close"
+                                            text={(<span aria-hidden="true">&times;</span>)}
+                                        />
                                     </div>
                                 )}
                             </div>

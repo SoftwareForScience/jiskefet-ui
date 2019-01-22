@@ -42,7 +42,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         return (
             <div class="row justify-content-end">
                 <Button
-                    type={ButtonType.BUTTON}
+                    buttonType={ButtonType.BUTTON}
                     text="Link existing run"
                     buttonClass={ButtonClass.DEFAULT}
                     buttonSize={ButtonSize.SMALL}
