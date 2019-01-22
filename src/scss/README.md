@@ -1,10 +1,10 @@
 # Sass Architecture
+
 The project aims to follow the [7-1 pattern](https://sass-guidelin.es/#architecture). When certain directories are missing (i.e. the directory is in the 7-1 pattern, but not in our architecture), there has not yet been a need for the directory and its accompanying .scss files.
 
-(Vendor modules can be found in the node_modules directory and can be referenced directly in main.scss)
-
 Example architecture:
-```
+
+```bash
 sass/
 |
 |– abstracts/
@@ -49,5 +49,5 @@ sass/
 |   |– _jquery-ui.scss    # jQuery UI
 |   …                     # Etc.
 |
-`– main.scss              # Main Sass file
+|– main.scss              # Main Sass file
 ```

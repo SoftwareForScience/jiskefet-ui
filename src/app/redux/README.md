@@ -1,4 +1,4 @@
-# Redux
+# Redux <!-- omit in toc -->
 
 Jiskefet uses [Redux](https://redux.js.org/introduction/getting-started) for state management.
 
@@ -8,14 +8,12 @@ It helps you write applications that behave consistently, run in different envir
 
 You can use Redux together with ~~React~~ Mithril, or with any other view library. It is tiny (2kB, including dependencies), but has a large ecosystem of addons available.
 
-## Table of Contents
+## Table of Contents <!-- omit in toc -->
 
-- [Redux](#redux)
-  - [Table of Contents](#table-of-contents)
-  - [Architecture (re-ducks)](#architecture-re-ducks)
-  - [Redux Devtools](#redux-devtools)
-  - [Reselect](#reselect)
-  - [Redux Thunk](#redux-thunk)
+- [Architecture (re-ducks)](#architecture-re-ducks)
+- [Redux Devtools](#redux-devtools)
+- [Reselect](#reselect)
+- [Redux Thunk](#redux-thunk)
 
 ## Architecture (re-ducks)
 
