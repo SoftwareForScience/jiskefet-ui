@@ -14,10 +14,14 @@ import * as m from 'mithril';
  * Set the query parameters in the URL to be equal to the key value pairs in filters.
  * @param filters
  */
-export const setQueryParams = (filters: FilterState): void => {
+export const setQueryParams = (filters: FilterState, isModal: boolean): void | string => {
     const truthyFilters = _.pickBy(filters);
     if (truthyFilters) {
         const queryString: string = m.buildQueryString(truthyFilters);
-        m.route.set(`${m.route.get().split(/[?#]/)[0]}?${queryString}`);
+        if (isModal) {
+            return queryString;
+        } else {
+            m.route.set(`${m.route.get().split(/[?#]/)[0]}?${queryString}`);
+        }
     }
 };

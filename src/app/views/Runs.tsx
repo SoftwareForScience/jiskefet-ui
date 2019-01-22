@@ -127,7 +127,7 @@ export default class Runs extends MithrilTsxComponent<{}> {
      */
     setQueryAndFetch = (): void => {
         const runFilters = selectFilters(store.getState())[FilterName.Run];
-        setQueryParams(runFilters);
+        setQueryParams(runFilters, false);
         this.fetchWithFilters();
     }
 

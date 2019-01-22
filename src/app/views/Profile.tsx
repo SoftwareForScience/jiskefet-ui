@@ -58,7 +58,7 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
      */
     setQueryAndFetch = (id: number): void => {
         const userLogFilters = selectFilters(store.getState())[FilterName.UserLog];
-        setQueryParams(userLogFilters);
+        setQueryParams(userLogFilters, false);
         this.fetchLogsWithFilters(id);
     }
 

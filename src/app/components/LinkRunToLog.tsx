@@ -15,6 +15,21 @@ import { fetchRuns } from '../redux/ducks/run/operations';
 import { linkRunToLog, fetchLog } from '../redux/ducks/log/operations';
 import { store } from '../redux/configureStore';
 import { selectRuns } from '../redux/ducks/run/selectors';
+import Filter from './Filter';
+import { setFilter } from '../redux/ducks/filter/actions';
+import { FilterName } from '../interfaces/Filter';
+import { selectFilters } from '../redux/ducks/filter/selectors';
+import { setQueryParams } from '../utility/UrlUtil';
+
+const inputFields = [
+    {
+        name: 'runNumber',
+        type: 'number',
+        event: 'onchange',
+        label: 'Run number',
+        placeholder: 'e.g. 12'
+    }
+];
 
 interface Attrs {
     /**
@@ -45,9 +60,27 @@ export default class LinkRunToLog extends MithrilTsxComponent<Attrs> {
         );
     }
 
+    /**
+     * Builds the query and fetch with the filters in the current state.
+     */
+    setQueryAndFetch = (): void => {
+        const runFilters = selectFilters(store.getState())[FilterName.Run];
+        const queryString = setQueryParams(runFilters, true);
+        store.dispatch(fetchRuns(queryString as string));
+    }
+
     view(vnode: Vnode) {
+        const runFilters = selectFilters(store.getState())[FilterName.Run];
         return (
             <div>
+                <Filter
+                    inputFields={inputFields}
+                    onEvent={(key: string, value: string | number | null) => {
+                        store.dispatch(setFilter(FilterName.Run, key, value));
+                        this.setQueryAndFetch();
+                    }}
+                    filters={runFilters}
+                />
                 <Table
                     data={selectRuns(store.getState())}
                     columns={LinkRunToLogColumns(vnode.attrs.logId, this.linkRunToLog)}
