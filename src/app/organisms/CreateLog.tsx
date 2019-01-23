@@ -26,6 +26,7 @@ import Label from '../atoms/Label';
 import Select from '../atoms/Select';
 import FormGroup from '../molecules/FormGroup';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
+import HttpErrorAlert from '../atoms/HttpErrorAlert';
 
 interface Attrs {
     runNumber?: number | undefined;
@@ -78,110 +79,116 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
         const logToBeCreated = selectLogToBeCreated(store.getState());
         return (
-            <form
-                onsubmit={(event: Event) => {
-                    event.preventDefault();
-                    this.saveLog(vnode.attrs.runNumber);
-                }}
-            >
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-12 mx-auto bg-light rounded p-4 shadow-sm">
-                            <div>
-                                <h3>
-                                    {`Create a new log ${vnode.attrs.runNumber ?
-                                        `for run number ${vnode.attrs.runNumber}` :
-                                        ''}`}
-                                </h3>
-                            </div>
-                            <FormGroup
-                                label={(
-                                    <Label id="title" text="Add a title:" />
-                                )}
-                                field={(
-                                    <Input
-                                        id="title"
-                                        inputType="text"
-                                        className="form-control"
-                                        inputSize={InputSize.MEDIUM}
-                                        placeholder="Title"
-                                        required={true}
-                                        oninput={this.addToCreateLog}
-                                    />
-                                )}
-                            />
-                            <FormGroup
-                                label={(
-                                    <Label id="subtype" text="Select a subtype:" />
-                                )}
-                                field={(
-                                    <Select
-                                        id="subtype"
-                                        className="form-control"
-                                        inputSize={InputSize.MEDIUM}
-                                        name="subtype"
-                                        required={true}
-                                        oninput={this.addToCreateLog}
-                                        options={['run']}
-                                    />
-                                )}
-                            />
-                            <FormGroup
-                                label={(
-                                    <Label id="runs" text="Run number:" />
-                                )}
-                                field={(
-                                    <Input
-                                        id="runs"
-                                        inputType="number"
-                                        className="form-control"
-                                        inputSize={InputSize.MEDIUM}
-                                        placeholder="Run number"
-                                        required={false}
-                                        oninput={this.addToCreateLog}
-                                        value={vnode.attrs.runNumber && vnode.attrs.runNumber}
-                                    />
-                                )}
-                            />
-                            <FormGroup
-                                field={(
-                                    <div class="card shadow-sm bg-light">
-                                        <TabContainer titles={['Editor', 'Preview']} >
-                                            <MarkdownEditor
-                                                postContent={(content: string) => this.addDescription(content)}
-                                            />
-                                            <MarkdownViewer
-                                                id={'MarkdownPreview'}
-                                                content={logToBeCreated && logToBeCreated.text || ''}
-                                            />
-                                        </TabContainer>
-                                    </div>
-                                )}
-                            />
-                            <AttachmentComponent
-                                attachTo="Log"
-                                hideImagePreview={true}
-                                isExistingItem={false}
-                            />
-                            <br />
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <Button
-                                        buttonType={ButtonType.SUBMIT}
-                                        buttonClass={ButtonClass.DEFAULT}
-                                        text="Submit"
-                                    />
+            <HttpErrorAlert>
+                <form
+                    onsubmit={(event: Event) => {
+                        event.preventDefault();
+                        this.saveLog(vnode.attrs.runNumber);
+                    }}
+                >
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 mx-auto bg-light rounded p-4 shadow-sm">
+                                <div>
+                                    <h3>
+                                        {`Create a new log ${vnode.attrs.runNumber ?
+                                            `for run number ${vnode.attrs.runNumber}` :
+                                            ''}`}
+                                    </h3>
                                 </div>
-                                <div class="col-md-6">
-                                    <Modal id="MarkdownHelpText" title="Markdown help" buttonClass="btn btn-info mb-">
-                                        <MarkdownViewer id={'MarkdownHelpTextViewer'} content={MarkdownHelpText} />
-                                    </Modal>
+                                <FormGroup
+                                    label={(
+                                        <Label id="title" text="Add a title:" />
+                                    )}
+                                    field={(
+                                        <Input
+                                            id="title"
+                                            inputType="text"
+                                            className="form-control"
+                                            inputSize={InputSize.MEDIUM}
+                                            placeholder="Title"
+                                            required={true}
+                                            oninput={this.addToCreateLog}
+                                        />
+                                    )}
+                                />
+                                <FormGroup
+                                    label={(
+                                        <Label id="subtype" text="Select a subtype:" />
+                                    )}
+                                    field={(
+                                        <Select
+                                            id="subtype"
+                                            className="form-control"
+                                            inputSize={InputSize.MEDIUM}
+                                            name="subtype"
+                                            required={true}
+                                            oninput={this.addToCreateLog}
+                                            options={['run']}
+                                        />
+                                    )}
+                                />
+                                <FormGroup
+                                    label={(
+                                        <Label id="runs" text="Run number:" />
+                                    )}
+                                    field={(
+                                        <Input
+                                            id="runs"
+                                            inputType="number"
+                                            className="form-control"
+                                            inputSize={InputSize.MEDIUM}
+                                            placeholder="Run number"
+                                            required={false}
+                                            oninput={this.addToCreateLog}
+                                            value={vnode.attrs.runNumber && vnode.attrs.runNumber}
+                                        />
+                                    )}
+                                />
+                                <FormGroup
+                                    field={(
+                                        <div class="card shadow-sm bg-light">
+                                            <TabContainer titles={['Editor', 'Preview']} >
+                                                <MarkdownEditor
+                                                    postContent={(content: string) => this.addDescription(content)}
+                                                />
+                                                <MarkdownViewer
+                                                    id={'MarkdownPreview'}
+                                                    content={logToBeCreated && logToBeCreated.text || ''}
+                                                />
+                                            </TabContainer>
+                                        </div>
+                                    )}
+                                />
+                                <AttachmentComponent
+                                    attachTo="Log"
+                                    hideImagePreview={true}
+                                    isExistingItem={false}
+                                />
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <Button
+                                            buttonType={ButtonType.SUBMIT}
+                                            buttonClass={ButtonClass.DEFAULT}
+                                            text="Submit"
+                                        />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <Modal
+                                            id="MarkdownHelpText"
+                                            title="Markdown help"
+                                            buttonClass="btn btn-info mb-"
+                                        >
+                                            <MarkdownViewer id={'MarkdownHelpTextViewer'} content={MarkdownHelpText} />
+                                        </Modal>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </HttpErrorAlert>
         );
     }
 }

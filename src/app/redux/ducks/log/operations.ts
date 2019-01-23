@@ -76,6 +76,9 @@ export const createLog = (logToBeCreated: LogCreate): ThunkResult<Promise<void>>
             url: postLog(),
             data: logToBeCreated
         }).then((result: any) => {
+            if (result.error) {
+                dispatch(addHttpError(result.error));
+            }
             dispatch(createLogSuccess());
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));

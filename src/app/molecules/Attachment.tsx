@@ -53,7 +53,6 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
      * @param event The event of having selected a file.
      */
     getSelectedFiles = (event: Event) => {
-        console.log(event.target.value);
         const files = (event.target as HTMLInputElement).files as FileList;
         const maxSizeLabel = document.getElementById('maximum-size-label') as HTMLElement;
         if (files[0].size > this.maxFileSize) {
