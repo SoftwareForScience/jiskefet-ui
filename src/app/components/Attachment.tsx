@@ -13,6 +13,8 @@ import { setAttachmentToBeCreated, clearAttachmentToBeCreated } from '../redux/d
 import { selectAttachmentToBeCreated } from '../redux/ducks/attachment/selectors';
 import { saveAttachment, fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { selectCurrentLog, selectLogToBeCreated } from '../redux/ducks/log/selectors';
+import { setLogToBeCreated } from '../redux/ducks/log/actions';
+import { LogCreate } from '../interfaces/Log';
 
 interface Attrs {
     /**
@@ -94,26 +96,28 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         );
         const state = store.getState();
         const currentLog = selectCurrentLog(state);
-        const LogToBeCreated = selectLogToBeCreated(state);
+        const logToBeCreated = selectLogToBeCreated(state);
         const fileData = base64String.split(';base64,')[1];
         let log = null;
         if (isExistingItem) {
             log = currentLog;
+            const attachmentToBeCreated = {
+                title: name,
+                fileMime,
+                fileData,
+                ...(log && { log })
+            };
+            store.dispatch(setAttachmentToBeCreated(attachmentToBeCreated));
         } else {
             // Check if attachment was not already added (needs to be adjusted for multiple file upload)
-            if (LogToBeCreated && (LogToBeCreated.attachments === undefined
-                || LogToBeCreated.attachments.length > 0)) {
+            if (logToBeCreated && (logToBeCreated.attachments === undefined
+                || logToBeCreated.attachments.length > 0)) {
 
-                LogToBeCreated.attachments = new Array();
+                logToBeCreated.attachments = new Array();
+                logToBeCreated.attachments.push({ title: name, fileMime, fileData });
+                store.dispatch(setLogToBeCreated(logToBeCreated as LogCreate));
             }
         }
-        const attachmentToBeCreated = {
-            title: name,
-            fileMime,
-            fileData,
-            ...(log && { log })
-        };
-        store.dispatch(setAttachmentToBeCreated(attachmentToBeCreated));
     }
 
     /**
