@@ -10,9 +10,9 @@
 
 import * as m from 'mithril';
 import { Tabs } from '../interfaces/Tabs';
-import MarkdownViewer from '../components/MarkdownViewer';
+import MarkdownViewer from '../atoms/MarkdownViewer';
 import { Log } from '../interfaces/Log';
-import MarkdownEditor from '../components/MarkdownEditor';
+import MarkdownEditor from '../atoms/MarkdownEditor';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
