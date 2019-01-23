@@ -1,7 +1,7 @@
 import * as m from 'mithril';
 import { Column } from '../interfaces/Column';
 import _ = require('lodash');
-import Table from '../components/Table';
+import Table from '../molecules/Table';
 
 /*
  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)

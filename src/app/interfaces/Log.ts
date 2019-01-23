@@ -8,6 +8,7 @@
 
 import { Attachment } from './Attachment';
 import { User } from './User';
+import { Run } from './Run';
 
 /**
  * Interface with the fields for fetching one or more Log entries.
@@ -21,20 +22,19 @@ export interface Log {
     title: string;
     text: string;
     user: User;
-    runs?: any[];
-    attachments?: any[];
+    runs?: Run[];
+    attachments?: Attachment[];
 }
 
 /**
  * Interface with the fields for creating a Log entry.
  */
 export interface LogCreate {
-    logId?: number;
     subtype: string;
     origin: string;
     title: string;
     text: string;
-    user: User;
+    user: number;
     runs: any[];
     attachments?: Attachment[];
 }
