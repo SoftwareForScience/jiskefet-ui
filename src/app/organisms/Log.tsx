@@ -27,7 +27,7 @@ import RunColumns from '../constants/RunColumns';
 import { selectAttachments } from '../redux/ducks/attachment/selectors';
 import { Attachment } from '../interfaces/Attachment';
 import { download } from '../utility/FileUtil';
-import AttachmentComponent from '../atoms/Attachment';
+import AttachmentComponent from '../molecules/Attachment';
 
 interface Attrs {
     logId: number;

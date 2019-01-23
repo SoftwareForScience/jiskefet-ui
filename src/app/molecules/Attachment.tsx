@@ -14,8 +14,8 @@ import { selectAttachmentToBeCreated } from '../redux/ducks/attachment/selectors
 import { saveAttachment, fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { selectCurrentLog, selectLogToBeCreated } from '../redux/ducks/log/selectors';
 import { Event } from '../interfaces/Event';
-import Label from './Label';
-import Input from './Input';
+import Label from '../atoms/Label';
+import Input from '../atoms/Input';
 
 interface Attrs {
     /**

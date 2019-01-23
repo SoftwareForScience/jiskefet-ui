@@ -12,7 +12,7 @@ import { Event } from '../interfaces/Event';
 import Modal from '../atoms/Modal';
 import MarkdownViewer from '../atoms/MarkdownViewer';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
-import AttachmentComponent from '../atoms/Attachment';
+import AttachmentComponent from '../molecules/Attachment';
 import { selectProfile } from '../redux/ducks/auth/selectors';
 import { store } from '../redux/configureStore';
 import { LogCreate } from '../interfaces/Log';
@@ -26,7 +26,7 @@ import Label from '../atoms/Label';
 import Select from '../atoms/Select';
 import { selectCurrentRun } from '../redux/ducks/run/selectors';
 import { fetchRun } from '../redux/ducks/run/operations';
-import FormGroup from '../atoms/FormGroup';
+import FormGroup from '../molecules/FormGroup';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 
 interface Attrs {
@@ -142,7 +142,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                         className="form-control"
                                         inputSize={InputSize.MEDIUM}
                                         placeholder="Run number"
-                                        required={true}
+                                        required={false}
                                         oninput={this.addToCreateLog}
                                         value={vnode.attrs.runNumber && vnode.attrs.runNumber}
                                     />

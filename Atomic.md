@@ -21,7 +21,7 @@ Molecules give us some building blocks to work with, and we can now combine them
 Organisms can consist of similar and/or different molecule types. For example, a masthead organism might consist of diverse components like a logo, primary navigation, search form, and list of social media channels. 
 
 ### Templates
-At the template stage, we break our chemistry analogy to get into language that makes more sense to our clients and our final output. Templates consist mostly of groups of organisms stitched together to form pages. It’s here where we start to see the design coming together and start seeing things like layout in action.
+At the template stage, we break our chemistry analogy to get into language that makes more sense to our clients and our final output. Templates consist mostly of groups of organisms stitched together to form pages. It’s here where we start to see the design coming together and start seeing things like layout in action. Because we are currently using Bootstrap 4.0 we have decided not to use templates in this project.
 
 ### Pages
 Pages are the highest level of fidelity and because they’re the most tangible, it’s typically where most people in the process spend most of their time and what most reviews revolve around.
@@ -41,9 +41,9 @@ The page stage is essential as it’s where we test the effectiveness of the des
 │ │ └─── organisms
 │ │ │ └─── *
 | │ └─── pages
-│ │ │    Login.tsx
-│ │ │    Logs.tsx
-│ │ │    Runs.tsx
+│ │ │    LoginPage.tsx
+│ │ │    LogsPage.tsx
+│ │ │    RunsPage.tsx
 │ │ │    *.tsx
 ```
 
