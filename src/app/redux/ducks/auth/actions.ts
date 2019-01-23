@@ -16,13 +16,14 @@ import {
 } from './types';
 import { UserProfile } from '../../../interfaces/UserProfile';
 import { AuthorizeResponse } from '../../../interfaces/Auth';
+import { ResponseObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchProfileRequest = (): FetchProfileRequestAction => ({
     type: ActionTypes.FETCH_PROFILE_REQUEST
 });
 
-export const fetchProfileSuccess = (payload: UserProfile): FetchProfileSuccessAction => ({
+export const fetchProfileSuccess = (payload: ResponseObject<UserProfile>): FetchProfileSuccessAction => ({
     type: ActionTypes.FETCH_PROFILE_SUCCESS,
     payload
 });

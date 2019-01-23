@@ -22,7 +22,7 @@ const initialState: LogState = {
 };
 
 // Reducer
-const runReducer: Reducer<LogState>
+const logReducer: Reducer<LogState>
     = (state: LogState = initialState, action: LogAction): LogState => {
         switch (action.type) {
             case ActionTypes.FETCH_LOGS_REQUEST:
@@ -34,8 +34,8 @@ const runReducer: Reducer<LogState>
                 return {
                     ...state,
                     isFetchingLogs: false,
-                    logs: [...action.payload.logs],
-                    count: action.payload.count
+                    logs: [...action.payload.data.items],
+                    count: action.payload.data.count
                 };
             case ActionTypes.CREATE_LOG_REQUEST:
                 return {
@@ -66,7 +66,7 @@ const runReducer: Reducer<LogState>
                 return {
                     ...state,
                     isFetchingLog: false,
-                    current: action.payload
+                    current: action.payload.data.item
                 };
             case ActionTypes.LINK_RUN_TO_LOG_REQUEST:
                 return {
@@ -83,4 +83,4 @@ const runReducer: Reducer<LogState>
         }
     };
 
-export default runReducer;
+export default logReducer;

@@ -58,12 +58,10 @@ export default class LinkLogToRun extends MithrilTsxComponent<Attrs> {
      * Link a log to a run by calling a PATCH api call.
      * Fetch the updated run afterwards.
      */
-    linkLogToRun = (logId: number, runNumber: number) => {
-        store.dispatch(linkLogToRun(logId, runNumber)).then(() =>
-            store.dispatch(fetchRun(runNumber)).then(() =>
-                m.redraw()
-            )
-        );
+    linkLogToRun = async (logId: number, runNumber: number) => {
+        await store.dispatch(linkLogToRun(logId, runNumber));
+        await store.dispatch(fetchRun(runNumber));
+        await m.redraw();
     }
 
     /**

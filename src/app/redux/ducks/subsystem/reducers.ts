@@ -35,7 +35,7 @@ const subsystemReducer: Reducer<SubsystemState>
                 return {
                     ...state,
                     isFetchingSubsystems: false,
-                    subsystems: [...action.payload]
+                    subsystems: [...action.payload.data.items]
                 };
             case ActionTypes.FETCH_SUBSYSTEM_REQUEST:
                 return {
@@ -46,7 +46,7 @@ const subsystemReducer: Reducer<SubsystemState>
                 return {
                     ...state,
                     isFetchingSubsystem: false,
-                    current: action.payload
+                    current: action.payload.data.item
                 };
             case ActionTypes.FETCH_SUBSYSTEM_OVERVIEWS_REQUEST:
                 return {
@@ -57,7 +57,7 @@ const subsystemReducer: Reducer<SubsystemState>
                 return {
                     ...state,
                     isFetchingSubsystemOverviews: false,
-                    subsystemOverviews: action.payload
+                    subsystemOverviews: action.payload.data.items
                 };
             case ActionTypes.CREATE_TOKEN_REQUEST:
                 return {
@@ -78,7 +78,7 @@ const subsystemReducer: Reducer<SubsystemState>
                 return {
                     ...state,
                     isFetchingSubsystemPermissions: false,
-                    subsystemPermissions: action.payload
+                    subsystemPermissions: action.payload.data.items
                 };
             default:
                 return state;

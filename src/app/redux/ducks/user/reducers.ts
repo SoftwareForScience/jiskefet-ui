@@ -32,7 +32,7 @@ const userReducer: Reducer<UserState>
                 return {
                     ...state,
                     IsFetchingUser: false,
-                    user: action.payload
+                    user: action.payload.data.item
                 };
             case ActionTypes.FETCH_LOGS_FOR_USER_REQUEST:
                 return {
@@ -43,8 +43,8 @@ const userReducer: Reducer<UserState>
                 return {
                     ...state,
                     IsFetchingLogs: false,
-                    logs: [...action.payload.data],
-                    logCount: action.payload.count
+                    logs: [...action.payload.data.items],
+                    logCount: action.payload.data.count
                 };
             default:
                 return state;

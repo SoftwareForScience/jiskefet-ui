@@ -30,7 +30,7 @@ const authReducer: Reducer<AuthState>
                 return {
                     ...state,
                     isFetchingProfile: false,
-                    profile: action.payload
+                    profile: action.payload.data.item
                 };
             case ActionTypes.AUTHORIZE_REQUEST:
                 return {

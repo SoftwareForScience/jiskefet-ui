@@ -16,16 +16,18 @@ import {
     ClearAttachmentToBeCreatedAction
 } from './types';
 import { Attachment } from '../../../interfaces/Attachment';
+import { CollectionResponseObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchAttachmentsByLogRequest = (): FetchAttachmentsByLogRequestAction => ({
     type: ActionTypes.FETCH_ATTACHMENTS_BY_LOG_REQUEST
 });
 
-export const fetchAttachmentsByLogSuccess = (payload: Attachment[]): FetchAttachmentsByLogSuccessAction => ({
-    type: ActionTypes.FETCH_ATTACHMENTS_BY_LOG_SUCCESS,
-    payload
-});
+export const fetchAttachmentsByLogSuccess = (
+    payload: CollectionResponseObject<Attachment>): FetchAttachmentsByLogSuccessAction => ({
+        type: ActionTypes.FETCH_ATTACHMENTS_BY_LOG_SUCCESS,
+        payload
+    });
 
 export const createAttachmentRequest = (): CreateAttachmentRequestAction => ({
     type: ActionTypes.CREATE_ATTACHMENT_REQUEST

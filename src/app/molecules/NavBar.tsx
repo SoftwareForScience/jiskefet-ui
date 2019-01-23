@@ -27,6 +27,7 @@ export default class NavBar extends MithrilTsxComponent<{}> {
     }
 
     view() {
+        const profile = selectProfile(store.getState());
         return (
             <nav class="navbar navbar-expand-sm navbar-dark jf-navbar" >
                 <div class="navbar-header w-100 d-flex">
@@ -49,7 +50,7 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                     </a>
                     <ul class="jf-align-right mr-2">
                         {Cookie.get('token') ?
-                            <ProfileNavItem profile={selectProfile(store.getState())} />
+                            <ProfileNavItem profile={profile} />
                             :
                             <a
                                 href={

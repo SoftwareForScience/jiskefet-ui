@@ -31,7 +31,7 @@ const attachmentReducer: Reducer<AttachmentState>
                 return {
                     ...state,
                     isFetchingAttachments: false,
-                    attachments: [...action.payload]
+                    attachments: [...action.payload.data.items]
                 };
             case ActionTypes.CREATE_ATTACHMENT_REQUEST:
                 return {

@@ -14,5 +14,5 @@ export interface HttpError {
     error: string;
     statusCode: number;
     message: string;
-    stack: string;
+    stack?: string;
 }

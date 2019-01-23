@@ -12,6 +12,7 @@ import 'bootstrap';
 import * as Cookie from 'js-cookie';
 import { Setting } from './interfaces/Setting';
 import { CronJob } from 'cron';
+import { ResponseObject } from './interfaces/ResponseObject';
 import LogPage from './pages/LogPage';
 import LogsPage from './pages/LogsPage';
 import RunsPage from './pages/RunsPage';
@@ -116,10 +117,10 @@ export const getAuthSettings = () => {
     return m.request({
         method: 'GET',
         url: `${process.env.API_URL}setting`
-    }).then((result: { data: Setting }) => {
+    }).then((result: ResponseObject<Setting>) => {
         // setting['date'] = new Date().valueOf();
-        localStorage.setItem('USE_CERN_SSO', result.data.USE_CERN_SSO);
-        localStorage.setItem('AUTH_URL', result.data.AUTH_URL);
+        localStorage.setItem('USE_CERN_SSO', result.data.item.USE_CERN_SSO);
+        localStorage.setItem('AUTH_URL', result.data.item.AUTH_URL);
     });
 };
 

@@ -25,6 +25,7 @@ import {
 import { getLogs, getLog, linkRunToLogUrl, postLog } from '../../../constants/apiUrls';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
+import { ResponseObject, CollectionResponseObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
@@ -33,7 +34,7 @@ export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getLogs(query)
-        }).then((result: { logs: Log[], count: number }) => {
+        }).then((result: CollectionResponseObject<Log>) => {
             dispatch(fetchLogsSuccess(result));
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));
@@ -46,7 +47,7 @@ export const fetchLog = (id: number): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getLog(id)
-        }).then((result: Log) => {
+        }).then((result: ResponseObject<Log>) => {
             dispatch(fetchLogSuccess(result));
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));
@@ -75,6 +76,9 @@ export const createLog = (logToBeCreated: LogCreate): ThunkResult<Promise<void>>
             url: postLog(),
             data: logToBeCreated
         }).then((result: any) => {
+            if (result.error) {
+                dispatch(addHttpError(result.error));
+            }
             dispatch(createLogSuccess());
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));

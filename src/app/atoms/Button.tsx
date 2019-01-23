@@ -78,7 +78,6 @@ export default class Button extends MithrilTsxComponent<Attrs> {
             ariaLabel,
             disabled
         } = vnode.attrs;
-        console.log(onClick);
         return (
             <button
                 type={buttonType}
