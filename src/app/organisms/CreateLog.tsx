@@ -24,8 +24,6 @@ import TabContainer from '../molecules/TabContainer';
 import Input, { InputSize } from '../atoms/Input';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
-import { selectCurrentRun } from '../redux/ducks/run/selectors';
-import { fetchRun } from '../redux/ducks/run/operations';
 import FormGroup from '../molecules/FormGroup';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 
@@ -62,10 +60,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
 
     async saveLog(runNumber: number | undefined) {
         if (runNumber) {
-            store.dispatch(fetchRun(runNumber));
-            const state = store.getState();
-            const currentRun = selectCurrentRun(state);
-            this.setValueForLogToBeCreated('runs', currentRun);
+            this.setValueForLogToBeCreated('runs', runNumber);
         }
         const profile = selectProfile(store.getState());
         if (profile) {
