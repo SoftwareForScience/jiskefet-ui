@@ -21,3 +21,16 @@ export const setQueryParams = (filters: FilterState): void => {
         m.route.set(`${m.route.get().split(/[?#]/)[0]}?${queryString}`);
     }
 };
+
+/**
+ * Set the query parameters in the URL to be equal to the key value pairs in filters.
+ * @param filters
+ */
+export const returnQueryParams = (filters: FilterState): string => {
+    const truthyFilters = _.pickBy(filters);
+    let queryString: string = '';
+    if (truthyFilters) {
+        queryString = m.buildQueryString(truthyFilters);
+    }
+    return queryString;
+};
