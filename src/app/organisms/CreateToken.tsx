@@ -32,7 +32,9 @@ import { fetchProfile } from '../redux/ducks/auth/operations';
 import { selectProfile } from '../redux/ducks/auth/selectors';
 import { fetchUser } from '../redux/ducks/user/operations';
 import { UserProfile } from '../interfaces/UserProfile';
-import Input from '../atoms/Input';
+import Input, { InputSize } from '../atoms/Input';
+import FormGroup from '../molecules/FormGroup';
+import Label from '../atoms/Label';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
 
@@ -89,11 +91,11 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                     this.handleSubmit(event);
                                 }}
                             >
-                                <dl class="form-group">
-                                    <dt class="input-label">
-                                        <label autofocus="autofocus">Token description</label>
-                                    </dt>
-                                    <dd>
+                                <FormGroup
+                                    label={(
+                                        <Label autofocus="autofocus" id="token-description" text="Token description" />
+                                    )}
+                                    field={(
                                         <Input
                                             id="description"
                                             inputType="text"
@@ -101,9 +103,23 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                             className="form-control"
                                             required={true}
                                         />
-                                        <p class="note">What's the token for?</p>
-                                    </dd>
-                                </dl>
+                                    )}
+                                />
+                                // HIERONDER BEN IK GEBLEVEN!!!!!!!!!!!
+                                <FormGroup
+                                    label={(
+                                        <Label autofocus="autofocus" id="description" text="Token description" />
+                                    )}
+                                    field={(
+                                        <Input
+                                            id="description"
+                                            inputType="text"
+                                            autofocus="autofocus"
+                                            className="form-control"
+                                            required={true}
+                                        />
+                                    )}
+                                />
                                 <div class="form-group">
                                     <dt>
                                         <label for="subsystem">Select subsystem:</label>
@@ -142,7 +158,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                                 role="alert"
                                                 hidden={subsystems.length > 0}
                                             >No subsystems found,
-                                                    please add subsystems directly via SQL queries in the database.
+                                                        please add subsystems directly via SQL queries in the database.
                                             </div>
                                         </Spinner>
                                     </div>

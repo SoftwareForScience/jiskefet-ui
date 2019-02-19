@@ -37,13 +37,13 @@ interface Attrs {
 type Vnode = m.Vnode<Attrs, AttachmentComponent>;
 
 export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
-    private isExistingItem: boolean;
+    private isCreateLog: boolean;
     private hasChosenAttachment: boolean;
     private maxFileSize: number;
 
     constructor(vnode: Vnode) {
         super();
-        this.isExistingItem = vnode.attrs.isExistingItem;
+        this.isCreateLog = vnode.attrs.isExistingItem;
         this.hasChosenAttachment = false;
         this.maxFileSize = 5000000; // Equals to 5MB
     }
@@ -59,7 +59,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
             maxSizeLabel.hidden = false;
         } else {
             maxSizeLabel.hidden = true;
-            this.read(files[0], this.isExistingItem);
+            this.read(files[0], this.isCreateLog);
         }
     }
 
@@ -175,7 +175,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                     style="max-width:40%; padding:10px 10px 10px 0px;"
                     hidden={hideImagePreview}
                 />
-                <div hidden={!this.isExistingItem}>
+                <div hidden={!this.isCreateLog}>
                     <span
                         class="d-inline-block"
                         tabindex="0"
