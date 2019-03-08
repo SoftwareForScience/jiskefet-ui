@@ -23,7 +23,7 @@ import {
 import { getRuns, getRun, linkLogToRunUrl } from '../../../constants/apiUrls';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
-import { CollectionResponseObject, ResponseObject } from '../../../interfaces/ResponseObject';
+import { CollectionSuccessObject, SuccessObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchRuns = (query?: string): ThunkResult<Promise<void>> =>
@@ -32,7 +32,7 @@ export const fetchRuns = (query?: string): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getRuns(query)
-        }).then((result: CollectionResponseObject<Run>) => {
+        }).then((result: CollectionSuccessObject<Run>) => {
             dispatch(fetchRunsSuccess(result));
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));
@@ -45,7 +45,7 @@ export const fetchRun = (id: number | string): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getRun(id)
-        }).then((result: ResponseObject<Run>) => {
+        }).then((result: SuccessObject<Run>) => {
             dispatch(fetchRunSuccess(result));
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));

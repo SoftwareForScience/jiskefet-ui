@@ -16,14 +16,14 @@ import {
     LinkLogToRunSuccesAction,
 } from './types';
 import { Run } from '../../../interfaces/Run';
-import { CollectionResponseObject, ResponseObject } from '../../../interfaces/ResponseObject';
+import { CollectionSuccessObject, SuccessObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchRunsRequest = (): FetchRunsByLogRequestAction => ({
     type: ActionTypes.FETCH_RUNS_REQUEST
 });
 
-export const fetchRunsSuccess = (payload: CollectionResponseObject<Run>): FetchRunsByLogSuccessAction => ({
+export const fetchRunsSuccess = (payload: CollectionSuccessObject<Run>): FetchRunsByLogSuccessAction => ({
     type: ActionTypes.FETCH_RUNS_SUCCESS,
     payload
 });
@@ -32,7 +32,7 @@ export const fetchRunRequest = (): FetchRunRequestAction => ({
     type: ActionTypes.FETCH_RUN_REQUEST
 });
 
-export const fetchRunSuccess = (run: ResponseObject<Run>): FetchRunSuccessAction => ({
+export const fetchRunSuccess = (run: SuccessObject<Run>): FetchRunSuccessAction => ({
     type: ActionTypes.FETCH_RUN_SUCCESS,
     payload: run
 });

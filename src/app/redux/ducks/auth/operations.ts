@@ -19,7 +19,7 @@ import { AuthorizeResponse } from '../../../interfaces/Auth';
 import { initialize } from '../../../app';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
-import { ResponseObject } from '../../../interfaces/ResponseObject';
+import { SuccessObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchProfile = (): ThunkResult<Promise<void>> =>
@@ -28,7 +28,7 @@ export const fetchProfile = (): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getProfile()
-        }).then((result: ResponseObject<UserProfile>) => {
+        }).then((result: SuccessObject<UserProfile>) => {
             dispatch(fetchProfileSuccess(result));
         }).catch((error: HttpError) => {
             dispatch(addHttpError(error));
