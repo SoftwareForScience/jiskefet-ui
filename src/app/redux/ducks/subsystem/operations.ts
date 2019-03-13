@@ -55,7 +55,7 @@ export const fetchSubsystems = (): ThunkResult<void> =>
             url: getSubsystems()
         }).then((result: CollectionSuccessObject<Subsystem>) => {
             dispatch(fetchSubsystemsSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -68,7 +68,7 @@ export const fetchSubsystem = (id: string | number): ThunkResult<Promise<void>> 
             url: getSubsystem(id)
         }).then((result: SuccessObject<Subsystem>) => {
             dispatch(fetchSubsystemSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -81,7 +81,7 @@ export const fetchSubsystemOverviews = (query?: string): ThunkResult<void> =>
             url: getSubsystemOverviews(query)
         }).then((result: CollectionSuccessObject<SubsystemOverview>) => {
             dispatch(fetchSubsystemOverviewsSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -94,7 +94,7 @@ export const fetchSubsystemPermissions = (userId: number): ThunkResult<void> =>
             url: getSubsystemPermissions(userId)
         }).then((result: CollectionSuccessObject<SubsystemPermission>) => {
             dispatch(fetchSubsystemPermissionsSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -111,7 +111,7 @@ export const createToken = (payload: SubsystemPermissionCreate): ThunkResult<Pro
             const tokenString =
                 `Successfully saved the token. Please write it down: \n${result.data}`;
             dispatch(addSuccessMessage(tokenString));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

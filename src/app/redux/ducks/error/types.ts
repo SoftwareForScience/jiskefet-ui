@@ -13,7 +13,7 @@ import { HttpError } from '../../../interfaces/HttpError';
 
 // State interface
 export interface ErrorState {
-    httpErrors: HttpError[];
+    httpErrors: Array<HttpError<any>>;
     errorHistory: object[];
 }
 
@@ -26,7 +26,7 @@ export enum ActionTypes {
 // Action interfaces
 export interface AddHttpErrorAction extends Action {
     type: ActionTypes.ADD_HTTP_ERROR;
-    payload: HttpError;
+    payload: HttpError<any>;
 }
 
 export interface ClearHttpErrorsAction extends Action {

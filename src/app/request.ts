@@ -22,8 +22,8 @@ export const request = (options: m.RequestOptions<{}> & { url: string }): Promis
     return new Promise((resolve: any, reject: any) => {
         m.request(options).then((response: {}) => {
             resolve(response);
-        }).catch((response: HttpError) => {
-            if (response.statusCode === 401) {
+        }).catch((response: HttpError<any>) => {
+            if (response.code === 401) {
                 store.dispatch(logout());
             }
             reject({ ...response, message: response.message, dateTime: new Date() });

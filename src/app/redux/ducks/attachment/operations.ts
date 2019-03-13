@@ -32,7 +32,7 @@ export const fetchAttachmentsByLog = (logId: number): ThunkResult<Promise<void>>
             url: getAttachmentsByLog(logId)
         }).then((result: CollectionSuccessObject<Attachment>) => {
             dispatch(fetchAttachmentsByLogSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -47,7 +47,7 @@ export const saveAttachment = (attachment: Attachment): ThunkResult<Promise<void
         }).then((result: any) => {
             // SuccesModel.add('Successfully saved attachment.');
             dispatch(createAttachmentSuccess());
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

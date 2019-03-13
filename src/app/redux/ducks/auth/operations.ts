@@ -30,7 +30,7 @@ export const fetchProfile = (): ThunkResult<Promise<void>> =>
             url: getProfile()
         }).then((result: SuccessObject<UserProfile>) => {
             dispatch(fetchProfileSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -43,7 +43,7 @@ export const authorize = (authGrant: string): ThunkResult<Promise<void>> =>
             url: getAuthorize(authGrant)
         }).then((result: AuthorizeResponse) => {
             dispatch(authorizeSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

@@ -32,7 +32,7 @@ export const fetchUser = (id: number | string): ThunkResult<Promise<void>> =>
             withCredentials: false
         }).then((result: SuccessObject<User>) => {
             dispatch(fetchUserSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -46,7 +46,7 @@ export const fetchLogsForUser = (id: number | string, query?: string): ThunkResu
             withCredentials: false
         }).then((result: CollectionSuccessObject<Log>) => {
             dispatch(fetchLogsForUserSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

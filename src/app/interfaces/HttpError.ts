@@ -12,11 +12,11 @@ import { ResponseObject } from './ResponseObject';
  * An error received from, for example, a failed API call.
  * Returned in the catch portion of the Promise request().
  */
-export interface HttpError extends ResponseObject {
+export interface HttpError<T> extends ResponseObject<T> {
     error: string;
     code: number;
     message: string;
-    details?: HttpError[];
+    details?: Array<HttpError<T>>;
     innerError?: InnerError;
 }
 

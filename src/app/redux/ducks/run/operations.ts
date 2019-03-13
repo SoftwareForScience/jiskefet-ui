@@ -34,7 +34,7 @@ export const fetchRuns = (query?: string): ThunkResult<Promise<void>> =>
             url: getRuns(query)
         }).then((result: CollectionSuccessObject<Run>) => {
             dispatch(fetchRunsSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -47,7 +47,7 @@ export const fetchRun = (id: number | string): ThunkResult<Promise<void>> =>
             url: getRun(id)
         }).then((result: SuccessObject<Run>) => {
             dispatch(fetchRunSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -61,7 +61,7 @@ export const linkLogToRun = (logId: number, runNumber: number): ThunkResult<Prom
             data: { logId: logId as number }
         }).then(() => {
             dispatch(linkLogToRunSucces());
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
