@@ -30,7 +30,7 @@ const CreateLogTabs: Tabs[] = [
         name: 'Preview',
         id: 'preview',
         content: (log: Log): JSX.Element => (
-            <MarkdownViewer id={'MarkdownPreview'} content={log.text} />
+            <MarkdownViewer id={'MarkdownPreview'} content={log.body} />
         )
     }
 ];
