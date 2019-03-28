@@ -109,7 +109,7 @@ export const createToken = (payload: SubsystemPermissionCreate): ThunkResult<Pro
         }).then((result: SuccessObject<SubsystemToken>) => {
             dispatch(createTokenSuccess());
             const tokenString =
-                `Successfully saved the token. Please write it down: \n${result.data}`;
+                `Successfully saved the token. Please write it down: \n${ result.data.item.subSystemHash }`;
             dispatch(addSuccessMessage(tokenString));
         }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
