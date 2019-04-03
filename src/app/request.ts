@@ -23,10 +23,10 @@ export const request = (options: m.RequestOptions<{}> & { url: string }): Promis
         m.request(options).then((response: {}) => {
             resolve(response);
         }).catch((response: HttpError<any>) => {
-            if (response.code === 401) {
+            if (response.error.code === 401) {
                 store.dispatch(logout());
             }
-            reject({ ...response, message: response.message, dateTime: new Date() });
+            reject({ ...response, message: response.error.message, dateTime: new Date() });
         });
     });
 };

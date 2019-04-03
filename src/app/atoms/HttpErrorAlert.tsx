@@ -50,8 +50,8 @@ export default class HttpErrorAlert extends MithrilTsxComponent<Attrs> {
                                     return (
                                         // tslint:disable-next-line:jsx-key
                                         <div class="alert alert-danger">
-                                            <h4 class="alert-heading">{error.code} {error.error}</h4>
-                                            <p>{error.message}</p>
+                                            <h4 class="alert-heading">{error.error.code} {error.error.error}</h4>
+                                            <p>{error.error.message}</p>
                                         </div>
                                     );
                                 })}

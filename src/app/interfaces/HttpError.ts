@@ -13,11 +13,13 @@ import { ResponseObject } from './ResponseObject';
  * Returned in the catch portion of the Promise request().
  */
 export interface HttpError<T> extends ResponseObject<T> {
-    error: string;
-    code: number;
-    message: string;
-    details?: Array<HttpError<T>>;
-    innerError?: InnerError;
+    error: {
+        error: string;
+        code: number;
+        message: string;
+        details?: Array<HttpError<T>>;
+        innerError?: InnerError;
+    };
 }
 
 export interface InnerError {
