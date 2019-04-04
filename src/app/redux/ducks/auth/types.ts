@@ -11,7 +11,7 @@ import { RootState } from '../../types';
 import { ThunkAction } from 'redux-thunk';
 import { UserProfile } from '../../../interfaces/UserProfile';
 import { AuthorizeResponse } from '../../../interfaces/Auth';
-import { ResponseObject } from '../../../interfaces/ResponseObject';
+import { SuccessObject } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface AuthState {
@@ -37,7 +37,7 @@ export interface FetchProfileRequestAction extends Action {
 
 export interface FetchProfileSuccessAction extends Action {
     type: ActionTypes.FETCH_PROFILE_SUCCESS;
-    payload: ResponseObject<UserProfile>;
+    payload: SuccessObject<UserProfile>;
 }
 
 export interface AuthorizeRequestAction extends Action {

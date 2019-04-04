@@ -22,14 +22,14 @@ import {
 } from './types';
 import { SubsystemOverview } from '../../../interfaces/SubsystemOverview';
 import { SubsystemPermission } from '../../../interfaces/SubsystemPermission';
-import { CollectionResponseObject, ResponseObject } from '../../../interfaces/ResponseObject';
+import { CollectionSuccessObject, SuccessObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchSubsystemsRequest = (): FetchSubsystemsRequestAction => ({
     type: ActionTypes.FETCH_SUBSYSTEMS_REQUEST
 });
 
-export const fetchSubsystemsSuccess = (payload: CollectionResponseObject<Subsystem>): FetchSubsystemsSuccessAction => ({
+export const fetchSubsystemsSuccess = (payload: CollectionSuccessObject<Subsystem>): FetchSubsystemsSuccessAction => ({
     type: ActionTypes.FETCH_SUBSYSTEMS_SUCCESS,
     payload
 });
@@ -38,7 +38,7 @@ export const fetchSubsystemRequest = (): FetchSubsystemRequestAction => ({
     type: ActionTypes.FETCH_SUBSYSTEM_REQUEST
 });
 
-export const fetchSubsystemSuccess = (payload: ResponseObject<Subsystem>): FetchSubsystemSuccessAction => ({
+export const fetchSubsystemSuccess = (payload: SuccessObject<Subsystem>): FetchSubsystemSuccessAction => ({
     type: ActionTypes.FETCH_SUBSYSTEM_SUCCESS,
     payload
 });
@@ -48,7 +48,7 @@ export const fetchSubsystemOverviewsRequest = (): FetchSubsystemOverviewsRequest
 });
 
 export const fetchSubsystemOverviewsSuccess = (
-    payload: CollectionResponseObject<SubsystemOverview>): FetchSubsystemOverviewsSuccessAction => ({
+    payload: CollectionSuccessObject<SubsystemOverview>): FetchSubsystemOverviewsSuccessAction => ({
         type: ActionTypes.FETCH_SUBSYSTEM_OVERVIEWS_SUCCESS,
         payload
     });
@@ -58,7 +58,7 @@ export const fetchSubsystemPermissionsRequest = (): FetchSubsystemPermissionsReq
 });
 
 export const fetchSubsystemPermissionsSuccess
-    = (payload: CollectionResponseObject<SubsystemPermission>): FetchSubsystemPermissionsSuccessAction => ({
+    = (payload: CollectionSuccessObject<SubsystemPermission>): FetchSubsystemPermissionsSuccessAction => ({
         type: ActionTypes.FETCH_SUBSYSTEM_PERMISSIONS_SUCCESS,
         payload
     });

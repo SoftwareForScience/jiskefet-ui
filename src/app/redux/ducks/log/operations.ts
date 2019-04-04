@@ -25,7 +25,7 @@ import {
 import { getLogs, getLog, linkRunToLogUrl, postLog } from '../../../constants/apiUrls';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
-import { ResponseObject, CollectionResponseObject } from '../../../interfaces/ResponseObject';
+import { SuccessObject, CollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
@@ -34,9 +34,9 @@ export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getLogs(query)
-        }).then((result: CollectionResponseObject<Log>) => {
+        }).then((result: CollectionSuccessObject<Log>) => {
             dispatch(fetchLogsSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -47,9 +47,9 @@ export const fetchLog = (id: number): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getLog(id)
-        }).then((result: ResponseObject<Log>) => {
+        }).then((result: SuccessObject<Log>) => {
             dispatch(fetchLogSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -63,7 +63,7 @@ export const linkRunToLog = (logId: number, runNumber: number): ThunkResult<Prom
             data: { runNumber: runNumber as number }
         }).then(() => {
             dispatch(linkRunToLogSucces());
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -80,7 +80,7 @@ export const createLog = (logToBeCreated: LogCreate): ThunkResult<Promise<void>>
                 dispatch(addHttpError(result.error));
             }
             dispatch(createLogSuccess());
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

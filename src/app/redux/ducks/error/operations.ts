@@ -18,8 +18,9 @@ import { HttpError } from '../../../interfaces/HttpError';
 /**
  * Returns the errors currently in the error store and then clears the error store (excluding errorHistory).
  */
-export const extractErrors = (): ThunkResult<Promise<HttpError[]>> =>
-    async (dispatch: ThunkDispatch<RootState, void, ErrorAction>, getState: () => RootState): Promise<HttpError[]> => {
+export const extractErrors = (): ThunkResult<Promise<Array<HttpError<any>>>> =>
+    async (dispatch: ThunkDispatch<RootState, void, ErrorAction>, getState: () =>
+        RootState): Promise<Array<HttpError<any>>> => {
         const errors = await selectErrors(getState());
         if (errors.length > 0) {
             await dispatch(clearHttpErrors());

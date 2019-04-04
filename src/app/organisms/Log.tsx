@@ -74,10 +74,10 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                     footerContent={(
                                         <TabContainer titles={['Content', 'Runs', 'Files', 'Others...']} >
                                             {
-                                                currentLog && currentLog.text
+                                                currentLog && currentLog.body
                                                     ? <MarkdownViewer
                                                         id={'CreateLogMarkdown'}
-                                                        content={currentLog.text}
+                                                        content={currentLog.body}
                                                     />
                                                     : 'This log has no text'
                                             }

@@ -20,7 +20,7 @@ export interface Log {
     origin: string;
     creationTime: string;
     title: string;
-    text: string;
+    body: string;
     user: User;
     runs?: Run[];
     attachments?: Attachment[];
@@ -33,7 +33,7 @@ export interface LogCreate {
     subtype: string;
     origin: string;
     title: string;
-    text: string;
+    body: string;
     user: number;
     runs: any[];
     attachments?: Attachment[];

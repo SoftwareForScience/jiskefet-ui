@@ -11,7 +11,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
 import { Log } from '../../../interfaces/Log';
-import { ResponseObject, CollectionResponseObject } from '../../../interfaces/ResponseObject';
+import { SuccessObject, CollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface UserState {
@@ -38,7 +38,7 @@ export interface FetchUserRequestAction extends Action {
 
 export interface FetchUserSuccessAction extends Action {
     type: ActionTypes.FETCH_USER_SUCCESS;
-    payload: ResponseObject<User>;
+    payload: SuccessObject<User>;
 }
 
 export interface FetchLogsForUserRequestAction extends Action {
@@ -47,7 +47,7 @@ export interface FetchLogsForUserRequestAction extends Action {
 
 export interface FetchLogsForUserSuccessAction extends Action {
     type: ActionTypes.FETCH_LOGS_FOR_USER_SUCCES;
-    payload: CollectionResponseObject<Log>;
+    payload: CollectionSuccessObject<Log>;
 }
 
 // Combine actions into single type

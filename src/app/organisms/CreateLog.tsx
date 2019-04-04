@@ -56,7 +56,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
     }
 
     addDescription = (content: string) => {
-        this.setValueForLogToBeCreated('text', content);
+        this.setValueForLogToBeCreated('body', content);
     }
 
     async saveLog(runNumber: number | undefined) {
@@ -154,7 +154,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                                 />
                                                 <MarkdownViewer
                                                     id={'MarkdownPreview'}
-                                                    content={logToBeCreated && logToBeCreated.text || ''}
+                                                    content={logToBeCreated && logToBeCreated.body || ''}
                                                 />
                                             </TabContainer>
                                         </div>

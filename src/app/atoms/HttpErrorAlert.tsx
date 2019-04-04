@@ -23,7 +23,7 @@ interface Attrs {
 type Vnode = m.Vnode<Attrs, HttpErrorAlert>;
 
 export default class HttpErrorAlert extends MithrilTsxComponent<Attrs> {
-    errors: HttpError[] = [];
+    errors: Array<HttpError<any>> = [];
 
     async oninit() {
         const fetchedErrors = await store.dispatch(extractErrors());
@@ -46,12 +46,12 @@ export default class HttpErrorAlert extends MithrilTsxComponent<Attrs> {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="text-center">
-                            {errors.map((error: HttpError) => {
+                            {errors.map((error: HttpError<any>) => {
                                     return (
                                         // tslint:disable-next-line:jsx-key
                                         <div class="alert alert-danger">
-                                            <h4 class="alert-heading">{error.statusCode} {error.error}</h4>
-                                            <p>{error.message}</p>
+                                            <h4 class="alert-heading">{error.error.code} {error.error.error}</h4>
+                                            <p>{error.error.message}</p>
                                         </div>
                                     );
                                 })}

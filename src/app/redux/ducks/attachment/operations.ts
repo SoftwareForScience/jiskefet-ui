@@ -21,7 +21,7 @@ import {
 import { getAttachmentsByLog, postAttachment } from '../../../constants/apiUrls';
 import { addHttpError } from '../error/actions';
 import { ErrorAction } from '../error/types';
-import { CollectionResponseObject } from '../../../interfaces/ResponseObject';
+import { CollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchAttachmentsByLog = (logId: number): ThunkResult<Promise<void>> =>
@@ -30,9 +30,9 @@ export const fetchAttachmentsByLog = (logId: number): ThunkResult<Promise<void>>
         return request({
             method: 'GET',
             url: getAttachmentsByLog(logId)
-        }).then((result: CollectionResponseObject<Attachment>) => {
+        }).then((result: CollectionSuccessObject<Attachment>) => {
             dispatch(fetchAttachmentsByLogSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -47,7 +47,7 @@ export const saveAttachment = (attachment: Attachment): ThunkResult<Promise<void
         }).then((result: any) => {
             // SuccesModel.add('Successfully saved attachment.');
             dispatch(createAttachmentSuccess());
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
