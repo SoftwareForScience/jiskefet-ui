@@ -10,6 +10,7 @@ import { ThunkResult, SuccessAction } from './types';
 import { RootState } from '../../types';
 import { selectSuccesMessages } from './selectors';
 import { ThunkDispatch } from 'redux-thunk';
+import { clearSuccessMessages } from './actions';
 
 // Thunks
 
@@ -19,5 +20,6 @@ import { ThunkDispatch } from 'redux-thunk';
 export const getSuccessMessages = (): ThunkResult<Promise<string[]>> =>
     async (dispatch: ThunkDispatch<RootState, void, SuccessAction>, getState: () => RootState): Promise<string[]> => {
         const successMessages = await selectSuccesMessages(getState());
+        dispatch(clearSuccessMessages());
         return successMessages;
     };

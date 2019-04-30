@@ -166,7 +166,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                                 style="min-width: 75px; max-width: 75px; overflow: hidden;"
                                                 className="form-control form-control-sm"
                                                 name="pageSize"
-                                                onchange={(event: Event) => {
+                                                oninput={(event: Event) => {
                                                     store.dispatch(
                                                         setFilter(FilterName.Log, 'pageSize', event.target.value)
                                                     );

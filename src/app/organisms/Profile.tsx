@@ -134,7 +134,7 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                                         style="min-width: 75px; max-width: 75px; overflow: hidden;"
                                         className="form-control form-control-sm"
                                         name="pageSize"
-                                        onchange={(event: Event) => {
+                                        oninput={(event: Event) => {
                                             store.dispatch(
                                                 setFilter(FilterName.UserLog, 'pageSize', event.target.value)
                                             );

@@ -70,7 +70,7 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> {
                                     id="timeRange"
                                     className="form-control form-control-sm"
                                     name="timeRange"
-                                    onchange={(event: Event) => {
+                                    oninput={(event: Event) => {
                                         store.dispatch(setFilter(
                                             FilterName.Subsystem,
                                             'timeRange',

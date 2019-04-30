@@ -25,7 +25,6 @@ interface Attrs {
     placeholder?: string;
     required?: boolean;
     oninput?: (event: Event) => void;
-    onchange?: (event: Event) => void;
     optionValue?: string;
     optionText?: string;
     options: any[];
@@ -53,7 +52,7 @@ export default class Select extends MithrilTsxComponent<Attrs> {
                 hidden={hidden}
                 style={style}
             >
-            <option value="default">{defaultOption}</option>
+            <option value="">{defaultOption}</option>
                 {
                     options.map((option: any) => (
                         optionValue && optionText
