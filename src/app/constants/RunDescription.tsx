@@ -26,25 +26,25 @@ const RunDescription: Description[] = [
     {
         label: 'Time O&sup2; start',
         value: (run: Run): string | Date => {
-            return formatDateField(run.timeO2Start);
+            return formatDateField(run.O2StartTime);
         }
     },
     {
         label: 'Time O&sup2; end',
         value: (run: Run): string | Date => {
-            return formatDateField(run.timeO2Start);
+            return formatDateField(run.O2EndTime);
         }
     },
     {
         label: 'Time TRG start',
         value: (run: Run): string | Date => {
-            return formatDateField(run.timeO2Start);
+            return formatDateField(run.TrgStartTime);
         }
     },
     {
         label: 'Time TRG end',
         value: (run: Run): string | Date => {
-            return formatDateField(run.timeO2Start);
+            return formatDateField(run.TrgEndTime);
         }
     },
     {
