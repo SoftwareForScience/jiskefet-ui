@@ -44,7 +44,7 @@ import { addHttpError } from '../error/actions';
 import { ErrorAction } from '../error/types';
 import { addSuccessMessage } from '../success/actions';
 import { SuccessAction } from '../success/types';
-import { CollectionResponseObject, ResponseObject } from '../../../interfaces/ResponseObject';
+import { CollectionSuccessObject, SuccessObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchSubsystems = (): ThunkResult<void> =>
@@ -53,9 +53,9 @@ export const fetchSubsystems = (): ThunkResult<void> =>
         request({
             method: 'GET',
             url: getSubsystems()
-        }).then((result: CollectionResponseObject<Subsystem>) => {
+        }).then((result: CollectionSuccessObject<Subsystem>) => {
             dispatch(fetchSubsystemsSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -66,9 +66,9 @@ export const fetchSubsystem = (id: string | number): ThunkResult<Promise<void>> 
         return request({
             method: 'GET',
             url: getSubsystem(id)
-        }).then((result: ResponseObject<Subsystem>) => {
+        }).then((result: SuccessObject<Subsystem>) => {
             dispatch(fetchSubsystemSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -79,9 +79,9 @@ export const fetchSubsystemOverviews = (query?: string): ThunkResult<void> =>
         request({
             method: 'GET',
             url: getSubsystemOverviews(query)
-        }).then((result: CollectionResponseObject<SubsystemOverview>) => {
+        }).then((result: CollectionSuccessObject<SubsystemOverview>) => {
             dispatch(fetchSubsystemOverviewsSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -92,9 +92,9 @@ export const fetchSubsystemPermissions = (userId: number): ThunkResult<void> =>
         request({
             method: 'GET',
             url: getSubsystemPermissions(userId)
-        }).then((result: CollectionResponseObject<SubsystemPermission>) => {
+        }).then((result: CollectionSuccessObject<SubsystemPermission>) => {
             dispatch(fetchSubsystemPermissionsSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -106,12 +106,12 @@ export const createToken = (payload: SubsystemPermissionCreate): ThunkResult<Pro
             method: 'POST',
             data: payload,
             url: postToken(payload.user)
-        }).then((result: ResponseObject<SubsystemToken>) => {
+        }).then((result: SuccessObject<SubsystemToken>) => {
             dispatch(createTokenSuccess());
             const tokenString =
-                `Successfully saved the token. Please write it down: \n${result.data.item.subSystemHash}`;
+                `Successfully saved the token. Please write it down: \n${ result.data.item.subSystemHash }`;
             dispatch(addSuccessMessage(tokenString));
-        }).catch((error: HttpError) => {
+        }).catch((error: HttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

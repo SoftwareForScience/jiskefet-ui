@@ -20,14 +20,14 @@ import {
     ClearLogToBeCreatedAction,
 } from './types';
 import { Log, LogCreate } from '../../../interfaces/Log';
-import { ResponseObject, CollectionResponseObject } from '../../../interfaces/ResponseObject';
+import { SuccessObject, CollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchLogsRequest = (): FetchLogsByLogRequestAction => ({
     type: ActionTypes.FETCH_LOGS_REQUEST
 });
 
-export const fetchLogsSuccess = (payload: CollectionResponseObject<Log>): FetchLogsByLogSuccessAction => ({
+export const fetchLogsSuccess = (payload: CollectionSuccessObject<Log>): FetchLogsByLogSuccessAction => ({
     type: ActionTypes.FETCH_LOGS_SUCCESS,
     payload
 });
@@ -36,7 +36,7 @@ export const fetchLogRequest = (): FetchLogRequestAction => ({
     type: ActionTypes.FETCH_LOG_REQUEST
 });
 
-export const fetchLogSuccess = (payload: ResponseObject<Log>): FetchLogSuccessAction => ({
+export const fetchLogSuccess = (payload: SuccessObject<Log>): FetchLogSuccessAction => ({
     type: ActionTypes.FETCH_LOG_SUCCESS,
     payload
 });

@@ -10,4 +10,4 @@ import { RootState } from '../../types';
 import { HttpError } from '../../../interfaces/HttpError';
 
 // Selectors
-export const selectErrors = (state: RootState): HttpError[] => state.error.httpErrors;
+export const selectErrors = (state: RootState): Array<HttpError<any>> => state.error.httpErrors;

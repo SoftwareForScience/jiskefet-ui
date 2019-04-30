@@ -10,7 +10,7 @@ import { ActionTypes, AddHttpErrorAction, ClearHttpErrorsAction } from './types'
 import { HttpError } from '../../../interfaces/HttpError';
 
 // Action creators
-export const addHttpError = (httpError: HttpError): AddHttpErrorAction => ({
+export const addHttpError = (httpError: HttpError<any>): AddHttpErrorAction => ({
     type: ActionTypes.ADD_HTTP_ERROR,
     payload: httpError,
 });

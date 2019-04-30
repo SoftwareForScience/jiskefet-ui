@@ -6,12 +6,18 @@
  * copied verbatim in the file "LICENSE"
  */
 
- /**
-  * Interface for the API Response Object with a single item
-  */
+/**
+ * Interface of information for every API response
+ */
 export interface ResponseObject<T> {
     apiVersion: string;
     meta?: Meta;
+}
+
+/**
+ * Interface to standardize the response of a API object containing a single item
+ */
+export interface SuccessObject<T> extends ResponseObject<T> {
     data: {
         [key: string]: any;
         item: T;
@@ -19,19 +25,16 @@ export interface ResponseObject<T> {
 }
 
 /**
- * Interface for the API Response Object with a collection of items
+ * Interface to standardize the response of a API object containing multiple items
  */
-export interface CollectionResponseObject<T> {
-    apiVersion: string;
-    meta?: Meta;
+export interface CollectionSuccessObject<T> extends ResponseObject<T> {
     data: {
         [key: string]: any;
         items: T[];
     };
 }
-
 /**
- * Interface for key value pair
+ * Interface for Meta object
  */
 export interface Meta {
     [key: string]: string;
