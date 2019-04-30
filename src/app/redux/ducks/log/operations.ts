@@ -71,6 +71,7 @@ export const linkRunToLog = (logId: number, runNumber: number): ThunkResult<Prom
 export const createLog = (logToBeCreated: LogCreate): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, LogAction | ErrorAction>): Promise<void> => {
         dispatch(createLogRequest());
+        console.log(`LogToBeCreated in operation: ${logToBeCreated }`);
         return request({
             method: 'POST',
             url: postLog(),

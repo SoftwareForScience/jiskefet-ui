@@ -45,7 +45,6 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
         if (!logToBeCreated) {
             logToBeCreated = {};
         }
-        logToBeCreated = { ...logToBeCreated, [key]: value };
         if (logToBeCreated) {
             store.dispatch(setLogToBeCreated(logToBeCreated as LogCreate));
         }
@@ -59,13 +58,20 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
         this.setValueForLogToBeCreated('body', content);
     }
 
-    async saveLog(runNumber: number | undefined) {
+    async saveLog(runNumber: number | string | undefined) {
         if (runNumber) {
+            console.log(`Before casting ${typeof runNumber}`);
+            console.log(runNumber);
+            runNumber = +runNumber;
+            console.log(`After casting ${typeof runNumber}`);
+            console.log(runNumber);
             this.setValueForLogToBeCreated('runs', runNumber);
         }
         const profile = selectProfile(store.getState());
         if (profile) {
             this.setValueForLogToBeCreated('user', profile.userData.userId);
+            console.log('store getstate');
+            console.log(store.getState());
 
             const logToBeCreated = selectLogToBeCreated(store.getState());
             if (logToBeCreated) {
@@ -83,6 +89,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                 <form
                     onsubmit={(event: Event) => {
                         event.preventDefault();
+                        console.log(`Vnode runnumber ${ vnode.attrs.runNumber }`);
                         this.saveLog(vnode.attrs.runNumber);
                     }}
                 >
