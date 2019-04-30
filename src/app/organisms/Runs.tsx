@@ -30,6 +30,9 @@ import { setFilter, resetFilters } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
 import { fetchRuns } from '../redux/ducks/run/operations';
 import { selectIsFetchingRuns, selectRuns, selectRunCount } from '../redux/ducks/run/selectors';
+import Label from '../atoms/Label';
+import Select from '../atoms/Select';
+import { selectLogCount } from '../redux/ducks/log/selectors';
 
 const inputFields = [
     {
@@ -211,17 +214,17 @@ export default class Runs extends MithrilTsxComponent<{}> {
                                 <div class="row">
                                     <div class="col-md-4 m-1 small-center">
                                         <div class="pagination-block">
-                                            <label
-                                                for="pageSize"
-                                                class="col-form-label col-form-label-sm mr-2"
-                                            >
-                                                Page size
-                                            </label>
+                                            <Label
+                                                id="pageSize"
+                                                className="col-form-label col-form-label-sm mr-2"
+                                                text="Page size"
+                                            />
                                         </div>
                                         <div class="pagination-block">
-                                            <select
+                                            <Select
                                                 id="pageSize"
-                                                class="form-control form-control-sm"
+                                                style="min-width: 75px; max-width: 75px; overflow: hidden;"
+                                                className="form-control form-control-sm"
                                                 name="pageSize"
                                                 onchange={(event: Event) => {
                                                     store.dispatch(
@@ -230,13 +233,9 @@ export default class Runs extends MithrilTsxComponent<{}> {
                                                     store.dispatch(setFilter(FilterName.Run, 'pageNumber', 1));
                                                     this.setQueryAndFetch();
                                                 }}
-                                                value={runFilters.pageSize}
-                                            >
-                                                {pageSizes.map((pageSize: number) =>
-                                                    // tslint:disable-next-line:jsx-key
-                                                    <option value={pageSize}>{pageSize}</option>
-                                                )}
-                                            </select>
+                                                defaultOption={runFilters.pageSize}
+                                                options={pageSizes}
+                                            />
                                         </div>
                                         <div class="text-muted mt-2 ml-2 pagination-block">
                                             <PageCounter

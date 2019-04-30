@@ -13,6 +13,7 @@ import * as Cookie from 'js-cookie';
 import { store } from '../redux/configureStore';
 import { selectIsAuthorizing } from '../redux/ducks/auth/selectors';
 import Spinner from '../atoms/Spinner';
+import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 
 /**
  * Landing page for unauthorized users.
@@ -31,34 +32,37 @@ export default class Login extends MithrilTsxComponent<{}> {
                                     <strong>Please close the browser to end the user session.</strong>
                                 </div>
                             </div>
-                        :
-                        <div>
-                            <h1 class="display-2">Welcome to Jiskefet</h1>
-                            <p class="lead">Please sign in to use the application.</p>
-                            <div class="mt-4">
-                                {localStorage.getItem('USE_CERN_SSO') === 'true' ?
-                                    <div /> :
-                                    <a href="https://github.com/join" target="_blank">
-                                        <button type="button" class="btn btn-outline-dark btn-lg mr-2">
-                                            Sign up
+                            :
+                            <div>
+                                <h1 class="display-2">Welcome to Jiskefet</h1>
+                                <p class="lead">Please sign in to use the application.</p>
+                                <div class="mt-4">
+                                    {localStorage.getItem('USE_CERN_SSO') === 'true' ?
+                                        <div /> :
+                                        <a href="https://github.com/join" target="_blank">
+                                            <button type="button" class="btn btn-outline-dark btn-lg mr-2">
+                                                Sign up
                                     </button>
+                                        </a>
+                                    }
+                                    <a
+                                        href={
+                                            localStorage.getItem('AUTH_URL')
+                                        }
+                                    >
+                                        {
+                                            <Button
+                                                buttonType={ButtonType.BUTTON}
+                                                buttonClass={ButtonClass.SUCCESS}
+                                                text="Sign in"
+                                            />
+
+                                        }
                                     </a>
-                                }
-                                <a
-                                    href={
-                                        localStorage.getItem('AUTH_URL')
-                                    }
-                                >
-                                    {
-                                        <button type="button" class="btn btn-success btn-lg">
-                                            <span class="mr-2">Sign in</span>
-                                        </button>
-                                    }
-                                </a>
+                                </div>
                             </div>
-                        </div>
-                    }
-                </div>
+                        }
+                    </div>
                 </HttpErrorAlert>
             </Spinner>
         );

@@ -35,6 +35,8 @@ import { UserProfile } from '../interfaces/UserProfile';
 import Input, { InputSize } from '../atoms/Input';
 import FormGroup from '../molecules/FormGroup';
 import Label from '../atoms/Label';
+import Select from '../atoms/Select';
+import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
 
@@ -97,7 +99,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                     )}
                                     field={(
                                         <Input
-                                            id="description"
+                                            id="token-description"
                                             inputType="text"
                                             autofocus="autofocus"
                                             className="form-control"
@@ -105,72 +107,49 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                         />
                                     )}
                                 />
-                                // HIERONDER BEN IK GEBLEVEN!!!!!!!!!!!
                                 <FormGroup
                                     label={(
-                                        <Label autofocus="autofocus" id="description" text="Token description" />
+                                        <Label id="subsystem" text="Select subsystem:" />
                                     )}
                                     field={(
-                                        <Input
-                                            id="description"
-                                            inputType="text"
-                                            autofocus="autofocus"
-                                            className="form-control"
-                                            required={true}
+                                        <div>
+                                            <Spinner
+                                                isLoading={selectFetchingSubsystems(store.getState())}
+                                                small
+                                            >
+                                                <Select
+                                                    id="subsystem"
+                                                    className="form-control"
+                                                    name="subsystem"
+                                                    required
+                                                    hidden={subsystems.length === 0}
+                                                    optionValue="subsystemId"
+                                                    optionText="subsystemName"
+                                                    options={subsystems}
+                                                    defaultOption="Please select a subsystem.">
+                                                </Select>
+                                                {/* Below div could become an *alert* atom */}
+                                                <div
+                                                    class="alert alert-warning"
+                                                    role="alert"
+                                                    hidden={subsystems.length > 0}
+                                                >No subsystems found,
+                                                    please add subsystems directly via SQL queries in the database.
+                                            </div>
+                                            </Spinner>
+                                        </div>
+                                    )}
+                                />
+                                <FormGroup
+                                    field={(
+                                        <Button
+                                            buttonType={ButtonType.SUBMIT}
+                                            buttonClass={ButtonClass.DEFAULT}                                            
+                                            disabled={subsystems.length === 0}
+                                            text="Generate token"
                                         />
                                     )}
                                 />
-                                <div class="form-group">
-                                    <dt>
-                                        <label for="subsystem">Select subsystem:</label>
-                                    </dt>
-                                    <div class="field">
-                                        <Spinner
-                                            isLoading={selectFetchingSubsystems(store.getState())}
-                                            small
-                                        >
-                                            <select
-                                                id="subsystem"
-                                                class="form-control"
-                                                name="subsystem"
-                                                required
-                                                hidden={subsystems.length === 0}
-                                            >
-                                                <option
-                                                    value=""
-                                                    selected
-                                                    disabled
-                                                    hidden
-                                                >Please select a subsystem.
-                                                </option>
-                                                {
-                                                    subsystems && subsystems.map((subsystem: Subsystem) => (
-                                                        <option
-                                                            value={subsystem.subsystemId}
-                                                        >
-                                                            {subsystem.subsystemName}
-                                                        </option>
-                                                    ))
-                                                }
-                                            </select>
-                                            <div
-                                                class="alert alert-warning"
-                                                role="alert"
-                                                hidden={subsystems.length > 0}
-                                            >No subsystems found,
-                                                        please add subsystems directly via SQL queries in the database.
-                                            </div>
-                                        </Spinner>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button
-                                        type="submit"
-                                        class="btn btn-primary"
-                                        disabled={subsystems.length === 0}
-                                    >Generate Token
-                                    </button>
-                                </div>
                             </form>
                             <hr />
                             <Spinner
