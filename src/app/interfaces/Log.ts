@@ -35,6 +35,6 @@ export interface LogCreate {
     title: string;
     body: string;
     user: number;
-    runs: any[];
+    run: number;
     attachments?: Attachment[];
 }
