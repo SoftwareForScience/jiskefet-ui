@@ -27,6 +27,7 @@ import Select from '../atoms/Select';
 import FormGroup from '../molecules/FormGroup';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 import HttpErrorAlert from '../atoms/HttpErrorAlert';
+import { addSuccessMessage } from '../redux/ducks/success/actions';
 
 interface Attrs {
     runNumber?: number | undefined;
@@ -71,6 +72,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
             if (logToBeCreated) {
                 await store.dispatch(createLog(logToBeCreated));
                 store.dispatch(clearLogToBeCreated());
+                store.dispatch(addSuccessMessage('Succesfully created Log'));
             }
             m.route.set('/Logs');
         }
