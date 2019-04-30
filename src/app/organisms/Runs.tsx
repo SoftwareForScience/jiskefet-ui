@@ -32,7 +32,6 @@ import { fetchRuns } from '../redux/ducks/run/operations';
 import { selectIsFetchingRuns, selectRuns, selectRunCount } from '../redux/ducks/run/selectors';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
-import { selectLogCount } from '../redux/ducks/log/selectors';
 
 const inputFields = [
     {

@@ -9,7 +9,6 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
-import { Subsystem } from '../interfaces/SubSytem';
 import Table from '../molecules/Table';
 import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns';
 import SuccessMessage from '../atoms/SuccessMessage';
@@ -32,7 +31,7 @@ import { fetchProfile } from '../redux/ducks/auth/operations';
 import { selectProfile } from '../redux/ducks/auth/selectors';
 import { fetchUser } from '../redux/ducks/user/operations';
 import { UserProfile } from '../interfaces/UserProfile';
-import Input, { InputSize } from '../atoms/Input';
+import Input from '../atoms/Input';
 import FormGroup from '../molecules/FormGroup';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';

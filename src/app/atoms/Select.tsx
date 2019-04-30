@@ -30,7 +30,7 @@ interface Attrs {
     optionText?: string;
     options: any[];
     hidden?: boolean;
-    defaultOption: string | number | null;
+    defaultOption?: string | number | null;
 }
 
 type Vnode = m.Vnode<Attrs, Select>;
