@@ -125,16 +125,17 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                                     optionValue="subsystemId"
                                                     optionText="subsystemName"
                                                     options={subsystems}
-                                                    defaultOption="Please select a subsystem.">
-                                                </Select>
+                                                    defaultOption="Please select a subsystem."
+                                                />
                                                 {/* Below div could become an *alert* atom */}
                                                 <div
                                                     class="alert alert-warning"
                                                     role="alert"
                                                     hidden={subsystems.length > 0}
                                                 >No subsystems found,
-                                                    please add subsystems directly via SQL queries in the database.
-                                            </div>
+                                                                    please add subsystems directly
+                                                                    via SQL queries in the database.
+                                                </div>
                                             </Spinner>
                                         </div>
                                     )}
@@ -143,7 +144,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                     field={(
                                         <Button
                                             buttonType={ButtonType.SUBMIT}
-                                            buttonClass={ButtonClass.DEFAULT}                                            
+                                            buttonClass={ButtonClass.DEFAULT}
                                             disabled={subsystems.length === 0}
                                             text="Generate token"
                                         />
