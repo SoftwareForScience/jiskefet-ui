@@ -89,8 +89,8 @@ export default class Logs extends MithrilTsxComponent<{}> {
         const logFilters = selectFilters(store.getState())[FilterName.Log];
         return (
             <div>
+                <SuccessMessage />
                 <HttpErrorAlert>
-                    <SuccessMessage />
                     <div class="row">
                         <div
                             class={

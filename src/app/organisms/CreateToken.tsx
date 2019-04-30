@@ -94,11 +94,11 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                             >
                                 <FormGroup
                                     label={(
-                                        <Label autofocus="autofocus" id="token-description" text="Token description" />
+                                        <Label autofocus="autofocus" id="description" text="Token description" />
                                     )}
                                     field={(
                                         <Input
-                                            id="token-description"
+                                            id="description"
                                             inputType="text"
                                             autofocus="autofocus"
                                             className="form-control"
