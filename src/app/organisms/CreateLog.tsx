@@ -61,7 +61,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
 
     async saveLog(runNumber: number | undefined) {
         if (runNumber) {
-            this.setValueForLogToBeCreated('runs', runNumber);
+            this.setValueForLogToBeCreated('run', runNumber);
         }
         const profile = selectProfile(store.getState());
         if (profile) {
@@ -130,11 +130,11 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 />
                                 <FormGroup
                                     label={(
-                                        <Label id="runs" text="Run number:" />
+                                        <Label id="run" text="Run number:" />
                                     )}
                                     field={(
                                         <Input
-                                            id="runs"
+                                            id="run"
                                             inputType="number"
                                             className="form-control"
                                             inputSize={InputSize.MEDIUM}
