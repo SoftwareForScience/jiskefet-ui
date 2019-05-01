@@ -43,3 +43,12 @@ export const getLogs = (query?: string): string => `${baseUrl}logs${query ? `?${
 export const getLog = (id: string | number): string => `${baseUrl}logs/${id}`;
 export const linkRunToLogUrl = (runNumber: number): string => `${baseUrl}logs/${runNumber}/runs`;
 export const postLog = (): string => `${baseUrl}logs`;
+
+// Tag
+export const getTags = (query?: string): string => `${baseUrl}tags${query ? `?${query}` : ''}`;
+export const getTag = (id: string | number): string => `${baseUrl}tags/${id}`;
+export const getTagsForLog = (logId: string | number): string => `${baseUrl}tags/${logId}/logs`;
+export const getTagsForRun = (runId: string | number): string => `${baseUrl}tags/${runId}/runs`;
+export const postTag = (): string => `${baseUrl}tags`;
+export const updateTag = (id: string | number): string => `${baseUrl}tags/${id}`;
+export const deleteTage = (id: string | number): string => `${baseUrl}tags/${id}`;
