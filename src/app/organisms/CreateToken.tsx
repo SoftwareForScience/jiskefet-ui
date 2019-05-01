@@ -9,7 +9,6 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { Event } from '../interfaces/Event';
-import { Subsystem } from '../interfaces/SubSytem';
 import Table from '../molecules/Table';
 import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns';
 import SuccessMessage from '../atoms/SuccessMessage';
@@ -33,6 +32,10 @@ import { selectProfile } from '../redux/ducks/auth/selectors';
 import { fetchUser } from '../redux/ducks/user/operations';
 import { UserProfile } from '../interfaces/UserProfile';
 import Input from '../atoms/Input';
+import FormGroup from '../molecules/FormGroup';
+import Label from '../atoms/Label';
+import Select from '../atoms/Select';
+import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 
 export default class CreateToken extends MithrilTsxComponent<{}> {
 
@@ -89,11 +92,11 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                     this.handleSubmit(event);
                                 }}
                             >
-                                <dl class="form-group">
-                                    <dt class="input-label">
-                                        <label autofocus="autofocus">Token description</label>
-                                    </dt>
-                                    <dd>
+                                <FormGroup
+                                    label={(
+                                        <Label autofocus="autofocus" id="description" text="Token description" />
+                                    )}
+                                    field={(
                                         <Input
                                             id="description"
                                             inputType="text"
@@ -101,60 +104,52 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                             className="form-control"
                                             required={true}
                                         />
-                                        <p class="note">What's the token for?</p>
-                                    </dd>
-                                </dl>
-                                <div class="form-group">
-                                    <dt>
-                                        <label for="subsystem">Select subsystem:</label>
-                                    </dt>
-                                    <div class="field">
-                                        <Spinner
-                                            isLoading={selectFetchingSubsystems(store.getState())}
-                                            small
-                                        >
-                                            <select
-                                                id="subsystem"
-                                                class="form-control"
-                                                name="subsystem"
-                                                required
-                                                hidden={subsystems.length === 0}
+                                    )}
+                                />
+                                <FormGroup
+                                    label={(
+                                        <Label id="subsystem" text="Select subsystem:" />
+                                    )}
+                                    field={(
+                                        <div>
+                                            <Spinner
+                                                isLoading={selectFetchingSubsystems(store.getState())}
+                                                small
                                             >
-                                                <option
-                                                    value=""
-                                                    selected
-                                                    disabled
-                                                    hidden
-                                                >Please select a subsystem.
-                                                </option>
-                                                {
-                                                    subsystems && subsystems.map((subsystem: Subsystem) => (
-                                                        <option
-                                                            value={subsystem.subsystemId}
-                                                        >
-                                                            {subsystem.subsystemName}
-                                                        </option>
-                                                    ))
-                                                }
-                                            </select>
-                                            <div
-                                                class="alert alert-warning"
-                                                role="alert"
-                                                hidden={subsystems.length > 0}
-                                            >No subsystems found,
-                                                    please add subsystems directly via SQL queries in the database.
-                                            </div>
-                                        </Spinner>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button
-                                        type="submit"
-                                        class="btn btn-primary"
-                                        disabled={subsystems.length === 0}
-                                    >Generate Token
-                                    </button>
-                                </div>
+                                                <Select
+                                                    id="subsystem"
+                                                    className="form-control"
+                                                    name="subsystem"
+                                                    required
+                                                    hidden={subsystems.length === 0}
+                                                    optionValue="subsystemId"
+                                                    optionText="subsystemName"
+                                                    options={subsystems}
+                                                    defaultOption="Please select a subsystem."
+                                                />
+                                                {/* Below div could become an *alert* atom */}
+                                                <div
+                                                    class="alert alert-warning"
+                                                    role="alert"
+                                                    hidden={subsystems.length > 0}
+                                                >No subsystems found,
+                                                                    please add subsystems directly
+                                                                    via SQL queries in the database.
+                                                </div>
+                                            </Spinner>
+                                        </div>
+                                    )}
+                                />
+                                <FormGroup
+                                    field={(
+                                        <Button
+                                            buttonType={ButtonType.SUBMIT}
+                                            buttonClass={ButtonClass.DEFAULT}
+                                            disabled={subsystems.length === 0}
+                                            text="Generate token"
+                                        />
+                                    )}
+                                />
                             </form>
                             <hr />
                             <Spinner

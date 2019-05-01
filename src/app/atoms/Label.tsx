@@ -13,15 +13,16 @@ interface Attrs {
     id: string;
     text: string;
     className?: string;
+    autofocus?: string;
 }
 
 type Vnode = m.Vnode<Attrs, Label>;
 
 export default class Label extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { id, text, className } = vnode.attrs;
+        const { id, text, className, autofocus } = vnode.attrs;
         return (
-            <label class={className} for={id}>{text}</label>
+            <label autofocus={autofocus} class={className} for={id}>{text}</label>
         );
     }
 }

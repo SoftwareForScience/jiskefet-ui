@@ -19,19 +19,28 @@ export enum InputSize {
 interface Attrs {
     id: string;
     className: string;
-    inputSize: InputSize;
+    style?: string;
+    inputSize?: InputSize;
     name?: string;
     placeholder?: string;
     required?: boolean;
     oninput?: (event: Event) => void;
-    options: string[];
+    optionValue?: string;
+    optionText?: string;
+    options: any[];
+    hidden?: boolean;
+    defaultOption?: string | number | null;
 }
 
 type Vnode = m.Vnode<Attrs, Select>;
 
 export default class Select extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { id, name, className, inputSize, placeholder, required, oninput, options } = vnode.attrs;
+        const { id, name,
+            className, inputSize,
+            placeholder, required,
+            oninput, options,
+            optionValue, optionText, defaultOption, hidden, style } = vnode.attrs;
         return (
             <select
                 id={id}
@@ -40,10 +49,15 @@ export default class Select extends MithrilTsxComponent<Attrs> {
                 placeholder={placeholder}
                 required={required}
                 oninput={oninput}
+                hidden={hidden}
+                style={style}
             >
+            <option value="">{defaultOption}</option>
                 {
-                    options.map((option: string) => (
-                        <option value={option}>{option}</option>
+                    options.map((option: any) => (
+                        optionValue && optionText
+                        ? <option value={option[optionValue]}>{option[optionText]}</option>
+                        : <option value={option}>{option}</option>
                     ))
                 }
             </select>

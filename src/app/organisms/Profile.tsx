@@ -29,6 +29,8 @@ import { setFilter } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
 import { fetchLogsForUser } from '../redux/ducks/user/operations';
 import { selectIsFetchingUserLogs, selectUserLogs, selectUserLogCount } from '../redux/ducks/user/selectors';
+import Label from '../atoms/Label';
+import Select from '../atoms/Select';
 
 interface Attrs {
     userId: number;
@@ -120,33 +122,28 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                         <div class="row">
                             <div class="col-md-4 m-1 small-center" >
                                 <div class="pagination-block">
-                                    <label
-                                        for="pageSize"
-                                        class="col-form-label col-form-label-sm mr-2"
-                                    >
-                                        Page size
-                                    </label>
+                                    <Label
+                                        id="pageSize"
+                                        className="col-form-label col-form-label-sm mr-2"
+                                        text="Page size"
+                                    />
                                 </div>
                                 <div class="pagination-block">
-                                    <select
+                                    <Select
                                         id="pageSize"
                                         style="min-width: 75px; max-width: 75px; overflow: hidden;"
-                                        class="form-control form-control-sm"
+                                        className="form-control form-control-sm"
                                         name="pageSize"
-                                        onchange={(event: Event) => {
+                                        oninput={(event: Event) => {
                                             store.dispatch(
                                                 setFilter(FilterName.UserLog, 'pageSize', event.target.value)
                                             );
                                             store.dispatch(setFilter(FilterName.UserLog, 'pageNumber', 1));
                                             this.setQueryAndFetch(userId);
                                         }}
-                                        value={userLogFilters.pageSize}
-                                    >
-                                        {pageSizes.map((pageSize: number) =>
-                                            // tslint:disable-next-line:jsx-key
-                                            <option value={pageSize}>{pageSize}</option>
-                                        )}
-                                    </select>
+                                        defaultOption={userLogFilters.pageSize}
+                                        options={pageSizes}
+                                    />
                                 </div>
                                 <div class="text-muted mt-2 ml-2 pagination-block">
                                     <PageCounter
