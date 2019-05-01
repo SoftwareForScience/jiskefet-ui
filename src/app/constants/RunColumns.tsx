@@ -25,23 +25,23 @@ const RunColumns = [
     },
     {
         header: 'Time O\xB2 start',
-        accessor: 'timeO2Start',
-        cell: (row: Run): string => (row.timeO2Start ? format(row.timeO2Start, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        accessor: 'o2StartTime',
+        cell: (row: Run): string => (row.O2StartTime ? format(row.O2StartTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: `Time O\xB2 end`,
-        accessor: 'timeO2End',
-        cell: (row: Run): string => (row.timeO2End ? format(row.timeO2End, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        accessor: 'o2EndTime',
+        cell: (row: Run): string => (row.O2EndTime ? format(row.O2EndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
     },
     {
         header: 'Time trg start',
-        accessor: 'timeTrgStart',
-        cell: (row: Run): string => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        accessor: 'trgStartTime',
+        cell: (row: Run): string => (row.TrgStartTime ? format(row.TrgStartTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Time trg end',
-        accessor: 'timeTrgEnd',
-        cell: (row: Run): string => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        accessor: 'trgEndTime',
+        cell: (row: Run): string => (row.TrgEndTime ? format(row.TrgEndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
     },
     {
         header: 'Activity id',

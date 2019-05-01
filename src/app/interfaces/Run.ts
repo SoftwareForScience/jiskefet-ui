@@ -13,10 +13,10 @@ import { Log } from './Log';
  */
 export interface Run {
     runNumber: number;
-    timeO2Start: Date | string;
-    timeTrgStart: Date | string;
-    timeTrgEnd: Date | string;
-    timeO2End: Date | string;
+    O2StartTime: Date | string;
+    TrgStartTime: Date | string;
+    TrgEndTime: Date | string;
+    O2EndTime: Date | string;
     runType: string[];
     runQuality: string[];
     activityId: string;
