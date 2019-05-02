@@ -20,3 +20,4 @@ export { default as error } from './error';
 export { default as user } from './user';
 export { default as run } from './run';
 export { default as log } from './log';
+export { default as tag } from './tag';

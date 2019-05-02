@@ -133,8 +133,8 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                                     role="alert"
                                                     hidden={subsystems.length > 0}
                                                 >No subsystems found,
-                                                                    please add subsystems directly
-                                                                    via SQL queries in the database.
+                                                                        please add subsystems directly
+                                                                        via SQL queries in the database.
                                                 </div>
                                             </Spinner>
                                         </div>

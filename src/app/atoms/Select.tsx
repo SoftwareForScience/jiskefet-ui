@@ -29,6 +29,7 @@ interface Attrs {
     optionText?: string;
     options: any[];
     hidden?: boolean;
+    liveSearch?: boolean;
     defaultOption?: string | number | null;
 }
 
@@ -40,7 +41,9 @@ export default class Select extends MithrilTsxComponent<Attrs> {
             className, inputSize,
             placeholder, required,
             oninput, options,
-            optionValue, optionText, defaultOption, hidden, style } = vnode.attrs;
+            optionValue, optionText,
+            defaultOption, hidden,
+            style, liveSearch } = vnode.attrs;
         return (
             <select
                 id={id}
@@ -51,13 +54,18 @@ export default class Select extends MithrilTsxComponent<Attrs> {
                 oninput={oninput}
                 hidden={hidden}
                 style={style}
+                liveSearch={liveSearch}
+                liveSearchStyle="startsWith"
             >
-            <option value="">{defaultOption}</option>
+                {options.length !== 0
+                    ? <option value="">{defaultOption}</option>
+                    : <option value="">{'No options found'}</option>
+                }
                 {
                     options.map((option: any) => (
                         optionValue && optionText
-                        ? <option value={option[optionValue]}>{option[optionText]}</option>
-                        : <option value={option}>{option}</option>
+                            ? <option value={option[optionValue]}>{option[optionText]}</option>
+                            : <option value={option}>{option}</option>
                     ))
                 }
             </select>
