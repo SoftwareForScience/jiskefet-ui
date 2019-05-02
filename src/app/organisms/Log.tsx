@@ -28,7 +28,7 @@ import { selectAttachments } from '../redux/ducks/attachment/selectors';
 import { Attachment } from '../interfaces/Attachment';
 import { download } from '../utility/FileUtil';
 import AttachmentComponent from '../molecules/Attachment';
-import { selectFetchingTags, selectTagsForLog } from '../redux/ducks/tag/selectors';
+import { selectFetchingTags, selectTagsForLog, selectTags } from '../redux/ducks/tag/selectors';
 import { Tag, TagCreate } from '../interfaces/Tag';
 import Input from '../atoms/Input';
 import FormGroup from '../molecules/FormGroup';
@@ -57,15 +57,16 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         const newTag = event.target.tagText.value;
         if (log && tagId) {
             // add existing tag to Log
+            // store.dispatch()
+            event.target.reset(); // Clear the form.
         } else if (log && newTag) {
             // create new tag and add to Log
             const tagToCreate = {
                 tagText: newTag
             };
             store.dispatch(createTag(tagToCreate as TagCreate));
+            event.target.reset(); // Clear the form.
         }
-
-        event.target.reset(); // Clear the form.
     }
 
     view(vnode: Vnode) {
@@ -76,7 +77,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         const isPatchingLinkRunToLog = selectIsPatchingLinkRunToLog(state);
         const attachments = selectAttachments(store.getState());
         const tagsForLog = selectTagsForLog(store.getState());
-        const tags = ['test', 'test', 'test', 'test', 'test']; // selectTags(store.getState());
+        const tags = selectTags(store.getState());
 
         return (
             <div class="container-fluid">
@@ -190,12 +191,10 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                                             className="selectpicker form-control"
                                                                             name="tag"
                                                                             required
-                                                                            hidden={tags.length === 0}
-                                                                            // optionValue="id"
-                                                                            // optionText="tagText"
+                                                                            optionValue="id"
+                                                                            optionText="tagText"
                                                                             options={tags}
                                                                             defaultOption="Please select a Tag."
-                                                                            liveSearch={true}
                                                                         />
                                                                     </Spinner>
                                                                 </div>
@@ -218,21 +217,12 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                                 />
                                                             )}
                                                         />
-                                                        {/* Below div could become an *alert* atom */}
-                                                        <div
-                                                            id="tagalert"
-                                                            class="alert alert-warning"
-                                                            role="alert"
-                                                            hidden={tags.length > 0}
-                                                        >No Tags found. Please create a new Tag above.
-                                                        </div>
                                                         <FormGroup
                                                             field={(
                                                                 <Button
                                                                     buttonType={ButtonType.SUBMIT}
                                                                     buttonClass={ButtonClass.DEFAULT}
-                                                                    disabled={tags.length === 0}
-                                                                    text="Add Tag."
+                                                                    text="Add Tag"
                                                                 />
                                                             )}
                                                         />

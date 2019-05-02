@@ -19,16 +19,17 @@ import { selectIsFetchingRun, selectIsPatchingLinkLogToRun, selectCurrentRun } f
 import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import RunDescription from '../constants/RunDescription';
-import Button, { ButtonClass, ButtonSize } from '../atoms/Button';
+import Button, { ButtonClass, ButtonSize, ButtonType } from '../atoms/Button';
 import TabContainer from '../molecules/TabContainer';
 import Table from '../molecules/Table';
 import LogColumns from '../constants/LogColumns';
 import { selectTags, selectTagsForRun, selectFetchingTags } from '../redux/ducks/tag/selectors';
-import { Tag } from '../interfaces/Tag';
+import { Tag, TagCreate } from '../interfaces/Tag';
 import FormGroup from '../molecules/FormGroup';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
 import Input from '../atoms/Input';
+import { createTag } from '../redux/ducks/tag/operations';
 
 interface Attrs {
     runNumber: number;
@@ -62,7 +63,21 @@ export default class Run extends MithrilTsxComponent<Attrs> {
     }
 
     async handleSubmit(event: any): Promise<void> {
-        // TODO
+        const log = await selectCurrentRun(store.getState()) as Run | null;
+        const tagId = event.target.tag.value;
+        const newTag = event.target.tagText.value;
+        if (log && tagId) {
+            // add existing tag to Log
+            // store.dispatch()
+            event.target.reset(); // Clear the form.
+        } else if (log && newTag) {
+            // create new tag and add to Log
+            const tagToCreate = {
+                tagText: newTag
+            };
+            store.dispatch(createTag(tagToCreate as TagCreate));
+            event.target.reset(); // Clear the form.
+        }
     }
 
     view(vnode: Vnode) {
@@ -135,20 +150,11 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                                             className="form-control"
                                                                             name="tag"
                                                                             required
-                                                                            hidden={tags.length === 0}
                                                                             optionValue="id"
                                                                             optionText="tagText"
                                                                             options={tags}
                                                                             defaultOption="Please select a Tag."
-                                                                            data-live-search={true}
                                                                         />
-                                                                        {/* Below div could become an *alert* atom */}
-                                                                        <div
-                                                                            class="alert alert-warning"
-                                                                            role="alert"
-                                                                            hidden={tags.length > 0}
-                                                                        >No Tags found. Please create a new Tag above.
-                                                                        </div>
                                                                     </Spinner>
                                                                 </div>
                                                             )}
@@ -168,6 +174,15 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                                     autofocus="autofocus"
                                                                     className="form-control"
                                                                     required={true}
+                                                                />
+                                                            )}
+                                                        />
+                                                        <FormGroup
+                                                            field={(
+                                                                <Button
+                                                                    buttonType={ButtonType.SUBMIT}
+                                                                    buttonClass={ButtonClass.DEFAULT}
+                                                                    text="Add Tag"
                                                                 />
                                                             )}
                                                         />

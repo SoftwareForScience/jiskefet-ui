@@ -57,7 +57,10 @@ export default class Select extends MithrilTsxComponent<Attrs> {
                 liveSearch={liveSearch}
                 liveSearchStyle="startsWith"
             >
-                <option value="">{defaultOption}</option>
+                {options.length !== 0
+                    ? <option value="">{defaultOption}</option>
+                    : <option value="">{'No options found'}</option>
+                }
                 {
                     options.map((option: any) => (
                         optionValue && optionText
