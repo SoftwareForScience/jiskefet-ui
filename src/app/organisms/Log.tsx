@@ -28,12 +28,14 @@ import { selectAttachments } from '../redux/ducks/attachment/selectors';
 import { Attachment } from '../interfaces/Attachment';
 import { download } from '../utility/FileUtil';
 import AttachmentComponent from '../molecules/Attachment';
-import { selectTags, selectFetchingTags, selectTagsForLog } from '../redux/ducks/tag/selectors';
-import { Tag } from '../interfaces/Tag';
+import { selectFetchingTags, selectTagsForLog } from '../redux/ducks/tag/selectors';
+import { Tag, TagCreate } from '../interfaces/Tag';
 import Input from '../atoms/Input';
 import FormGroup from '../molecules/FormGroup';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
+import { createTag } from '../redux/ducks/tag/operations';
+import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 
 interface Attrs {
     logId: number;
@@ -50,7 +52,20 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     }
 
     async handleSubmit(event: any): Promise<void> {
-        // TODO
+        const log = await selectCurrentLog(store.getState()) as Log | null;
+        const tagId = event.target.tag.value;
+        const newTag = event.target.tagText.value;
+        if (log && tagId) {
+            // add existing tag to Log
+        } else if (log && newTag) {
+            // create new tag and add to Log
+            const tagToCreate = {
+                tagText: newTag
+            };
+            store.dispatch(createTag(tagToCreate as TagCreate));
+        }
+
+        event.target.reset(); // Clear the form.
     }
 
     view(vnode: Vnode) {
@@ -61,7 +76,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         const isPatchingLinkRunToLog = selectIsPatchingLinkRunToLog(state);
         const attachments = selectAttachments(store.getState());
         const tagsForLog = selectTagsForLog(store.getState());
-        const tags = selectTags(store.getState());
+        const tags = ['test', 'test', 'test', 'test', 'test']; // selectTags(store.getState());
 
         return (
             <div class="container-fluid">
@@ -161,7 +176,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                     >
                                                         <FormGroup
                                                             label={(
-                                                                <Label id="tag" text="Select existing tag:" />
+                                                                <Label id="tag" text="Select an existing tag:" />
                                                             )}
                                                             field={(
                                                                 <div>
@@ -172,23 +187,16 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                                     >
                                                                         <Select
                                                                             id="tag"
-                                                                            className="form-control"
+                                                                            className="selectpicker form-control"
                                                                             name="tag"
                                                                             required
                                                                             hidden={tags.length === 0}
-                                                                            optionValue="id"
-                                                                            optionText="tagText"
+                                                                            // optionValue="id"
+                                                                            // optionText="tagText"
                                                                             options={tags}
                                                                             defaultOption="Please select a Tag."
-                                                                            data-live-search={true}
+                                                                            liveSearch={true}
                                                                         />
-                                                                        {/* Below div could become an *alert* atom */}
-                                                                        <div
-                                                                            class="alert alert-warning"
-                                                                            role="alert"
-                                                                            hidden={tags.length > 0}
-                                                                        >No Tags found. Please create a new Tag above.
-                                                                        </div>
                                                                     </Spinner>
                                                                 </div>
                                                             )}
@@ -207,7 +215,24 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                                     inputType="text"
                                                                     autofocus="autofocus"
                                                                     className="form-control"
-                                                                    required={true}
+                                                                />
+                                                            )}
+                                                        />
+                                                        {/* Below div could become an *alert* atom */}
+                                                        <div
+                                                            id="tagalert"
+                                                            class="alert alert-warning"
+                                                            role="alert"
+                                                            hidden={tags.length > 0}
+                                                        >No Tags found. Please create a new Tag above.
+                                                        </div>
+                                                        <FormGroup
+                                                            field={(
+                                                                <Button
+                                                                    buttonType={ButtonType.SUBMIT}
+                                                                    buttonClass={ButtonClass.DEFAULT}
+                                                                    disabled={tags.length === 0}
+                                                                    text="Add Tag."
                                                                 />
                                                             )}
                                                         />

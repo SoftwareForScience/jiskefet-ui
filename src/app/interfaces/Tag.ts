@@ -10,7 +10,7 @@
  * Interface with the fields for fetching one or more Attachment entries.
  */
 export interface Tag {
-    id: number;
+    id?: number;
     tagText: string;
 }
 

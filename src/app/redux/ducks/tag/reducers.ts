@@ -16,6 +16,8 @@ const initialState: TagState = {
     isCreatingTag: false,
     tags: [],
     tagToBeCreated: null,
+    tagsForLog: [],
+    tagsForRun: []
 };
 
 // Reducer

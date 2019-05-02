@@ -37,7 +37,7 @@ export const fetchTagsForLog = (logId: number): ThunkResult<Promise<void>> =>
         });
     };
 
-export const saveTag = (tag: Tag): ThunkResult<Promise<void>> =>
+export const createTag = (tag: Tag): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, TagAction | ErrorAction>): Promise<void> => {
         dispatch(createTagRequest());
         return request({

@@ -121,7 +121,7 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                     >
                                                         <FormGroup
                                                             label={(
-                                                                <Label id="tag" text="Select existing tag:" />
+                                                                <Label id="tag" text="Select an existing tag:" />
                                                             )}
                                                             field={(
                                                                 <div>
