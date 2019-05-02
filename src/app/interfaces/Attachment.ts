@@ -13,23 +13,20 @@ import { Log } from './Log';
  */
 export interface Attachment {
     fileId?: number;
-    log?: Log;
-    creationTime?: string;
-    title: string;
+    title?: string;
+    fileName: string;
     fileMime: string;
     fileData: string;
-    fileMD5?: string;
+    log?: Log;
 }
 
 /**
  * Interface with the fields for creating a Attachment entry.
  */
 export interface AttachmentCreate {
-    fileId?: number;
-    log?: Log;
-    creationTime?: string;
-    title: string;
+    title?: string;
+    fileName: string;
     fileMime: string;
     fileData: string;
-    fileMD5?: string;
+    log?: Log;
 }

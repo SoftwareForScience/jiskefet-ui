@@ -6,7 +6,7 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Attachment } from './Attachment';
+import { Attachment, AttachmentCreate } from './Attachment';
 import { User } from './User';
 import { Run } from './Run';
 
@@ -36,5 +36,5 @@ export interface LogCreate {
     body: string;
     user: number;
     run: number;
-    attachments?: Attachment[];
+    attachments?: AttachmentCreate[];
 }

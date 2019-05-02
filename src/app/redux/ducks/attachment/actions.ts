@@ -15,7 +15,7 @@ import {
     SetAttachmentToBeCreatedAction,
     ClearAttachmentToBeCreatedAction
 } from './types';
-import { Attachment } from '../../../interfaces/Attachment';
+import { Attachment, AttachmentCreate } from '../../../interfaces/Attachment';
 import { CollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
@@ -37,9 +37,9 @@ export const createAttachmentSuccess = (): CreateAttachmentSuccessAction => ({
     type: ActionTypes.CREATE_ATTACHMENT_SUCCESS
 });
 
-export const setAttachmentToBeCreated = (attachment: Attachment): SetAttachmentToBeCreatedAction => ({
+export const setAttachmentToBeCreated = (attachmentToBeCreated: AttachmentCreate): SetAttachmentToBeCreatedAction => ({
     type: ActionTypes.SET_ATTACHMENT_TO_BE_CREATED,
-    payload: attachment
+    payload: attachmentToBeCreated
 });
 
 export const clearAttachmentToBeCreated = (): ClearAttachmentToBeCreatedAction => ({
