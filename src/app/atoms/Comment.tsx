@@ -27,7 +27,11 @@ export default class Comment extends MithrilTsxComponent<Attrs> {
                         <div class="timeline-comment-header">
                             <div class="timeline-comment-header-text">
                                 <div class="timeline-comment-author">
-                                    <h5><a href={m.route.set(`/Log/${log.logId}`)}>{log.title}</a></h5>
+                                    <h5><a
+                                        // href={m.route.set(`/Log/${log.logId}`)}
+                                        href="#"
+                                    >{log.title}
+                                    </a> </h5>
                                     <div
                                         class="comment-date"
                                         data-toggle="tooltip"
@@ -42,25 +46,27 @@ export default class Comment extends MithrilTsxComponent<Attrs> {
                         </div>
                         <div class="timeline-comment-footer">
                             <a
-                                href={m.route.set(`/Log/Create/comments/${log.logId}`)}
+                                // href={m.route.set(`/Log/Create/comments/${log.logId}`)}
+                                href="#"
                                 class="btn btn-sm btn-secondary"
                             >Reply
                             </a>
                         </div>
                     </div>
                 </li>
-                {log.comments
-                    ?
-                    <ul class="timeline-comments">
-                        {log.comments && log.comments.map((sublog: ILog) =>
-                            <Comment
-                                log={sublog}
-                                key={sublog.logId}
-                            />
-                        )}
+                { // Sub-comments of comments
+                    log.comments
+                        ?
+                        <ul class="timeline-comments">
+                            {log.comments && log.comments.map((sublog: ILog) =>
+                                <Comment
+                                    log={sublog}
+                                    key={sublog.logId}
+                                />
+                            )}
 
-                    </ul>
-                    : <div />
+                        </ul>
+                        : <div />
                 }
             </div>
         );
