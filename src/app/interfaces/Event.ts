@@ -10,7 +10,7 @@
  * Event that is given when calling functions on input elements.
  * e.g. <input type="text" oninput={(event: Event) => event.target.value} />
  */
-export interface Event {
+export interface IEvent {
     target: HTMLInputElement;
     preventDefault: () => void;
 }

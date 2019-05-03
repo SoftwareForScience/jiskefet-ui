@@ -19,15 +19,15 @@ import {
     SetLogToBeCreatedAction,
     ClearLogToBeCreatedAction,
 } from './types';
-import { Log, LogCreate } from '../../../interfaces/Log';
-import { SuccessObject, CollectionSuccessObject } from '../../../interfaces/ResponseObject';
+import { ILog, ILogCreate } from '../../../interfaces/Log';
+import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchLogsRequest = (): FetchLogsByLogRequestAction => ({
     type: ActionTypes.FETCH_LOGS_REQUEST
 });
 
-export const fetchLogsSuccess = (payload: CollectionSuccessObject<Log>): FetchLogsByLogSuccessAction => ({
+export const fetchLogsSuccess = (payload: ICollectionSuccessObject<ILog>): FetchLogsByLogSuccessAction => ({
     type: ActionTypes.FETCH_LOGS_SUCCESS,
     payload
 });
@@ -36,7 +36,7 @@ export const fetchLogRequest = (): FetchLogRequestAction => ({
     type: ActionTypes.FETCH_LOG_REQUEST
 });
 
-export const fetchLogSuccess = (payload: SuccessObject<Log>): FetchLogSuccessAction => ({
+export const fetchLogSuccess = (payload: ISuccessObject<ILog>): FetchLogSuccessAction => ({
     type: ActionTypes.FETCH_LOG_SUCCESS,
     payload
 });
@@ -57,7 +57,7 @@ export const linkRunToLogSucces = (): LinkLogToLogSuccesAction => ({
     type: ActionTypes.LINK_RUN_TO_LOG_SUCCESS
 });
 
-export const setLogToBeCreated = (logToBeCreated: LogCreate): SetLogToBeCreatedAction => ({
+export const setLogToBeCreated = (logToBeCreated: ILogCreate): SetLogToBeCreatedAction => ({
     type: ActionTypes.SET_LOG_TO_BE_CREATED,
     payload: logToBeCreated
 });

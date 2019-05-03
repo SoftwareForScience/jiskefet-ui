@@ -9,7 +9,7 @@
 /**
  * Interface with the fields for fetching a SubsystemOverview.
  */
-export interface SubsystemOverview {
+export interface ISubsystemOverview {
     subsystemName: string;
     logs: number;
     userId: string;

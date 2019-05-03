@@ -19,6 +19,7 @@ const initialState: LogState = {
     count: 0,
     current: null,
     logToBeCreated: null,
+    comments: []
 };
 
 // Reducer

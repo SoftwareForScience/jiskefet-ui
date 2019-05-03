@@ -8,14 +8,14 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import Modal from '../atoms/Modal';
 import MarkdownViewer from '../atoms/MarkdownViewer';
 import MarkdownHelpText from '../constants/MarkdownHelpText';
 import AttachmentComponent from '../molecules/Attachment';
 import { selectProfile } from '../redux/ducks/auth/selectors';
 import { store } from '../redux/configureStore';
-import { LogCreate } from '../interfaces/Log';
+import { ILogCreate } from '../interfaces/Log';
 import { createLog } from '../redux/ducks/log/operations';
 import { selectLogToBeCreated } from '../redux/ducks/log/selectors';
 import { clearLogToBeCreated, setLogToBeCreated } from '../redux/ducks/log/actions';
@@ -41,17 +41,17 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
     }
 
     setValueForLogToBeCreated = (key: string, value: any) => {
-        let logToBeCreated = selectLogToBeCreated(store.getState()) as LogCreate | {};
+        let logToBeCreated = selectLogToBeCreated(store.getState()) as ILogCreate | {};
         if (!logToBeCreated) {
             logToBeCreated = {};
         }
         logToBeCreated = { ...logToBeCreated, [key]: value };
         if (logToBeCreated) {
-            store.dispatch(setLogToBeCreated(logToBeCreated as LogCreate));
+            store.dispatch(setLogToBeCreated(logToBeCreated as ILogCreate));
         }
     }
 
-    addToCreateLog = (event: Event) => {
+    addToCreateLog = (event: IEvent) => {
         this.setValueForLogToBeCreated(event.target.id, event.target.value);
     }
 
@@ -81,7 +81,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
         return (
             <HttpErrorAlert>
                 <form
-                    onsubmit={(event: Event) => {
+                    onsubmit={(event: IEvent) => {
                         event.preventDefault();
                         this.saveLog(vnode.attrs.runNumber);
                     }}

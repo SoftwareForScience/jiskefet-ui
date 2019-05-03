@@ -9,7 +9,7 @@
 /**
  * Interface with the fields for fetching one or more Attachment entries.
  */
-export interface Tag {
+export interface ITag {
     id?: number;
     tagText: string;
 }
@@ -17,7 +17,7 @@ export interface Tag {
 /**
  * Interface with the fields for creating a Attachment entry.
  */
-export interface TagCreate {
+export interface ITagCreate {
     fileId?: number;
     tagText: string;
 }

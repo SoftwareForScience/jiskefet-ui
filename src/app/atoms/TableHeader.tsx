@@ -9,11 +9,11 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Column } from '../interfaces/Column';
+import { IColumn } from '../interfaces/Column';
 import { OrderDirection } from '../enums/OrderDirection';
 
 interface Attrs {
-    column: Column;
+    column: IColumn;
     orderDirection?: OrderDirection | null;
     onClick?: () => void;
 }

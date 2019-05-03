@@ -8,7 +8,7 @@
 
 import { Reducer } from 'redux';
 import { UIState, UIAction, ActionTypes } from './types';
-import { CollapsableItem } from '../../../interfaces/CollapsableItem';
+import { ICollapsableItem } from '../../../interfaces/CollapsableItem';
 
 // Initial state
 const initialState: UIState = {
@@ -28,7 +28,7 @@ const uiReducer: Reducer<UIState>
             case ActionTypes.TOGGLE_COLLAPSE:
                 return {
                     ...state,
-                    collapsableItems: state.collapsableItems.map((item: CollapsableItem) => {
+                    collapsableItems: state.collapsableItems.map((item: ICollapsableItem) => {
                         if (item.id === action.id) {
                             return {
                                 id: action.id,
@@ -40,7 +40,7 @@ const uiReducer: Reducer<UIState>
                 };
             case ActionTypes.ADD_COLLAPSE:
                 if (state.collapsableItems.filter(
-                    (item: CollapsableItem) => item.id === action.collapsableItem.id).length === 0
+                    (item: ICollapsableItem) => item.id === action.collapsableItem.id).length === 0
                 ) {
                     return {
                         ...state,
@@ -54,7 +54,7 @@ const uiReducer: Reducer<UIState>
             case ActionTypes.SET_COLLAPSE:
                 return {
                     ...state,
-                    collapsableItems: state.collapsableItems.map((item: CollapsableItem) => {
+                    collapsableItems: state.collapsableItems.map((item: ICollapsableItem) => {
                         if (item.id === action.collapsableItem.id) {
                             return {
                                 id: action.collapsableItem.id,

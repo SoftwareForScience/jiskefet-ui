@@ -15,7 +15,7 @@ import Table from '../molecules/Table';
 import ContentBlock from '../molecules/ContentBlock';
 import PageCounter from '../atoms/PageCounter';
 import Pagination from '../atoms/Pagination';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import HttpErrorAlert from '../atoms/HttpErrorAlert';
 import { CernProfileDto } from '../interfaces/CernProfile';
 import { fetchProfile } from '../redux/ducks/auth/operations';
@@ -134,7 +134,7 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                                         style="min-width: 75px; max-width: 75px; overflow: hidden;"
                                         className="form-control form-control-sm"
                                         name="pageSize"
-                                        oninput={(event: Event) => {
+                                        oninput={(event: IEvent) => {
                                             store.dispatch(
                                                 setFilter(FilterName.UserLog, 'pageSize', event.target.value)
                                             );

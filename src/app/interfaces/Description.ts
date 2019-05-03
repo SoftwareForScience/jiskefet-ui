@@ -9,7 +9,7 @@
 /**
  * Interface with the fields for fetching one or more Attachment entries.
  */
-export interface Description {
+export interface IDescription {
     label: string;
     value: any;
 }

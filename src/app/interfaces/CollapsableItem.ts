@@ -9,7 +9,7 @@
 /**
  * An item that has a collapsable state.
  */
-export interface CollapsableItem {
+export interface ICollapsableItem {
     /**
      * The unique id of the item.
      */

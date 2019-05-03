@@ -8,9 +8,9 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Description } from '../interfaces/Description';
-import { Log } from '../interfaces/Log';
-import { Run } from '../interfaces/Run';
+import { IDescription } from '../interfaces/Description';
+import { ILog } from '../interfaces/Log';
+import { IRun } from '../interfaces/Run';
 
 interface Attrs {
     /**
@@ -22,7 +22,7 @@ interface Attrs {
     /**
      * List of descriptions (label, value)
      */
-    descriptions: Description[];
+    descriptions: IDescription[];
 
     /**
      * Optional number that determine the length of the first list.
@@ -32,7 +32,7 @@ interface Attrs {
     /**
      * The entity to display the details of.
      */
-    entity: Log | Run | null;
+    entity: ILog | IRun | null;
 }
 
 type Vnode = m.Vnode<Attrs, DescriptionList>;
@@ -51,7 +51,7 @@ export default class DescriptionList extends MithrilTsxComponent<Attrs> {
                             </div>
                             <div class="col-md-6">
                                 {
-                                    descriptions.map((description: Description) => (
+                                    descriptions.map((description: IDescription) => (
                                         <dl class="row" style="margin-block-end: 0;">
                                             <dt class="col-sm-6">{description.label}</dt>
                                             <dd class="col-sm-6">{description.value(entity)}</dd>
@@ -66,7 +66,7 @@ export default class DescriptionList extends MithrilTsxComponent<Attrs> {
                             <div class="col-md-6">
                                 {
                                     listLength &&
-                                    descriptions.slice(0, listLength).map((description: Description) => (
+                                    descriptions.slice(0, listLength).map((description: IDescription) => (
                                         <dl class="row" style="margin-block-end: 0;">
                                             <dt class="col-sm-6">{description.label}</dt>
                                             <dd class="col-sm-6">{description.value(entity)}</dd>
@@ -77,7 +77,7 @@ export default class DescriptionList extends MithrilTsxComponent<Attrs> {
                             <div class="col-md-6">
                                 {
                                     listLength &&
-                                    descriptions.slice(listLength).map((description: Description) => (
+                                    descriptions.slice(listLength).map((description: IDescription) => (
                                         <dl class="row" style="margin-block-end: 0;">
                                             <dt class="col-sm-6">{description.label}</dt>
                                             <dd class="col-sm-6">{description.value(entity)}</dd>

@@ -7,21 +7,21 @@
  */
 
 import { RootState } from '../../types';
-import { Subsystem } from '../../../interfaces/SubSytem';
-import { SubsystemOverview } from '../../../interfaces/SubsystemOverview';
-import { SubsystemPermission } from '../../../interfaces/SubsystemPermission';
+import { ISubsystem } from '../../../interfaces/SubSytem';
+import { ISubsystemOverview } from '../../../interfaces/SubsystemOverview';
+import { ISubsystemPermission } from '../../../interfaces/SubsystemPermission';
 
 // Selectors
 export const selectFetchingSubsystems = (state: RootState): boolean => state.subsystem.isFetchingSubsystems;
-export const selectSubsystems = (state: RootState): Subsystem[] => state.subsystem.subsystems;
-export const selectSubsystem = (state: RootState): Subsystem | null => state.subsystem.current;
-export const selectSubsystemOverviews = (state: RootState): SubsystemOverview[] => state.subsystem.subsystemOverviews;
+export const selectSubsystems = (state: RootState): ISubsystem[] => state.subsystem.subsystems;
+export const selectSubsystem = (state: RootState): ISubsystem | null => state.subsystem.current;
+export const selectSubsystemOverviews = (state: RootState): ISubsystemOverview[] => state.subsystem.subsystemOverviews;
 export const selectFetchingSubsystemOverviews = (state: RootState): boolean => (
     state.subsystem.isFetchingSubsystemOverviews
 );
 export const selectFetchingSubsystemPermissions = (state: RootState): boolean => (
     state.subsystem.isFetchingSubsystemPermissions
 );
-export const selectSubsystemPermissions = (state: RootState): SubsystemPermission[] => (
+export const selectSubsystemPermissions = (state: RootState): ISubsystemPermission[] => (
     state.subsystem.subsystemPermissions
 );

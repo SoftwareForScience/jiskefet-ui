@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 
 export enum InputSize {
     SMALL = 'col-md-2',
@@ -24,7 +24,7 @@ interface Attrs {
     name?: string;
     placeholder?: string;
     required?: boolean;
-    oninput?: (event: Event) => void;
+    oninput?: (event: IEvent) => void;
     optionValue?: string;
     optionText?: string;
     options: any[];

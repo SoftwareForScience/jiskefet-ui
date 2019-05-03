@@ -7,10 +7,10 @@
  */
 
 import { RootState } from '../../types';
-import { Attachment } from '../../../interfaces/Attachment';
+import { IAttachment } from '../../../interfaces/Attachment';
 
 // Selectors
-export const selectAttachments = (state: RootState): Attachment[] => state.attachment.attachments;
-export const selectAttachmentToBeCreated = (state: RootState): Attachment | null => (
+export const selectAttachments = (state: RootState): IAttachment[] => state.attachment.attachments;
+export const selectAttachmentToBeCreated = (state: RootState): IAttachment | null => (
     state.attachment.attachmentToBeCreated
 );

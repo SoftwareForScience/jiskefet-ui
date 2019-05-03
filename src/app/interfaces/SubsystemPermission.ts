@@ -9,7 +9,7 @@
 /**
  * Interface with the fields for creating a Token entry.
  */
-export interface SubsystemPermissionCreate {
+export interface ISubsystemPermissionCreate {
     user: number; // userId
     subsystem: number; // subsystemId
     subSystemTokenDescription: string;
@@ -20,7 +20,7 @@ export interface SubsystemPermissionCreate {
 /**
  * Interface with the fields to display
  */
-export interface SubsystemPermission {
+export interface ISubsystemPermission {
     subsystemPermissionId: number;
     subSystemTokenDescription: string;
 }
@@ -28,6 +28,6 @@ export interface SubsystemPermission {
 /**
  * Response object when a token is successfully created.
  */
-export interface SubsystemToken extends SubsystemPermissionCreate {
+export interface ISubsystemToken extends ISubsystemPermissionCreate {
     subSystemHash: string;
 }

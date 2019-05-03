@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Column } from '../interfaces/Column';
+import { IColumn } from '../interfaces/Column';
 import TableHeader from '../atoms/TableHeader';
 import { OrderDirection } from '../enums/OrderDirection';
 
@@ -21,7 +21,7 @@ interface Attrs {
     /**
      * The columns (table headers) for the table.
      */
-    columns: Column[];
+    columns: IColumn[];
     /**
      * The optional css class for the table.
      */
@@ -40,7 +40,7 @@ export default class Table extends MithrilTsxComponent<Attrs> {
     /**
      * Returns the order direction for a column, based on orderBy and orderDirection.
      */
-    getOrder = (column: Column, orderBy: string, orderDirection: OrderDirection): OrderDirection | null => {
+    getOrder = (column: IColumn, orderBy: string, orderDirection: OrderDirection): OrderDirection | null => {
         if (orderBy === column.accessor) {
             return orderDirection;
         } else {
@@ -55,7 +55,7 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                 <table class={`table table-sm table-bordered table-hover jf-table ${className || ''}`}>
                     <thead class="thead-light">
                         <tr>
-                            {columns && columns.map((column: Column) =>
+                            {columns && columns.map((column: IColumn) =>
                                 // tslint:disable-next-line:jsx-key
                                 <TableHeader
                                     column={column}
@@ -71,7 +71,7 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                         {data && data.map((row: object) =>
                             // tslint:disable-next-line:jsx-key
                             <tr>
-                                {columns.map((column: Column) => (
+                                {columns.map((column: IColumn) => (
                                     <td>
                                         {
                                             (column.cell ?

@@ -9,8 +9,8 @@
 import { ThunkResult, LogAction } from './types';
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../types';
-import { Log, LogCreate } from '../../../interfaces/Log';
-import { HttpError } from '../../../interfaces/HttpError';
+import { ILog, ILogCreate } from '../../../interfaces/Log';
+import { IHttpError } from '../../../interfaces/HttpError';
 import { request } from '../../../request';
 import {
     fetchLogsRequest,
@@ -25,7 +25,7 @@ import {
 import { getLogs, getLog, linkRunToLogUrl, postLog } from '../../../constants/apiUrls';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
-import { SuccessObject, CollectionSuccessObject } from '../../../interfaces/ResponseObject';
+import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 import { addSuccessMessage } from '../success/actions';
 import { SuccessAction } from '../success/types';
 
@@ -36,9 +36,9 @@ export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getLogs(query)
-        }).then((result: CollectionSuccessObject<Log>) => {
+        }).then((result: ICollectionSuccessObject<ILog>) => {
             dispatch(fetchLogsSuccess(result));
-        }).catch((error: HttpError<any>) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -49,9 +49,9 @@ export const fetchLog = (id: number): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getLog(id)
-        }).then((result: SuccessObject<Log>) => {
+        }).then((result: ISuccessObject<ILog>) => {
             dispatch(fetchLogSuccess(result));
-        }).catch((error: HttpError<any>) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -65,12 +65,12 @@ export const linkRunToLog = (logId: number, runNumber: number): ThunkResult<Prom
             data: { runNumber: runNumber as number }
         }).then(() => {
             dispatch(linkRunToLogSucces());
-        }).catch((error: HttpError<any>) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
 
-export const createLog = (logToBeCreated: LogCreate): ThunkResult<Promise<void>> =>
+export const createLog = (logToBeCreated: ILogCreate): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, LogAction | ErrorAction | SuccessAction>): Promise<void> => {
         dispatch(createLogRequest());
         return request({
@@ -83,9 +83,9 @@ export const createLog = (logToBeCreated: LogCreate): ThunkResult<Promise<void>>
             }
             dispatch(createLogSuccess());
             const message =
-                `Successfully created Log with id: ${ result.data.item.logId }`;
+                `Successfully created Log with id: ${result.data.item.logId}`;
             dispatch(addSuccessMessage(message));
-        }).catch((error: HttpError<any>) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

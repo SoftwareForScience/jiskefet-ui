@@ -9,18 +9,18 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
-import { Tag, TagCreate } from '../../../interfaces/Tag';
-import { CollectionSuccessObject } from '../../../interfaces/ResponseObject';
+import { ITag, ITagCreate } from '../../../interfaces/Tag';
+import { ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface TagState {
     isFetchingTags: boolean;
     isFetchingTag: boolean;
     isCreatingTag: boolean;
-    tags: Tag[];
-    tagToBeCreated: TagCreate | null;
-    tagsForRun: Tag[];
-    tagsForLog: Tag[];
+    tags: ITag[];
+    tagToBeCreated: ITagCreate | null;
+    tagsForRun: ITag[];
+    tagsForLog: ITag[];
 }
 
 // Action types
@@ -40,7 +40,7 @@ export interface FetchTagsByLogRequestAction extends Action {
 
 export interface FetchTagsByLogSuccessAction extends Action {
     type: ActionTypes.FETCH_TAGS_BY_LOG_SUCCESS;
-    payload: CollectionSuccessObject<Tag>;
+    payload: ICollectionSuccessObject<ITag>;
 }
 
 export interface CreateTagRequestAction extends Action {
@@ -53,7 +53,7 @@ export interface CreateTagSuccessAction extends Action {
 
 export interface SetTagToBeCreatedAction extends Action {
     type: ActionTypes.SET_TAG_TO_BE_CREATED;
-    payload: Tag;
+    payload: ITag;
 }
 
 export interface ClearTagToBeCreatedAction extends Action {

@@ -24,7 +24,7 @@ import TabContainer from '../molecules/TabContainer';
 import Table from '../molecules/Table';
 import LogColumns from '../constants/LogColumns';
 import { selectTags, selectTagsForRun, selectFetchingTags } from '../redux/ducks/tag/selectors';
-import { Tag, TagCreate } from '../interfaces/Tag';
+import { ITag, ITagCreate } from '../interfaces/Tag';
 import FormGroup from '../molecules/FormGroup';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
@@ -75,7 +75,7 @@ export default class Run extends MithrilTsxComponent<Attrs> {
             const tagToCreate = {
                 tagText: newTag
             };
-            store.dispatch(createTag(tagToCreate as TagCreate));
+            store.dispatch(createTag(tagToCreate as ITagCreate));
             event.target.reset(); // Clear the form.
         }
     }
@@ -114,7 +114,7 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                 <div>
                                                     <h3>Currently added tags:</h3>
                                                     <ul>
-                                                        {tagsForRun && tagsForRun.map((tag: Tag) =>
+                                                        {tagsForRun && tagsForRun.map((tag: ITag) =>
                                                             <li key={tag.id}>
                                                                 <a
                                                                     id={tag.id}

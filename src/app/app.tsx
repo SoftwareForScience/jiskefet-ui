@@ -10,9 +10,9 @@ import * as m from 'mithril';
 import '../scss/main.scss';
 import 'bootstrap';
 import * as Cookie from 'js-cookie';
-import { Setting } from './interfaces/Setting';
+import { ISetting } from './interfaces/Setting';
 import { CronJob } from 'cron';
-import { SuccessObject } from './interfaces/ResponseObject';
+import { ISuccessObject } from './interfaces/ResponseObject';
 import LogPage from './pages/LogPage';
 import LogsPage from './pages/LogsPage';
 import RunsPage from './pages/RunsPage';
@@ -117,7 +117,7 @@ export const getAuthSettings = () => {
     return m.request({
         method: 'GET',
         url: `${process.env.API_URL}setting`
-    }).then((result: SuccessObject<Setting>) => {
+    }).then((result: ISuccessObject<ISetting>) => {
         // setting['date'] = new Date().valueOf();
         localStorage.setItem('USE_CERN_SSO', result.data.item.USE_CERN_SSO);
         localStorage.setItem('AUTH_URL', result.data.item.AUTH_URL);

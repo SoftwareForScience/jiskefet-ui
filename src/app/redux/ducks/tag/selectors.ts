@@ -7,11 +7,11 @@
  */
 
 import { RootState } from '../../types';
-import { Tag, TagCreate } from '../../../interfaces/Tag';
+import { ITag, ITagCreate } from '../../../interfaces/Tag';
 
 // Selectors
-export const selectTags = (state: RootState): Tag[] => state.tag.tags;
-export const selectTagsForRun = (state: RootState): Tag[] => state.tag.tagsForRun;
-export const selectTagsForLog = (state: RootState): Tag[] => state.tag.tagsForLog;
-export const selectTagToBeCreated = (state: RootState): TagCreate | null => state.tag.tagToBeCreated;
+export const selectTags = (state: RootState): ITag[] => state.tag.tags;
+export const selectTagsForRun = (state: RootState): ITag[] => state.tag.tagsForRun;
+export const selectTagsForLog = (state: RootState): ITag[] => state.tag.tagsForLog;
+export const selectTagToBeCreated = (state: RootState): ITagCreate | null => state.tag.tagToBeCreated;
 export const selectFetchingTags = (state: RootState): boolean => state.tag.isFetchingTags;

@@ -15,8 +15,8 @@ import {
     SetTagToBeCreatedAction,
     ClearTagToBeCreatedAction
 } from './types';
-import { Tag } from '../../../interfaces/Tag';
-import { CollectionSuccessObject } from '../../../interfaces/ResponseObject';
+import { ITag } from '../../../interfaces/Tag';
+import { ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchTagsByLogRequest = (): FetchTagsByLogRequestAction => ({
@@ -24,7 +24,7 @@ export const fetchTagsByLogRequest = (): FetchTagsByLogRequestAction => ({
 });
 
 export const fetchTagsByLogSuccess = (
-    payload: CollectionSuccessObject<Tag>): FetchTagsByLogSuccessAction => ({
+    payload: ICollectionSuccessObject<ITag>): FetchTagsByLogSuccessAction => ({
         type: ActionTypes.FETCH_TAGS_BY_LOG_SUCCESS,
         payload
     });
@@ -37,7 +37,7 @@ export const createTagSuccess = (): CreateTagSuccessAction => ({
     type: ActionTypes.CREATE_TAG_SUCCESS
 });
 
-export const setTagToBeCreated = (attachment: Tag): SetTagToBeCreatedAction => ({
+export const setTagToBeCreated = (attachment: ITag): SetTagToBeCreatedAction => ({
     type: ActionTypes.SET_TAG_TO_BE_CREATED,
     payload: attachment
 });

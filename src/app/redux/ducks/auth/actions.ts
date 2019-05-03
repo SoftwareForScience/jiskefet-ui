@@ -15,15 +15,15 @@ import {
     UserLogoutAction
 } from './types';
 import { UserProfile } from '../../../interfaces/UserProfile';
-import { AuthorizeResponse } from '../../../interfaces/Auth';
-import { SuccessObject } from '../../../interfaces/ResponseObject';
+import { IAuthorizeResponse } from '../../../interfaces/Auth';
+import { ISuccessObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchProfileRequest = (): FetchProfileRequestAction => ({
     type: ActionTypes.FETCH_PROFILE_REQUEST
 });
 
-export const fetchProfileSuccess = (payload: SuccessObject<UserProfile>): FetchProfileSuccessAction => ({
+export const fetchProfileSuccess = (payload: ISuccessObject<UserProfile>): FetchProfileSuccessAction => ({
     type: ActionTypes.FETCH_PROFILE_SUCCESS,
     payload
 });
@@ -32,7 +32,7 @@ export const authorizeRequest = (): AuthorizeRequestAction => ({
     type: ActionTypes.AUTHORIZE_REQUEST
 });
 
-export const authorizeSuccess = (payload: AuthorizeResponse): AuthorizeSuccessAction => ({
+export const authorizeSuccess = (payload: IAuthorizeResponse): AuthorizeSuccessAction => ({
     type: ActionTypes.AUTHORIZE_SUCCESS,
     payload
 });

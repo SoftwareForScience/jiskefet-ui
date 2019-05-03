@@ -6,14 +6,14 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Attachment } from './Attachment';
-import { User } from './User';
-import { Run } from './Run';
+import { IAttachment } from './Attachment';
+import { IUser } from './User';
+import { IRun } from './Run';
 
 /**
  * Interface with the fields for fetching one or more Log entries.
  */
-export interface Log {
+export interface ILog {
     logId: number;
     subtype: string;
     userId?: number;
@@ -21,20 +21,20 @@ export interface Log {
     creationTime: string;
     title: string;
     body: string;
-    user: User;
-    runs?: Run[];
-    attachments?: Attachment[];
+    user: IUser;
+    runs?: IRun[];
+    attachments?: IAttachment[];
 }
 
 /**
  * Interface with the fields for creating a Log entry.
  */
-export interface LogCreate {
+export interface ILogCreate {
     subtype: string;
     origin: string;
     title: string;
     body: string;
     user: number;
     run: number;
-    attachments?: Attachment[];
+    attachments?: IAttachment[];
 }

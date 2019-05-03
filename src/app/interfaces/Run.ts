@@ -6,12 +6,12 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Log } from './Log';
+import { ILog } from './Log';
 
 /**
  * Interface with the fields for fetching one or more Log entries.
  */
-export interface Run {
+export interface IRun {
     runNumber: number;
     O2StartTime: Date | string;
     TrgStartTime: Date | string;
@@ -27,5 +27,5 @@ export interface Run {
     nSubtimeframes: number;
     bytesReadOut: number;
     bytesTimeframeBuilder: number;
-    logs: Log[];
+    logs: ILog[];
 }

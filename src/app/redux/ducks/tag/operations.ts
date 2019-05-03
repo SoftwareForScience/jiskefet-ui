@@ -9,8 +9,8 @@
 import { ThunkResult, TagAction } from './types';
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../types';
-import { Tag } from '../../../interfaces/Tag';
-import { HttpError } from '../../../interfaces/HttpError';
+import { ITag } from '../../../interfaces/Tag';
+import { IHttpError } from '../../../interfaces/HttpError';
 import { request } from '../../../request';
 import {
     fetchTagsByLogRequest,
@@ -21,7 +21,7 @@ import {
 import { getTagsForLog, postTag } from '../../../constants/apiUrls';
 import { addHttpError } from '../error/actions';
 import { ErrorAction } from '../error/types';
-import { CollectionSuccessObject } from '../../../interfaces/ResponseObject';
+import { ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchTagsForLog = (logId: number): ThunkResult<Promise<void>> =>
@@ -30,14 +30,14 @@ export const fetchTagsForLog = (logId: number): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getTagsForLog(logId)
-        }).then((result: CollectionSuccessObject<Tag>) => {
+        }).then((result: ICollectionSuccessObject<ITag>) => {
             dispatch(fetchTagsByLogSuccess(result));
-        }).catch((error: HttpError<any>) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
 
-export const createTag = (tag: Tag): ThunkResult<Promise<void>> =>
+export const createTag = (tag: ITag): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, TagAction | ErrorAction>): Promise<void> => {
         dispatch(createTagRequest());
         return request({
@@ -47,7 +47,7 @@ export const createTag = (tag: Tag): ThunkResult<Promise<void>> =>
         }).then((result: any) => {
             // SuccesModel.add('Successfully saved tag.');
             dispatch(createTagSuccess());
-        }).catch((error: HttpError<any>) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

@@ -7,7 +7,7 @@
  */
 
 import { RootState } from '../../types';
-import { HttpError } from '../../../interfaces/HttpError';
+import { IHttpError } from '../../../interfaces/HttpError';
 
 // Selectors
-export const selectErrors = (state: RootState): Array<HttpError<any>> => state.error.httpErrors;
+export const selectErrors = (state: RootState): Array<IHttpError<any>> => state.error.httpErrors;

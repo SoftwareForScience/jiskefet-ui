@@ -14,7 +14,7 @@ import SuccessMessage from '../atoms/SuccessMessage';
 import Table from '../molecules/Table';
 import ContentBlock from '../molecules/ContentBlock';
 import Spinner from '../atoms/Spinner';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import { fetchSubsystemOverviews } from '../redux/ducks/subsystem/operations';
 import { store } from '../redux/configureStore';
 import { selectFetchingSubsystemOverviews, selectSubsystemOverviews } from '../redux/ducks/subsystem/selectors';
@@ -70,7 +70,7 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> {
                                     id="timeRange"
                                     className="form-control form-control-sm"
                                     name="timeRange"
-                                    oninput={(event: Event) => {
+                                    oninput={(event: IEvent) => {
                                         store.dispatch(setFilter(
                                             FilterName.Subsystem,
                                             'timeRange',

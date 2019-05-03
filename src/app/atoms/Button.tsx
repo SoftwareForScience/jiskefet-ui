@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 
 /**
  * Css class that defines the size (bootstrap)
@@ -47,7 +47,7 @@ interface Attrs {
     id?: string | number;
     margin?: string;
     href?: string;
-    onClick?: (event?: Event) => void;
+    onClick?: (event?: IEvent) => void;
     name?: string;
     value?: string | number;
     dataToggle?: string;

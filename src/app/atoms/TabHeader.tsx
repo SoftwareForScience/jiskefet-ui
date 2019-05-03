@@ -8,14 +8,14 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Tabs } from '../interfaces/Tabs';
+import { ITab } from '../interfaces/Tab';
 
 interface Attrs {
     /**
      * The information of a tab. Each object in the array represents a tab.
      * It is used to set the id and name of the tab header.
      */
-    tabs: Tabs[];
+    tabs: ITab[];
 }
 
 type Vnode = m.Vnode<Attrs, TabHeader>;
@@ -30,7 +30,7 @@ export default class TabHeader extends MithrilTsxComponent<Attrs> {
         return (
             <div class="col-md-12 mx-auto">
                 <ul class="nav nav-tabs card-header-tabs pull-xs-left flex-column flex-sm-row" role="tablist">
-                    {tabs && tabs.map((tab: Tabs) =>
+                    {tabs && tabs.map((tab: ITab) =>
                         // tslint:disable-next-line:jsx-key
                         <li class="nav-item">
                             <a

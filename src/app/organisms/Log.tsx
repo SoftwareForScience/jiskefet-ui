@@ -16,7 +16,10 @@ import SuccessMessage from '../atoms/SuccessMessage';
 import { store } from '../redux/configureStore';
 import { fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { fetchLog } from '../redux/ducks/log/operations';
-import { selectCurrentLog, selectIsFetchingLog, selectIsPatchingLinkRunToLog } from '../redux/ducks/log/selectors';
+import {
+    selectCurrentLog, selectIsFetchingLog,
+    selectIsPatchingLinkRunToLog, selectComments
+} from '../redux/ducks/log/selectors';
 import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import LogDescription from '../constants/LogDescription';
@@ -25,17 +28,19 @@ import MarkdownViewer from '../atoms/MarkdownViewer';
 import Table from '../molecules/Table';
 import RunColumns from '../constants/RunColumns';
 import { selectAttachments } from '../redux/ducks/attachment/selectors';
-import { Attachment } from '../interfaces/Attachment';
+import { IAttachment } from '../interfaces/Attachment';
 import { download } from '../utility/FileUtil';
 import AttachmentComponent from '../molecules/Attachment';
 import { selectFetchingTags, selectTagsForLog, selectTags } from '../redux/ducks/tag/selectors';
-import { Tag, TagCreate } from '../interfaces/Tag';
+import { ITag, ITagCreate } from '../interfaces/Tag';
 import Input from '../atoms/Input';
 import FormGroup from '../molecules/FormGroup';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
 import { createTag } from '../redux/ducks/tag/operations';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
+import Comment from '../atoms/Comment';
+import { ILog } from '../interfaces/Log';
 
 interface Attrs {
     logId: number;
@@ -52,7 +57,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     }
 
     async handleSubmit(event: any): Promise<void> {
-        const log = await selectCurrentLog(store.getState()) as Log | null;
+        const log = await selectCurrentLog(store.getState()) as ILog | null;
         const tagId = event.target.tag.value;
         const newTag = event.target.tagText.value;
         if (log && tagId) {
@@ -64,7 +69,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
             const tagToCreate = {
                 tagText: newTag
             };
-            store.dispatch(createTag(tagToCreate as TagCreate));
+            store.dispatch(createTag(tagToCreate as ITagCreate));
             event.target.reset(); // Clear the form.
         }
     }
@@ -78,6 +83,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         const attachments = selectAttachments(store.getState());
         const tagsForLog = selectTagsForLog(store.getState());
         const tags = selectTags(store.getState());
+        const comments = selectComments(store.getState());
 
         return (
             <div class="container-fluid">
@@ -99,7 +105,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                             <LinkRunToLog logId={vnode.attrs.logId} />
                                         </Modal>}
                                     footerContent={(
-                                        <TabContainer titles={['Content', 'Runs', 'Files', 'Tags']} >
+                                        <TabContainer titles={['Content', 'Runs', 'Files', 'Tags', 'Comments']} >
                                             {
                                                 currentLog && currentLog.body
                                                     ? <MarkdownViewer
@@ -122,7 +128,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                             {
                                                 <div>
                                                     <ul>
-                                                        {attachments && attachments.map((attachment: Attachment) =>
+                                                        {attachments && attachments.map((attachment: IAttachment) =>
                                                             <li key={attachment.fileId}>
                                                                 <a
                                                                     id={attachment.fileId}
@@ -155,7 +161,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                 <div>
                                                     <h3>Currently added tags:</h3>
                                                     <ul>
-                                                        {tagsForLog && tagsForLog.map((tag: Tag) =>
+                                                        {tagsForLog && tagsForLog.map((tag: ITag) =>
                                                             <li key={tag.id}>
                                                                 <a
                                                                     id={tag.id}
@@ -228,6 +234,17 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                         />
                                                     </form>
                                                 </div>
+                                            }
+                                            {
+                                                <ul>
+                                                    {comments && comments.map((log: ILog) =>
+                                                        <Comment
+                                                            log={log}
+                                                            key={log.logId}
+                                                        />
+                                                    )}
+                                                </ul>
+
                                             }
                                         </TabContainer>
                                     )}

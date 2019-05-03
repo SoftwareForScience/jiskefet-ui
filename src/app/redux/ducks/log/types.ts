@@ -9,8 +9,8 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
-import { Log, LogCreate } from '../../../interfaces/Log';
-import { SuccessObject, CollectionSuccessObject } from '../../../interfaces/ResponseObject';
+import { ILog, ILogCreate } from '../../../interfaces/Log';
+import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface LogState {
@@ -18,10 +18,11 @@ export interface LogState {
     isFetchingLog: boolean;
     isPatchingLinkRunToLog: boolean;
     isCreatingLog: boolean;
-    logs: Log[];
+    logs: ILog[];
     count: number;
-    current: Log | null;
-    logToBeCreated: LogCreate | null;
+    current: ILog | null;
+    logToBeCreated: ILogCreate | null;
+    comments: ILog[];
 }
 
 // Action types
@@ -45,7 +46,7 @@ export interface FetchLogsByLogRequestAction extends Action {
 
 export interface FetchLogsByLogSuccessAction extends Action {
     type: ActionTypes.FETCH_LOGS_SUCCESS;
-    payload: CollectionSuccessObject<Log>;
+    payload: ICollectionSuccessObject<ILog>;
 }
 
 export interface FetchLogRequestAction extends Action {
@@ -54,7 +55,7 @@ export interface FetchLogRequestAction extends Action {
 
 export interface FetchLogSuccessAction extends Action {
     type: ActionTypes.FETCH_LOG_SUCCESS;
-    payload: SuccessObject<Log>;
+    payload: ISuccessObject<ILog>;
 }
 
 export interface LinkLogToLogRequestAction extends Action {
@@ -75,7 +76,7 @@ export interface CreateLogSuccessAction extends Action {
 
 export interface SetLogToBeCreatedAction extends Action {
     type: ActionTypes.SET_LOG_TO_BE_CREATED;
-    payload: LogCreate;
+    payload: ILogCreate;
 }
 
 export interface ClearLogToBeCreatedAction extends Action {

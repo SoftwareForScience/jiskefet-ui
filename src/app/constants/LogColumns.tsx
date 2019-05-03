@@ -7,7 +7,7 @@
  */
 
 import * as m from 'mithril';
-import { Log } from '../interfaces/Log';
+import { ILog } from '../interfaces/Log';
 import { format } from 'date-fns';
 
 /**
@@ -21,7 +21,7 @@ const LogColumns: any[] = [
     {
         header: 'Title',
         accessor: 'title',
-        cell: (row: Log): JSX.Element => (
+        cell: (row: ILog): JSX.Element => (
             <a href={`/logs/${row.logId}`} oncreate={m.route.link}>
                 {row.title}
             </a>
@@ -30,7 +30,7 @@ const LogColumns: any[] = [
     {
         header: 'Sub-type',
         accessor: 'subtype',
-        cell: (row: Log): JSX.Element | string => (
+        cell: (row: ILog): JSX.Element | string => (
             row.subtype === 'run' ?
                 (
                     <div class="text-center">
@@ -43,7 +43,7 @@ const LogColumns: any[] = [
     {
         header: 'Origin',
         accessor: 'origin',
-        cell: (row: Log): JSX.Element | string => (
+        cell: (row: ILog): JSX.Element | string => (
             row.origin === 'human' ?
                 (
                     <div class="text-center">
@@ -51,22 +51,22 @@ const LogColumns: any[] = [
                     </div>
                 )
                 : row.origin === 'process' ?
-                (
-                    <div class="text-center">
-                        <span class="badge badge-primary">{row.origin}</span>
-                    </div>
-                ) : row.origin
+                    (
+                        <div class="text-center">
+                            <span class="badge badge-primary">{row.origin}</span>
+                        </div>
+                    ) : row.origin
         )
     },
     {
         header: 'Creation time',
         accessor: 'creationTime',
-        cell: (row: Log): string => (row.creationTime ? format(row.creationTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        cell: (row: ILog): string => (row.creationTime ? format(row.creationTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Author',
         accessor: 'user',
-        cell: (row: Log): string => (row.user ? row.user.userId.toString() : 'Unknown')
+        cell: (row: ILog): string => (row.user ? row.user.userId.toString() : 'Unknown')
     }
 ];
 
