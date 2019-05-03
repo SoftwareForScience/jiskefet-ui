@@ -14,6 +14,7 @@ import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/Re
 
 // State interface
 export interface LogState {
+    isFetchingThread: boolean;
     isFetchingLogs: boolean;
     isFetchingLog: boolean;
     isPatchingLinkRunToLog: boolean;
@@ -22,11 +23,13 @@ export interface LogState {
     count: number;
     current: ILog | null;
     logToBeCreated: ILogCreate | null;
-    comments: ILog[];
+    thread: ILog | null;
 }
 
 // Action types
 export enum ActionTypes {
+    FETCH_THREAD_REQUEST = 'jiskefet/log/FETCH_THREAD_REQUEST',
+    FETCH_THREAD_SUCCESS = 'jiskefet/log/FETCH_THREAD_SUCCESS',
     FETCH_LOGS_REQUEST = 'jiskefet/log/FETCH_LOGS_LOG_REQUEST',
     FETCH_LOGS_SUCCESS = 'jiskefet/log/FETCH_LOGS_LOG_SUCCESS',
     FETCH_LOG_REQUEST = 'jiskefet/log/FETCH_LOG_REQUEST',
@@ -40,6 +43,15 @@ export enum ActionTypes {
 }
 
 // Action interfaces
+export interface FetchThreadRequestAction extends Action {
+    type: ActionTypes.FETCH_THREAD_REQUEST;
+}
+
+export interface FetchThreadSuccessAction extends Action {
+    type: ActionTypes.FETCH_THREAD_SUCCESS;
+    payload: ISuccessObject<ILog>;
+}
+
 export interface FetchLogsByLogRequestAction extends Action {
     type: ActionTypes.FETCH_LOGS_REQUEST;
 }
@@ -85,6 +97,8 @@ export interface ClearLogToBeCreatedAction extends Action {
 
 // Combine actions into single type
 export type LogAction =
+    | FetchThreadRequestAction
+    | FetchThreadSuccessAction
     | FetchLogsByLogRequestAction
     | FetchLogsByLogSuccessAction
     | FetchLogRequestAction

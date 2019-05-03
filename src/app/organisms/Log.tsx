@@ -15,10 +15,10 @@ import LinkRunToLog from '../atoms/LinkRunToLog';
 import SuccessMessage from '../atoms/SuccessMessage';
 import { store } from '../redux/configureStore';
 import { fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
-import { fetchLog } from '../redux/ducks/log/operations';
+import { fetchLog, fetchThread } from '../redux/ducks/log/operations';
 import {
     selectCurrentLog, selectIsFetchingLog,
-    selectIsPatchingLinkRunToLog, selectComments
+    selectIsPatchingLinkRunToLog, selectThread, selectIsFetchingThread
 } from '../redux/ducks/log/selectors';
 import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
@@ -54,6 +54,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         super();
         store.dispatch(fetchLog(vnode.attrs.logId));
         store.dispatch(fetchAttachmentsByLog(vnode.attrs.logId));
+        store.dispatch(fetchThread(vnode.attrs.logId));
     }
 
     async handleSubmit(event: any): Promise<void> {
@@ -79,15 +80,16 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         const state = store.getState();
         const currentLog = selectCurrentLog(state);
         const isFetchingLog = selectIsFetchingLog(state);
+        const isFetchingThread = selectIsFetchingThread(state);
         const isPatchingLinkRunToLog = selectIsPatchingLinkRunToLog(state);
         const attachments = selectAttachments(store.getState());
         const tagsForLog = selectTagsForLog(store.getState());
         const tags = selectTags(store.getState());
-        const comments = selectComments(store.getState());
+        const thread = selectThread(store.getState());
 
         return (
             <div class="container-fluid">
-                <Spinner isLoading={isFetchingLog || isPatchingLinkRunToLog}>
+                <Spinner isLoading={isFetchingLog || isPatchingLinkRunToLog || isFetchingThread}>
                     <SuccessMessage />
                     <HttpErrorAlert>
                         <SuccessMessage />
@@ -237,7 +239,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                             }
                                             {
                                                 <ul>
-                                                    {comments && comments.map((log: ILog) =>
+                                                    {thread && thread.comments && thread.comments.map((log: ILog) =>
                                                         <Comment
                                                             log={log}
                                                             key={log.logId}

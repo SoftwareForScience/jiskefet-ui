@@ -18,11 +18,22 @@ import {
     CreateLogSuccessAction,
     SetLogToBeCreatedAction,
     ClearLogToBeCreatedAction,
+    FetchThreadRequestAction,
+    FetchThreadSuccessAction,
 } from './types';
 import { ILog, ILogCreate } from '../../../interfaces/Log';
 import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
+export const fetchThreadRequest = (): FetchThreadRequestAction => ({
+    type: ActionTypes.FETCH_THREAD_REQUEST
+});
+
+export const fetchThreadSuccess = (payload: ISuccessObject<ILog>): FetchThreadSuccessAction => ({
+    type: ActionTypes.FETCH_THREAD_SUCCESS,
+    payload
+});
+
 export const fetchLogsRequest = (): FetchLogsByLogRequestAction => ({
     type: ActionTypes.FETCH_LOGS_REQUEST
 });

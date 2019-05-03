@@ -43,6 +43,8 @@ export const getLogs = (query?: string): string => `${baseUrl}logs${query ? `?${
 export const getLog = (id: string | number): string => `${baseUrl}logs/${id}`;
 export const linkRunToLogUrl = (runNumber: number): string => `${baseUrl}logs/${runNumber}/runs`;
 export const postLog = (): string => `${baseUrl}logs`;
+export const getThread = (id: number): string => `${baseUrl}logs/${id}/threads`;
+export const postToThread = (): string => `${baseUrl}logs/threads`;
 
 // Tag
 export const getTags = (query?: string): string => `${baseUrl}tags${query ? `?${query}` : ''}`;

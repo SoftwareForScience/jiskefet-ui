@@ -24,17 +24,22 @@ export interface ILog {
     user: IUser;
     runs?: IRun[];
     attachments?: IAttachment[];
+    comments?: ILog[];
+    rootId?: number;
+    parentId?: number;
 }
 
 /**
  * Interface with the fields for creating a Log entry.
  */
 export interface ILogCreate {
-    subtype: string;
-    origin: string;
+    subtype?: string;
+    origin?: string;
     title: string;
     body: string;
     user: number;
-    run: number;
+    run?: number;
     attachments?: IAttachment[];
+    rootId?: number;
+    parentId?: number;
 }
