@@ -238,15 +238,14 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                 </div>
                                             }
                                             {
-                                                <ul>
+                                                <div>
                                                     {thread && thread.comments && thread.comments.map((log: ILog) =>
                                                         <Comment
                                                             log={log}
                                                             key={log.logId}
                                                         />
                                                     )}
-                                                </ul>
-
+                                                </div>
                                             }
                                         </TabContainer>
                                     )}

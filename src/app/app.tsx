@@ -49,6 +49,11 @@ const authenticatedRoutes = {
             <CreateLogPage runNumber={vnode.attrs.id} />
         ),
     },
+    '/logs/create/comments/:id': {
+        view: (vnode: m.Vnode<{ id: number }>) => (
+            <CreateLogPage logNumber={vnode.attrs.id} />
+        ),
+    },
     '/logs/:id': {
         view: (vnode: m.Vnode<{ id: number }>) => (
             <LogPage logId={vnode.attrs.id} />

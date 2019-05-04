@@ -25,8 +25,8 @@ export interface ILog {
     runs?: IRun[];
     attachments?: IAttachment[];
     comments?: ILog[];
-    rootId?: number;
-    parentId?: number;
+    commentFkRootLogId?: number;
+    commentFkParentLogId?: number;
 }
 
 /**

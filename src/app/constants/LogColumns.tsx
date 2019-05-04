@@ -37,7 +37,11 @@ const LogColumns: any[] = [
                         <span class="badge badge-warning">{row.subtype}</span>
                     </div>
                 )
-                : row.subtype
+                : (
+                    <div class="text-center">
+                        <span class="badge badge-primary">{row.subtype}</span>
+                    </div>
+                )
         )
     },
     {

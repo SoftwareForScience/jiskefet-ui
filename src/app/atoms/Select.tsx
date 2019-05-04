@@ -43,7 +43,7 @@ export default class Select extends MithrilTsxComponent<Attrs> {
             oninput, options,
             optionValue, optionText,
             defaultOption, hidden,
-            style, liveSearch } = vnode.attrs;
+            style } = vnode.attrs;
         return (
             <select
                 id={id}
@@ -54,12 +54,12 @@ export default class Select extends MithrilTsxComponent<Attrs> {
                 oninput={oninput}
                 hidden={hidden}
                 style={style}
-                liveSearch={liveSearch}
-                liveSearchStyle="startsWith"
             >
-                {options.length !== 0
-                    ? <option value="">{defaultOption}</option>
-                    : <option value="">{'No options found'}</option>
+                {defaultOption
+                    ? options.length !== 0
+                        ? <option value="">{defaultOption}</option>
+                        : <option value="">{'No options found'}</option>
+                    : ''
                 }
                 {
                     options.map((option: any) => (

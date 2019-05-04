@@ -27,7 +27,8 @@ export enum ButtonClass {
     SUCCESS = 'btn btn-success',
     NAV = 'dropdown-item jf-dropdown-item',
     CLOSE = 'close',
-    INFO = 'btn btn-info'
+    INFO = 'btn btn-info',
+    SMALL = 'btn btn-sm btn-secondary'
 }
 
 /**

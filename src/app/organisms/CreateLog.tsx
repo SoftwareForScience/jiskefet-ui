@@ -15,9 +15,9 @@ import MarkdownHelpText from '../constants/MarkdownHelpText';
 import AttachmentComponent from '../molecules/Attachment';
 import { selectProfile } from '../redux/ducks/auth/selectors';
 import { store } from '../redux/configureStore';
-import { ILogCreate } from '../interfaces/Log';
-import { createLog } from '../redux/ducks/log/operations';
-import { selectLogToBeCreated } from '../redux/ducks/log/selectors';
+import { ILogCreate, ILog } from '../interfaces/Log';
+import { createLog, fetchLog, createComment } from '../redux/ducks/log/operations';
+import { selectLogToBeCreated, selectCurrentLog } from '../redux/ducks/log/selectors';
 import { clearLogToBeCreated, setLogToBeCreated } from '../redux/ducks/log/actions';
 import MarkdownEditor from '../atoms/MarkdownEditor';
 import TabContainer from '../molecules/TabContainer';
@@ -30,6 +30,7 @@ import HttpErrorAlert from '../atoms/HttpErrorAlert';
 
 interface Attrs {
     runNumber?: number | undefined;
+    logNumber?: number | undefined;
 }
 
 type Vnode = m.Vnode<Attrs, CreateLog>;
@@ -51,6 +52,10 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
         }
     }
 
+    fetchParentLog = async (logNumber: number): Promise<ILog | null> => {
+        await store.dispatch(fetchLog(logNumber));
+        return selectCurrentLog(store.getState());
+    }
     addToCreateLog = (event: IEvent) => {
         this.setValueForLogToBeCreated(event.target.id, event.target.value);
     }
@@ -59,17 +64,28 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
         this.setValueForLogToBeCreated('body', content);
     }
 
-    async saveLog(runNumber: number | undefined) {
+    async saveLog(runNumber: number | undefined, logNumber: number | undefined) {
+        const parentLog = logNumber && await this.fetchParentLog(logNumber);
+
         if (runNumber) {
             this.setValueForLogToBeCreated('run', runNumber);
+        }
+        console.log('Create comment for root:');
+        console.log(parentLog && parentLog.commentFkRootLogId);
+        if (logNumber) {
+            this.setValueForLogToBeCreated('parentId', logNumber);
+            this.setValueForLogToBeCreated('rootId', parentLog && parentLog.commentFkRootLogId);
         }
         const profile = selectProfile(store.getState());
         if (profile) {
             this.setValueForLogToBeCreated('user', profile.userData.userId);
 
             const logToBeCreated = selectLogToBeCreated(store.getState());
-            if (logToBeCreated) {
+            if (logToBeCreated && !logNumber) {
                 await store.dispatch(createLog(logToBeCreated));
+                store.dispatch(clearLogToBeCreated());
+            } else if (logToBeCreated && !runNumber) {
+                await store.dispatch(createComment(logToBeCreated));
                 store.dispatch(clearLogToBeCreated());
             }
             m.route.set('/Logs');
@@ -83,7 +99,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                 <form
                     onsubmit={(event: IEvent) => {
                         event.preventDefault();
-                        this.saveLog(vnode.attrs.runNumber);
+                        this.saveLog(vnode.attrs.runNumber, vnode.attrs.logNumber);
                     }}
                 >
                     <div class="container-fluid">
@@ -124,11 +140,12 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                             name="subtype"
                                             required={true}
                                             oninput={this.addToCreateLog}
-                                            options={['run']}
+                                            options={vnode.attrs.logNumber ? ['comment'] : ['run']}
                                         />
                                     )}
                                 />
                                 <FormGroup
+                                    hidden={!vnode.attrs.runNumber}
                                     label={(
                                         <Label id="run" text="Run number:" />
                                     )}
