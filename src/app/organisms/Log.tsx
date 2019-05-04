@@ -99,13 +99,24 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                     className={'shadow-sm bg-light'}
                                     headerTitle={'Log'}
                                     headerContent={
-                                        <Modal
-                                            id={addExistingRunId}
-                                            title="Link to run"
-                                            buttonClass="btn btn-primary"
-                                        >
-                                            <LinkRunToLog logId={vnode.attrs.logId} />
-                                        </Modal>}
+                                        <div>
+                                            <Modal
+                                                id={addExistingRunId}
+                                                title="Link to run"
+                                                buttonClass="btn btn-primary"
+                                            >
+                                                <LinkRunToLog logId={vnode.attrs.logId} />
+                                            </Modal>
+                                            <Button
+                                                buttonClass={ButtonClass.DEFAULT}
+                                                onClick={() => m.route.set(
+                                                    `/logs/create/comments/
+                                                    ${currentLog && currentLog.logId}`
+                                                )}
+                                                text="Comment on this Log"
+                                            />
+                                        </div>
+                                    }
                                     footerContent={(
                                         <TabContainer titles={['Content', 'Runs', 'Files', 'Tags', 'Comments']} >
                                             {
