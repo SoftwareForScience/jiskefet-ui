@@ -22,7 +22,6 @@ export const postToken = (userId: number): string => (`${baseUrl}users/${userId}
 
 // Attachment
 export const getAttachmentsByLog = (logId: number): string => `${baseUrl}attachments/${logId}/logs`;
-export const postAttachment = (): string => `${baseUrl}attachments`;
 
 // Auth
 export const getProfile = (): string => `${baseUrl}user/profile`;
@@ -43,3 +42,4 @@ export const getLogs = (query?: string): string => `${baseUrl}logs${query ? `?${
 export const getLog = (id: string | number): string => `${baseUrl}logs/${id}`;
 export const linkRunToLogUrl = (runNumber: number): string => `${baseUrl}logs/${runNumber}/runs`;
 export const postLog = (): string => `${baseUrl}logs`;
+export const postAttachment = (logId: string | number): string => `${baseUrl}logs/${logId}/attachments`;
