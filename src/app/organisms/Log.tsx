@@ -18,7 +18,7 @@ import { fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { fetchLog, fetchThread } from '../redux/ducks/log/operations';
 import {
     selectCurrentLog, selectIsFetchingLog,
-    selectIsPatchingLinkRunToLog, selectThread, selectIsFetchingThread
+    selectIsPatchingLinkRunToLog, selectThread
 } from '../redux/ducks/log/selectors';
 import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
@@ -80,7 +80,6 @@ export default class Log extends MithrilTsxComponent<Attrs> {
         const state = store.getState();
         const currentLog = selectCurrentLog(state);
         const isFetchingLog = selectIsFetchingLog(state);
-        const isFetchingThread = selectIsFetchingThread(state);
         const isPatchingLinkRunToLog = selectIsPatchingLinkRunToLog(state);
         const attachments = selectAttachments(store.getState());
         const tagsForLog = selectTagsForLog(store.getState());
