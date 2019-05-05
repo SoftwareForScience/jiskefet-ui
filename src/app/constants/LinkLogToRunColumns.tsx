@@ -28,7 +28,7 @@ const LinkLogToRunColumns = (
                     data-dismiss="modal"
                 >
                     Link
-            </button>
+                </button>
             )
         },
         {

@@ -29,10 +29,11 @@ export const fetchSubsystemsRequest = (): FetchSubsystemsRequestAction => ({
     type: ActionTypes.FETCH_SUBSYSTEMS_REQUEST
 });
 
-export const fetchSubsystemsSuccess = (payload: ICollectionSuccessObject<ISubsystem>): FetchSubsystemsSuccessAction => ({
-    type: ActionTypes.FETCH_SUBSYSTEMS_SUCCESS,
-    payload
-});
+export const fetchSubsystemsSuccess =
+    (payload: ICollectionSuccessObject<ISubsystem>): FetchSubsystemsSuccessAction => ({
+        type: ActionTypes.FETCH_SUBSYSTEMS_SUCCESS,
+        payload
+    });
 
 export const fetchSubsystemRequest = (): FetchSubsystemRequestAction => ({
     type: ActionTypes.FETCH_SUBSYSTEM_REQUEST

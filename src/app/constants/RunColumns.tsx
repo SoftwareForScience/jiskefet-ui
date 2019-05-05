@@ -41,7 +41,8 @@ const RunColumns = [
     {
         header: 'Time trg end',
         accessor: 'trgEndTime',
-        cell: (row: IRun): string => (row.TrgEndTime ? format(row.TrgEndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
+        cell: (row: IRun): string =>
+            (row.TrgEndTime ? format(row.TrgEndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
     },
     {
         header: 'Activity id',
