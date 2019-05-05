@@ -89,7 +89,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
 
         return (
             <div class="container-fluid">
-                <Spinner isLoading={isFetchingLog || isPatchingLinkRunToLog || isFetchingThread}>
+                <Spinner isLoading={isFetchingLog || isPatchingLinkRunToLog}>
                     <SuccessMessage />
                     <HttpErrorAlert>
                         <SuccessMessage />
