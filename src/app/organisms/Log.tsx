@@ -145,10 +145,10 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                             <li key={attachment.fileId}>
                                                                 <a
                                                                     id={attachment.fileId}
-                                                                    download={attachment.title}
+                                                                    download={attachment.fileName}
                                                                     href={download(attachment)}
                                                                 >
-                                                                    {attachment.title}
+                                                                    {attachment.fileName}
                                                                 </a>
                                                             </li>
                                                         )}

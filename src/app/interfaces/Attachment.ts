@@ -13,23 +13,20 @@ import { ILog } from './Log';
  */
 export interface IAttachment {
     fileId?: number;
-    log?: ILog;
-    creationTime?: string;
-    title: string;
+    title?: string;
+    fileName: string;
     fileMime: string;
     fileData: string;
-    fileMD5?: string;
+    log?: ILog;
 }
 
 /**
  * Interface with the fields for creating a Attachment entry.
  */
 export interface IAttachmentCreate {
-    fileId?: number;
-    log?: ILog;
-    creationTime?: string;
-    title: string;
+    title?: string;
+    fileName: string;
     fileMime: string;
     fileData: string;
-    fileMD5?: string;
+    log?: ILog;
 }

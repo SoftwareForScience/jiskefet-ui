@@ -51,7 +51,7 @@ export interface CreateAttachmentSuccessAction extends Action {
 
 export interface SetAttachmentToBeCreatedAction extends Action {
     type: ActionTypes.SET_ATTACHMENT_TO_BE_CREATED;
-    payload: IAttachment;
+    payload: IAttachmentCreate;
 }
 
 export interface ClearAttachmentToBeCreatedAction extends Action {

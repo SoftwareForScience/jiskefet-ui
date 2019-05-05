@@ -90,10 +90,10 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
     /**
      * Saves the base64 encoded string into the state.
      * @param base64String The file base64 encoded string.
-     * @param name The name of the file.
+     * @param fileName The name of the file.
      * @param isExistingItem Whether the attachment is added to an existing Item.
      */
-    saveAttachmentState = (base64String: string, name: string, isExistingItem: boolean) => {
+    saveAttachmentState = (base64String: string, fileName: string, isExistingItem: boolean) => {
         const fileMime = base64String.substring(
             'data:'.length, base64String.indexOf(';base64,')
         );
@@ -105,7 +105,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         if (isExistingItem) {
             log = currentLog;
             const attachmentToBeCreated = {
-                title: name,
+                fileName,
                 fileMime,
                 fileData,
                 ...(log && { log })
@@ -115,9 +115,8 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
             // Check if attachment was not already added (needs to be adjusted for multiple file upload)
             if (logToBeCreated && (logToBeCreated.attachments === undefined
                 || logToBeCreated.attachments.length > 0)) {
-
                 logToBeCreated.attachments = new Array();
-                logToBeCreated.attachments.push({ title: name, fileMime, fileData });
+                logToBeCreated.attachments.push({ fileName, fileMime, fileData });
                 store.dispatch(setLogToBeCreated(logToBeCreated as ILogCreate));
             }
         }
@@ -131,7 +130,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         const attachment = selectAttachmentToBeCreated(state);
         const currentLog = selectCurrentLog(state);
         if (attachment && this.hasChosenAttachment && currentLog) {
-            await store.dispatch(saveAttachment(attachment))
+            await store.dispatch(saveAttachment(attachment, currentLog.logId))
                 .then(async () => {
                     // Reset the input form
                     const fileInput = document.getElementById('addAttachment') as HTMLFormElement;

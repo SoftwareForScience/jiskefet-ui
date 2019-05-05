@@ -6,7 +6,7 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { IAttachment } from './Attachment';
+import { IAttachmentCreate, IAttachment } from './Attachment';
 import { IUser } from './User';
 import { IRun } from './Run';
 
@@ -38,8 +38,8 @@ export interface ILogCreate {
     title: string;
     body: string;
     user: number;
-    run?: number;
-    attachments?: IAttachment[];
     rootId?: number;
     parentId?: number;
+    run: number;
+    attachments?: IAttachmentCreate[];
 }

@@ -9,7 +9,7 @@
 import { ThunkResult, AttachmentAction } from './types';
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../types';
-import { IAttachment } from '../../../interfaces/Attachment';
+import { IAttachment, IAttachmentCreate } from '../../../interfaces/Attachment';
 import { IHttpError } from '../../../interfaces/HttpError';
 import { request } from '../../../request';
 import {
@@ -37,13 +37,13 @@ export const fetchAttachmentsByLog = (logId: number): ThunkResult<Promise<void>>
         });
     };
 
-export const saveAttachment = (attachment: IAttachment): ThunkResult<Promise<void>> =>
+export const saveAttachment = (attachment: IAttachmentCreate, logId: number): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, AttachmentAction | ErrorAction>): Promise<void> => {
         dispatch(createAttachmentRequest());
         return request({
             method: 'POST',
             data: attachment,
-            url: postAttachment()
+            url: postAttachment(logId)
         }).then((result: any) => {
             // SuccesModel.add('Successfully saved attachment.');
             dispatch(createAttachmentSuccess());
