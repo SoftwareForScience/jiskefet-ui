@@ -72,7 +72,6 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                         <ul class="navbar-nav">
                             <NavItem href="/logs" name="Logs" />
                             <NavItem href="/runs" name="Runs" />
-                            <NavItem href="/logs/create" name="Create new log" />
                             <NavItem href="/subsystems" name="Subsystems Overview" />
                         </ul>
                     </div>
