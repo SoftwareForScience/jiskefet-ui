@@ -165,7 +165,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 <FormGroup
                                     field={(
                                         <div class="card shadow-sm bg-light">
-                                            <TabContainer titles={['Editor', 'Preview']} >
+                                            <TabContainer titles={['Editor', 'Preview']} disableds = {['']} >
                                                 <MarkdownEditor
                                                     postContent={(content: string) => this.addDescription(content)}
                                                 />
