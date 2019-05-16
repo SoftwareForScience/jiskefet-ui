@@ -12,7 +12,7 @@ import { ICollapsableItem } from '../../../interfaces/CollapsableItem';
 
 // Initial state
 const initialState: UIState = {
-    isSidebarShown: true,
+    isSidebarShown: false,
     collapsableItems: []
 };
 

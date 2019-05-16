@@ -8,7 +8,6 @@
 
 import * as m from 'mithril';
 import NavBar from '../molecules/NavBar';
-import SideBar from '../molecules/SideBar';
 import Content from '../atoms/Content';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 
@@ -20,7 +19,6 @@ export default class Layout extends MithrilTsxComponent<{}> {
             <div>
                 <NavBar />
                 <div class="jf-wrapper">
-                    <SideBar />
                     <Content>
                         {vnode.children}
                     </Content>

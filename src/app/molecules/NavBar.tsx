@@ -14,6 +14,7 @@ import { store } from '../redux/configureStore';
 import { toggleSidebar } from '../redux/ducks/ui/actions';
 import { fetchProfile } from '../redux/ducks/auth/operations';
 import { selectProfile } from '../redux/ducks/auth/selectors';
+import NavItem from '../atoms/NavItem';
 
 export default class NavBar extends MithrilTsxComponent<{}> {
     toggleSidebar = () => {
@@ -31,13 +32,13 @@ export default class NavBar extends MithrilTsxComponent<{}> {
         return (
             <nav class="navbar navbar-expand-sm navbar-dark jf-navbar" >
                 <div class="navbar-header w-100 d-flex">
-                    <button
+                    {/* <button
                         type="button"
                         class="btn jf-hamburger-button"
                         onclick={this.toggleSidebar}
                     >
                         <span class="fas fa-bars" />
-                    </button>
+                    </button> */}
                     <a href="/" class="navbar-brand" oncreate={m.route.link}>
                         <img
                             src="../../assets/alice_logo_text_white.png"
@@ -67,6 +68,14 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                             </a>
                         }
                     </ul>
+                    <div class="collapse navbar-collapse justify-content-md-center">
+                        <ul class="navbar-nav">
+                            <NavItem href="/logs" name="Logs" />
+                            <NavItem href="/runs" name="Runs" />
+                            <NavItem href="/logs/create" name="Create new log" />
+                            <NavItem href="/subsystems" name="Subsystems Overview" />
+                        </ul>
+                    </div>
                 </div>
             </nav >
         );
