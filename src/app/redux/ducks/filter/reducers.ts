@@ -28,7 +28,7 @@ const getInitialState = (name: FilterName): IFilterState | {} => {
                 creationTime: null,
                 origin: null,
                 subType: null,
-                orderBy: 'creationTime',
+                orderBy: 'logId',
                 orderDirection: OrderDirection.Descending,
                 pageSize: 16,
                 pageNumber: 1,
