@@ -12,7 +12,7 @@ import { OrderDirection } from '../enums/OrderDirection';
  * Object containing (possibly) multiple filters by key - value pair.
  * Example: { searchterm: 'foo', pageNumber: 1 }
  */
-export interface FilterState {
+export interface IFilterState {
     [key: string]: FilterValue;
 }
 

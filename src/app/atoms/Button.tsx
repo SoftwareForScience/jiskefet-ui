@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 
 /**
  * Css class that defines the size (bootstrap)
@@ -27,7 +27,8 @@ export enum ButtonClass {
     SUCCESS = 'btn btn-success',
     NAV = 'dropdown-item jf-dropdown-item',
     CLOSE = 'close',
-    INFO = 'btn btn-info'
+    INFO = 'btn btn-info',
+    SMALL = 'btn btn-sm btn-secondary'
 }
 
 /**
@@ -47,7 +48,7 @@ interface Attrs {
     id?: string | number;
     margin?: string;
     href?: string;
-    onClick?: (event?: Event) => void;
+    onClick?: (event?: IEvent) => void;
     name?: string;
     value?: string | number;
     dataToggle?: string;

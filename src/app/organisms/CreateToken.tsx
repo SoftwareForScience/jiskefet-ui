@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import Table from '../molecules/Table';
 import SubsystemPermissionColumns from '../constants/SubsystemPermissionColumns';
 import SuccessMessage from '../atoms/SuccessMessage';
@@ -25,7 +25,7 @@ import {
     selectFetchingSubsystemPermissions,
     selectFetchingSubsystems
 } from '../redux/ducks/subsystem/selectors';
-import { SubsystemPermissionCreate } from '../interfaces/SubsystemPermission';
+import { ISubsystemPermissionCreate } from '../interfaces/SubsystemPermission';
 import Spinner from '../atoms/Spinner';
 import { fetchProfile } from '../redux/ducks/auth/operations';
 import { selectProfile } from '../redux/ducks/auth/selectors';
@@ -63,7 +63,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
             isMember: true,
             editEorReason: true
         };
-        store.dispatch(createToken(tokenToCreate as SubsystemPermissionCreate));
+        store.dispatch(createToken(tokenToCreate as ISubsystemPermissionCreate));
         event.target.reset(); // Clear the form.
     }
 
@@ -87,7 +87,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                 </p>
                             </div>
                             <form
-                                onsubmit={(event: Event) => {
+                                onsubmit={(event: IEvent) => {
                                     event.preventDefault();
                                     this.handleSubmit(event);
                                 }}
@@ -133,8 +133,8 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                                                     role="alert"
                                                     hidden={subsystems.length > 0}
                                                 >No subsystems found,
-                                                                    please add subsystems directly
-                                                                    via SQL queries in the database.
+                                                                            please add subsystems directly
+                                                                            via SQL queries in the database.
                                                 </div>
                                             </Spinner>
                                         </div>

@@ -9,23 +9,27 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
-import { Log, LogCreate } from '../../../interfaces/Log';
-import { SuccessObject, CollectionSuccessObject } from '../../../interfaces/ResponseObject';
+import { ILog, ILogCreate } from '../../../interfaces/Log';
+import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface LogState {
+    isFetchingThread: boolean;
     isFetchingLogs: boolean;
     isFetchingLog: boolean;
     isPatchingLinkRunToLog: boolean;
     isCreatingLog: boolean;
-    logs: Log[];
+    logs: ILog[];
     count: number;
-    current: Log | null;
-    logToBeCreated: LogCreate | null;
+    current: ILog | null;
+    logToBeCreated: ILogCreate | null;
+    thread: ILog | null;
 }
 
 // Action types
 export enum ActionTypes {
+    FETCH_THREAD_REQUEST = 'jiskefet/log/FETCH_THREAD_REQUEST',
+    FETCH_THREAD_SUCCESS = 'jiskefet/log/FETCH_THREAD_SUCCESS',
     FETCH_LOGS_REQUEST = 'jiskefet/log/FETCH_LOGS_LOG_REQUEST',
     FETCH_LOGS_SUCCESS = 'jiskefet/log/FETCH_LOGS_LOG_SUCCESS',
     FETCH_LOG_REQUEST = 'jiskefet/log/FETCH_LOG_REQUEST',
@@ -39,13 +43,22 @@ export enum ActionTypes {
 }
 
 // Action interfaces
+export interface FetchThreadRequestAction extends Action {
+    type: ActionTypes.FETCH_THREAD_REQUEST;
+}
+
+export interface FetchThreadSuccessAction extends Action {
+    type: ActionTypes.FETCH_THREAD_SUCCESS;
+    payload: ISuccessObject<ILog>;
+}
+
 export interface FetchLogsByLogRequestAction extends Action {
     type: ActionTypes.FETCH_LOGS_REQUEST;
 }
 
 export interface FetchLogsByLogSuccessAction extends Action {
     type: ActionTypes.FETCH_LOGS_SUCCESS;
-    payload: CollectionSuccessObject<Log>;
+    payload: ICollectionSuccessObject<ILog>;
 }
 
 export interface FetchLogRequestAction extends Action {
@@ -54,7 +67,7 @@ export interface FetchLogRequestAction extends Action {
 
 export interface FetchLogSuccessAction extends Action {
     type: ActionTypes.FETCH_LOG_SUCCESS;
-    payload: SuccessObject<Log>;
+    payload: ISuccessObject<ILog>;
 }
 
 export interface LinkLogToLogRequestAction extends Action {
@@ -75,7 +88,7 @@ export interface CreateLogSuccessAction extends Action {
 
 export interface SetLogToBeCreatedAction extends Action {
     type: ActionTypes.SET_LOG_TO_BE_CREATED;
-    payload: LogCreate;
+    payload: ILogCreate;
 }
 
 export interface ClearLogToBeCreatedAction extends Action {
@@ -84,6 +97,8 @@ export interface ClearLogToBeCreatedAction extends Action {
 
 // Combine actions into single type
 export type LogAction =
+    | FetchThreadRequestAction
+    | FetchThreadSuccessAction
     | FetchLogsByLogRequestAction
     | FetchLogsByLogSuccessAction
     | FetchLogRequestAction

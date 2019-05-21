@@ -14,8 +14,8 @@ import { selectAttachmentToBeCreated } from '../redux/ducks/attachment/selectors
 import { saveAttachment, fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { selectCurrentLog, selectLogToBeCreated } from '../redux/ducks/log/selectors';
 import { setLogToBeCreated } from '../redux/ducks/log/actions';
-import { LogCreate } from '../interfaces/Log';
-import { Event } from '../interfaces/Event';
+import { ILogCreate } from '../interfaces/Log';
+import { IEvent } from '../interfaces/Event';
 import Label from '../atoms/Label';
 import Input from '../atoms/Input';
 
@@ -52,7 +52,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
      * Gets called after User selects a file.
      * @param event The event of having selected a file.
      */
-    getSelectedFiles = (event: Event) => {
+    getSelectedFiles = (event: IEvent) => {
         const files = (event.target as HTMLInputElement).files as FileList;
         const maxSizeLabel = document.getElementById('maximum-size-label') as HTMLElement;
         if (files[0].size > this.maxFileSize) {
@@ -117,7 +117,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                 || logToBeCreated.attachments.length > 0)) {
                 logToBeCreated.attachments = new Array();
                 logToBeCreated.attachments.push({ fileName, fileMime, fileData });
-                store.dispatch(setLogToBeCreated(logToBeCreated as LogCreate));
+                store.dispatch(setLogToBeCreated(logToBeCreated as ILogCreate));
             }
         }
     }

@@ -18,6 +18,7 @@ import { UserState, UserAction } from './ducks/user/types';
 import { RunState, RunAction } from './ducks/run/types';
 import { LogState, LogAction } from './ducks/log/types';
 import { SuccessState, SuccessAction } from './ducks/success/types';
+import { TagState, TagAction } from './ducks/tag/types';
 
 /**
  * Interface for the Redux store.
@@ -41,6 +42,7 @@ export interface RootState {
     filter: RootFilterState;
     error: ErrorState;
     user: UserState;
+    tag: TagState;
 }
 
 /**
@@ -56,7 +58,8 @@ export type RootActions =
     | ErrorAction
     | UserAction
     | RunAction
-    | LogAction;
+    | LogAction
+    | TagAction;
 
 /**
  * An action that has a name field to identify which reducer should process the action.

@@ -9,7 +9,7 @@
 import { RootState, NamedAction } from '../../types';
 import { ThunkAction } from 'redux-thunk';
 import { OrderDirection } from '../../../enums/OrderDirection';
-import { FilterState, FilterValue, FilterName } from '../../../interfaces/Filter';
+import { IFilterState, FilterValue, FilterName } from '../../../interfaces/Filter';
 
 // State interface
 export interface RootFilterState {
@@ -19,7 +19,7 @@ export interface RootFilterState {
     [FilterName.UserLog]: UserLogFilters;
 }
 
-export interface LogFilters extends FilterState {
+export interface LogFilters extends IFilterState {
     logId: string | null;
     searchterm: string | null;
     creationTime: string | null;
@@ -31,7 +31,7 @@ export interface LogFilters extends FilterState {
     pageNumber: number;
 }
 
-export interface RunFilters extends FilterState {
+export interface RunFilters extends IFilterState {
     runNumber: string | null;
     activityId: string | null;
     runType: string | null;
@@ -50,13 +50,13 @@ export interface RunFilters extends FilterState {
     pageNumber: number;
 }
 
-export interface SubsystemFilters extends FilterState {
+export interface SubsystemFilters extends IFilterState {
     orderBy: string | null;
     orderDirection: OrderDirection | null;
     timeRange: number | null;
 }
 
-export interface UserLogFilters extends FilterState {
+export interface UserLogFilters extends IFilterState {
     orderBy: string | null;
     orderDirection: OrderDirection | null;
     pageSize: number;
@@ -85,7 +85,7 @@ export interface SetFilterAction extends NamedFilterAction {
 
 export interface SetFiltersAction extends NamedFilterAction {
     type: ActionTypes.SET_FILTERS;
-    payload: FilterState;
+    payload: IFilterState;
 }
 
 export interface ResetFiltersAction extends NamedFilterAction {

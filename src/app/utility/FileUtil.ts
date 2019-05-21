@@ -6,7 +6,7 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Attachment } from '../interfaces/Attachment';
+import { IAttachment } from '../interfaces/Attachment';
 
 /**
  * Utility class for working with the file system.
@@ -15,7 +15,7 @@ import { Attachment } from '../interfaces/Attachment';
 /**
  * Downloads an attachment to the user's machine.
  */
-export const download = (attachment: Attachment): string => {
+export const download = (attachment: IAttachment): string => {
     if (attachment.fileData.indexOf('base64;') >= 0) {
         attachment.fileData = attachment.fileData.split('base64;')[1];
     }

@@ -6,27 +6,27 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Log } from './Log';
+import { ILog } from './Log';
 
 /**
  * Interface with the fields for fetching one or more Attachment entries.
  */
-export interface Attachment {
+export interface IAttachment {
     fileId?: number;
     title?: string;
     fileName: string;
     fileMime: string;
     fileData: string;
-    log?: Log;
+    log?: ILog;
 }
 
 /**
  * Interface with the fields for creating a Attachment entry.
  */
-export interface AttachmentCreate {
+export interface IAttachmentCreate {
     title?: string;
     fileName: string;
     fileMime: string;
     fileData: string;
-    log?: Log;
+    log?: ILog;
 }

@@ -11,6 +11,7 @@ import { ActionTypes, LogState, LogAction } from './types';
 
 // Initial state
 const initialState: LogState = {
+    isFetchingThread: false,
     isFetchingLogs: false,
     isFetchingLog: false,
     isPatchingLinkRunToLog: false,
@@ -19,12 +20,24 @@ const initialState: LogState = {
     count: 0,
     current: null,
     logToBeCreated: null,
+    thread: null
 };
 
 // Reducer
 const logReducer: Reducer<LogState>
     = (state: LogState = initialState, action: LogAction): LogState => {
         switch (action.type) {
+            case ActionTypes.FETCH_THREAD_REQUEST:
+                return {
+                    ...state,
+                    isFetchingThread: true
+                };
+            case ActionTypes.FETCH_THREAD_SUCCESS:
+                return {
+                    ...state,
+                    isFetchingThread: false,
+                    thread: action.payload.data.item
+                };
             case ActionTypes.FETCH_LOGS_REQUEST:
                 return {
                     ...state,

@@ -1,5 +1,5 @@
 import * as m from 'mithril';
-import { Column } from '../interfaces/Column';
+import { IColumn } from '../interfaces/Column';
 import _ = require('lodash');
 import Table from '../molecules/Table';
 
@@ -14,7 +14,7 @@ import Table from '../molecules/Table';
 /**
  * Creates a dummy table, to be used when fetching happens.
  */
-export const createDummyTable = (size: number, columns: Column[], className?: string): JSX.Element => {
+export const createDummyTable = (size: number, columns: IColumn[], className?: string): JSX.Element => {
     const dummyData = [] as Array<{ [column: string]: any }>;
     _.times(size, () => dummyData.push({ key: 'value' }));
     return (

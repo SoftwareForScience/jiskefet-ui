@@ -15,7 +15,7 @@ import LogColumns from '../constants/LogColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import Filter from '../molecules/Filter';
 import Pagination from '../atoms/Pagination';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import PageCounter from '../atoms/PageCounter';
 import { createDummyTable } from '../utility/DummyService';
 import ContentBlock from '../molecules/ContentBlock';
@@ -166,7 +166,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                                 style="min-width: 75px; max-width: 75px; overflow: hidden;"
                                                 className="form-control form-control-sm"
                                                 name="pageSize"
-                                                oninput={(event: Event) => {
+                                                oninput={(event: IEvent) => {
                                                     store.dispatch(
                                                         setFilter(FilterName.Log, 'pageSize', event.target.value)
                                                     );

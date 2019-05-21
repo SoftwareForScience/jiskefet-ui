@@ -10,6 +10,6 @@
 /**
  * Response object after calling api/auth endpoint.
  */
-export interface AuthorizeResponse {
+export interface IAuthorizeResponse {
     token: string;
 }

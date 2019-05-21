@@ -16,7 +16,7 @@ import Filter from '../molecules/Filter';
 import { createDummyTable } from '../utility/DummyService';
 import PageCounter from '../atoms/PageCounter';
 import Pagination from '../atoms/Pagination';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import ContentBlock from '../molecules/ContentBlock';
 import SuccessMessage from '../atoms/SuccessMessage';
 import Badges from '../atoms/Badges';
@@ -225,7 +225,7 @@ export default class Runs extends MithrilTsxComponent<{}> {
                                                 style="min-width: 75px; max-width: 75px; overflow: hidden;"
                                                 className="form-control form-control-sm"
                                                 name="pageSize"
-                                                oninput={(event: Event) => {
+                                                oninput={(event: IEvent) => {
                                                     store.dispatch(
                                                         setFilter(FilterName.Run, 'pageSize', event.target.value)
                                                     );

@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 
 interface Attrs {
     postContent: (content: string) => void;
@@ -25,7 +25,7 @@ export default class MarkdownEditor extends MithrilTsxComponent<Attrs> {
     /**
      * Bind event.target.value to this.content;
      */
-    handleInput = (event: Event): void => {
+    handleInput = (event: IEvent): void => {
         this.content = event.target.value;
     }
 
@@ -37,7 +37,7 @@ export default class MarkdownEditor extends MithrilTsxComponent<Attrs> {
                         id="markdown"
                         class="rounded"
                         placeholder="Type your description here"
-                        oninput={(event: Event) => {
+                        oninput={(event: IEvent) => {
                             this.handleInput(event);
                             vnode.attrs.postContent(this.content);
                         }}

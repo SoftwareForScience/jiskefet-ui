@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { format } from 'date-fns';
-import { Run } from '../interfaces/Run';
+import { IRun } from '../interfaces/Run';
 
 /**
  * The columns used by the Table that holds Run entities.
@@ -17,7 +17,7 @@ const RunColumns = [
     {
         header: 'Run number',
         accessor: 'runNumber',
-        cell: (row: Run): JSX.Element => (
+        cell: (row: IRun): JSX.Element => (
             <a href={`/runs/${row.runNumber}`} oncreate={m.route.link}>
                 {row.runNumber}
             </a>
@@ -26,22 +26,23 @@ const RunColumns = [
     {
         header: 'Time O\xB2 start',
         accessor: 'o2StartTime',
-        cell: (row: Run): string => (row.O2StartTime ? format(row.O2StartTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        cell: (row: IRun): string => (row.O2StartTime ? format(row.O2StartTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: `Time O\xB2 end`,
         accessor: 'o2EndTime',
-        cell: (row: Run): string => (row.O2EndTime ? format(row.O2EndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
+        cell: (row: IRun): string => (row.O2EndTime ? format(row.O2EndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
     },
     {
         header: 'Time trg start',
         accessor: 'trgStartTime',
-        cell: (row: Run): string => (row.TrgStartTime ? format(row.TrgStartTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        cell: (row: IRun): string => (row.TrgStartTime ? format(row.TrgStartTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
     },
     {
         header: 'Time trg end',
         accessor: 'trgEndTime',
-        cell: (row: Run): string => (row.TrgEndTime ? format(row.TrgEndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
+        cell: (row: IRun): string =>
+            (row.TrgEndTime ? format(row.TrgEndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
     },
     {
         header: 'Activity id',

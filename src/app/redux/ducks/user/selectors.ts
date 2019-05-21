@@ -7,13 +7,13 @@
  */
 
 import { RootState } from '../../types';
-import { User } from '../../../interfaces/User';
-import { Log } from '../../../interfaces/Log';
+import { IUser } from '../../../interfaces/User';
+import { ILog } from '../../../interfaces/Log';
 
 // Selectors
-export const selectUser = (state: RootState): User | null => state.user.user;
+export const selectUser = (state: RootState): IUser | null => state.user.user;
 export const selectIsFetchingUser = (state: RootState): boolean => state.user.IsFetchingUser;
 export const selectIsFetchingUserLogs = (state: RootState): boolean => state.user.IsFetchingLogs;
-export const selectUserLogs = (state: RootState): Log[] => state.user.logs;
+export const selectUserLogs = (state: RootState): ILog[] => state.user.logs;
 export const selectUserLogCount = (state: RootState): number => state.user.logCount;
-export const selectCurrentUser = (state: RootState): User | null => state.user.current;
+export const selectCurrentUser = (state: RootState): IUser | null => state.user.current;

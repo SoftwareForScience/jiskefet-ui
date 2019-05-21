@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 
 export enum InputSize {
     SMALL = 'col-md-2',
@@ -24,11 +24,12 @@ interface Attrs {
     name?: string;
     placeholder?: string;
     required?: boolean;
-    oninput?: (event: Event) => void;
+    oninput?: (event: IEvent) => void;
     optionValue?: string;
     optionText?: string;
     options: any[];
     hidden?: boolean;
+    liveSearch?: boolean;
     defaultOption?: string | number | null;
 }
 
@@ -40,7 +41,9 @@ export default class Select extends MithrilTsxComponent<Attrs> {
             className, inputSize,
             placeholder, required,
             oninput, options,
-            optionValue, optionText, defaultOption, hidden, style } = vnode.attrs;
+            optionValue, optionText,
+            defaultOption, hidden,
+            style } = vnode.attrs;
         return (
             <select
                 id={id}
@@ -52,12 +55,17 @@ export default class Select extends MithrilTsxComponent<Attrs> {
                 hidden={hidden}
                 style={style}
             >
-            <option value="">{defaultOption}</option>
+                {defaultOption
+                    ? options.length !== 0
+                        ? <option value="">{defaultOption}</option>
+                        : <option value="">{'No options found'}</option>
+                    : ''
+                }
                 {
                     options.map((option: any) => (
                         optionValue && optionText
-                        ? <option value={option[optionValue]}>{option[optionText]}</option>
-                        : <option value={option}>{option}</option>
+                            ? <option value={option[optionValue]}>{option[optionText]}</option>
+                            : <option value={option}>{option}</option>
                     ))
                 }
             </select>

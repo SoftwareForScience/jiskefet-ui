@@ -9,11 +9,11 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
-import { HttpError } from '../../../interfaces/HttpError';
+import { IHttpError } from '../../../interfaces/HttpError';
 
 // State interface
 export interface ErrorState {
-    httpErrors: Array<HttpError<any>>;
+    httpErrors: Array<IHttpError<any>>;
     errorHistory: object[];
 }
 
@@ -26,7 +26,7 @@ export enum ActionTypes {
 // Action interfaces
 export interface AddHttpErrorAction extends Action {
     type: ActionTypes.ADD_HTTP_ERROR;
-    payload: HttpError<any>;
+    payload: IHttpError<any>;
 }
 
 export interface ClearHttpErrorsAction extends Action {

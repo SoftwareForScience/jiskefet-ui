@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 
 export enum InputSize {
     SMALL = 'col-md-2',
@@ -27,7 +27,7 @@ interface Attrs {
     required?: boolean;
     dataShowCaption?: string;
     value?: string | number;
-    oninput?: (event: Event) => void;
+    oninput?: (event: IEvent) => void;
 }
 
 type Vnode = m.Vnode<Attrs, Input>;

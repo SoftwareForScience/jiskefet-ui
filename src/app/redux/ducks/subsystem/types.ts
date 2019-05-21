@@ -6,13 +6,13 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Subsystem } from '../../../interfaces/SubSytem';
+import { ISubsystem } from '../../../interfaces/SubSytem';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
-import { SubsystemOverview } from '../../../interfaces/SubsystemOverview';
-import { SubsystemPermission } from '../../../interfaces/SubsystemPermission';
-import { CollectionSuccessObject, SuccessObject } from '../../../interfaces/ResponseObject';
+import { ISubsystemOverview } from '../../../interfaces/SubsystemOverview';
+import { ISubsystemPermission } from '../../../interfaces/SubsystemPermission';
+import { ICollectionSuccessObject, ISuccessObject } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface SubsystemState {
@@ -21,10 +21,10 @@ export interface SubsystemState {
     isFetchingSubsystemOverviews: boolean;
     isFetchingSubsystemPermissions: boolean;
     isCreatingToken: boolean;
-    subsystems: Subsystem[];
-    current: Subsystem | null;
-    subsystemOverviews: SubsystemOverview[];
-    subsystemPermissions: SubsystemPermission[];
+    subsystems: ISubsystem[];
+    current: ISubsystem | null;
+    subsystemOverviews: ISubsystemOverview[];
+    subsystemPermissions: ISubsystemPermission[];
 }
 
 // Action types
@@ -48,7 +48,7 @@ export interface FetchSubsystemsRequestAction extends Action {
 
 export interface FetchSubsystemsSuccessAction extends Action {
     type: ActionTypes.FETCH_SUBSYSTEMS_SUCCESS;
-    payload: CollectionSuccessObject<Subsystem>;
+    payload: ICollectionSuccessObject<ISubsystem>;
 }
 
 export interface FetchSubsystemRequestAction extends Action {
@@ -57,7 +57,7 @@ export interface FetchSubsystemRequestAction extends Action {
 
 export interface FetchSubsystemSuccessAction extends Action {
     type: ActionTypes.FETCH_SUBSYSTEM_SUCCESS;
-    payload: SuccessObject<Subsystem>;
+    payload: ISuccessObject<ISubsystem>;
 }
 
 export interface FetchSubsystemOverviewsRequestAction extends Action {
@@ -66,7 +66,7 @@ export interface FetchSubsystemOverviewsRequestAction extends Action {
 
 export interface FetchSubsystemOverviewsSuccessAction extends Action {
     type: ActionTypes.FETCH_SUBSYSTEM_OVERVIEWS_SUCCESS;
-    payload: CollectionSuccessObject<SubsystemOverview>;
+    payload: ICollectionSuccessObject<ISubsystemOverview>;
 }
 
 export interface FetchSubsystemPermissionsRequestAction extends Action {
@@ -75,7 +75,7 @@ export interface FetchSubsystemPermissionsRequestAction extends Action {
 
 export interface FetchSubsystemPermissionsSuccessAction extends Action {
     type: ActionTypes.FETCH_SUBSYSTEM_PERMISSIONS_SUCCESS;
-    payload: CollectionSuccessObject<SubsystemPermission>;
+    payload: ICollectionSuccessObject<ISubsystemPermission>;
 }
 
 export interface CreateTokenRequestAction extends Action {

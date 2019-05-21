@@ -6,7 +6,7 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { SubsystemOverview } from '../interfaces/SubsystemOverview';
+import { ISubsystemOverview } from '../interfaces/SubsystemOverview';
 import * as m from 'mithril';
 
 /**
@@ -24,7 +24,7 @@ const SubsystemOverviewColumns: any[] = [
     {
         header: 'Last Log Entry',
         accessor: 'lastLog',
-        cell: (row: SubsystemOverview): JSX.Element => (
+        cell: (row: ISubsystemOverview): JSX.Element => (
             <a href={`/logs/${row.logId}`} oncreate={m.route.link}>
                 {row.lastLog}
             </a>

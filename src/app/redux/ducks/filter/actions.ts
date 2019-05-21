@@ -7,7 +7,7 @@
  */
 
 import { ActionTypes, SetFilterAction, ResetFiltersAction, SetFiltersAction } from './types';
-import { FilterState, FilterName } from '../../../interfaces/Filter';
+import { IFilterState, FilterName } from '../../../interfaces/Filter';
 
 // Action creators
 
@@ -35,7 +35,7 @@ export const setFilter = (name: FilterName, key: string, value: any): SetFilterA
  * @param name The name of the filter reducer.
  * @param filters The filters used to replace the filter values.
  */
-export const setFilters = (name: FilterName, filters: FilterState): SetFiltersAction => ({
+export const setFilters = (name: FilterName, filters: IFilterState): SetFiltersAction => ({
     type: ActionTypes.SET_FILTERS,
     name,
     payload: filters

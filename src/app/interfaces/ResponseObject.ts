@@ -9,15 +9,15 @@
 /**
  * Interface of information for every API response
  */
-export interface ResponseObject<T> {
+export interface IResponseObject<T> {
     apiVersion: string;
-    meta?: Meta;
+    meta?: IMeta;
 }
 
 /**
  * Interface to standardize the response of a API object containing a single item
  */
-export interface SuccessObject<T> extends ResponseObject<T> {
+export interface ISuccessObject<T> extends IResponseObject<T> {
     data: {
         [key: string]: any;
         item: T;
@@ -27,7 +27,7 @@ export interface SuccessObject<T> extends ResponseObject<T> {
 /**
  * Interface to standardize the response of a API object containing multiple items
  */
-export interface CollectionSuccessObject<T> extends ResponseObject<T> {
+export interface ICollectionSuccessObject<T> extends IResponseObject<T> {
     data: {
         [key: string]: any;
         items: T[];
@@ -36,6 +36,6 @@ export interface CollectionSuccessObject<T> extends ResponseObject<T> {
 /**
  * Interface for Meta object
  */
-export interface Meta {
+export interface IMeta {
     [key: string]: string;
 }

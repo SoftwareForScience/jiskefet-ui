@@ -12,14 +12,14 @@ import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../types';
 import { request } from '../../../request';
 import { fetchProfileSuccess, fetchProfileRequest, authorizeRequest, authorizeSuccess, userLogout } from './actions';
-import { HttpError } from '../../../interfaces/HttpError';
+import { IHttpError } from '../../../interfaces/HttpError';
 import { UserProfile } from '../../../interfaces/UserProfile';
 import { getAuthorize, getProfile } from '../../../constants/apiUrls';
-import { AuthorizeResponse } from '../../../interfaces/Auth';
+import { IAuthorizeResponse } from '../../../interfaces/Auth';
 import { initialize } from '../../../app';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
-import { SuccessObject } from '../../../interfaces/ResponseObject';
+import { ISuccessObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchProfile = (): ThunkResult<Promise<void>> =>
@@ -28,9 +28,9 @@ export const fetchProfile = (): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getProfile()
-        }).then((result: SuccessObject<UserProfile>) => {
+        }).then((result: ISuccessObject<UserProfile>) => {
             dispatch(fetchProfileSuccess(result));
-        }).catch((error: HttpError<any>) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -41,9 +41,9 @@ export const authorize = (authGrant: string): ThunkResult<Promise<void>> =>
         return request({
             method: 'GET',
             url: getAuthorize(authGrant)
-        }).then((result: AuthorizeResponse) => {
+        }).then((result: IAuthorizeResponse) => {
             dispatch(authorizeSuccess(result));
-        }).catch((error: HttpError<any>) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

@@ -13,16 +13,16 @@ import {
     FetchLogsForUserRequestAction,
     FetchLogsForUserSuccessAction
 } from './types';
-import { User } from '../../../interfaces/User';
-import { Log } from '../../../interfaces/Log';
-import { SuccessObject, CollectionSuccessObject } from '../../../interfaces/ResponseObject';
+import { IUser } from '../../../interfaces/User';
+import { ILog } from '../../../interfaces/Log';
+import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchUserRequest = (): FetchUserRequestAction => ({
     type: ActionTypes.FETCH_USER_REQUEST
 });
 
-export const fetchUserSuccess = (user: SuccessObject<User>): FetchUserSuccessAction => ({
+export const fetchUserSuccess = (user: ISuccessObject<IUser>): FetchUserSuccessAction => ({
     type: ActionTypes.FETCH_USER_SUCCESS,
     payload: user
 });
@@ -31,7 +31,7 @@ export const fetchLogsForUserRequest = (): FetchLogsForUserRequestAction => ({
     type: ActionTypes.FETCH_LOGS_FOR_USER_REQUEST
 });
 
-export const fetchLogsForUserSuccess = (payload: CollectionSuccessObject<Log>): FetchLogsForUserSuccessAction => ({
+export const fetchLogsForUserSuccess = (payload: ICollectionSuccessObject<ILog>): FetchLogsForUserSuccessAction => ({
     type: ActionTypes.FETCH_LOGS_FOR_USER_SUCCES,
     payload
 });

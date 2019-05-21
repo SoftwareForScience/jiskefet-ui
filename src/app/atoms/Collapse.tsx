@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import { store } from '../redux/configureStore';
 import { toggleCollapse, addCollapse } from '../redux/ducks/ui/actions';
 import { selectCollapsableItem } from '../redux/ducks/ui/selectors';
@@ -49,7 +49,7 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
      * Toggles the collapsed state of the component.
      * @param event
      */
-    toggleCollapse(event: Event) {
+    toggleCollapse(event: IEvent) {
         const id = event.target.id;
         store.dispatch(toggleCollapse(id));
     }

@@ -11,7 +11,7 @@ import { RootFilterState } from './types';
 import { createSelector } from 'reselect';
 import * as m from 'mithril';
 import * as _ from 'lodash';
-import { FilterState, FilterName } from '../../../interfaces/Filter';
+import { IFilterState, FilterName } from '../../../interfaces/Filter';
 
 // Selectors
 export const selectFilters = (state: RootState): RootFilterState => state.filter;
@@ -24,7 +24,7 @@ export const selectQueryString = createSelector(
     selectFilters,
     (filters: RootFilterState) => _.memoize(
         (filterName: FilterName): string => {
-            const childFilters: FilterState = filters[filterName];
+            const childFilters: IFilterState = filters[filterName];
             return m.buildQueryString(_.pickBy(childFilters));
         }
     )

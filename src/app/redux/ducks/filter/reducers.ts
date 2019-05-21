@@ -10,7 +10,7 @@ import { Reducer, combineReducers } from 'redux';
 import { FilterAction, ActionTypes } from './types';
 import { OrderDirection } from '../../../enums/OrderDirection';
 import * as _ from 'lodash';
-import { FilterState, FilterValue, FilterName } from '../../../interfaces/Filter';
+import { IFilterState, FilterValue, FilterName } from '../../../interfaces/Filter';
 import { createNamedWrapperReducer } from '../../utils/reducerWrappers';
 
 // Initial state
@@ -19,7 +19,7 @@ import { createNamedWrapperReducer } from '../../utils/reducerWrappers';
  * Returns the initial state for the name given.
  * @param name The name identifier for the state.
  */
-const getInitialState = (name: FilterName): FilterState | {} => {
+const getInitialState = (name: FilterName): IFilterState | {} => {
     switch (name) {
         case FilterName.Log: {
             return {
@@ -78,7 +78,7 @@ const getInitialState = (name: FilterName): FilterState | {} => {
  * @param source
  * @param mergeObj
  */
-const mergeOverlappingKeys = (source: FilterState, mergeObj: FilterState): FilterState => {
+const mergeOverlappingKeys = (source: IFilterState, mergeObj: IFilterState): IFilterState => {
     const result = _.mapValues(source, (value: FilterValue, key: string) => {
         return mergeObj[key] || value;
     });
@@ -86,8 +86,8 @@ const mergeOverlappingKeys = (source: FilterState, mergeObj: FilterState): Filte
 };
 
 // Reducer
-const filterReducer: Reducer<FilterState>
-    = (state: FilterState, action: FilterAction): FilterState => {
+const filterReducer: Reducer<IFilterState>
+    = (state: IFilterState, action: FilterAction): IFilterState => {
         if (!state || _.isEmpty(state)) {
             state = getInitialState(action.name);
         }
@@ -112,10 +112,10 @@ const filterReducer: Reducer<FilterState>
     };
 
 const rootReducer = combineReducers({
-    [FilterName.Log]: createNamedWrapperReducer<FilterState, FilterName>(filterReducer, FilterName.Log),
-    [FilterName.Run]: createNamedWrapperReducer<FilterState, FilterName>(filterReducer, FilterName.Run),
-    [FilterName.Subsystem]: createNamedWrapperReducer<FilterState, FilterName>(filterReducer, FilterName.Subsystem),
-    [FilterName.UserLog]: createNamedWrapperReducer<FilterState, FilterName>(filterReducer, FilterName.UserLog),
+    [FilterName.Log]: createNamedWrapperReducer<IFilterState, FilterName>(filterReducer, FilterName.Log),
+    [FilterName.Run]: createNamedWrapperReducer<IFilterState, FilterName>(filterReducer, FilterName.Run),
+    [FilterName.Subsystem]: createNamedWrapperReducer<IFilterState, FilterName>(filterReducer, FilterName.Subsystem),
+    [FilterName.UserLog]: createNamedWrapperReducer<IFilterState, FilterName>(filterReducer, FilterName.UserLog),
 });
 
 export default rootReducer;
