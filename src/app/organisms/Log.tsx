@@ -112,12 +112,12 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                     `/logs/create/comments/
                                                     ${currentLog && currentLog.logId}`
                                                 )}
-                                                text="Comment on this Log"
+                                                text="Reply on this log entry"
                                             />
                                         </div>
                                     }
                                     footerContent={(
-                                        <TabContainer titles={['Content', 'Runs', 'Files', 'Tags', 'Comments']} >
+                                        <TabContainer titles={['Content', 'Runs', 'Files', 'Tags', 'Replies']} >
                                             {
                                                 currentLog && currentLog.body
                                                     ? <MarkdownViewer
@@ -135,7 +135,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                                             className="font-sm"
                                                         />
                                                     )
-                                                    : 'This log has no runs'
+                                                    : 'This log is not linked to any run'
                                             }
                                             {
                                                 <div>
