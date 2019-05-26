@@ -92,14 +92,17 @@ export default class Logs extends MithrilTsxComponent<{}> {
             <div>
                 <SuccessMessage />
                 <HttpErrorAlert>
-                    <div style="margin-bottom: 1rem">
-                        <Button
-                            buttonClass={ButtonClass.DEFAULT}
-                            onClick={() => m.route.set(
-                            '/logs/create'
-                            )}
-                            text="Create new log"
-                        />
+                    <div class="row">
+                        <div class="col">
+                            <Button
+                                margin="float-right"
+                                buttonClass={ButtonClass.DEFAULT}
+                                onClick={() => m.route.set(
+                                '/logs/create'
+                                )}
+                                text="Create new log"
+                            />
+                    </div>
                     </div>
                     <div class="row">
                         <div
