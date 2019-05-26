@@ -68,13 +68,18 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                             </a>
                         }
                     </ul>
-                    <div class="collapse navbar-collapse justify-content-md-center">
-                        <ul class="navbar-nav">
-                            <NavItem href="/logs" name="Logs" />
-                            <NavItem href="/runs" name="Runs" />
-                            <NavItem href="/subsystems" name="Subsystems Overview" />
-                        </ul>
-                    </div>
+                    {Cookie.get('token')
+                        ?
+                        <div class="collapse navbar-collapse justify-content-md-center">
+                            <ul class="navbar-nav">
+                                <NavItem href="/logs" name="Logs" />
+                                <NavItem href="/runs" name="Runs" />
+                                <NavItem href="/subsystems" name="Subsystems Overview" />
+                            </ul>
+                        </div>
+                        :
+                        null
+                    }
                 </div>
             </nav >
         );
