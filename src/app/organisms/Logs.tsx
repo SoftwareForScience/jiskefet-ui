@@ -93,7 +93,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
                 <SuccessMessage />
                 <HttpErrorAlert>
                     <div class="row">
-                        <div class="col">
+                        <div class="col" style={{ marginBottom: '0.5rem' }}>
                             <Button
                                 margin="float-right"
                                 buttonClass={ButtonClass.DEFAULT}
