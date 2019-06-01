@@ -12,6 +12,7 @@
     cursor: pointer;
     transition: all 0.2s;
     background-color: $main-theme-secondary-color;
+    white-space: nowrap;
     @include no-select();
     
     &:hover {
