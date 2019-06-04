@@ -14,6 +14,7 @@ import { store } from '../redux/configureStore';
 import { toggleSidebar } from '../redux/ducks/ui/actions';
 import { fetchProfile } from '../redux/ducks/auth/operations';
 import { selectProfile } from '../redux/ducks/auth/selectors';
+import { APPLICATION_NAME } from '../constants/constants';
 
 export default class NavBar extends MithrilTsxComponent<{}> {
     toggleSidebar = () => {
@@ -46,7 +47,7 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                             class="d-inline-block align-top jf-logo"
                             alt=""
                         />
-                        Jiskefet
+                        {APPLICATION_NAME}
                     </a>
                     <ul class="jf-align-right mr-2">
                         {Cookie.get('token') ?

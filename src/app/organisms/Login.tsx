@@ -14,6 +14,7 @@ import { store } from '../redux/configureStore';
 import { selectIsAuthorizing } from '../redux/ducks/auth/selectors';
 import Spinner from '../atoms/Spinner';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
+import { APPLICATION_NAME } from '../constants/constants';
 
 /**
  * Landing page for unauthorized users.
@@ -34,7 +35,7 @@ export default class Login extends MithrilTsxComponent<{}> {
                             </div>
                             :
                             <div>
-                                <h1 class="display-2">Welcome to Jiskefet</h1>
+                                <h1 class="display-2">Welcome to {APPLICATION_NAME}</h1>
                                 <p class="lead">Please sign in to use the application.</p>
                                 <div class="mt-4">
                                     {localStorage.getItem('USE_CERN_SSO') === 'true' ?

@@ -23,8 +23,10 @@ import SubsystemsOverviewPage from './pages/SubsystemsOverviewPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import AuthorizingPage from './pages/AuthorizingPage';
+import { APPLICATION_NAME } from './constants/constants';
 
 m.route.prefix('');
+document.title = APPLICATION_NAME;
 /**
  * Routes enabled when user is authenticated.
  */
@@ -116,16 +118,17 @@ export const initialize = () => {
 };
 
 /**
- * Creates a request to the /setting endpoint in order to retrieve settings for the authentication.
+ * Creates a request to the /setting endpoint in order to retrieve settings for the authentication and others.
  */
-export const getAuthSettings = () => {
+export const getSettings = () => {
     return m.request({
         method: 'GET',
         url: `${process.env.API_URL}setting`
     }).then((result: ISuccessObject<ISetting>) => {
-        // setting['date'] = new Date().valueOf();
-        localStorage.setItem('USE_CERN_SSO', result.data.item.USE_CERN_SSO);
-        localStorage.setItem('AUTH_URL', result.data.item.AUTH_URL);
+        const settingsArray = Object.entries(result.data.item);
+        settingsArray.forEach((setting: [string, string | number | boolean]) => {
+            localStorage.setItem(setting[0], setting[1].toString());
+        });
     });
 };
 
@@ -133,8 +136,8 @@ export const getAuthSettings = () => {
  * Schedule a daily cronjob to check if the settings are up to date.
  */
 new CronJob('0 2 * * *', () => {
-    getAuthSettings();
+    getSettings();
 }).start();
 
-getAuthSettings();
+getSettings();
 initialize();
