@@ -14,6 +14,11 @@ export const APPLICATION_NAME = process.env.APPLICATION_NAME ? process.env.APPLI
 export let FILE_UPLOAD_LIMIT: number;
 export let API_VERSION: string;
 
+/**
+ * Retrieves the value that has been saved on index {key}.
+ * This has been done to equalize the variables between the UI and the API
+ * If the key does not exist, fall back to the .env or default value.
+ */
 const fileUploadLimit = localStorage.getItem('FILE_UPLOAD_LIMIT');
 if (fileUploadLimit) {
     FILE_UPLOAD_LIMIT = +fileUploadLimit;
