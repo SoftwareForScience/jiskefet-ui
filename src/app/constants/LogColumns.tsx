@@ -8,7 +8,8 @@
 
 import * as m from 'mithril';
 import { ILog } from '../interfaces/Log';
-import { format } from 'date-fns';
+import { format } from 'date-fns'
+
 
 /**
  * The columns used by the Table that holds Log entities.
@@ -70,7 +71,7 @@ const LogColumns: any[] = [
     {
         header: 'Author',
         accessor: 'user',
-        cell: (row: ILog): string => (row.user ? row.user.userId.toString() : 'Unknown')
+        cell: (row: ILog): string => (row.user ? row.user.name : 'Unknown')
     }
 ];
 

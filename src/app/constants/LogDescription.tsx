@@ -58,9 +58,9 @@ const LogDescription: IDescription[] = [
     },
     {
         label: 'Author',
-        value: (log: ILog): number => {
+        value: (log: ILog): string => {
             return log.user &&
-                log.user.userId;
+                log.user.name;
         }
     }
 ];

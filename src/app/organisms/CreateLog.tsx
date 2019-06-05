@@ -28,6 +28,8 @@ import FormGroup from '../molecules/FormGroup';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 import HttpErrorAlert from '../atoms/HttpErrorAlert';
 
+
+
 interface Attrs {
     runNumber?: number | undefined;
     logNumber?: number | undefined;
@@ -78,7 +80,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
         }
         const profile = selectProfile(store.getState());
         if (profile) {
-            this.setValueForLogToBeCreated('user', profile.userData.userId);
+            this.setValueForLogToBeCreated('user', profile.userData.userId)
 
             const logToBeCreated = selectLogToBeCreated(store.getState());
             if (logToBeCreated && !logNumber) {
