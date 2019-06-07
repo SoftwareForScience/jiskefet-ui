@@ -80,7 +80,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
         }
         const profile = selectProfile(store.getState());
         if (profile) {
-            this.setValueForLogToBeCreated('user', profile.userData.userId)
+            this.setValueForLogToBeCreated('user', profile.userData.userId);
 
             const logToBeCreated = selectLogToBeCreated(store.getState());
             if (logToBeCreated && !logNumber) {
