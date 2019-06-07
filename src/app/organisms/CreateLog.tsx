@@ -28,8 +28,6 @@ import FormGroup from '../molecules/FormGroup';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 import HttpErrorAlert from '../atoms/HttpErrorAlert';
 
-
-
 interface Attrs {
     runNumber?: number | undefined;
     logNumber?: number | undefined;
@@ -167,7 +165,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 <FormGroup
                                     field={(
                                         <div class="card shadow-sm bg-light">
-                                            <TabContainer titles={['Editor', 'Preview']} disableds = {['']} >
+                                            <TabContainer titles={['Editor', 'Preview']} disableds={['']} >
                                                 <MarkdownEditor
                                                     postContent={(content: string) => this.addDescription(content)}
                                                 />
