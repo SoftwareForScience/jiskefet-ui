@@ -1,0 +1,32 @@
+.emojipicker-toggler {
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.emojipicker-container {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+    width: 250px;
+    height: 300px;
+    overflow: auto;
+    background-color: white;
+    border: 1px solid #424242;
+    position: absolute;
+    z-index: 1;
+}
+
+/* Create four equal columns that floats next to each other */
+.emojipicker-column {
+    text-align: center;
+    float: left;
+    width: 25%;
+    padding: 0.5rem;
+    cursor: pointer;
+    &:hover{
+        background-color: #424242;
+    }
+}

@@ -11,6 +11,7 @@ import { MithrilTsxComponent } from 'mithril-tsx-component';
 
 interface Attrs {
     titles: string[];
+    disableds: string[];
 }
 
 type Vnode = m.Vnode<Attrs, TabContainer>;
@@ -29,13 +30,15 @@ export default class TabContainer extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         const { titles } = vnode.attrs;
+        const { disableds } = vnode.attrs;
         const children = vnode.children as any[];
         return (
             <div class="card">
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs">
                         {titles.length > 0 && titles.map((title: string) => (
-                            <li class="nav-item">
+                        disableds.length > 0 && disableds.map((disabled: string) => (
+                            <li class={title !== disabled ? 'nav-item' : 'nav-item d-none'}>
                                 <a
                                     class={`nav-link ${this.activeTab === title && 'active'}`}
                                     onclick={(e: any) => this.handleOnTabClick(e)}
@@ -44,6 +47,7 @@ export default class TabContainer extends MithrilTsxComponent<Attrs> {
                                     {title}
                                 </a>
                             </li>
+                            ))
                         ))}
                     </ul>
                 </div>

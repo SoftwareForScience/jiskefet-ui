@@ -32,6 +32,7 @@ import { fetchLogs } from '../redux/ducks/log/operations';
 import { selectIsFetchingLogs, selectLogCount, selectLogs } from '../redux/ducks/log/selectors';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
+import Button, { ButtonClass } from '../atoms/Button';
 
 const inputFields = [
     {
@@ -91,6 +92,18 @@ export default class Logs extends MithrilTsxComponent<{}> {
             <div>
                 <SuccessMessage />
                 <HttpErrorAlert>
+                    <div class="row">
+                        <div class="col" style={{ marginBottom: '0.5rem' }}>
+                            <Button
+                                margin="float-right"
+                                buttonClass={ButtonClass.DEFAULT}
+                                onClick={() => m.route.set(
+                                '/logs/create'
+                                )}
+                                text="Create new log"
+                            />
+                    </div>
+                    </div>
                     <div class="row">
                         <div
                             class={

@@ -12,6 +12,7 @@ import { IEvent } from '../interfaces/Event';
 
 interface Attrs {
     postContent: (content: string) => void;
+    value?: string | number;
 }
 
 type Vnode = m.Vnode<Attrs, MarkdownEditor>;
@@ -21,7 +22,6 @@ type Vnode = m.Vnode<Attrs, MarkdownEditor>;
  */
 export default class MarkdownEditor extends MithrilTsxComponent<Attrs> {
     content: string;
-
     /**
      * Bind event.target.value to this.content;
      */
@@ -30,6 +30,9 @@ export default class MarkdownEditor extends MithrilTsxComponent<Attrs> {
     }
 
     view(vnode: Vnode) {
+        const {
+            value
+        } = vnode.attrs;
         return (
             <div class="row">
                 <div class="col-md-12 jf-markdown-wrapper">
@@ -37,6 +40,7 @@ export default class MarkdownEditor extends MithrilTsxComponent<Attrs> {
                         id="markdown"
                         class="rounded"
                         placeholder="Type your description here"
+                        value={value}
                         oninput={(event: IEvent) => {
                             this.handleInput(event);
                             vnode.attrs.postContent(this.content);

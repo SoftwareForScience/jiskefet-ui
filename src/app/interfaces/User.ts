@@ -14,4 +14,5 @@ export interface IUser {
     externalUserId: number;
     samsId: number;
     token: string;
+    name: string;
 }
