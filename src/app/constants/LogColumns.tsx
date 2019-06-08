@@ -70,7 +70,7 @@ const LogColumns: any[] = [
     {
         header: 'Author',
         accessor: 'user',
-        cell: (row: ILog): string => (row.user ? row.user.userId.toString() : 'Unknown')
+        cell: (row: ILog): string => (row.user ? row.user.name : 'Unknown')
     }
 ];
 

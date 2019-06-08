@@ -62,3 +62,4 @@ export default class TabContainer extends MithrilTsxComponent<Attrs> {
         );
     }
 }
+

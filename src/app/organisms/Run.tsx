@@ -104,7 +104,7 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                         this.linkingButton(addExistingRunId, vnode.attrs.runNumber)
                                     }
                                     footerContent={(
-                                        <TabContainer titles={['Logs', 'Tags']} disableds = {['']}>
+                                        <TabContainer titles={['Logs', 'Tags']} disableds={['']}>
                                             {
                                                 currentRun && currentRun.logs.length > 0
                                                     ? <Table data={currentRun.logs} columns={LogColumns} />

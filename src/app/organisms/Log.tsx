@@ -42,7 +42,6 @@ import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 import Comment from '../atoms/Comment';
 import { ILog } from '../interfaces/Log';
 
-
 interface Attrs {
   logId: number;
 }
@@ -108,10 +107,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                           ${currentLog && currentLog.logId}`
                         )}
                         text="Comment on this Log"
-                      />
-               
-  
-                      
+                      />                      
                     </div>
                   }
                   footerContent={(
@@ -275,3 +271,4 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     );
   }
 }
+
