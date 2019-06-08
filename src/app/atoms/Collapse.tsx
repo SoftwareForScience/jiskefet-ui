@@ -31,6 +31,8 @@ interface Attrs {
      * Whether the component is initially collapsed.
      */
     isInitiallyCollapsed?: boolean;
+    
+    style?: object;
 }
 
 type Vnode = m.Vnode<Attrs, Collapse>;
@@ -55,7 +57,7 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
     }
 
     view(vnode: Vnode) {
-        const { icon, title, id } = vnode.attrs;
+        const { icon, title, id, style } = vnode.attrs;
         const collapsableItem = selectCollapsableItem(store.getState(), id);
         return (
             <div>
@@ -67,9 +69,10 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
                             aria-expanded={collapsableItem && collapsableItem.isCollapsed ? 'false' : 'true'}
                             data-fa-transform="grow-10"
                             onclick={this.toggleCollapse}
+                            style={style}
                         >
                             {icon}
-                            &nbsp;{title}
+                            {title}
                         </div>
                         <div class={collapsableItem && collapsableItem.isCollapsed ? 'jf-collapse-in' : ''} id={id}>
                             {vnode.children}

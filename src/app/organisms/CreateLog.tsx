@@ -27,6 +27,7 @@ import Select from '../atoms/Select';
 import FormGroup from '../molecules/FormGroup';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 import HttpErrorAlert from '../atoms/HttpErrorAlert';
+import EmojiPicker from '../atoms/EmojiPicker';
 
 interface Attrs {
     runNumber?: number | undefined;
@@ -58,6 +59,23 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
     }
     addToCreateLog = (event: IEvent) => {
         this.setValueForLogToBeCreated(event.target.id, event.target.value);
+    }
+
+    // TODO: Refactor this
+    appendTitle = (content: string) => {
+        const logToBeCreated = selectLogToBeCreated(store.getState()) as ILogCreate;
+        if(logToBeCreated !== null)
+            this.setValueForLogToBeCreated('title', logToBeCreated.title + content);
+        else
+            this.setValueForLogToBeCreated('title', content);
+    }
+
+    appendDescription = (content: string) => {
+        const logToBeCreated = selectLogToBeCreated(store.getState()) as ILogCreate;
+        if(logToBeCreated !== null)
+            this.setValueForLogToBeCreated('body', logToBeCreated.body + content);
+        else
+            this.setValueForLogToBeCreated('body', content);
     }
 
     addDescription = (content: string) => {
@@ -117,15 +135,26 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                         <Label id="title" text="Add a title:" />
                                     )}
                                     field={(
-                                        <Input
-                                            id="title"
-                                            inputType="text"
-                                            className="form-control"
-                                            inputSize={InputSize.MEDIUM}
-                                            placeholder="Title"
-                                            required={true}
-                                            oninput={this.addToCreateLog}
-                                        />
+                                        <div class="input-group mb-1">
+                                            <Input
+                                                id="title"
+                                                inputType="text"
+                                                className="form-control"
+                                                inputSize={InputSize.MEDIUM}
+                                                placeholder="Title"
+                                                required={true}
+                                                oninput={this.addToCreateLog}
+                                                value={logToBeCreated !== null ? logToBeCreated.title : undefined}
+                                            />
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    <EmojiPicker
+                                                        id="1"
+                                                        onSelect={this.appendTitle}
+                                                    />
+                                                </span>
+                                            </div>
+                                        </div>
                                     )}
                                 />
                                 <FormGroup
@@ -166,9 +195,18 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                     field={(
                                         <div class="card shadow-sm bg-light">
                                             <TabContainer titles={['Editor', 'Preview']} disableds = {['']} >
-                                                <MarkdownEditor
-                                                    postContent={(content: string) => this.addDescription(content)}
-                                                />
+                                                <div style={{ position: 'relative' }}>
+                                                    <MarkdownEditor
+                                                        value={logToBeCreated !== null ? logToBeCreated.body : undefined}
+                                                        postContent={(content: string) => this.addDescription(content)}
+                                                    />
+                                                    <div class="textarea-icon">
+                                                        <EmojiPicker
+                                                            id="2"
+                                                            onSelect={this.appendDescription}
+                                                        />
+                                                    </div>
+                                                </div>
                                                 <MarkdownViewer
                                                     id={'MarkdownPreview'}
                                                     content={logToBeCreated && logToBeCreated.body || ''}
