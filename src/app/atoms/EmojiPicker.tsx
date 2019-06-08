@@ -9,7 +9,6 @@
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { getAllEmoji } from '../utility/EmojiUtil';
-import Collapse from './Collapse';
 
 interface Attrs {
     id: string;
@@ -25,25 +24,28 @@ export default class EmojiPicker extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
         const { id, onSelect } = vnode.attrs;
         return(
-            <Collapse 
-                title="😁"
-                id={id}
-                isInitiallyCollapsed={true}
-                style={{ padding: '0 0 0 0' }}
-            >
-                <div class="emojipicker-container">
-                    {
-                        getAllEmoji.map((x: string) =>
-                                <div 
+                <div
+                    class="dropdown-toggle emojipicker-toggler"
+                    data-toggle="dropdown" 
+                    aria-haspopup="true" 
+                    aria-expanded="false"
+                    id={id}
+                >
+                😁
+                <div class="dropdown-menu dropdown-menu-right emojipicker-container ">
+                            <div class="jf-align-right mr-2 show">
+                                {
+                                    getAllEmoji.map((x: string) =>
+                                    <div 
                                     class="emojipicker-column"
                                     onclick={() => onSelect(x)}
-                                >
-                                    {x}
-                                </div>
-                    )}
+                                    >
+                                        {x}
+                                    </div>
+                                )}
+                            </div>
                 </div>
-            </Collapse>
+            </div>
         );
     }
 }
-

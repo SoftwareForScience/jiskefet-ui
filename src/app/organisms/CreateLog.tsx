@@ -135,7 +135,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                         <Label id="title" text="Add a title:" />
                                     )}
                                     field={(
-                                        <div class="input-group mb-1">
+                                        <div class="input-group">
                                             <Input
                                                 id="title"
                                                 inputType="text"
