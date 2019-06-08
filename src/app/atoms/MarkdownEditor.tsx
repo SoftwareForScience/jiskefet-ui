@@ -12,7 +12,6 @@ import { IEvent } from '../interfaces/Event';
 
 interface Attrs {
     postContent: (content: string) => void;
-    
     value?: string | number;
 }
 

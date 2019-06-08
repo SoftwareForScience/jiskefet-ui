@@ -64,18 +64,20 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
     // TODO: Refactor this
     appendTitle = (content: string) => {
         const logToBeCreated = selectLogToBeCreated(store.getState()) as ILogCreate;
-        if(logToBeCreated !== null)
+        if (logToBeCreated !== null) {
             this.setValueForLogToBeCreated('title', logToBeCreated.title + content);
-        else
+        } else {
             this.setValueForLogToBeCreated('title', content);
+        }
     }
 
     appendDescription = (content: string) => {
         const logToBeCreated = selectLogToBeCreated(store.getState()) as ILogCreate;
-        if(logToBeCreated !== null)
+        if (logToBeCreated !== null) {
             this.setValueForLogToBeCreated('body', logToBeCreated.body + content);
-        else
+        } else {
             this.setValueForLogToBeCreated('body', content);
+        }
     }
 
     addDescription = (content: string) => {
@@ -194,9 +196,10 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 <FormGroup
                                     field={(
                                         <div class="card shadow-sm bg-light">
-                                            <TabContainer titles={['Editor', 'Preview']} disableds = {['']} >
+                                            <TabContainer titles={['Editor', 'Preview']} disableds={['']} >
                                                 <div style={{ position: 'relative' }}>
                                                     <MarkdownEditor
+                                                    // tslint:disable-next-line
                                                         value={logToBeCreated !== null ? logToBeCreated.body : undefined}
                                                         postContent={(content: string) => this.addDescription(content)}
                                                     />

@@ -107,14 +107,15 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                           ${currentLog && currentLog.logId}`
                         )}
                         text="Comment on this Log"
-                      />                      
+                      />
                     </div>
                   }
                   footerContent={(
-                    <TabContainer 
-                      titles={['Content', 'Runs', 'Files', 'Tags', 'Comments']} 
-                      disableds={[currentLog && currentLog.runs && currentLog.runs.length > 0 ?(''):'Runs']}              //Check wether the current log has a Run, if not pass "Runs" as tab to hide to TabContainer
-                    >                                                                                                     
+                    <TabContainer
+                      titles={['Content', 'Runs', 'Files', 'Tags', 'Comments']}
+                      disableds={[currentLog && currentLog.runs && currentLog.runs.length > 0 ? ('') : 'Runs']}
+                      // Check wether the current log has a Run, if not pass "Runs" as tab to hide to TabContainer
+                    >
                       {
                         currentLog && currentLog.body
                           ? <MarkdownViewer
@@ -271,4 +272,3 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     );
   }
 }
-
