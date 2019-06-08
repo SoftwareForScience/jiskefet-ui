@@ -11,6 +11,7 @@ import NavItem from '../atoms/NavItem';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import { selectIsSidebarShown } from '../redux/ducks/ui/selectors';
 import { store } from '../redux/configureStore';
+import { APPLICATION_NAME, API_VERSION } from '../constants/constants';
 
 export default class SideBar extends MithrilTsxComponent<{}> {
     constructor() {
@@ -27,7 +28,7 @@ export default class SideBar extends MithrilTsxComponent<{}> {
                     <NavItem href="/logs/create" name="Create new log" />
                     <NavItem href="/subsystems" name="Subsystems Overview" />
                 </ul>
-                <div class="jf-footer">Jiskefet v0.1.0</div>
+                <div class="jf-footer">{APPLICATION_NAME} v{API_VERSION}</div>
             </nav>
         );
     }

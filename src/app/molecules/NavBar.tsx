@@ -47,7 +47,7 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                             class="d-inline-block align-top jf-logo"
                             alt=""
                         />
-                        Jiskefet
+                        {APPLICATION_NAME}
                     </a>
                     <ul class="jf-align-right mr-2">
                         {Cookie.get('token') ?

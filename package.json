@@ -27,7 +27,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "tar": "^4.4.8"
+    "tar": ">=4.4.2"
   },
   "devDependencies": {
     "@types/cron": "^1.7.0",

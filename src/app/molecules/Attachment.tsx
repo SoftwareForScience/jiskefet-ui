@@ -18,6 +18,7 @@ import { ILogCreate } from '../interfaces/Log';
 import { IEvent } from '../interfaces/Event';
 import Label from '../atoms/Label';
 import Input from '../atoms/Input';
+import { FILE_UPLOAD_LIMIT } from '../constants/constants';
 
 interface Attrs {
     /**
@@ -45,7 +46,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         super();
         this.isCreateLog = vnode.attrs.isExistingItem;
         this.hasChosenAttachment = false;
-        this.maxFileSize = 5000000; // Equals to 5MB
+        this.maxFileSize = FILE_UPLOAD_LIMIT * 1024 * 1024;
     }
 
     /**
@@ -154,7 +155,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         return (
             <div>
                 <div class="alert alert-danger" role="alert" id="maximum-size-label" for="save" hidden>
-                    Maximum file size is 5MB! Please select a smaller file.
+                    Filesize exceeds the maximum limit of {FILE_UPLOAD_LIMIT}MB! Please select a smaller file.
                 </div>
                 <Label
                     id="fileUpload"

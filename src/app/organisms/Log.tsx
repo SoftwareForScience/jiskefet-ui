@@ -106,13 +106,13 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                           `/logs/create/comments/
                           ${currentLog && currentLog.logId}`
                         )}
-                        text="Comment on this Log"
+                        text="Reply on this Log"
                       />
                     </div>
                   }
                   footerContent={(
                     <TabContainer
-                      titles={['Content', 'Runs', 'Files', 'Tags', 'Comments']}
+                      titles={['Content', 'Runs', 'Files', 'Tags', 'Replies']}
                       disableds={[currentLog && currentLog.runs && currentLog.runs.length > 0 ? ('') : 'Runs']}
                       // Check wether the current log has a Run, if not pass "Runs" as tab to hide to TabContainer
                     >
