@@ -86,16 +86,16 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
 
     async saveLog(runNumber: number | undefined, logNumber: number | undefined) {
 
-        // Create runLog
-        if (runNumber) {
+        if (logNumber) {
+            // Create commentLog
+            this.setValueForLogToBeCreated('parentId', logNumber);
+            this.setValueForLogToBeCreated('subtype', 'comment');
+        } else {
+            // Create runLog
             this.setValueForLogToBeCreated('run', runNumber);
             this.setValueForLogToBeCreated('subtype', 'run');
         }
-        // Create commentLog
-        if (logNumber) {
-            this.setValueForLogToBeCreated('parentId', logNumber);
-            this.setValueForLogToBeCreated('subtype', 'comment');
-        }
+
         const profile = selectProfile(store.getState());
         if (profile) {
             this.setValueForLogToBeCreated('user', profile.userData.userId);
