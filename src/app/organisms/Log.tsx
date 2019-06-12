@@ -41,18 +41,26 @@ import { createTag } from '../redux/ducks/tag/operations';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 import Comment from '../atoms/Comment';
 import { ILog } from '../interfaces/Log';
+import { setFilter } from '../redux/ducks/filter/actions';
+import { FilterName } from '../interfaces/Filter';
+import { selectQueryString } from '../redux/ducks/filter/selectors';
 
 interface Attrs {
   logId: number;
 }
 type Vnode = m.Vnode<Attrs, Log>;
 export default class Log extends MithrilTsxComponent<Attrs> {
+
   constructor(vnode: Vnode) {
     super();
     store.dispatch(fetchLog(vnode.attrs.logId));
     store.dispatch(fetchAttachmentsByLog(vnode.attrs.logId));
-    store.dispatch(fetchThread(vnode.attrs.logId));
+    store.dispatch(setFilter(FilterName.Log, 'threadId', vnode.attrs.logId));
+    const queryString = selectQueryString(store.getState())(FilterName.Log);
+    console.log('fetching thread...');
+    store.dispatch(fetchThread(queryString));
   }
+
   async handleSubmit(event: any): Promise<void> {
     const log = await selectCurrentLog(store.getState()) as ILog | null;
     const tagId = event.target.tag.value;
@@ -70,6 +78,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
       event.target.reset(); // Clear the form.
     }
   }
+
   view(vnode: Vnode) {
     const addExistingRunId = 'add-existing-run';
     const state = store.getState();
@@ -114,7 +123,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                     <TabContainer
                       titles={['Content', 'Runs', 'Files', 'Tags', 'Replies']}
                       disableds={[currentLog && currentLog.runs && currentLog.runs.length > 0 ? ('') : 'Runs']}
-                      // Check wether the current log has a Run, if not pass "Runs" as tab to hide to TabContainer
+                    // Check wether the current log has a Run, if not pass "Runs" as tab to hide to TabContainer
                     >
                       {
                         currentLog && currentLog.body

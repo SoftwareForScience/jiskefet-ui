@@ -24,7 +24,7 @@ import {
     fetchThreadRequest,
     fetchThreadSuccess
 } from './actions';
-import { getLogs, getLog, linkRunToLogUrl, postLog, getThread, postToThread } from '../../../constants/apiUrls';
+import { getLogs, getLog, linkRunToLogUrl, postLog } from '../../../constants/apiUrls';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
 import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
@@ -32,12 +32,12 @@ import { addSuccessMessage } from '../success/actions';
 import { SuccessAction } from '../success/types';
 
 // Thunks
-export const fetchThread = (id: number): ThunkResult<Promise<void>> =>
+export const fetchThread = (query?: string): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, LogAction | ErrorAction>): Promise<void> => {
         dispatch(fetchThreadRequest());
         return request({
             method: 'GET',
-            url: getThread(id)
+            url: getLogs(query)
         }).then((result: ISuccessObject<ILog>) => {
             dispatch(fetchThreadSuccess(result));
         }).catch((error: IHttpError<any>) => {
@@ -45,25 +45,6 @@ export const fetchThread = (id: number): ThunkResult<Promise<void>> =>
         });
     };
 
-export const createComment = (logToBeCreated: ILogCreate): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, LogAction | ErrorAction | SuccessAction>): Promise<void> => {
-        dispatch(createLogRequest());
-        return request({
-            method: 'POST',
-            url: postToThread(),
-            data: logToBeCreated
-        }).then((result: any) => {
-            if (result.error) {
-                dispatch(addHttpError(result.error));
-            }
-            dispatch(createLogSuccess());
-            const message =
-                `Successfully created Log with id: ${result.data.item.logId}`;
-            dispatch(addSuccessMessage(message));
-        }).catch((error: IHttpError<any>) => {
-            dispatch(addHttpError(error));
-        });
-    };
 export const fetchLogs = (query?: string): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, LogAction | ErrorAction>): Promise<void> => {
         dispatch(fetchLogsRequest());

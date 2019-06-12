@@ -38,8 +38,7 @@ export interface ILogCreate {
     title: string;
     body: string;
     user: number;
-    rootId?: number;
     parentId?: number;
-    run: number;
+    run?: number;
     attachments?: IAttachmentCreate[];
 }

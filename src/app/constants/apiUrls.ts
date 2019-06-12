@@ -42,8 +42,6 @@ export const getLogs = (query?: string): string => `${BASE_URL}logs${query ? `?$
 export const getLog = (id: string | number): string => `${BASE_URL}logs/${id}`;
 export const linkRunToLogUrl = (runNumber: number): string => `${BASE_URL}logs/${runNumber}/runs`;
 export const postLog = (): string => `${BASE_URL}logs`;
-export const getThread = (id: number): string => `${BASE_URL}logs/${id}/threads`;
-export const postToThread = (): string => `${BASE_URL}logs/threads`;
 export const postAttachment = (logId: string | number): string => `${BASE_URL}logs/${logId}/attachments`;
 
 // Tag
