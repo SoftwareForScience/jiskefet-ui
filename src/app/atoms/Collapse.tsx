@@ -31,7 +31,6 @@ interface Attrs {
      * Whether the component is initially collapsed.
      */
     isInitiallyCollapsed?: boolean;
-    
     style?: object;
 }
 

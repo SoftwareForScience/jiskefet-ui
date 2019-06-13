@@ -16,7 +16,7 @@ import AttachmentComponent from '../molecules/Attachment';
 import { selectProfile } from '../redux/ducks/auth/selectors';
 import { store } from '../redux/configureStore';
 import { ILogCreate, ILog } from '../interfaces/Log';
-import { createLog, fetchLog, createComment } from '../redux/ducks/log/operations';
+import { createLog, fetchLog } from '../redux/ducks/log/operations';
 import { selectLogToBeCreated, selectCurrentLog } from '../redux/ducks/log/selectors';
 import { clearLogToBeCreated, setLogToBeCreated } from '../redux/ducks/log/actions';
 import MarkdownEditor from '../atoms/MarkdownEditor';
@@ -64,18 +64,20 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
     // TODO: Refactor this
     appendTitle = (content: string) => {
         const logToBeCreated = selectLogToBeCreated(store.getState()) as ILogCreate;
-        if(logToBeCreated !== null)
+        if (logToBeCreated !== null) {
             this.setValueForLogToBeCreated('title', logToBeCreated.title + content);
-        else
+        } else {
             this.setValueForLogToBeCreated('title', content);
+        }
     }
 
     appendDescription = (content: string) => {
         const logToBeCreated = selectLogToBeCreated(store.getState()) as ILogCreate;
-        if(logToBeCreated !== null)
+        if (logToBeCreated !== null) {
             this.setValueForLogToBeCreated('body', logToBeCreated.body + content);
-        else
+        } else {
             this.setValueForLogToBeCreated('body', content);
+        }
     }
 
     addDescription = (content: string) => {
@@ -83,27 +85,24 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
     }
 
     async saveLog(runNumber: number | undefined, logNumber: number | undefined) {
-        const parentLog = logNumber && await this.fetchParentLog(logNumber);
 
-        if (runNumber) {
-            this.setValueForLogToBeCreated('run', runNumber);
-        }
-        console.log('Create comment for root:');
-        console.log(parentLog && parentLog.commentFkRootLogId);
         if (logNumber) {
+            // Create commentLog
             this.setValueForLogToBeCreated('parentId', logNumber);
-            this.setValueForLogToBeCreated('rootId', parentLog && parentLog.commentFkRootLogId);
+            this.setValueForLogToBeCreated('subtype', 'comment');
+        } else {
+            // Create runLog
+            this.setValueForLogToBeCreated('run', runNumber);
+            this.setValueForLogToBeCreated('subtype', 'run');
         }
+
         const profile = selectProfile(store.getState());
         if (profile) {
             this.setValueForLogToBeCreated('user', profile.userData.userId);
 
             const logToBeCreated = selectLogToBeCreated(store.getState());
-            if (logToBeCreated && !logNumber) {
+            if (logToBeCreated) {
                 await store.dispatch(createLog(logToBeCreated));
-                store.dispatch(clearLogToBeCreated());
-            } else if (logToBeCreated && !runNumber) {
-                await store.dispatch(createComment(logToBeCreated));
                 store.dispatch(clearLogToBeCreated());
             }
             m.route.set('/Logs');
@@ -194,9 +193,10 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 <FormGroup
                                     field={(
                                         <div class="card shadow-sm bg-light">
-                                            <TabContainer titles={['Editor', 'Preview']} disableds = {['']} >
+                                            <TabContainer titles={['Editor', 'Preview']} disableds={['']} >
                                                 <div style={{ position: 'relative' }}>
                                                     <MarkdownEditor
+                                                        // tslint:disable-next-line
                                                         value={logToBeCreated !== null ? logToBeCreated.body : undefined}
                                                         postContent={(content: string) => this.addDescription(content)}
                                                     />

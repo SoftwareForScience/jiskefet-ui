@@ -9,9 +9,10 @@
  * It explains the basics of markdown, it also gives a link that
  * redirects to a website with a more detailed explanation.
  */
+import { APPLICATION_NAME } from './constants';
 
 const MarkdownHelpText: string =
-    `Jiskefet uses markdown for text formatting and editing.
+    `${APPLICATION_NAME} uses markdown for text formatting and editing.
     These are the basic techniques.
     For a more detailed explanation
     [go here](https://guides.github.com/features/mastering-markdown/).

@@ -26,8 +26,8 @@ export default class EmojiPicker extends MithrilTsxComponent<Attrs> {
         return(
                 <div
                     class="dropdown-toggle emojipicker-toggler"
-                    data-toggle="dropdown" 
-                    aria-haspopup="true" 
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
                     aria-expanded="false"
                     id={id}
                 >
@@ -36,16 +36,17 @@ export default class EmojiPicker extends MithrilTsxComponent<Attrs> {
                             <div class="jf-align-right mr-2 show">
                                 {
                                     getAllEmoji.map((x: string) =>
-                                    <div 
-                                    class="emojipicker-column"
-                                    onclick={() => onSelect(x)}
+                                    // tslint:disable-next-line
+                                    <div
+                                        class="emojipicker-column"
+                                        onclick={() => onSelect(x)}
                                     >
                                         {x}
                                     </div>
                                 )}
                             </div>
                 </div>
-            </div>
+                </div>
         );
     }
 }

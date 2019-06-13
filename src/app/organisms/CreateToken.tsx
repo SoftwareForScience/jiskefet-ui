@@ -77,7 +77,7 @@ export default class CreateToken extends MithrilTsxComponent<{}> {
                         <div class="col-9 mx-auto bg-light rounded p-4 shadow-sm">
                             <div><h2>Create a new token</h2></div>
                             <div>
-                                <p> For a machine to make use of the jiskefet API,
+                                <p> For a machine to make use of the API,
                                     it needs to use an access token for
                                     authentication and authorization. This token can be
                                     generated here and is linked to your account.
