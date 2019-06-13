@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { ILog } from '../interfaces/Log';
-import { format } from 'date-fns';
+import { formatDateField } from '../utility/DateUtil';
 
 /**
  * The columns for the Log table in LinklogToRun.
@@ -68,7 +68,7 @@ const LinkLogToRunColumns = (
         {
             header: 'Creation time',
             accessor: 'creationTime',
-            cell: (row: ILog): string => (row.creationTime ? format(row.creationTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+            cell: (row: ILog): string => (row.creationTime ? formatDateField(row.creationTime) : 'Unkown')
         }
     ];
 
