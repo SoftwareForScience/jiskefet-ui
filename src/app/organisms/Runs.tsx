@@ -32,6 +32,7 @@ import { fetchRuns } from '../redux/ducks/run/operations';
 import { selectIsFetchingRuns, selectRuns, selectRunCount } from '../redux/ducks/run/selectors';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
+import { pageSizes } from '../constants/constants';
 
 const inputFields = [
     {
@@ -134,7 +135,6 @@ export default class Runs extends MithrilTsxComponent<{}> {
     }
 
     view() {
-        const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         const collapsableFilterItem = selectCollapsableItem(store.getState(), 'filters');
         const runFilters = selectFilters(store.getState())[FilterName.Run];
         return (

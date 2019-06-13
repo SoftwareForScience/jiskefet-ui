@@ -33,6 +33,7 @@ import { selectIsFetchingLogs, selectLogCount, selectLogs } from '../redux/ducks
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
 import Button, { ButtonClass } from '../atoms/Button';
+import { pageSizes } from '../constants/constants';
 
 const inputFields = [
     {
@@ -85,7 +86,6 @@ export default class Logs extends MithrilTsxComponent<{}> {
     }
 
     view() {
-        const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         const collapsableFilterItem = selectCollapsableItem(store.getState(), 'filters');
         const logFilters = selectFilters(store.getState())[FilterName.Log];
         return (
