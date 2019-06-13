@@ -32,14 +32,16 @@ export default class NavBar extends MithrilTsxComponent<{}> {
         return (
             <nav class="navbar navbar-expand-sm navbar-dark jf-navbar" >
                 <div class="navbar-header d-flex">
-                    <button type="button" 
-                            class="btn jf-hamburger-button navbar-toggler collapsed" 
-                            data-toggle="collapse" 
-                            data-target="#navbar" 
-                            aria-controls="navbar" 
-                            aria-expanded="true" 
-                            aria-label="Toggle navigation">
-                        <span class="fas fa-bars"></span>
+                    <button
+                            type="button"
+                            class="btn jf-hamburger-button navbar-toggler collapsed"
+                            data-toggle="collapse"
+                            data-target="#navbar"
+                            aria-controls="navbar"
+                            aria-expanded="true"
+                            aria-label="Toggle navigation"
+                    >
+                        <span class="fas fa-bars" />
                     </button>
                     <a href="/" class="navbar-brand" oncreate={m.route.link}>
                         <img

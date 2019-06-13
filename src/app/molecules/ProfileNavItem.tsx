@@ -90,6 +90,7 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                 </a>
                                 <div class="dropdown-divider" />
                                 <a
+// tslint:disable-next-line: max-line-length
                                     href="https://alice.its.cern.ch/jira/secure/RapidBoard.jspa?rapidView=309&view=detail&selectedIssue=O2B-124"
                                     target="_blank"
                                 >
