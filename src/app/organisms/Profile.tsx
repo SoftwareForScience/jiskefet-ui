@@ -31,7 +31,7 @@ import { fetchLogsForUser } from '../redux/ducks/user/operations';
 import { selectIsFetchingUserLogs, selectUserLogs, selectUserLogCount } from '../redux/ducks/user/selectors';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
-import { pageSizes } from '../constants/constants';
+import { PAGE_SIZES } from '../constants/constants';
 
 interface Attrs {
     userId: number;
@@ -142,7 +142,7 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                                             this.setQueryAndFetch(userId);
                                         }}
                                         defaultOption={userLogFilters.pageSize}
-                                        options={pageSizes}
+                                        options={PAGE_SIZES}
                                     />
                                 </div>
                                 <div class="text-muted mt-2 ml-2 pagination-block">

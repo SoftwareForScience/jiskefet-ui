@@ -32,7 +32,7 @@ import { fetchRuns } from '../redux/ducks/run/operations';
 import { selectIsFetchingRuns, selectRuns, selectRunCount } from '../redux/ducks/run/selectors';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
-import { pageSizes } from '../constants/constants';
+import { PAGE_SIZES } from '../constants/constants';
 
 const inputFields = [
     {
@@ -233,7 +233,7 @@ export default class Runs extends MithrilTsxComponent<{}> {
                                                     this.setQueryAndFetch();
                                                 }}
                                                 defaultOption={runFilters.pageSize}
-                                                options={pageSizes}
+                                                options={PAGE_SIZES}
                                             />
                                         </div>
                                         <div class="text-muted mt-2 ml-2 pagination-block">

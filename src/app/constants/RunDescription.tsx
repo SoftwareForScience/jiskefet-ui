@@ -12,7 +12,6 @@ import * as m from 'mithril';
 import { IDescription } from '../interfaces/Description';
 import { IRun } from '../interfaces/Run';
 import { formatDateField } from '../utility/DateUtil';
-import { format } from 'date-fns';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.

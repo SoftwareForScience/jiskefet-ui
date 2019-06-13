@@ -33,7 +33,7 @@ import { selectIsFetchingLogs, selectLogCount, selectLogs } from '../redux/ducks
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
 import Button, { ButtonClass } from '../atoms/Button';
-import { pageSizes } from '../constants/constants';
+import { PAGE_SIZES } from '../constants/constants';
 
 const inputFields = [
     {
@@ -187,7 +187,7 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                                     this.setQueryAndFetch();
                                                 }}
                                                 defaultOption={logFilters.pageSize}
-                                                options={pageSizes}
+                                                options={PAGE_SIZES}
                                             />
                                         </div>
                                         <div class="text-muted mt-2 ml-2 pagination-block">
