@@ -57,7 +57,7 @@ export default class Select extends MithrilTsxComponent<Attrs> {
                 value={defaultOption}
             >
                 {
-                    options.map((option: any, i) => (
+                    options.map((option: any) => (
                         optionValue && optionText
                             ? <option value={option[optionValue]}>{option[optionText]}</option>
                             : <option value={option}>{option}</option>
