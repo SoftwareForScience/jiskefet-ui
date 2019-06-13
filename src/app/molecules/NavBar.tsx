@@ -31,14 +31,16 @@ export default class NavBar extends MithrilTsxComponent<{}> {
         const profile = selectProfile(store.getState());
         return (
             <nav class="navbar navbar-expand-sm navbar-dark jf-navbar" >
-                <div class="navbar-header w-100 d-flex">
-                    {/* <button
-                        type="button"
-                        class="btn jf-hamburger-button"
-                        onclick={this.toggleSidebar}
-                    >
-                        <span class="fas fa-bars" />
-                    </button> */}
+                <div class="navbar-header d-flex">
+                    <button type="button" 
+                            class="btn jf-hamburger-button navbar-toggler collapsed" 
+                            data-toggle="collapse" 
+                            data-target="#navbar" 
+                            aria-controls="navbar" 
+                            aria-expanded="true" 
+                            aria-label="Toggle navigation">
+                        <span class="fas fa-bars"></span>
+                    </button>
                     <a href="/" class="navbar-brand" oncreate={m.route.link}>
                         <img
                             src="../../assets/alice_logo_text_white.png"
@@ -68,9 +70,10 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                             </a>
                         }
                     </ul>
+                </div>
                     {Cookie.get('token')
                         ?
-                        <div class="collapse navbar-collapse justify-content-md-center">
+                        <div class="navbar-collapse justify-content-md-center collapse" id="navbar">
                             <ul class="navbar-nav">
                                 <NavItem href="/logs" name="Logs" />
                                 <NavItem href="/runs" name="Runs" />
@@ -80,7 +83,6 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                         :
                         null
                     }
-                </div>
             </nav >
         );
     }
