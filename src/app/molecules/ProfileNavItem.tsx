@@ -89,6 +89,19 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                     </button>
                                 </a>
                                 <div class="dropdown-divider" />
+                                <a
+// tslint:disable-next-line: max-line-length
+                                    href="https://alice.its.cern.ch/jira/secure/RapidBoard.jspa?rapidView=309&view=detail&selectedIssue=O2B-124"
+                                    target="_blank"
+                                >
+                                    <button
+                                        class="dropdown-item jf-dropdown-item"
+                                        type="button"
+                                    >
+                                        JIRA Board
+                                    </button>
+                                </a>
+                                <div class="dropdown-divider" />
                                 <button
                                     type="button"
                                     class="dropdown-item jf-dropdown-item"

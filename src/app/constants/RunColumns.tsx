@@ -7,8 +7,8 @@
  */
 
 import * as m from 'mithril';
-import { format } from 'date-fns';
 import { IRun } from '../interfaces/Run';
+import { formatDateField } from '../utility/DateUtil';
 
 /**
  * The columns used by the Table that holds Run entities.
@@ -26,23 +26,23 @@ const RunColumns = [
     {
         header: 'Time O\xB2 start',
         accessor: 'o2StartTime',
-        cell: (row: IRun): string => (row.O2StartTime ? format(row.O2StartTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        cell: (row: IRun): string => (row.O2StartTime ? formatDateField(row.O2StartTime) : 'Unkown')
     },
     {
         header: `Time O\xB2 end`,
         accessor: 'o2EndTime',
-        cell: (row: IRun): string => (row.O2EndTime ? format(row.O2EndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
+        cell: (row: IRun): string => (row.O2EndTime ? formatDateField(row.O2EndTime) : 'Run In Progress')
     },
     {
         header: 'Time trg start',
         accessor: 'trgStartTime',
-        cell: (row: IRun): string => (row.TrgStartTime ? format(row.TrgStartTime, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+        cell: (row: IRun): string => (row.TrgStartTime ? formatDateField(row.TrgStartTime) : 'Unkown')
     },
     {
         header: 'Time trg end',
         accessor: 'trgEndTime',
         cell: (row: IRun): string =>
-            (row.TrgEndTime ? format(row.TrgEndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
+            (row.TrgEndTime ? formatDateField(row.TrgEndTime) : 'Run In Progress')
     },
     {
         header: 'Activity id',

@@ -27,13 +27,3 @@
         width: 100%;
     }
 }
-
-@media (max-width: 768px) {
-    .jf-content {
-        width: 100%;
-
-        &.jf-content-active {
-            width: calc(100% - #{$sidebar-width});
-        }
-    }
-}

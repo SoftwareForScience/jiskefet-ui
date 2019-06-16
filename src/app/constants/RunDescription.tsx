@@ -12,7 +12,6 @@ import * as m from 'mithril';
 import { IDescription } from '../interfaces/Description';
 import { IRun } from '../interfaces/Run';
 import { formatDateField } from '../utility/DateUtil';
-import { format } from 'date-fns';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
@@ -33,7 +32,7 @@ const RunDescription: IDescription[] = [
     {
         label: 'Time O\xB2 end',
         value: (run: IRun): string | Date =>
-            (run.O2EndTime ? format(run.O2EndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
+            (run.O2EndTime ? formatDateField(run.O2EndTime) : 'Run In Progress')
     },
     {
         label: 'Time TRG start',
@@ -44,7 +43,7 @@ const RunDescription: IDescription[] = [
     {
         label: 'Time TRG end',
         value: (run: IRun): string | Date =>
-            (run.TrgEndTime ? format(run.TrgEndTime, 'HH:mm:ss DD/MM/YYYY') : 'Run In Progress')
+            (run.TrgEndTime ? formatDateField(run.TrgEndTime) : 'Run In Progress')
     },
     {
         label: 'Run type',

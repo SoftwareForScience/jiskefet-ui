@@ -54,13 +54,8 @@ export default class Select extends MithrilTsxComponent<Attrs> {
                 oninput={oninput}
                 hidden={hidden}
                 style={style}
+                value={defaultOption}
             >
-                {defaultOption
-                    ? options.length !== 0
-                        ? <option value="">{defaultOption}</option>
-                        : <option value="">{'No options found'}</option>
-                    : ''
-                }
                 {
                     options.map((option: any) => (
                         optionValue && optionText

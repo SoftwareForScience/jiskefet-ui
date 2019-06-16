@@ -30,7 +30,7 @@ const getInitialState = (name: FilterName): IFilterState | {} => {
                 subType: null,
                 orderBy: 'logId',
                 orderDirection: OrderDirection.Descending,
-                pageSize: 16,
+                pageSize: 20,
                 pageNumber: 1,
             };
         }
@@ -50,7 +50,7 @@ const getInitialState = (name: FilterName): IFilterState | {} => {
                 endTimeTrgEnd: null,
                 orderBy: null,
                 orderDirection: null,
-                pageSize: 16,
+                pageSize: 20,
                 pageNumber: 1,
             };
         case FilterName.Subsystem:
@@ -63,7 +63,7 @@ const getInitialState = (name: FilterName): IFilterState | {} => {
             return {
                 orderBy: null,
                 orderDirection: null,
-                pageSize: 16,
+                pageSize: 20,
                 pageNumber: 1,
             };
         default:

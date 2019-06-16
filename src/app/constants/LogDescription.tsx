@@ -10,8 +10,8 @@
 
 import * as m from 'mithril';
 import { IDescription } from '../interfaces/Description';
-import { format } from 'date-fns';
 import { ILog } from '../interfaces/Log';
+import { formatDateField } from '../utility/DateUtil';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
@@ -53,7 +53,7 @@ const LogDescription: IDescription[] = [
     {
         label: 'Creation time',
         value: (log: ILog): string => {
-            return format(log.creationTime, 'HH:mm:ss DD/MM/YYYY');
+            return formatDateField(log.creationTime);
         }
     },
     {
