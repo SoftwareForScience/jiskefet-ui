@@ -79,7 +79,7 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                                 <img
                                     class="card-img-top"
                                     src={isCernProfile
-                                        ? 'https://via.placeholder.com/300'
+                                        ? '/assets/img/user.png'
                                         : (profile as GithubProfileDto).profileData.avatar_url}
                                     alt="Card image cap"
                                 />

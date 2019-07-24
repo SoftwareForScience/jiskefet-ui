@@ -39,7 +39,7 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                             >
                                 <img
                                     src={isCernProfile
-                                        ? 'https://via.placeholder.com/300'
+                                        ? '/assets/img/user.png'
                                         : (profile as GithubProfileDto).profileData.avatar_url}
                                     class="rounded"
                                     alt={`@${profile.profileData.name}`}
