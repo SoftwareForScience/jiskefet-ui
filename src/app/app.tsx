@@ -109,12 +109,14 @@ const lockedOutRoutes = {
  * (logged in is in essence: does the user have a cookie with a JWT)
  */
 export const initialize = () => {
-    const localHostnames = process.env.DEV_HOST_NAME;
+    const localHostname = process.env.DEV_HOST_NAME;
 
-    if (typeof(localHostnames) !== 'undefined') {
-        if (localHostnames.includes(window.location.hostname) && !Cookie.get('token')) {
+    if (typeof(localHostname) !== 'undefined' && localHostname) {
+        if (localHostname === window.location.hostname && !Cookie.get('token')) {
             Cookie.set('token', 'TEST');
         }
+    } else if (Cookie.get('token') && Cookie.get('token') === 'TEST') {
+        Cookie.remove('token');
     }
 
     const token = Cookie.get('token');
