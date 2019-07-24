@@ -109,9 +109,9 @@ const lockedOutRoutes = {
  * (logged in is in essence: does the user have a cookie with a JWT)
  */
 export const initialize = () => {
-    const localHostname = process.env.ALLOW_ANONYMOUS;
+    const allowAnonymous = process.env.ALLOW_ANONYMOUS;
 
-    if (typeof(localHostname) !== 'undefined' && localHostname === 'true') {
+    if (typeof(allowAnonymous) !== 'undefined' && allowAnonymous.toLowerCase() === 'true') {
         if (!Cookie.get('token')) {
             Cookie.set('token', 'TEST');
         }
