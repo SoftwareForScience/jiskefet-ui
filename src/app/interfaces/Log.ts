@@ -9,6 +9,7 @@
 import { IAttachmentCreate, IAttachment } from './Attachment';
 import { IUser } from './User';
 import { IRun } from './Run';
+import { ITag } from './Tag';
 
 /**
  * Interface with the fields for fetching one or more Log entries.
@@ -24,6 +25,7 @@ export interface ILog {
     user: IUser;
     runs?: IRun[];
     attachments?: IAttachment[];
+    tags?: ITag[];
     comments?: ILog[];
     commentFkRootLogId?: number;
     commentFkParentLogId?: number;

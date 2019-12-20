@@ -8,6 +8,7 @@
 
 import { RootState } from '../../types';
 import { ILog, ILogCreate } from '../../../interfaces/Log';
+import { ITag } from '../../../interfaces/Tag';
 
 // Selectors
 export const selectIsFetchingLogs = (state: RootState): boolean => state.log.isFetchingLogs;
@@ -23,3 +24,4 @@ export const selectCurrentLog = (state: RootState): ILog | null => (
 export const selectLogToBeCreated = (state: RootState): ILogCreate | null => (
     state.log.logToBeCreated
 );
+export const selectTagsForLog = (state: RootState): ITag[] => state.log.tags;

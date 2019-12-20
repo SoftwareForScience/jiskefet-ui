@@ -16,7 +16,9 @@ const initialState: LogState = {
     isFetchingLog: false,
     isPatchingLinkRunToLog: false,
     isCreatingLog: false,
+    isFetchingTags: false,
     logs: [],
+    tags: [],
     count: 0,
     current: null,
     logToBeCreated: null,
@@ -90,6 +92,17 @@ const logReducer: Reducer<LogState>
                 return {
                     ...state,
                     isPatchingLinkRunToLog: false
+                };
+            case ActionTypes.FETCH_TAGS_BY_LOG_REQUEST:
+                return {
+                    ...state,
+                    isFetchingTags: true,
+                };
+            case ActionTypes.FETCH_TAGS_BY_LOG_SUCCESS:
+                return {
+                    ...state,
+                    isFetchingTags: false,
+                    tags: [...action.payload.data.items]
                 };
             default:
                 return state;

@@ -12,6 +12,7 @@ import * as m from 'mithril';
 import { IDescription } from '../interfaces/Description';
 import { ILog } from '../interfaces/Log';
 import { formatDateField } from '../utility/DateUtil';
+import { ITag } from '../interfaces/Tag';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
@@ -62,6 +63,16 @@ const LogDescription: IDescription[] = [
             return log.user &&
                 log.user.name;
         }
+    },
+    {
+        label: 'Tags',
+        value: (log: ILog): JSX.Element => (
+            <div>
+                {log.tags!.map((tag: ITag) => {
+                    return <span key={tag.id}><span key={tag.id} class={`badge badge-primary`}>{tag.tagText}</span>, </span>;
+                })}
+            </div>
+        )
     }
 ];
 
