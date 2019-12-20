@@ -17,7 +17,6 @@ import { store } from '../redux/configureStore';
 import { fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { fetchLog, fetchThread } from '../redux/ducks/log/operations';
 import { fetchTags } from '../redux/ducks/tag/operations';
-import { fetchTagsForLog } from '../redux/ducks/log/operations';
 import {
   selectCurrentLog, selectIsFetchingLog,
   selectIsPatchingLinkRunToLog, selectThread
@@ -34,7 +33,6 @@ import { IAttachment } from '../interfaces/Attachment';
 import { download } from '../utility/FileUtil';
 import AttachmentComponent from '../molecules/Attachment';
 import { selectFetchingTags, selectTags } from '../redux/ducks/tag/selectors';
-// import { selectTagsForLog } from '../redux/ducks/log/selectors';
 import { ITag, ITagCreate } from '../interfaces/Tag';
 import Input from '../atoms/Input';
 import FormGroup from '../molecules/FormGroup';
@@ -58,7 +56,6 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     super();
     store.dispatch(fetchLog(vnode.attrs.logId));
     store.dispatch(fetchAttachmentsByLog(vnode.attrs.logId));
-    store.dispatch(fetchTagsForLog(vnode.attrs.logId));
     store.dispatch(fetchTags());
     store.dispatch(setFilter(FilterName.Log, 'threadId', vnode.attrs.logId));
     const queryString = selectQueryString(store.getState())(FilterName.Log);
@@ -91,7 +88,6 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     const isFetchingLog = selectIsFetchingLog(state);
     const isPatchingLinkRunToLog = selectIsPatchingLinkRunToLog(state);
     const attachments = selectAttachments(store.getState());
-    // const tagsForLog = selectTagsForLog(store.getState());
     const tags = selectTags(store.getState());
     const thread = selectThread(store.getState());
     return (

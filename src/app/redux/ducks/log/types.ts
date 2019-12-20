@@ -20,7 +20,6 @@ export interface LogState {
     isFetchingLog: boolean;
     isPatchingLinkRunToLog: boolean;
     isCreatingLog: boolean;
-    isFetchingTags: boolean;
     logs: ILog[];
     count: number;
     current: ILog | null;
@@ -43,8 +42,6 @@ export enum ActionTypes {
     CREATE_LOG_SUCCESS = 'jiskefet/log/CREATE_LOG_SUCCESS',
     SET_LOG_TO_BE_CREATED = 'jiskefet/log/SET_LOG_TO_BE_CREATED',
     CLEAR_LOG_TO_BE_CREATED = 'jiskefet/log/CLEAR_LOG_TO_BE_CREATED',
-    FETCH_TAGS_BY_LOG_REQUEST = 'jiskefet/log/FETCH_TAGS_BY_LOG_REQUEST',
-    FETCH_TAGS_BY_LOG_SUCCESS = 'jiskefet/log/FETCH_TAGS_BY_LOG_SUCCESS',
 }
 
 // Action interfaces
@@ -100,15 +97,6 @@ export interface ClearLogToBeCreatedAction extends Action {
     type: ActionTypes.CLEAR_LOG_TO_BE_CREATED;
 }
 
-export interface FetchTagsByLogRequestAction extends Action {
-    type: ActionTypes.FETCH_TAGS_BY_LOG_REQUEST;
-}
-
-export interface FetchTagsByLogSuccessAction extends Action {
-    type: ActionTypes.FETCH_TAGS_BY_LOG_SUCCESS;
-    payload: ICollectionSuccessObject<ITag>;
-}
-
 // Combine actions into single type
 export type LogAction =
     | FetchThreadRequestAction
@@ -122,9 +110,7 @@ export type LogAction =
     | CreateLogRequestAction
     | CreateLogSuccessAction
     | SetLogToBeCreatedAction
-    | ClearLogToBeCreatedAction
-    | FetchTagsByLogRequestAction
-    | FetchTagsByLogSuccessAction;
+    | ClearLogToBeCreatedAction;
 
 // Shorthand type for ThunkAction
 export type ThunkResult<R> = ThunkAction<R, RootState, undefined, LogAction>;

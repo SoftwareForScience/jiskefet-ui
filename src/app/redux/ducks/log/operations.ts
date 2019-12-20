@@ -23,16 +23,13 @@ import {
     linkRunToLogSucces,
     fetchThreadRequest,
     fetchThreadSuccess,
-    fetchTagsByLogRequest,
-    fetchTagsByLogSuccess
 } from './actions';
-import { getLogs, getLog, linkRunToLogUrl, postLog, getTagsForLog } from '../../../constants/apiUrls';
+import { getLogs, getLog, linkRunToLogUrl, postLog } from '../../../constants/apiUrls';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
 import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 import { addSuccessMessage } from '../success/actions';
 import { SuccessAction } from '../success/types';
-import { ITag } from '../../../interfaces/Tag';
 
 // Thunks
 export const fetchThread = (query?: string): ThunkResult<Promise<void>> =>
@@ -103,19 +100,6 @@ export const createLog = (logToBeCreated: ILogCreate): ThunkResult<Promise<void>
             const message =
                 `Successfully created Log with id: ${result.data.item.logId}`;
             dispatch(addSuccessMessage(message));
-        }).catch((error: IHttpError<any>) => {
-            dispatch(addHttpError(error));
-        });
-    };
-
-export const fetchTagsForLog = (logId: number): ThunkResult<Promise<void>> =>
-    async (dispatch: ThunkDispatch<RootState, void, LogAction | ErrorAction>): Promise<void> => {
-        dispatch(fetchTagsByLogRequest());
-        return request({
-                           method: 'GET',
-                           url: getTagsForLog(logId)
-                       }).then((result: ICollectionSuccessObject<ITag>) => {
-            dispatch(fetchTagsByLogSuccess(result));
         }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });

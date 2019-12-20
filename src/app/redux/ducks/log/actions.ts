@@ -20,12 +20,9 @@ import {
     ClearLogToBeCreatedAction,
     FetchThreadRequestAction,
     FetchThreadSuccessAction,
-    FetchTagsByLogRequestAction,
-    FetchTagsByLogSuccessAction
 } from './types';
 import { ILog, ILogCreate } from '../../../interfaces/Log';
 import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
-import { ITag } from '../../../interfaces/Tag';
 
 // Action creators
 export const fetchThreadRequest = (): FetchThreadRequestAction => ({
@@ -78,14 +75,4 @@ export const setLogToBeCreated = (logToBeCreated: ILogCreate): SetLogToBeCreated
 
 export const clearLogToBeCreated = (): ClearLogToBeCreatedAction => ({
     type: ActionTypes.CLEAR_LOG_TO_BE_CREATED
-});
-
-export const fetchTagsByLogRequest = (): FetchTagsByLogRequestAction => ({
-    type: ActionTypes.FETCH_TAGS_BY_LOG_REQUEST
-});
-
-export const fetchTagsByLogSuccess = (
-    payload: ICollectionSuccessObject<ITag>): FetchTagsByLogSuccessAction => ({
-    type: ActionTypes.FETCH_TAGS_BY_LOG_SUCCESS,
-    payload
 });
