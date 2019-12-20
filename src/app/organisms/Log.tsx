@@ -16,6 +16,7 @@ import SuccessMessage from '../atoms/SuccessMessage';
 import { store } from '../redux/configureStore';
 import { fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { fetchLog, fetchThread } from '../redux/ducks/log/operations';
+import { fetchTagsForLog } from '../redux/ducks/tag/operations';
 import {
   selectCurrentLog, selectIsFetchingLog,
   selectIsPatchingLinkRunToLog, selectThread
@@ -55,6 +56,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     super();
     store.dispatch(fetchLog(vnode.attrs.logId));
     store.dispatch(fetchAttachmentsByLog(vnode.attrs.logId));
+    store.dispatch(fetchTagsForLog(vnode.attrs.logId));
     store.dispatch(setFilter(FilterName.Log, 'threadId', vnode.attrs.logId));
     const queryString = selectQueryString(store.getState())(FilterName.Log);
     console.log('fetching thread...');
@@ -87,6 +89,9 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     const isPatchingLinkRunToLog = selectIsPatchingLinkRunToLog(state);
     const attachments = selectAttachments(store.getState());
     const tagsForLog = selectTagsForLog(store.getState());
+    console.log(state);
+    console.log(attachments);
+    console.log(tagsForLog);
     const tags = selectTags(store.getState());
     const thread = selectThread(store.getState());
     return (
@@ -184,7 +189,9 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                               <li key={tag.id}>
                                 <a
                                   id={tag.id}
-                                  href={m.route.set(`/Logs?tagId=${tag.id}`)}
+                                  // TODO: change href to route for logs filtered by tag
+                                  href={''}
+                                  // href={m.route.set(`/Logs?tagId=${tag.id}`)}
                                   title="Click to search for logs with this tag."
                                 >
                                   {tag.tagText}

@@ -33,7 +33,7 @@ const attachmentReducer: Reducer<TagState>
                 return {
                     ...state,
                     isFetchingTags: false,
-                    tags: [...action.payload.data.items]
+                    tagsForLog: [...action.payload.data.items]
                 };
             case ActionTypes.CREATE_TAG_REQUEST:
                 return {
