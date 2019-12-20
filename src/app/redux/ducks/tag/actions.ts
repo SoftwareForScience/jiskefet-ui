@@ -13,7 +13,9 @@ import {
     CreateTagRequestAction,
     CreateTagSuccessAction,
     SetTagToBeCreatedAction,
-    ClearTagToBeCreatedAction
+    ClearTagToBeCreatedAction,
+    FetchTagsByTagRequestAction,
+    FetchTagsByTagSuccessAction
 } from './types';
 import { ITag } from '../../../interfaces/Tag';
 import { ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
@@ -44,4 +46,13 @@ export const setTagToBeCreated = (attachment: ITag): SetTagToBeCreatedAction => 
 
 export const clearTagToBeCreated = (): ClearTagToBeCreatedAction => ({
     type: ActionTypes.CLEAR_TAG_TO_BE_CREATED
+});
+
+export const fetchTagsRequest = (): FetchTagsByTagRequestAction => ({
+    type: ActionTypes.FETCH_TAGS_REQUEST
+});
+
+export const fetchTagsSuccess = (payload: ICollectionSuccessObject<ITag>): FetchTagsByTagSuccessAction => ({
+    type: ActionTypes.FETCH_TAGS_SUCCESS,
+    payload
 });

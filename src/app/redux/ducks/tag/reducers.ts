@@ -55,6 +55,17 @@ const attachmentReducer: Reducer<TagState>
                     ...state,
                     tagToBeCreated: null
                 };
+            case ActionTypes.FETCH_TAGS_REQUEST:
+                return {
+                    ...state,
+                    isFetchingTags: true
+                };
+            case ActionTypes.FETCH_TAGS_SUCCESS:
+                return {
+                    ...state,
+                    isFetchingTags: false,
+                    tags: [...action.payload.data.items]
+                };
             default:
                 return state;
         }
