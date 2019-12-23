@@ -50,6 +50,10 @@ export default class Table extends MithrilTsxComponent<Attrs> {
 
     view(vnode: Vnode) {
         const { columns, className, data, onHeaderClick, orderBy, orderDirection } = vnode.attrs;
+
+        const orderBySort = this.getOrderSort(orderBy);
+        const orderDirectionSort = this.getOrderDirection(orderDirection);
+
         return (
             <div class="table-responsive">
                 <table class={`table table-sm table-bordered table-hover jf-table ${className || ''}`}>
@@ -60,8 +64,8 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                                 <TableHeader
                                     column={column}
                                     // fix ternary
-                                    orderDirection={(orderBy && orderDirection) ?
-                                        this.getOrder(column, orderBy, orderDirection) : null}
+                                    orderDirection={(orderBySort && orderDirectionSort) ?
+                                        this.getOrder(column, orderBySort, orderDirectionSort) : null}
                                     onClick={() => (onHeaderClick ? onHeaderClick(column.accessor) : null)}
                                 />
                             )}
@@ -93,5 +97,36 @@ export default class Table extends MithrilTsxComponent<Attrs> {
                 </div>}
             </div>
         );
+    }
+
+    getOrderSort(orderBy?: string) {
+        let orderBySort = orderBy;
+        const searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.has('orderBy')) {
+            if (orderBy != null && orderBy !== undefined) {
+                let param: string | null;
+                param = searchParams.get('orderBy');
+                orderBySort = param!;
+            }
+        }
+        return orderBySort;
+    }
+
+    getOrderDirection(orderDirection?: OrderDirection) {
+        let orderDirectionSort = orderDirection!;
+        const searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.has('orderDirection')) {
+            if (orderDirection != null && orderDirection !== undefined) {
+                let paramDirection: string;
+                paramDirection = searchParams.get('orderDirection')!;
+                if (paramDirection === 'ASC') {
+                    orderDirectionSort = OrderDirection.Ascending;
+                }
+                if (paramDirection === 'DESC') {
+                    orderDirectionSort = OrderDirection.Descending;
+                }
+            }
+        }
+        return orderDirectionSort;
     }
 }
