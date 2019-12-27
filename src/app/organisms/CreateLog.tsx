@@ -193,7 +193,7 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                 <FormGroup
                                     field={(
                                         <div class="card shadow-sm bg-light">
-                                            <TabContainer titles={['Editor', 'Preview']} disableds={['']} >
+                                            <TabContainer titles={['Editor']} disableds={['']} >
                                                 <div style={{ position: 'relative' }}>
                                                     <MarkdownEditor
                                                         // tslint:disable-next-line
@@ -201,10 +201,10 @@ export default class CreateLog extends MithrilTsxComponent<Attrs> {
                                                         postContent={(content: string) => this.addDescription(content)}
                                                     />
                                                     <div class="textarea-icon">
-                                                        <EmojiPicker
+                                                        {/* <EmojiPicker
                                                             id="2"
                                                             onSelect={this.appendDescription}
-                                                        />
+                                                        /> */}
                                                     </div>
                                                 </div>
                                                 <MarkdownViewer

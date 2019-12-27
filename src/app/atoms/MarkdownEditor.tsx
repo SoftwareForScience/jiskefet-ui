@@ -35,19 +35,19 @@ export default class MarkdownEditor extends MithrilTsxComponent<Attrs> {
         } = vnode.attrs;
         return (
             <div class="row">
-                <div class="col-md-12 jf-markdown-wrapper">
-                    <textarea
-                        id="markdown"
-                        class="rounded"
-                        placeholder="Type your description here"
-                        value={value}
-                        oninput={(event: IEvent) => {
-                            this.handleInput(event);
-                            vnode.attrs.postContent(this.content);
-                        }}
-                    />
-                </div>
+            <div class="col-md-12">
+              <textarea id="comment-md" name="comment" placeholder="Say something..." value={value} 
+              oninput={(event: IEvent) => {
+                this.handleInput(event);
+                vnode.attrs.postContent(this.content);
+            }}></textarea>
+              <br />
+              <h3>Preview: </h3>
+              <div id="comment-md-preview-container">
+                <div class="well well-sm well-light md-preview margin-top-10" id="comment-md-preview"></div>
+              </div>
             </div>
+          </div>
         );
     }
 }
