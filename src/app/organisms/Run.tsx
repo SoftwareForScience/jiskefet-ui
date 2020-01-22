@@ -115,10 +115,10 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                                     <h3>Currently added tags:</h3>
                                                     <ul>
                                                         {tagsForRun && tagsForRun.map((tag: ITag) =>
-                                                            <li key={tag.id}>
+                                                            <li key={tag.tagId}>
                                                                 <a
-                                                                    id={tag.id}
-                                                                    href={m.route.set(`/Logs?tagId=${tag.id}`)}
+                                                                    id={tag.tagId}
+                                                                    href={m.route.set(`/Logs?tagId=${tag.tagId}`)}
                                                                     title="Click to search for logs with this tag."
                                                                 >
                                                                     {tag.tagText}

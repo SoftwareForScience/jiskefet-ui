@@ -52,3 +52,4 @@ export const getTagsForRun = (runId: string | number): string => `${BASE_URL}tag
 export const postTag = (): string => `${BASE_URL}tags`;
 export const updateTag = (id: string | number): string => `${BASE_URL}tags/${id}`;
 export const deleteTage = (id: string | number): string => `${BASE_URL}tags/${id}`;
+export const linkTagToLogUrl = (id: string | number): string => `${BASE_URL}tags/${id}/logs`;

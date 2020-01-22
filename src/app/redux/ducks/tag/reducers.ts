@@ -45,6 +45,14 @@ const attachmentReducer: Reducer<TagState>
                     ...state,
                     isCreatingTag: false
                 };
+            case ActionTypes.LINK_TAG_TO_LOG_SUCCESS:
+                return {
+                    ...state,
+                };
+            case ActionTypes.LINK_TAG_TO_LOG_REQUEST:
+                return {
+                    ...state,
+                };
             case ActionTypes.SET_TAG_TO_BE_CREATED:
                 return {
                     ...state,

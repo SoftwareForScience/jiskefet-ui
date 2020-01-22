@@ -69,7 +69,7 @@ const LogDescription: IDescription[] = [
         value: (log: ILog): JSX.Element => (
             <div>
                 {log.tags!.map((tag: ITag) => {
-                    return <span key={tag.id}><span key={tag.id} class={`badge badge-primary`}>{tag.tagText}</span>, </span>;
+                    return <span key={tag.tagId}><span key={tag.tagId} class={`badge badge-primary`}>{tag.tagText}</span>, </span>;
                 })}
             </div>
         )

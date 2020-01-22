@@ -38,7 +38,7 @@ import Input from '../atoms/Input';
 import FormGroup from '../molecules/FormGroup';
 import Label from '../atoms/Label';
 import Select from '../atoms/Select';
-import { createTag } from '../redux/ducks/tag/operations';
+import { createTag, linkTagToLog } from '../redux/ducks/tag/operations';
 import Button, { ButtonType, ButtonClass } from '../atoms/Button';
 import Comment from '../atoms/Comment';
 import { ILog } from '../interfaces/Log';
@@ -67,16 +67,22 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     const log = await selectCurrentLog(store.getState()) as ILog | null;
     const tagId = event.target.tag.value;
     const newTag = event.target.tagText.value;
-    if (log && tagId) {
-      // add existing tag to Log
-      // store.dispatch()
-      event.target.reset(); // Clear the form.
-    } else if (log && newTag) {
+    console.log(event);
+    console.log(log);
+    console.log(event.target.tag.value);
+    console.log(newTag);
+    if (log && newTag) {
       // create new tag and add to Log
       const tagToCreate = {
         tagText: newTag
       };
       store.dispatch(createTag(tagToCreate as ITagCreate));
+      event.target.reset(); // Clear the form.
+    } else if (log && tagId) {
+      // add existing tag to Log
+      // store.dispatch()
+      console.log('add tag');
+      store.dispatch(linkTagToLog(tagId, log.logId));
       event.target.reset(); // Clear the form.
     }
   }
@@ -89,6 +95,7 @@ export default class Log extends MithrilTsxComponent<Attrs> {
     const isPatchingLinkRunToLog = selectIsPatchingLinkRunToLog(state);
     const attachments = selectAttachments(store.getState());
     const tags = selectTags(store.getState());
+    console.log(tags);
     const thread = selectThread(store.getState());
     return (
       <div class="container-fluid">
@@ -182,9 +189,9 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                           <h3>Currently added tags:</h3>
                           <ul>
                             {currentLog && currentLog.tags && currentLog.tags.map((tag: ITag) =>
-                              <li key={tag.id}>
+                              <li key={tag.tagId}>
                                 <a
-                                  id={tag.id}
+                                  id={tag.tagId}
                                   // TODO: change href to route for logs filtered by tag
                                   href={''}
                                   // href={m.route.set(`/Logs?tagId=${tag.id}`)}
@@ -216,13 +223,11 @@ export default class Log extends MithrilTsxComponent<Attrs> {
                                   >
                                     <Select
                                       id="tag"
-                                      className="selectpicker form-control"
+                                      className="form-control"
                                       name="tag"
-                                      required
-                                      optionValue="id"
+                                      optionValue="tagId"
                                       optionText="tagText"
                                       options={tags}
-                                      defaultOption="Please select a Tag."
                                     />
                                   </Spinner>
                                 </div>

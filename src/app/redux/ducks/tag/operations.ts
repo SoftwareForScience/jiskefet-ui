@@ -18,9 +18,11 @@ import {
     createTagRequest,
     createTagSuccess,
     fetchTagsRequest,
-    fetchTagsSuccess
+    fetchTagsSuccess,
+    linkTagToLogRequest,
+    linkTagToLogSuccess
 } from './actions';
-import { getTags, getTagsForLog, postTag } from '../../../constants/apiUrls';
+import { getTags, getTagsForLog, postTag, linkTagToLogUrl } from '../../../constants/apiUrls';
 import { addHttpError } from '../error/actions';
 import { ErrorAction } from '../error/types';
 import { ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
@@ -62,6 +64,20 @@ export const fetchTags = (query?: string): ThunkResult<Promise<void>> =>
                            url: getTags(query)
                        }).then((result: ICollectionSuccessObject<ITag>) => {
             dispatch(fetchTagsSuccess(result));
+        }).catch((error: IHttpError<any>) => {
+            dispatch(addHttpError(error));
+        });
+    };
+
+export const linkTagToLog = (id: number, logId: number): ThunkResult<Promise<void>> =>
+    async (dispatch: ThunkDispatch<RootState, void, TagAction | ErrorAction>): Promise<void> => {
+        dispatch(linkTagToLogRequest());
+        return request({
+                           method: 'PATCH',
+                           url: linkTagToLogUrl(id),
+                           data: { logId: logId as number }
+                       }).then((result: any) => {
+            dispatch(linkTagToLogSuccess());
         }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });

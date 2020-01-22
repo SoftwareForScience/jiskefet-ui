@@ -15,7 +15,9 @@ import {
     SetTagToBeCreatedAction,
     ClearTagToBeCreatedAction,
     FetchTagsByTagRequestAction,
-    FetchTagsByTagSuccessAction
+    FetchTagsByTagSuccessAction,
+    LinkTagToLogRequestAction,
+    LinkTagToLogSuccessAction
 } from './types';
 import { ITag } from '../../../interfaces/Tag';
 import { ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
@@ -50,6 +52,14 @@ export const clearTagToBeCreated = (): ClearTagToBeCreatedAction => ({
 
 export const fetchTagsRequest = (): FetchTagsByTagRequestAction => ({
     type: ActionTypes.FETCH_TAGS_REQUEST
+});
+
+export const linkTagToLogRequest = (): LinkTagToLogRequestAction => ({
+    type: ActionTypes.LINK_TAG_TO_LOG_REQUEST
+});
+
+export const linkTagToLogSuccess = (): LinkTagToLogSuccessAction => ({
+    type: ActionTypes.LINK_TAG_TO_LOG_SUCCESS
 });
 
 export const fetchTagsSuccess = (payload: ICollectionSuccessObject<ITag>): FetchTagsByTagSuccessAction => ({
