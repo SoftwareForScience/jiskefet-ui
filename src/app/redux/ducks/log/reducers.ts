@@ -17,6 +17,7 @@ const initialState: LogState = {
     isPatchingLinkRunToLog: false,
     isCreatingLog: false,
     logs: [],
+    tags: [],
     count: 0,
     current: null,
     logToBeCreated: null,

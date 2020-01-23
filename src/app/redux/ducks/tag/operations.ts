@@ -16,9 +16,13 @@ import {
     fetchTagsByLogRequest,
     fetchTagsByLogSuccess,
     createTagRequest,
-    createTagSuccess
+    createTagSuccess,
+    fetchTagsRequest,
+    fetchTagsSuccess,
+    linkTagToLogRequest,
+    linkTagToLogSuccess
 } from './actions';
-import { getTagsForLog, postTag } from '../../../constants/apiUrls';
+import { getTags, getTagsForLog, postTag, linkTagToLogUrl } from '../../../constants/apiUrls';
 import { addHttpError } from '../error/actions';
 import { ErrorAction } from '../error/types';
 import { ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
@@ -47,6 +51,33 @@ export const createTag = (tag: ITag): ThunkResult<Promise<void>> =>
         }).then((result: any) => {
             // SuccesModel.add('Successfully saved tag.');
             dispatch(createTagSuccess());
+        }).catch((error: IHttpError<any>) => {
+            dispatch(addHttpError(error));
+        });
+    };
+
+export const fetchTags = (query?: string): ThunkResult<Promise<void>> =>
+    async (dispatch: ThunkDispatch<RootState, void, TagAction | ErrorAction>): Promise<void> => {
+        dispatch(fetchTagsRequest());
+        return request({
+                           method: 'GET',
+                           url: getTags(query)
+                       }).then((result: ICollectionSuccessObject<ITag>) => {
+            dispatch(fetchTagsSuccess(result));
+        }).catch((error: IHttpError<any>) => {
+            dispatch(addHttpError(error));
+        });
+    };
+
+export const linkTagToLog = (id: number, logId: number): ThunkResult<Promise<void>> =>
+    async (dispatch: ThunkDispatch<RootState, void, TagAction | ErrorAction>): Promise<void> => {
+        dispatch(linkTagToLogRequest());
+        return request({
+                           method: 'PATCH',
+                           url: linkTagToLogUrl(id),
+                           data: { logId: logId as number }
+                       }).then((result: any) => {
+            dispatch(linkTagToLogSuccess());
         }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });

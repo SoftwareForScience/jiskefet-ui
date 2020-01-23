@@ -33,7 +33,7 @@ const attachmentReducer: Reducer<TagState>
                 return {
                     ...state,
                     isFetchingTags: false,
-                    tags: [...action.payload.data.items]
+                    tagsForLog: [...action.payload.data.items]
                 };
             case ActionTypes.CREATE_TAG_REQUEST:
                 return {
@@ -45,6 +45,14 @@ const attachmentReducer: Reducer<TagState>
                     ...state,
                     isCreatingTag: false
                 };
+            case ActionTypes.LINK_TAG_TO_LOG_SUCCESS:
+                return {
+                    ...state,
+                };
+            case ActionTypes.LINK_TAG_TO_LOG_REQUEST:
+                return {
+                    ...state,
+                };
             case ActionTypes.SET_TAG_TO_BE_CREATED:
                 return {
                     ...state,
@@ -54,6 +62,17 @@ const attachmentReducer: Reducer<TagState>
                 return {
                     ...state,
                     tagToBeCreated: null
+                };
+            case ActionTypes.FETCH_TAGS_REQUEST:
+                return {
+                    ...state,
+                    isFetchingTags: true
+                };
+            case ActionTypes.FETCH_TAGS_SUCCESS:
+                return {
+                    ...state,
+                    isFetchingTags: false,
+                    tags: [...action.payload.data.items]
                 };
             default:
                 return state;

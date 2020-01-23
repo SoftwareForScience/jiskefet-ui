@@ -30,7 +30,11 @@ export enum ActionTypes {
     CREATE_TAG_REQUEST = 'jiskefet/attachment/CREATE_TAG_REQUEST',
     CREATE_TAG_SUCCESS = 'jiskefet/attachment/CREATE_TAG_SUCCESS',
     SET_TAG_TO_BE_CREATED = 'jiskefet/attachment/SET_TAG_TO_BE_CREATED',
-    CLEAR_TAG_TO_BE_CREATED = 'jiskefet/attachment/CLEAR_TAG_TO_BE_CREATED'
+    CLEAR_TAG_TO_BE_CREATED = 'jiskefet/attachment/CLEAR_TAG_TO_BE_CREATED',
+    FETCH_TAGS_REQUEST = 'jiskefet/attachment/FETCH_TAGS_REQUEST',
+    FETCH_TAGS_SUCCESS = 'jiskefet/attachment/FETCH_TAGS_SUCCESS',
+    LINK_TAG_TO_LOG_REQUEST = 'jiskefet/attachment/LINK_TAG_TO_LOG_REQUEST',
+    LINK_TAG_TO_LOG_SUCCESS = 'jiskefet/attachment/LINK_TAG_TO_LOG_SUCCESS',
 }
 
 // Action interfaces
@@ -60,6 +64,23 @@ export interface ClearTagToBeCreatedAction extends Action {
     type: ActionTypes.CLEAR_TAG_TO_BE_CREATED;
 }
 
+export interface FetchTagsByTagRequestAction extends Action {
+    type: ActionTypes.FETCH_TAGS_REQUEST;
+}
+
+export interface FetchTagsByTagSuccessAction extends Action {
+    type: ActionTypes.FETCH_TAGS_SUCCESS;
+    payload: ICollectionSuccessObject<ITag>;
+}
+
+export interface LinkTagToLogRequestAction extends Action {
+    type: ActionTypes.LINK_TAG_TO_LOG_REQUEST;
+}
+
+export interface LinkTagToLogSuccessAction extends Action {
+    type: ActionTypes.LINK_TAG_TO_LOG_SUCCESS;
+}
+
 // Combine actions into single type
 export type TagAction =
     | FetchTagsByLogRequestAction
@@ -67,7 +88,11 @@ export type TagAction =
     | CreateTagRequestAction
     | CreateTagSuccessAction
     | SetTagToBeCreatedAction
-    | ClearTagToBeCreatedAction;
+    | ClearTagToBeCreatedAction
+    | FetchTagsByTagRequestAction
+    | FetchTagsByTagSuccessAction
+    | LinkTagToLogRequestAction
+    | LinkTagToLogSuccessAction;
 
 // Shorthand type for ThunkAction
 export type ThunkResult<R> = ThunkAction<R, RootState, undefined, TagAction>;

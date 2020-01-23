@@ -10,6 +10,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
 import { ILog, ILogCreate } from '../../../interfaces/Log';
+import { ITag } from '../../../interfaces/Tag';
 import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // State interface
@@ -24,6 +25,7 @@ export interface LogState {
     current: ILog | null;
     logToBeCreated: ILogCreate | null;
     thread: ILog | null;
+    tags: ITag[];
 }
 
 // Action types

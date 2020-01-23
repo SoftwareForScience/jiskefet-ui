@@ -22,7 +22,7 @@ import {
     linkRunToLogRequest,
     linkRunToLogSucces,
     fetchThreadRequest,
-    fetchThreadSuccess
+    fetchThreadSuccess,
 } from './actions';
 import { getLogs, getLog, linkRunToLogUrl, postLog } from '../../../constants/apiUrls';
 import { ErrorAction } from '../error/types';
