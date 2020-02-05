@@ -17,8 +17,8 @@ export interface SuccessState {
 
 // Action types
 export enum ActionTypes {
-    ADD_SUCCESS_MESSAGE = 'jiskefet/succes/ADD_SUCCESS_MESSAGE',
-    CLEAR_SUCCESS_MESSAGES = 'jiskefet/succes/CLEAR_SUCCESS_MESSAGES',
+    ADD_SUCCESS_MESSAGE = 'jiskefet/success/ADD_SUCCESS_MESSAGE',
+    CLEAR_SUCCESS_MESSAGES = 'jiskefet/success/CLEAR_SUCCESS_MESSAGES',
 }
 
 // Action interfaces

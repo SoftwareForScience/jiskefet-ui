@@ -7,8 +7,8 @@
  */
 
 import * as m from 'mithril';
-import { format } from 'date-fns';
-import { Run } from '../interfaces/Run';
+import { IRun } from '../interfaces/Run';
+import { formatDateField } from '../utility/DateUtil';
 
 /**
  * The columns for the Log table in LinklogToRun.
@@ -20,7 +20,7 @@ const LinkRunToLogColumns = (
         {
             header: 'Action',
             accessor: null,
-            cell: (row: Run): JSX.Element => (
+            cell: (row: IRun): JSX.Element => (
                 <button
                     type="button"
                     class="btn btn-primary btn-sm btn-block"
@@ -37,23 +37,25 @@ const LinkRunToLogColumns = (
         },
         {
             header: 'Time O\xB2 start',
-            accessor: 'timeO2Start',
-            cell: (row: Run): string => (row.timeO2Start ? format(row.timeO2Start, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+            accessor: 'o2StartTime',
+            cell: (row: IRun): string => (row.O2StartTime ? formatDateField(row.O2StartTime) : 'Unkown')
         },
         {
             header: 'Time O\xB2 end',
-            accessor: 'timeO2End',
-            cell: (row: Run): string => (row.timeO2End ? format(row.timeO2End, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+            accessor: 'o2EndTime',
+            cell: (row: IRun): string =>
+                (row.O2EndTime ? formatDateField(row.O2EndTime) : 'Run In Progress')
         },
         {
             header: 'Time trg start',
-            accessor: 'timeTrgStart',
-            cell: (row: Run): string => (row.timeTrgStart ? format(row.timeTrgStart, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+            accessor: 'trgStartTime',
+            cell: (row: IRun): string => (row.TrgStartTime ? formatDateField(row.TrgStartTime) : 'Unkown')
         },
         {
             header: 'Time trg end',
-            accessor: 'timeTrgEnd',
-            cell: (row: Run): string => (row.timeTrgEnd ? format(row.timeTrgEnd, 'HH:mm:ss DD/MM/YYYY') : 'Unkown')
+            accessor: 'trgEndTime',
+            cell: (row: IRun): string =>
+                (row.TrgEndTime ? formatDateField(row.TrgEndTime) : 'Run In Progress')
         }
     ];
 

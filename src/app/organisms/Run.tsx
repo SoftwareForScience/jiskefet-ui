@@ -19,10 +19,17 @@ import { selectIsFetchingRun, selectIsPatchingLinkLogToRun, selectCurrentRun } f
 import Card from '../atoms/Card';
 import DescriptionList from '../atoms/DescriptionList';
 import RunDescription from '../constants/RunDescription';
-import Button, { ButtonClass, ButtonSize } from '../atoms/Button';
+import Button, { ButtonClass, ButtonSize, ButtonType } from '../atoms/Button';
 import TabContainer from '../molecules/TabContainer';
 import Table from '../molecules/Table';
 import LogColumns from '../constants/LogColumns';
+import { selectTags, selectTagsForRun, selectFetchingTags } from '../redux/ducks/tag/selectors';
+import { ITag, ITagCreate } from '../interfaces/Tag';
+import FormGroup from '../molecules/FormGroup';
+import Label from '../atoms/Label';
+import Select from '../atoms/Select';
+import Input from '../atoms/Input';
+import { createTag } from '../redux/ducks/tag/operations';
 
 interface Attrs {
     runNumber: number;
@@ -55,12 +62,32 @@ export default class Run extends MithrilTsxComponent<Attrs> {
         );
     }
 
+    async handleSubmit(event: any): Promise<void> {
+        const log = await selectCurrentRun(store.getState()) as Run | null;
+        const tagId = event.target.tag.value;
+        const newTag = event.target.tagText.value;
+        if (log && tagId) {
+            // add existing tag to Log
+            // store.dispatch()
+            event.target.reset(); // Clear the form.
+        } else if (log && newTag) {
+            // create new tag and add to Log
+            const tagToCreate = {
+                tagText: newTag
+            };
+            store.dispatch(createTag(tagToCreate as ITagCreate));
+            event.target.reset(); // Clear the form.
+        }
+    }
+
     view(vnode: Vnode) {
         const addExistingRunId = 'add-existing-run';
         const state = store.getState();
         const currentRun = selectCurrentRun(state);
         const isFetchingRun = selectIsFetchingRun(state);
         const isPatchingLinkLogToRun = selectIsPatchingLinkLogToRun(state);
+        const tagsForRun = selectTagsForRun(store.getState());
+        const tags = selectTags(store.getState());
         return (
             <div class="container-fluid">
                 <Spinner
@@ -77,17 +104,90 @@ export default class Run extends MithrilTsxComponent<Attrs> {
                                         this.linkingButton(addExistingRunId, vnode.attrs.runNumber)
                                     }
                                     footerContent={(
-                                        <TabContainer titles={['Logs', 'Detectors', 'Others...']} >
+                                        <TabContainer titles={['Logs', 'Tags']} disableds={['']}>
                                             {
                                                 currentRun && currentRun.logs.length > 0
-                                                ? <Table data={currentRun.logs} columns={LogColumns} />
-                                                : 'This run has no logs'
+                                                    ? <Table data={currentRun.logs} columns={LogColumns} />
+                                                    : 'This run has no logs'
                                             }
                                             {
-                                                'Not yet implemented'
-                                            }
-                                            {
-                                                'Not yet implemented'
+                                                <div>
+                                                    <h3>Currently added tags:</h3>
+                                                    <ul>
+                                                        {tagsForRun && tagsForRun.map((tag: ITag) =>
+                                                            <li key={tag.id}>
+                                                                <a
+                                                                    id={tag.id}
+                                                                    href={m.route.set(`/Logs?tagId=${tag.id}`)}
+                                                                    title="Click to search for logs with this tag."
+                                                                >
+                                                                    {tag.tagText}
+                                                                </a>
+                                                            </li>
+                                                        )}
+                                                    </ul>
+                                                    <hr />
+                                                    <h3>Add a Tag to this log:</h3>
+                                                    <form
+                                                        onsubmit={(event: Event) => {
+                                                            event.preventDefault();
+                                                            this.handleSubmit(event);
+                                                        }}
+                                                    >
+                                                        <FormGroup
+                                                            label={(
+                                                                <Label id="tag" text="Select an existing tag:" />
+                                                            )}
+                                                            field={(
+                                                                <div>
+                                                                    <Spinner
+                                                                        isLoading={selectFetchingTags(
+                                                                            store.getState())}
+                                                                        small
+                                                                    >
+                                                                        <Select
+                                                                            id="tag"
+                                                                            className="form-control"
+                                                                            name="tag"
+                                                                            required
+                                                                            optionValue="id"
+                                                                            optionText="tagText"
+                                                                            options={tags}
+                                                                            defaultOption="Please select a Tag."
+                                                                        />
+                                                                    </Spinner>
+                                                                </div>
+                                                            )}
+                                                        />
+                                                        <FormGroup
+                                                            label={(
+                                                                <Label
+                                                                    autofocus="autofocus"
+                                                                    id="description"
+                                                                    text="Add new tag:"
+                                                                />
+                                                            )}
+                                                            field={(
+                                                                <Input
+                                                                    id="tagText"
+                                                                    inputType="text"
+                                                                    autofocus="autofocus"
+                                                                    className="form-control"
+                                                                    required={true}
+                                                                />
+                                                            )}
+                                                        />
+                                                        <FormGroup
+                                                            field={(
+                                                                <Button
+                                                                    buttonType={ButtonType.SUBMIT}
+                                                                    buttonClass={ButtonClass.DEFAULT}
+                                                                    text="Add Tag"
+                                                                />
+                                                            )}
+                                                        />
+                                                    </form>
+                                                </div>
                                             }
                                         </TabContainer>
                                     )}

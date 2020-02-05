@@ -13,14 +13,14 @@ import {
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../types';
 import { getUser, getLogsForUser } from '../../../constants/apiUrls';
-import { User } from '../../../interfaces/User';
-import { HttpError } from '../../../interfaces/HttpError';
+import { IUser } from '../../../interfaces/User';
+import { IHttpError } from '../../../interfaces/HttpError';
 import { request } from '../../../request';
 import { fetchUserRequest, fetchUserSuccess, fetchLogsForUserRequest, fetchLogsForUserSuccess } from './actions';
-import { Log } from '../../../interfaces/Log';
+import { ILog } from '../../../interfaces/Log';
 import { ErrorAction } from '../error/types';
 import { addHttpError } from '../error/actions';
-import { ResponseObject, CollectionResponseObject } from '../../../interfaces/ResponseObject';
+import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchUser = (id: number | string): ThunkResult<Promise<void>> =>
@@ -30,9 +30,9 @@ export const fetchUser = (id: number | string): ThunkResult<Promise<void>> =>
             method: 'GET',
             url: getUser(id),
             withCredentials: false
-        }).then((result: ResponseObject<User>) => {
+        }).then((result: ISuccessObject<IUser>) => {
             dispatch(fetchUserSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
@@ -44,9 +44,9 @@ export const fetchLogsForUser = (id: number | string, query?: string): ThunkResu
             method: 'GET',
             url: getLogsForUser(id, query),
             withCredentials: false
-        }).then((result: CollectionResponseObject<Log>) => {
+        }).then((result: ICollectionSuccessObject<ILog>) => {
             dispatch(fetchLogsForUserSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

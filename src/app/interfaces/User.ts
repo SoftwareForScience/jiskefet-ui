@@ -9,9 +9,10 @@
 /**
  * Interface with the fields for creating a Token entry.
  */
-export interface User {
+export interface IUser {
     userId: number;
     externalUserId: number;
     samsId: number;
     token: string;
+    name: string;
 }

@@ -7,16 +7,16 @@
  */
 
 import { RootState } from '../../types';
-import { CollapsableItem } from '../../../interfaces/CollapsableItem';
+import { ICollapsableItem } from '../../../interfaces/CollapsableItem';
 
 // Selectors
 export const selectIsSidebarShown = (state: RootState): boolean => state.ui.isSidebarShown;
-export const selectCollapsableItems = (state: RootState): CollapsableItem[] => (
+export const selectCollapsableItems = (state: RootState): ICollapsableItem[] => (
     state.ui.collapsableItems
 );
 
-export const selectCollapsableItem = (state: RootState, id: string): CollapsableItem | null => {
-    const foundItem = state.ui.collapsableItems.find((item: CollapsableItem) => {
+export const selectCollapsableItem = (state: RootState, id: string): ICollapsableItem | null => {
+    const foundItem = state.ui.collapsableItems.find((item: ICollapsableItem) => {
         return item.id === id;
     });
     return foundItem || null;

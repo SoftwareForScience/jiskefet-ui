@@ -9,15 +9,15 @@
  */
 
 import * as m from 'mithril';
-import { Tabs } from '../interfaces/Tabs';
+import { ITab } from '../interfaces/Tab';
 import MarkdownViewer from '../atoms/MarkdownViewer';
-import { Log } from '../interfaces/Log';
+import { ILog } from '../interfaces/Log';
 import MarkdownEditor from '../atoms/MarkdownEditor';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
  */
-const CreateLogTabs: Tabs[] = [
+const CreateLogTabs: ITab[] = [
     {
         name: 'Edit',
         id: 'description',
@@ -29,8 +29,8 @@ const CreateLogTabs: Tabs[] = [
     {
         name: 'Preview',
         id: 'preview',
-        content: (log: Log): JSX.Element => (
-            <MarkdownViewer id={'MarkdownPreview'} content={log.text} />
+        content: (log: ILog): JSX.Element => (
+            <MarkdownViewer id={'MarkdownPreview'} content={log.body} />
         )
     }
 ];

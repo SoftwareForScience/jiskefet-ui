@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 
 export enum InputSize {
     SMALL = 'col-md-2',
@@ -19,19 +19,31 @@ export enum InputSize {
 interface Attrs {
     id: string;
     className: string;
-    inputSize: InputSize;
+    style?: string;
+    inputSize?: InputSize;
     name?: string;
     placeholder?: string;
     required?: boolean;
-    oninput?: (event: Event) => void;
-    options: string[];
+    oninput?: (event: IEvent) => void;
+    optionValue?: string;
+    optionText?: string;
+    options: any[];
+    hidden?: boolean;
+    liveSearch?: boolean;
+    defaultOption?: string | number | null;
 }
 
 type Vnode = m.Vnode<Attrs, Select>;
 
 export default class Select extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { id, name, className, inputSize, placeholder, required, oninput, options } = vnode.attrs;
+        const { id, name,
+            className, inputSize,
+            placeholder, required,
+            oninput, options,
+            optionValue, optionText,
+            defaultOption, hidden,
+            style } = vnode.attrs;
         return (
             <select
                 id={id}
@@ -40,10 +52,15 @@ export default class Select extends MithrilTsxComponent<Attrs> {
                 placeholder={placeholder}
                 required={required}
                 oninput={oninput}
+                hidden={hidden}
+                style={style}
+                value={defaultOption}
             >
                 {
-                    options.map((option: string) => (
-                        <option value={option}>{option}</option>
+                    options.map((option: any) => (
+                        optionValue && optionText
+                            ? <option value={option[optionValue]}>{option[optionText]}</option>
+                            : <option value={option}>{option}</option>
                     ))
                 }
             </select>

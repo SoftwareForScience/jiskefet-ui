@@ -9,7 +9,7 @@
 /**
  * Interface with setting fields in order to setup the front end authentication
  */
-export interface Setting {
+export interface ISetting {
     USE_CERN_SSO: string;
     AUTH_URL: string;
     [index: string]: string | boolean | number;

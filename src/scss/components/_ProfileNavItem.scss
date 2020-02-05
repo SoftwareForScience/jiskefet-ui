@@ -28,4 +28,10 @@
         font-size: 0.8rem;
         font-weight: 400;
     }
+
+    & a {
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }

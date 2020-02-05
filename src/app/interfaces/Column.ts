@@ -9,7 +9,7 @@
 /**
  * A column/table header for a table.
  */
-export interface Column {
+export interface IColumn {
     /**
      * The column header name to be displayed in the table.
      */

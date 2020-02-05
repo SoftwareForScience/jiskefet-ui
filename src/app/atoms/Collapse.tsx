@@ -8,7 +8,7 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import { store } from '../redux/configureStore';
 import { toggleCollapse, addCollapse } from '../redux/ducks/ui/actions';
 import { selectCollapsableItem } from '../redux/ducks/ui/selectors';
@@ -31,6 +31,7 @@ interface Attrs {
      * Whether the component is initially collapsed.
      */
     isInitiallyCollapsed?: boolean;
+    style?: object;
 }
 
 type Vnode = m.Vnode<Attrs, Collapse>;
@@ -49,13 +50,13 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
      * Toggles the collapsed state of the component.
      * @param event
      */
-    toggleCollapse(event: Event) {
+    toggleCollapse(event: IEvent) {
         const id = event.target.id;
         store.dispatch(toggleCollapse(id));
     }
 
     view(vnode: Vnode) {
-        const { icon, title, id } = vnode.attrs;
+        const { icon, title, id, style } = vnode.attrs;
         const collapsableItem = selectCollapsableItem(store.getState(), id);
         return (
             <div>
@@ -67,9 +68,10 @@ export default class Collapse extends MithrilTsxComponent<Attrs> {
                             aria-expanded={collapsableItem && collapsableItem.isCollapsed ? 'false' : 'true'}
                             data-fa-transform="grow-10"
                             onclick={this.toggleCollapse}
+                            style={style}
                         >
                             {icon}
-                            &nbsp;{title}
+                            {title}
                         </div>
                         <div class={collapsableItem && collapsableItem.isCollapsed ? 'jf-collapse-in' : ''} id={id}>
                             {vnode.children}

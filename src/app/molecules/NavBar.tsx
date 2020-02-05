@@ -14,6 +14,7 @@ import { store } from '../redux/configureStore';
 import { toggleSidebar } from '../redux/ducks/ui/actions';
 import { fetchProfile } from '../redux/ducks/auth/operations';
 import { selectProfile } from '../redux/ducks/auth/selectors';
+import NavItem from '../atoms/NavItem';
 
 export default class NavBar extends MithrilTsxComponent<{}> {
     toggleSidebar = () => {
@@ -30,11 +31,15 @@ export default class NavBar extends MithrilTsxComponent<{}> {
         const profile = selectProfile(store.getState());
         return (
             <nav class="navbar navbar-expand-sm navbar-dark jf-navbar" >
-                <div class="navbar-header w-100 d-flex">
+                <div class="navbar-header d-flex">
                     <button
-                        type="button"
-                        class="btn jf-hamburger-button"
-                        onclick={this.toggleSidebar}
+                            type="button"
+                            class="btn jf-hamburger-button navbar-toggler collapsed"
+                            data-toggle="collapse"
+                            data-target="#navbar"
+                            aria-controls="navbar"
+                            aria-expanded="true"
+                            aria-label="Toggle navigation"
                     >
                         <span class="fas fa-bars" />
                     </button>
@@ -46,7 +51,7 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                             class="d-inline-block align-top jf-logo"
                             alt=""
                         />
-                        Jiskefet
+                        {process.env.APPLICATION_NAME}
                     </a>
                     <ul class="jf-align-right mr-2">
                         {Cookie.get('token') ?
@@ -68,6 +73,18 @@ export default class NavBar extends MithrilTsxComponent<{}> {
                         }
                     </ul>
                 </div>
+                    {Cookie.get('token')
+                        ?
+                        <div class="navbar-collapse justify-content-md-center collapse" id="navbar">
+                            <ul class="navbar-nav">
+                                <NavItem href="/logs" name="Logs" />
+                                <NavItem href="/runs" name="Runs" />
+                                <NavItem href="/tags" name="Tags Overview" />
+                            </ul>
+                        </div>
+                        :
+                        null
+                    }
             </nav >
         );
     }

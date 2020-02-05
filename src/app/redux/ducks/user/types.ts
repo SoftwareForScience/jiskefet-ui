@@ -6,21 +6,21 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { User } from '../../../interfaces/User';
+import { IUser } from '../../../interfaces/User';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
-import { Log } from '../../../interfaces/Log';
-import { ResponseObject, CollectionResponseObject } from '../../../interfaces/ResponseObject';
+import { ILog } from '../../../interfaces/Log';
+import { ISuccessObject, ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface UserState {
     IsFetchingUser: boolean;
     IsFetchingLogs: boolean;
     logCount: number;
-    logs: Log[];
-    user: User | null;
-    current: User | null;
+    logs: ILog[];
+    user: IUser | null;
+    current: IUser | null;
 }
 
 // Action types
@@ -38,7 +38,7 @@ export interface FetchUserRequestAction extends Action {
 
 export interface FetchUserSuccessAction extends Action {
     type: ActionTypes.FETCH_USER_SUCCESS;
-    payload: ResponseObject<User>;
+    payload: ISuccessObject<IUser>;
 }
 
 export interface FetchLogsForUserRequestAction extends Action {
@@ -47,7 +47,7 @@ export interface FetchLogsForUserRequestAction extends Action {
 
 export interface FetchLogsForUserSuccessAction extends Action {
     type: ActionTypes.FETCH_LOGS_FOR_USER_SUCCES;
-    payload: CollectionResponseObject<Log>;
+    payload: ICollectionSuccessObject<ILog>;
 }
 
 // Combine actions into single type

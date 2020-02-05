@@ -9,16 +9,16 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
-import { Attachment, AttachmentCreate } from '../../../interfaces/Attachment';
-import { CollectionResponseObject } from '../../../interfaces/ResponseObject';
+import { IAttachment, IAttachmentCreate } from '../../../interfaces/Attachment';
+import { ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // State interface
 export interface AttachmentState {
     isFetchingAttachments: boolean;
     isFetchingAttachment: boolean;
     isCreatingAttachment: boolean;
-    attachments: Attachment[];
-    attachmentToBeCreated: AttachmentCreate | null;
+    attachments: IAttachment[];
+    attachmentToBeCreated: IAttachmentCreate | null;
 }
 
 // Action types
@@ -38,7 +38,7 @@ export interface FetchAttachmentsByLogRequestAction extends Action {
 
 export interface FetchAttachmentsByLogSuccessAction extends Action {
     type: ActionTypes.FETCH_ATTACHMENTS_BY_LOG_SUCCESS;
-    payload: CollectionResponseObject<Attachment>;
+    payload: ICollectionSuccessObject<IAttachment>;
 }
 
 export interface CreateAttachmentRequestAction extends Action {
@@ -51,7 +51,7 @@ export interface CreateAttachmentSuccessAction extends Action {
 
 export interface SetAttachmentToBeCreatedAction extends Action {
     type: ActionTypes.SET_ATTACHMENT_TO_BE_CREATED;
-    payload: Attachment;
+    payload: IAttachmentCreate;
 }
 
 export interface ClearAttachmentToBeCreatedAction extends Action {

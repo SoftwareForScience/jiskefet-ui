@@ -39,7 +39,7 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                             >
                                 <img
                                     src={isCernProfile
-                                        ? 'https://via.placeholder.com/300'
+                                        ? '/assets/img/user.png'
                                         : (profile as GithubProfileDto).profileData.avatar_url}
                                     class="rounded"
                                     alt={`@${profile.profileData.name}`}
@@ -86,6 +86,19 @@ export default class ProfileNavItem extends MithrilTsxComponent<Attrs> {
                                         type="button"
                                     >
                                         API docs
+                                    </button>
+                                </a>
+                                <div class="dropdown-divider" />
+                                <a
+// tslint:disable-next-line: max-line-length
+                                    href="https://alice.its.cern.ch/jira/secure/RapidBoard.jspa?rapidView=309&view=detail&selectedIssue=O2B-124"
+                                    target="_blank"
+                                >
+                                    <button
+                                        class="dropdown-item jf-dropdown-item"
+                                        type="button"
+                                    >
+                                        JIRA Board
                                     </button>
                                 </a>
                                 <div class="dropdown-divider" />

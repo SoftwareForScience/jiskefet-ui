@@ -13,16 +13,17 @@ import CreateLog from '../organisms/CreateLog';
 
 interface Attrs {
     runNumber?: number;
+    logNumber?: number;
 }
 
 type Vnode = m.Vnode<Attrs, CreateLogPage>;
 
 export default class CreateLogPage extends MithrilTsxComponent<Attrs> {
     view(vnode: Vnode) {
-        const { runNumber } = vnode.attrs;
+        const { runNumber, logNumber } = vnode.attrs;
         return (
             <Layout>
-                <CreateLog runNumber={runNumber} />
+                <CreateLog runNumber={runNumber} logNumber={logNumber} />
             </Layout>
         );
     }

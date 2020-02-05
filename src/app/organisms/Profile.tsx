@@ -15,7 +15,7 @@ import Table from '../molecules/Table';
 import ContentBlock from '../molecules/ContentBlock';
 import PageCounter from '../atoms/PageCounter';
 import Pagination from '../atoms/Pagination';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import HttpErrorAlert from '../atoms/HttpErrorAlert';
 import { CernProfileDto } from '../interfaces/CernProfile';
 import { fetchProfile } from '../redux/ducks/auth/operations';
@@ -29,6 +29,9 @@ import { setFilter } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
 import { fetchLogsForUser } from '../redux/ducks/user/operations';
 import { selectIsFetchingUserLogs, selectUserLogs, selectUserLogCount } from '../redux/ducks/user/selectors';
+import Label from '../atoms/Label';
+import Select from '../atoms/Select';
+import { PAGE_SIZES } from '../constants/constants';
 
 interface Attrs {
     userId: number;
@@ -63,7 +66,6 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
     }
 
     view(vnode: Vnode) {
-        const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         const isCernProfile = localStorage.getItem('USE_CERN_SSO') === 'true';
         const profile = selectProfile(store.getState());
         const { userId } = vnode.attrs;
@@ -77,7 +79,7 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                                 <img
                                     class="card-img-top"
                                     src={isCernProfile
-                                        ? 'https://via.placeholder.com/300'
+                                        ? '/assets/img/user.png'
                                         : (profile as GithubProfileDto).profileData.avatar_url}
                                     alt="Card image cap"
                                 />
@@ -120,33 +122,28 @@ export default class Profile extends MithrilTsxComponent<Attrs> {
                         <div class="row">
                             <div class="col-md-4 m-1 small-center" >
                                 <div class="pagination-block">
-                                    <label
-                                        for="pageSize"
-                                        class="col-form-label col-form-label-sm mr-2"
-                                    >
-                                        Page size
-                                    </label>
+                                    <Label
+                                        id="pageSize"
+                                        className="col-form-label col-form-label-sm mr-2"
+                                        text="Page size"
+                                    />
                                 </div>
                                 <div class="pagination-block">
-                                    <select
+                                    <Select
                                         id="pageSize"
                                         style="min-width: 75px; max-width: 75px; overflow: hidden;"
-                                        class="form-control form-control-sm"
+                                        className="form-control form-control-sm"
                                         name="pageSize"
-                                        onchange={(event: Event) => {
+                                        oninput={(event: IEvent) => {
                                             store.dispatch(
                                                 setFilter(FilterName.UserLog, 'pageSize', event.target.value)
                                             );
                                             store.dispatch(setFilter(FilterName.UserLog, 'pageNumber', 1));
                                             this.setQueryAndFetch(userId);
                                         }}
-                                        value={userLogFilters.pageSize}
-                                    >
-                                        {pageSizes.map((pageSize: number) =>
-                                            // tslint:disable-next-line:jsx-key
-                                            <option value={pageSize}>{pageSize}</option>
-                                        )}
-                                    </select>
+                                        defaultOption={userLogFilters.pageSize}
+                                        options={PAGE_SIZES}
+                                    />
                                 </div>
                                 <div class="text-muted mt-2 ml-2 pagination-block">
                                     <PageCounter

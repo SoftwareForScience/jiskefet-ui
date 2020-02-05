@@ -8,9 +8,9 @@
 
 import * as m from 'mithril';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import Collapse from '../atoms/Collapse';
-import { FilterState, FilterName } from '../interfaces/Filter';
+import { IFilterState, FilterName } from '../interfaces/Filter';
 import { store } from '../redux/configureStore';
 import { resetFilters } from '../redux/ducks/filter/actions';
 
@@ -34,7 +34,7 @@ interface Attrs {
     /**
      * The values of the filters.
      */
-    filters: FilterState;
+    filters: IFilterState;
 }
 
 type Vnode = m.Vnode<Attrs, Filter>;
@@ -70,7 +70,7 @@ export default class Filter extends MithrilTsxComponent<Attrs> {
                                         class="form-control form-control-sm"
                                         id={inputField.name}
                                         {...{
-                                            [inputField.event]: (event: Event) => {
+                                            [inputField.event]: (event: IEvent) => {
                                                 onEvent(inputField.name, event.target.value);
                                             }
                                         }}

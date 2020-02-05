@@ -9,12 +9,12 @@
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { RootState } from '../../types';
-import { CollapsableItem } from '../../../interfaces/CollapsableItem';
+import { ICollapsableItem } from '../../../interfaces/CollapsableItem';
 
 // State interface
 export interface UIState {
     isSidebarShown: boolean;
-    collapsableItems: CollapsableItem[];
+    collapsableItems: ICollapsableItem[];
 }
 
 // Action types
@@ -37,12 +37,12 @@ export interface ToggleCollapseAction extends Action {
 
 export interface AddCollapseAction extends Action {
     type: ActionTypes.ADD_COLLAPSE;
-    collapsableItem: CollapsableItem;
+    collapsableItem: ICollapsableItem;
 }
 
 export interface SetCollapseAction extends Action {
     type: ActionTypes.SET_COLLAPSE;
-    collapsableItem: CollapsableItem;
+    collapsableItem: ICollapsableItem;
 }
 
 // Combine actions into single type

@@ -6,17 +6,17 @@
  * copied verbatim in the file "LICENSE"
  */
 
-import { Log } from './Log';
+import { ILog } from './Log';
 
 /**
  * Interface with the fields for fetching one or more Log entries.
  */
-export interface Run {
+export interface IRun {
     runNumber: number;
-    timeO2Start: Date | string;
-    timeTrgStart: Date | string;
-    timeTrgEnd: Date | string;
-    timeO2End: Date | string;
+    O2StartTime: Date | string;
+    TrgStartTime: Date | string;
+    TrgEndTime: Date | string;
+    O2EndTime: Date | string;
     runType: string[];
     runQuality: string[];
     activityId: string;
@@ -27,5 +27,5 @@ export interface Run {
     nSubtimeframes: number;
     bytesReadOut: number;
     bytesTimeframeBuilder: number;
-    logs: Log[];
+    logs: ILog[];
 }

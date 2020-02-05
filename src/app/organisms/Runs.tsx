@@ -16,7 +16,7 @@ import Filter from '../molecules/Filter';
 import { createDummyTable } from '../utility/DummyService';
 import PageCounter from '../atoms/PageCounter';
 import Pagination from '../atoms/Pagination';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import ContentBlock from '../molecules/ContentBlock';
 import SuccessMessage from '../atoms/SuccessMessage';
 import Badges from '../atoms/Badges';
@@ -30,6 +30,9 @@ import { setFilter, resetFilters } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
 import { fetchRuns } from '../redux/ducks/run/operations';
 import { selectIsFetchingRuns, selectRuns, selectRunCount } from '../redux/ducks/run/selectors';
+import Label from '../atoms/Label';
+import Select from '../atoms/Select';
+import { PAGE_SIZES } from '../constants/constants';
 
 const inputFields = [
     {
@@ -132,7 +135,6 @@ export default class Runs extends MithrilTsxComponent<{}> {
     }
 
     view() {
-        const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         const collapsableFilterItem = selectCollapsableItem(store.getState(), 'filters');
         const runFilters = selectFilters(store.getState())[FilterName.Run];
         return (
@@ -211,32 +213,28 @@ export default class Runs extends MithrilTsxComponent<{}> {
                                 <div class="row">
                                     <div class="col-md-4 m-1 small-center">
                                         <div class="pagination-block">
-                                            <label
-                                                for="pageSize"
-                                                class="col-form-label col-form-label-sm mr-2"
-                                            >
-                                                Page size
-                                            </label>
+                                            <Label
+                                                id="pageSize"
+                                                className="col-form-label col-form-label-sm mr-2"
+                                                text="Page size"
+                                            />
                                         </div>
                                         <div class="pagination-block">
-                                            <select
+                                            <Select
                                                 id="pageSize"
-                                                class="form-control form-control-sm"
+                                                style="min-width: 75px; max-width: 75px; overflow: hidden;"
+                                                className="form-control form-control-sm"
                                                 name="pageSize"
-                                                onchange={(event: Event) => {
+                                                oninput={(event: IEvent) => {
                                                     store.dispatch(
                                                         setFilter(FilterName.Run, 'pageSize', event.target.value)
                                                     );
                                                     store.dispatch(setFilter(FilterName.Run, 'pageNumber', 1));
                                                     this.setQueryAndFetch();
                                                 }}
-                                                value={runFilters.pageSize}
-                                            >
-                                                {pageSizes.map((pageSize: number) =>
-                                                    // tslint:disable-next-line:jsx-key
-                                                    <option value={pageSize}>{pageSize}</option>
-                                                )}
-                                            </select>
+                                                defaultOption={runFilters.pageSize}
+                                                options={PAGE_SIZES}
+                                            />
                                         </div>
                                         <div class="text-muted mt-2 ml-2 pagination-block">
                                             <PageCounter

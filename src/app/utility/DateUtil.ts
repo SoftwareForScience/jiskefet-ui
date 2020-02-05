@@ -13,5 +13,5 @@ import { format } from 'date-fns';
  * @param date date to be formatted.
  */
 export const formatDateField = (date: string | Date): string => {
-    return format(date, 'HH:mm:ss DD/MM/YYYY');
+    return format(date, 'DD/MM/YYYY HH:mm:ss');
 };

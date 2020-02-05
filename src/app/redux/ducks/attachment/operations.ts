@@ -9,8 +9,8 @@
 import { ThunkResult, AttachmentAction } from './types';
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../../types';
-import { Attachment } from '../../../interfaces/Attachment';
-import { HttpError } from '../../../interfaces/HttpError';
+import { IAttachment, IAttachmentCreate } from '../../../interfaces/Attachment';
+import { IHttpError } from '../../../interfaces/HttpError';
 import { request } from '../../../request';
 import {
     fetchAttachmentsByLogRequest,
@@ -21,7 +21,7 @@ import {
 import { getAttachmentsByLog, postAttachment } from '../../../constants/apiUrls';
 import { addHttpError } from '../error/actions';
 import { ErrorAction } from '../error/types';
-import { CollectionResponseObject } from '../../../interfaces/ResponseObject';
+import { ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Thunks
 export const fetchAttachmentsByLog = (logId: number): ThunkResult<Promise<void>> =>
@@ -30,24 +30,24 @@ export const fetchAttachmentsByLog = (logId: number): ThunkResult<Promise<void>>
         return request({
             method: 'GET',
             url: getAttachmentsByLog(logId)
-        }).then((result: CollectionResponseObject<Attachment>) => {
+        }).then((result: ICollectionSuccessObject<IAttachment>) => {
             dispatch(fetchAttachmentsByLogSuccess(result));
-        }).catch((error: HttpError) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };
 
-export const saveAttachment = (attachment: Attachment): ThunkResult<Promise<void>> =>
+export const saveAttachment = (attachment: IAttachmentCreate, logId: number): ThunkResult<Promise<void>> =>
     async (dispatch: ThunkDispatch<RootState, void, AttachmentAction | ErrorAction>): Promise<void> => {
         dispatch(createAttachmentRequest());
         return request({
             method: 'POST',
             data: attachment,
-            url: postAttachment()
+            url: postAttachment(logId)
         }).then((result: any) => {
             // SuccesModel.add('Successfully saved attachment.');
             dispatch(createAttachmentSuccess());
-        }).catch((error: HttpError) => {
+        }).catch((error: IHttpError<any>) => {
             dispatch(addHttpError(error));
         });
     };

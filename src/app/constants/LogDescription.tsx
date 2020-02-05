@@ -9,23 +9,23 @@
  */
 
 import * as m from 'mithril';
-import { Description } from '../interfaces/Description';
-import { format } from 'date-fns';
-import { Log } from '../interfaces/Log';
+import { IDescription } from '../interfaces/Description';
+import { ILog } from '../interfaces/Log';
+import { formatDateField } from '../utility/DateUtil';
 
 /**
  * The tab information used by the TabHeader and TabContent of the Log detail page.
  */
-const LogDescription: Description[] = [
+const LogDescription: IDescription[] = [
     {
         label: 'Log id',
-        value: (log: Log): number => {
+        value: (log: ILog): number => {
             return log.logId;
         }
     },
     {
         label: 'Subtype',
-        value: (log: Log): JSX.Element => (
+        value: (log: ILog): JSX.Element => (
             <span
                 class={`badge ${
                     log.subtype === 'run' ?
@@ -39,7 +39,7 @@ const LogDescription: Description[] = [
     },
     {
         label: 'Origin',
-        value: (log: Log): JSX.Element => (
+        value: (log: ILog): JSX.Element => (
             <span
                 class={`badge ${
                     log.origin === 'human' ?
@@ -52,15 +52,15 @@ const LogDescription: Description[] = [
     },
     {
         label: 'Creation time',
-        value: (log: Log): string => {
-            return format(log.creationTime, 'HH:mm:ss DD/MM/YYYY');
+        value: (log: ILog): string => {
+            return formatDateField(log.creationTime);
         }
     },
     {
         label: 'Author',
-        value: (log: Log): number => {
+        value: (log: ILog): string => {
             return log.user &&
-            log.user.userId;
+                log.user.name;
         }
     }
 ];

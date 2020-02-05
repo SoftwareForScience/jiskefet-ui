@@ -10,9 +10,9 @@ import * as m from 'mithril';
 import '../scss/main.scss';
 import 'bootstrap';
 import * as Cookie from 'js-cookie';
-import { Setting } from './interfaces/Setting';
+import { ISetting } from './interfaces/Setting';
 import { CronJob } from 'cron';
-import { ResponseObject } from './interfaces/ResponseObject';
+import { ISuccessObject } from './interfaces/ResponseObject';
 import LogPage from './pages/LogPage';
 import LogsPage from './pages/LogsPage';
 import RunsPage from './pages/RunsPage';
@@ -23,8 +23,11 @@ import SubsystemsOverviewPage from './pages/SubsystemsOverviewPage';
 import ProfilePage from './pages/ProfilePage';
 import LoginPage from './pages/LoginPage';
 import AuthorizingPage from './pages/AuthorizingPage';
+import { APPLICATION_NAME } from './constants/constants';
+import TagsOverviewPage from './pages/TagsOverviewPage';
 
 m.route.prefix('');
+document.title = APPLICATION_NAME;
 /**
  * Routes enabled when user is authenticated.
  */
@@ -47,6 +50,11 @@ const authenticatedRoutes = {
     '/logs/create/runs/:id': {
         view: (vnode: m.Vnode<{ id: number }>) => (
             <CreateLogPage runNumber={vnode.attrs.id} />
+        ),
+    },
+    '/logs/create/comments/:id': {
+        view: (vnode: m.Vnode<{ id: number }>) => (
+            <CreateLogPage logNumber={vnode.attrs.id} />
         ),
     },
     '/logs/:id': {
@@ -78,6 +86,11 @@ const authenticatedRoutes = {
         view: (vnode: m.Vnode<{ userId: number }>) => (
             <ProfilePage userId={vnode.attrs.userId} />
         ),
+    },
+    '/tags': {
+        view: () => (
+            <TagsOverviewPage />
+        ),
     }
 };
 
@@ -102,6 +115,16 @@ const lockedOutRoutes = {
  * (logged in is in essence: does the user have a cookie with a JWT)
  */
 export const initialize = () => {
+    const allowAnonymous = process.env.ALLOW_ANONYMOUS;
+
+    if (typeof(allowAnonymous) !== 'undefined' && allowAnonymous.toLowerCase() === 'true') {
+        if (!Cookie.get('token')) {
+            Cookie.set('token', 'TEST');
+        }
+    } else if (Cookie.get('token') && Cookie.get('token') === 'TEST') {
+        Cookie.remove('token');
+    }
+
     const token = Cookie.get('token');
     if (token) {
         m.route(document.body, '/', authenticatedRoutes);
@@ -111,16 +134,17 @@ export const initialize = () => {
 };
 
 /**
- * Creates a request to the /setting endpoint in order to retrieve settings for the authentication.
+ * Creates a request to the /setting endpoint in order to retrieve settings for the authentication and others.
  */
-export const getAuthSettings = () => {
+export const getSettings = () => {
     return m.request({
         method: 'GET',
         url: `${process.env.API_URL}setting`
-    }).then((result: ResponseObject<Setting>) => {
-        // setting['date'] = new Date().valueOf();
-        localStorage.setItem('USE_CERN_SSO', result.data.item.USE_CERN_SSO);
-        localStorage.setItem('AUTH_URL', result.data.item.AUTH_URL);
+    }).then((result: ISuccessObject<ISetting>) => {
+        const settingsArray = Object.entries(result.data.item);
+        settingsArray.forEach((setting: [string, string | number | boolean]) => {
+            localStorage.setItem(setting[0], setting[1].toString());
+        });
     });
 };
 
@@ -128,8 +152,8 @@ export const getAuthSettings = () => {
  * Schedule a daily cronjob to check if the settings are up to date.
  */
 new CronJob('0 2 * * *', () => {
-    getAuthSettings();
+    getSettings();
 }).start();
 
-getAuthSettings();
+getSettings();
 initialize();

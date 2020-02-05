@@ -14,10 +14,11 @@ import { selectAttachmentToBeCreated } from '../redux/ducks/attachment/selectors
 import { saveAttachment, fetchAttachmentsByLog } from '../redux/ducks/attachment/operations';
 import { selectCurrentLog, selectLogToBeCreated } from '../redux/ducks/log/selectors';
 import { setLogToBeCreated } from '../redux/ducks/log/actions';
-import { LogCreate } from '../interfaces/Log';
-import { Event } from '../interfaces/Event';
+import { ILogCreate } from '../interfaces/Log';
+import { IEvent } from '../interfaces/Event';
 import Label from '../atoms/Label';
 import Input from '../atoms/Input';
+import { FILE_UPLOAD_LIMIT } from '../constants/constants';
 
 interface Attrs {
     /**
@@ -37,29 +38,29 @@ interface Attrs {
 type Vnode = m.Vnode<Attrs, AttachmentComponent>;
 
 export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
-    private isExistingItem: boolean;
+    private isCreateLog: boolean;
     private hasChosenAttachment: boolean;
     private maxFileSize: number;
 
     constructor(vnode: Vnode) {
         super();
-        this.isExistingItem = vnode.attrs.isExistingItem;
+        this.isCreateLog = vnode.attrs.isExistingItem;
         this.hasChosenAttachment = false;
-        this.maxFileSize = 5000000; // Equals to 5MB
+        this.maxFileSize = FILE_UPLOAD_LIMIT * 1024 * 1024;
     }
 
     /**
      * Gets called after User selects a file.
      * @param event The event of having selected a file.
      */
-    getSelectedFiles = (event: Event) => {
+    getSelectedFiles = (event: IEvent) => {
         const files = (event.target as HTMLInputElement).files as FileList;
         const maxSizeLabel = document.getElementById('maximum-size-label') as HTMLElement;
         if (files[0].size > this.maxFileSize) {
             maxSizeLabel.hidden = false;
         } else {
             maxSizeLabel.hidden = true;
-            this.read(files[0], this.isExistingItem);
+            this.read(files[0], this.isCreateLog);
         }
     }
 
@@ -90,10 +91,10 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
     /**
      * Saves the base64 encoded string into the state.
      * @param base64String The file base64 encoded string.
-     * @param name The name of the file.
+     * @param fileName The name of the file.
      * @param isExistingItem Whether the attachment is added to an existing Item.
      */
-    saveAttachmentState = (base64String: string, name: string, isExistingItem: boolean) => {
+    saveAttachmentState = (base64String: string, fileName: string, isExistingItem: boolean) => {
         const fileMime = base64String.substring(
             'data:'.length, base64String.indexOf(';base64,')
         );
@@ -105,7 +106,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         if (isExistingItem) {
             log = currentLog;
             const attachmentToBeCreated = {
-                title: name,
+                fileName,
                 fileMime,
                 fileData,
                 ...(log && { log })
@@ -115,10 +116,9 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
             // Check if attachment was not already added (needs to be adjusted for multiple file upload)
             if (logToBeCreated && (logToBeCreated.attachments === undefined
                 || logToBeCreated.attachments.length > 0)) {
-
                 logToBeCreated.attachments = new Array();
-                logToBeCreated.attachments.push({ title: name, fileMime, fileData });
-                store.dispatch(setLogToBeCreated(logToBeCreated as LogCreate));
+                logToBeCreated.attachments.push({ fileName, fileMime, fileData });
+                store.dispatch(setLogToBeCreated(logToBeCreated as ILogCreate));
             }
         }
     }
@@ -131,7 +131,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         const attachment = selectAttachmentToBeCreated(state);
         const currentLog = selectCurrentLog(state);
         if (attachment && this.hasChosenAttachment && currentLog) {
-            await store.dispatch(saveAttachment(attachment))
+            await store.dispatch(saveAttachment(attachment, currentLog.logId))
                 .then(async () => {
                     // Reset the input form
                     const fileInput = document.getElementById('addAttachment') as HTMLFormElement;
@@ -155,7 +155,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
         return (
             <div>
                 <div class="alert alert-danger" role="alert" id="maximum-size-label" for="save" hidden>
-                    Maximum file size is 5MB! Please select a smaller file.
+                    Filesize exceeds the maximum limit of {FILE_UPLOAD_LIMIT}MB! Please select a smaller file.
                 </div>
                 <Label
                     id="fileUpload"
@@ -175,7 +175,7 @@ export default class AttachmentComponent extends MithrilTsxComponent<Attrs> {
                     style="max-width:40%; padding:10px 10px 10px 0px;"
                     hidden={hideImagePreview}
                 />
-                <div hidden={!this.isExistingItem}>
+                <div hidden={!this.isCreateLog}>
                     <span
                         class="d-inline-block"
                         tabindex="0"

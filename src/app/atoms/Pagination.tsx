@@ -9,7 +9,7 @@
 import * as m from 'mithril';
 import * as _ from 'lodash';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import * as $ from 'jquery';
 
 interface Attrs {
@@ -63,7 +63,7 @@ export default class Pagination extends MithrilTsxComponent<Attrs> {
                     {...{ type: this.inputIsActive ? 'text' : 'hidden' }}
                     class="page-selector form-control form-control-sm"
                     id="page-selector-id"
-                    onchange={(event: Event) => {
+                    onchange={(event: IEvent) => {
                         let newPage = +event.target.value;
                         newPage = newPage > numberOfPages ? numberOfPages : newPage;
                         newPage = newPage < 1 ? 1 : newPage;

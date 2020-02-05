@@ -15,8 +15,8 @@ import {
     SetAttachmentToBeCreatedAction,
     ClearAttachmentToBeCreatedAction
 } from './types';
-import { Attachment } from '../../../interfaces/Attachment';
-import { CollectionResponseObject } from '../../../interfaces/ResponseObject';
+import { IAttachment, IAttachmentCreate } from '../../../interfaces/Attachment';
+import { ICollectionSuccessObject } from '../../../interfaces/ResponseObject';
 
 // Action creators
 export const fetchAttachmentsByLogRequest = (): FetchAttachmentsByLogRequestAction => ({
@@ -24,7 +24,7 @@ export const fetchAttachmentsByLogRequest = (): FetchAttachmentsByLogRequestActi
 });
 
 export const fetchAttachmentsByLogSuccess = (
-    payload: CollectionResponseObject<Attachment>): FetchAttachmentsByLogSuccessAction => ({
+    payload: ICollectionSuccessObject<IAttachment>): FetchAttachmentsByLogSuccessAction => ({
         type: ActionTypes.FETCH_ATTACHMENTS_BY_LOG_SUCCESS,
         payload
     });
@@ -37,9 +37,9 @@ export const createAttachmentSuccess = (): CreateAttachmentSuccessAction => ({
     type: ActionTypes.CREATE_ATTACHMENT_SUCCESS
 });
 
-export const setAttachmentToBeCreated = (attachment: Attachment): SetAttachmentToBeCreatedAction => ({
+export const setAttachmentToBeCreated = (attachmentToBeCreated: IAttachmentCreate): SetAttachmentToBeCreatedAction => ({
     type: ActionTypes.SET_ATTACHMENT_TO_BE_CREATED,
-    payload: attachment
+    payload: attachmentToBeCreated
 });
 
 export const clearAttachmentToBeCreated = (): ClearAttachmentToBeCreatedAction => ({

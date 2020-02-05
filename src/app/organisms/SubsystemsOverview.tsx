@@ -14,7 +14,7 @@ import SuccessMessage from '../atoms/SuccessMessage';
 import Table from '../molecules/Table';
 import ContentBlock from '../molecules/ContentBlock';
 import Spinner from '../atoms/Spinner';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import { fetchSubsystemOverviews } from '../redux/ducks/subsystem/operations';
 import { store } from '../redux/configureStore';
 import { selectFetchingSubsystemOverviews, selectSubsystemOverviews } from '../redux/ducks/subsystem/selectors';
@@ -24,6 +24,8 @@ import { selectQueryString, selectFilters } from '../redux/ducks/filter/selector
 import { setQueryParams } from '../utility/UrlUtil';
 import { setFilter } from '../redux/ducks/filter/actions';
 import { OrderDirection } from '../enums/OrderDirection';
+import Label from '../atoms/Label';
+import Select from '../atoms/Select';
 
 export default class SubsystemsOverview extends MithrilTsxComponent<{}> {
 
@@ -59,18 +61,16 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> {
                     <div class="row">
                         <div class="col-md-9">
                             <ContentBlock class="col-sm-3 mb-2">
-
-                                <label
-                                    for="timeRange"
-                                    class="col-form-label col-form-label-sm"
-                                >
-                                    Time range in hours.
-                                </label>
-                                <select
+                                <Label
                                     id="timeRange"
-                                    class="form-control form-control-sm"
+                                    className="col-form-label col-form-label-sm"
+                                    text="Time range in hours"
+                                />
+                                <Select
+                                    id="timeRange"
+                                    className="form-control form-control-sm"
                                     name="timeRange"
-                                    onchange={(event: Event) => {
+                                    oninput={(event: IEvent) => {
                                         store.dispatch(setFilter(
                                             FilterName.Subsystem,
                                             'timeRange',
@@ -78,13 +78,9 @@ export default class SubsystemsOverview extends MithrilTsxComponent<{}> {
                                         ));
                                         this.setQueryAndFetch();
                                     }}
-                                    value={subsystemFilters.timeRange}
-                                >
-                                    {timeRanges.map((timeRange: number) =>
-                                        <option key={timeRange} value={timeRange}>{timeRange}</option>
-                                    )}
-                                </select>
-
+                                    defaultOption={subsystemFilters.timeRange}
+                                    options={timeRanges}
+                                />
                             </ContentBlock>
                             <Spinner
                                 isLoading={selectFetchingSubsystemOverviews(store.getState())}

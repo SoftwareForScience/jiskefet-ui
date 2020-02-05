@@ -1,3 +1,5 @@
+import { IResponseObject } from './ResponseObject';
+
 /*
  * Copyright (C) 2018 Amsterdam University of Applied Sciences (AUAS)
  *
@@ -10,9 +12,17 @@
  * An error received from, for example, a failed API call.
  * Returned in the catch portion of the Promise request().
  */
-export interface HttpError {
-    error: string;
-    statusCode: number;
-    message: string;
-    stack?: string;
+export interface IHttpError<T> extends IResponseObject<T> {
+    error: {
+        error: string;
+        code: number;
+        message: string;
+        details?: Array<IHttpError<T>>;
+        innerError?: IInnerError;
+    };
+}
+
+export interface IInnerError {
+    code: string;
+    innerError: IInnerError;
 }

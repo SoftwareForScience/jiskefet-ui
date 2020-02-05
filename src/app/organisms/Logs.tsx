@@ -15,7 +15,7 @@ import LogColumns from '../constants/LogColumns';
 import { MithrilTsxComponent } from 'mithril-tsx-component';
 import Filter from '../molecules/Filter';
 import Pagination from '../atoms/Pagination';
-import { Event } from '../interfaces/Event';
+import { IEvent } from '../interfaces/Event';
 import PageCounter from '../atoms/PageCounter';
 import { createDummyTable } from '../utility/DummyService';
 import ContentBlock from '../molecules/ContentBlock';
@@ -30,6 +30,10 @@ import { selectQueryString, selectFilters } from '../redux/ducks/filter/selector
 import { setFilter, resetFilters } from '../redux/ducks/filter/actions';
 import { fetchLogs } from '../redux/ducks/log/operations';
 import { selectIsFetchingLogs, selectLogCount, selectLogs } from '../redux/ducks/log/selectors';
+import Label from '../atoms/Label';
+import Select from '../atoms/Select';
+import Button, { ButtonClass } from '../atoms/Button';
+import { PAGE_SIZES } from '../constants/constants';
 
 const inputFields = [
     {
@@ -82,13 +86,24 @@ export default class Logs extends MithrilTsxComponent<{}> {
     }
 
     view() {
-        const pageSizes = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512];
         const collapsableFilterItem = selectCollapsableItem(store.getState(), 'filters');
         const logFilters = selectFilters(store.getState())[FilterName.Log];
         return (
             <div>
+                <SuccessMessage />
                 <HttpErrorAlert>
-                    <SuccessMessage />
+                    <div class="row">
+                        <div class="col" style={{ marginBottom: '0.5rem' }}>
+                            <Button
+                                margin="float-right"
+                                buttonClass={ButtonClass.DEFAULT}
+                                onClick={() => m.route.set(
+                                '/logs/create'
+                                )}
+                                text="Create new log"
+                            />
+                    </div>
+                    </div>
                     <div class="row">
                         <div
                             class={
@@ -152,33 +167,28 @@ export default class Logs extends MithrilTsxComponent<{}> {
                                 <div class="row">
                                     <div class="col-md-4 m-1 small-center" >
                                         <div class="pagination-block">
-                                            <label
-                                                for="pageSize"
-                                                class="col-form-label col-form-label-sm mr-2"
-                                            >
-                                                Page size
-                                            </label>
+                                            <Label
+                                                id="pageSize"
+                                                className="col-form-label col-form-label-sm mr-2"
+                                                text="Page size"
+                                            />
                                         </div>
                                         <div class="pagination-block">
-                                            <select
+                                            <Select
                                                 id="pageSize"
                                                 style="min-width: 75px; max-width: 75px; overflow: hidden;"
-                                                class="form-control form-control-sm"
+                                                className="form-control form-control-sm"
                                                 name="pageSize"
-                                                onchange={(event: Event) => {
+                                                oninput={(event: IEvent) => {
                                                     store.dispatch(
                                                         setFilter(FilterName.Log, 'pageSize', event.target.value)
                                                     );
                                                     store.dispatch(setFilter(FilterName.Log, 'pageNumber', 1));
                                                     this.setQueryAndFetch();
                                                 }}
-                                                value={logFilters.pageSize}
-                                            >
-                                                {pageSizes.map((pageSize: number) =>
-                                                    // tslint:disable-next-line:jsx-key
-                                                    <option value={pageSize}>{pageSize}</option>
-                                                )}
-                                            </select>
+                                                defaultOption={logFilters.pageSize}
+                                                options={PAGE_SIZES}
+                                            />
                                         </div>
                                         <div class="text-muted mt-2 ml-2 pagination-block">
                                             <PageCounter
